@@ -1,0 +1,11 @@
+# deps
+__pycache__/
+node_modules/
+dist/
+.venv/
+*.tsbuildinfo
+
+data/positions.json
+data/quotes.json
+portfolio-board/public/data/positions.json
+portfolio-board/public/data/quotes.json
