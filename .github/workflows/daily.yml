@@ -1,0 +1,45 @@
+name: daily-screener
+
+on:
+  schedule:
+    # UTC 13:22 = 北京时间 21:22，港股与美股（前一交易日）均已收盘
+    - cron: '22 13 * * 1-6'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  scan-build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 安装取数依赖
+        run: pip install -r requirements-cloud.txt
+
+      - name: 运行云端选股引擎（HKEX + NASDAQ + 腾讯快照）
+        run: python -m screener.cloud_engine
+
+      - name: 同步筛选结果到前端数据目录
+        run: cp data/screener_results.json portfolio-board/public/data/screener_results.json
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: 构建前端
+        working-directory: portfolio-board
+        run: |
+          npm install --no-audit --no-fund
+          npm run build
+
+      - name: 部署到 GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./portfolio-board/dist
