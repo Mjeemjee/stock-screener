@@ -197,6 +197,7 @@ export default function Screener() {
             <h1 className="text-lg sm:text-xl font-bold">港美股选股台</h1>
             <nav className="flex gap-3 sm:gap-4 text-sm shrink-0">
               <span className="font-medium">选股</span>
+              <Link to="/backtest" className="text-muted-foreground hover:text-foreground">回测</Link>
               <Link to="/holdings" className="text-muted-foreground hover:text-foreground">持仓</Link>
               <Link to="/guide" className="text-muted-foreground hover:text-foreground">指南</Link>
             </nav>

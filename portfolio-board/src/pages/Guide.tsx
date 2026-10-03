@@ -16,6 +16,7 @@ export default function Guide() {
           <h1 className="text-xl font-bold">策略进化指南</h1>
           <nav className="flex gap-4 text-sm">
             <Link to="/" className="text-muted-foreground hover:text-foreground">选股</Link>
+            <Link to="/backtest" className="text-muted-foreground hover:text-foreground">回测</Link>
             <Link to="/holdings" className="text-muted-foreground hover:text-foreground">持仓</Link>
             <span className="font-medium">策略进化指南</span>
           </nav>
@@ -46,7 +47,9 @@ export default function Guide() {
             <p>每天北京时间 21:22，GitHub Actions 自动完成一次全市场扫描并更新本网站，你的电脑不需要开机：</p>
             <Code>{`港股宇宙：港交所官方证券列表（普通股 2,700+ 只）
 美股宇宙：NASDAQ 官方 screener（NYSE/NASDAQ/AMEX 6,600+ 只）
-行情快照：腾讯 qt.gtimg.cn 批量接口（价格/涨跌/PE/市值/52周高低）`}</Code>
+行情快照：腾讯 qt.gtimg.cn 批量接口（价格/涨跌/PE/市值/52周高低）
+回测历史K线：腾讯 fqkline（港股前复权）+ 东方财富（美股前复权）+ 雅虎（兜底）
+回测基准：标普500 / 恒生指数；股票池 = 当日成交额 Top 300/市场`}</Code>
             <p>全部为免费公开数据源，无需任何密钥。想在本地手跑一次：</p>
             <Code>python -m screener.cloud_engine</Code>
           </CardContent>
@@ -65,7 +68,11 @@ export default function Guide() {
             </div>
             <div>
               <p className="font-medium text-foreground">我想调整某个策略的参数/阈值？</p>
-              <p>直接告诉我「把动量突破的市值门槛提到 50 亿」即可，我会改参数并重新扫描。</p>
+              <p>选股策略的参数直接告诉我即可（如「把动量突破的市值门槛提到 50 亿」），我会改参数并重新扫描；回测策略的参数在<Link to="/backtest" className="underline">回测页</Link>自己拖数字就能实时重跑。</p>
+            </div>
+            <div>
+              <p className="font-medium text-foreground">回测结果可信吗？</p>
+              <p>回测用于「快速排除明显没用的想法」，不是收益承诺。已知的系统性偏差都写在回测页底部：股票池按今日成交额选取（幸存者偏差，结果偏乐观）、前复权口径、T+1 成交、允许零碎股。策略真要用，先过回测、再过人工复核。</p>
             </div>
             <div>
               <p className="font-medium text-foreground">云端版和本机版有什么区别？</p>

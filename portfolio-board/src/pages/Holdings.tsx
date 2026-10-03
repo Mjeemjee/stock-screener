@@ -55,6 +55,7 @@ export default function Holdings() {
           </div>
           <nav className="flex gap-4 text-sm">
             <Link to="/" className="text-muted-foreground hover:text-foreground">选股</Link>
+            <Link to="/backtest" className="text-muted-foreground hover:text-foreground">回测</Link>
             <span className="font-medium">持仓</span>
             <Link to="/guide" className="text-muted-foreground hover:text-foreground">策略进化指南</Link>
           </nav>
