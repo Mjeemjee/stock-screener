@@ -6,7 +6,7 @@
   - 美股宇宙：NASDAQ 官方 screener API（覆盖 NYSE/NASDAQ/AMEX，含行业/国家）
   - 快照行情：腾讯 qt.gtimg.cn 批量快照（价格/涨跌幅/成交额/PE/市值/52周高低）
 
-已验证的腾讯字段口径（2026-10-03 实测）：
+已验证的腾讯字段口径（2026-10-03 实测，见 reports/research.md）：
   [1]名称 [3]最新价 [4]昨收（[3]-[4]=[31]涨跌额，精确吻合） [32]涨跌幅%
   [36]成交量 [37]成交额（原币） [39]PE [44]总市值(亿原币) [48]52周高 [49]52周低
 未确认字段（[43]/[71]/[72] 疑似换手/PE静/股息率但样本矛盾）一律不映射。
@@ -199,6 +199,13 @@ def main() -> None:
         "strategies": results,
     }
     save_payload(payload)
+
+    # 网页回测历史数据管道：复用当日快照选股池，失败不影响选股结果部署
+    try:
+        from screener import history_fetch
+        history_fetch.main(snap=df)
+    except Exception as e:
+        print(f"[history] 历史数据管道失败（不影响选股结果）：{e}", flush=True)
 
 
 if __name__ == "__main__":
