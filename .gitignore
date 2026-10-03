@@ -1,11 +1,19 @@
-# deps
+# 依赖与缓存
 __pycache__/
 node_modules/
 dist/
 .venv/
 *.tsbuildinfo
 
+# 隐私：持仓与实盘行情数据永不上传
 data/positions.json
 data/quotes.json
 portfolio-board/public/data/positions.json
 portfolio-board/public/data/quotes.json
+
+# 本机 futu 版产物（云端版结果允许入库作为初始数据）
+# data/screener_results.json 保留
+
+# 回测历史数据：体积大（每市场数 MB）、每日由 Actions 重新生成，不入库
+portfolio-board/public/data/history/
+portfolio-board/.bt-test/
