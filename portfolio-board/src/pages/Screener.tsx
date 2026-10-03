@@ -11,7 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import type { ScreenerResults, StrategyResult } from '@/types/screener'
+import type { ScreenHit, ScreenerResults, StrategyResult } from '@/types/screener'
 
 const STATUS_STYLE: Record<string, { label: string; variant: 'default' | 'secondary' | 'outline' }> = {
   active: { label: '启用中', variant: 'default' },
@@ -30,6 +30,16 @@ function fmtMv(v?: number) {
   return (v / 1e6).toFixed(0) + 'M'
 }
 
+function ChangeText({ value }: { value?: number }) {
+  if (value == null) return <span>-</span>
+  return (
+    <span className={value >= 0 ? 'text-red-500' : 'text-emerald-500'}>
+      {value >= 0 ? '+' : ''}
+      {value.toFixed(2)}%
+    </span>
+  )
+}
+
 function StrategyCard({ r }: { r: StrategyResult }) {
   const s = STATUS_STYLE[r.meta.status] ?? STATUS_STYLE.watch
   return (
@@ -41,7 +51,7 @@ function StrategyCard({ r }: { r: StrategyResult }) {
           {r.meta.markets.map((m) => (
             <Badge key={m} variant="outline">{m}</Badge>
           ))}
-          <span className="ml-auto text-sm font-normal text-muted-foreground">
+          <span className="sm:ml-auto text-sm font-normal text-muted-foreground">
             {r.meta.error ? '执行出错' : `${r.meta.hit_count} 只命中`}
           </span>
         </CardTitle>
@@ -62,16 +72,40 @@ function StrategyCard({ r }: { r: StrategyResult }) {
   )
 }
 
-function HitTable({ r }: { r: StrategyResult }) {
-  if (r.meta.error)
-    return <p className="p-4 text-sm text-red-500">策略执行出错：{r.meta.error}</p>
-  if (r.hits.length === 0)
-    return (
-      <p className="p-4 text-sm text-muted-foreground">
-        本期无命中标的。
-        {r.meta.cloud_note && <span className="block mt-1 text-sky-600">{r.meta.cloud_note}</span>}
-      </p>
-    )
+/** 手机端：一张卡片 = 一只标的，免横向滚动 */
+function HitCardList({ hits }: { hits: ScreenHit[] }) {
+  return (
+    <div className="divide-y">
+      {hits.map((h) => (
+        <div key={h.code} className="px-4 py-3 space-y-1">
+          <div className="flex items-start justify-between gap-3">
+            <div className="flex items-center gap-2 min-w-0">
+              <Badge variant={mktOf(h.code) === 'US' ? 'default' : 'secondary'} className="shrink-0">
+                {mktOf(h.code)}
+              </Badge>
+              <div className="min-w-0">
+                <div className="font-medium leading-tight truncate">{h.name}</div>
+                <div className="text-xs text-muted-foreground">{h.code}</div>
+              </div>
+            </div>
+            <div className="text-right shrink-0">
+              <div className="font-medium leading-tight">{h.last_price?.toFixed(2)}</div>
+              <div className="text-xs">
+                <ChangeText value={h.change_rate} />
+              </div>
+            </div>
+          </div>
+          <p className="text-xs text-muted-foreground leading-relaxed">
+            市值 {fmtMv(h.circular_market_val)} · {h.reason}
+          </p>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+/** 桌面端：完整表格 */
+function HitTable({ hits }: { hits: ScreenHit[] }) {
   return (
     <Table>
       <TableHeader>
@@ -84,7 +118,7 @@ function HitTable({ r }: { r: StrategyResult }) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {r.hits.map((h) => (
+        {hits.map((h) => (
           <TableRow key={h.code}>
             <TableCell>
               <div className="flex items-center gap-2">
@@ -97,9 +131,7 @@ function HitTable({ r }: { r: StrategyResult }) {
             </TableCell>
             <TableCell className="text-right">{h.last_price?.toFixed(2)}</TableCell>
             <TableCell className="text-right">
-              <span className={(h.change_rate ?? 0) >= 0 ? 'text-red-500' : 'text-emerald-500'}>
-                {h.change_rate != null ? `${h.change_rate >= 0 ? '+' : ''}${h.change_rate.toFixed(2)}%` : '-'}
-              </span>
+              <ChangeText value={h.change_rate} />
             </TableCell>
             <TableCell className="text-right">{fmtMv(h.circular_market_val)}</TableCell>
             <TableCell className="text-xs text-muted-foreground max-w-[280px]">{h.reason}</TableCell>
@@ -107,6 +139,28 @@ function HitTable({ r }: { r: StrategyResult }) {
         ))}
       </TableBody>
     </Table>
+  )
+}
+
+function HitList({ r }: { r: StrategyResult }) {
+  if (r.meta.error)
+    return <p className="p-4 text-sm text-red-500">策略执行出错：{r.meta.error}</p>
+  if (r.hits.length === 0)
+    return (
+      <p className="p-4 text-sm text-muted-foreground">
+        本期无命中标的。
+        {r.meta.cloud_note && <span className="block mt-1 text-sky-600">{r.meta.cloud_note}</span>}
+      </p>
+    )
+  return (
+    <>
+      <div className="md:hidden">
+        <HitCardList hits={r.hits} />
+      </div>
+      <div className="hidden md:block">
+        <HitTable hits={r.hits} />
+      </div>
+    </>
   )
 }
 
@@ -138,42 +192,44 @@ export default function Screener() {
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b">
-        <div className="mx-auto max-w-6xl px-6 py-4 flex items-center justify-between">
-          <div>
-            <h1 className="text-xl font-bold">港美股选股台</h1>
-            <p className="text-xs text-muted-foreground">
-              全市场 {data.universe_total.toLocaleString()} 只 → 流动性过滤后 {data.universe_after_filter.toLocaleString()} 只｜
-              扫描于 {data.generated_at}（耗时 {data.elapsed_sec}s）
-            </p>
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 py-4 space-y-1.5">
+          <div className="flex items-center justify-between gap-2">
+            <h1 className="text-lg sm:text-xl font-bold">港美股选股台</h1>
+            <nav className="flex gap-3 sm:gap-4 text-sm shrink-0">
+              <span className="font-medium">选股</span>
+              <Link to="/holdings" className="text-muted-foreground hover:text-foreground">持仓</Link>
+              <Link to="/guide" className="text-muted-foreground hover:text-foreground">指南</Link>
+            </nav>
           </div>
-          <nav className="flex gap-4 text-sm">
-            <span className="font-medium">选股</span>
-            <Link to="/holdings" className="text-muted-foreground hover:text-foreground">持仓</Link>
-            <Link to="/guide" className="text-muted-foreground hover:text-foreground">策略进化指南</Link>
-          </nav>
+          <p className="text-xs text-muted-foreground leading-relaxed">
+            全市场 {data.universe_total.toLocaleString()} 只 → 过滤后 {data.universe_after_filter.toLocaleString()} 只
+            <span className="hidden sm:inline">｜</span>
+            <br className="sm:hidden" />
+            扫描于 {data.generated_at}
+          </p>
         </div>
       </header>
 
-      <main className="mx-auto max-w-6xl px-6 py-6 space-y-8">
+      <main className="mx-auto max-w-6xl px-4 sm:px-6 py-5 sm:py-6 space-y-8">
         <section>
-          <h2 className="text-lg font-semibold mb-3">策略库（{data.strategies.length} 个策略，持续进化中）</h2>
+          <h2 className="text-base sm:text-lg font-semibold mb-3">策略库（{data.strategies.length} 个策略，持续进化中）</h2>
           <div className="grid md:grid-cols-2 gap-4">
             {data.strategies.map((r) => (
               <StrategyCard key={r.meta.id} r={r} />
             ))}
           </div>
-          <p className="mt-3 text-xs text-muted-foreground">
+          <p className="mt-3 text-xs text-muted-foreground leading-relaxed">
             看到有意思的策略想加进来？把思路发给我即可——分析适用性 → 写成模块 → 先标「观察中」验证 → 你确认后启用。详见
             <Link to="/guide" className="underline ml-1">策略进化指南</Link>。
           </p>
         </section>
 
         <section>
-          <h2 className="text-lg font-semibold mb-3">最新筛选结果</h2>
+          <h2 className="text-base sm:text-lg font-semibold mb-3">最新筛选结果</h2>
           <Tabs defaultValue={active[0]?.meta.id}>
-            <TabsList>
+            <TabsList className="flex flex-wrap h-auto w-full sm:w-fit gap-1">
               {active.map((r) => (
-                <TabsTrigger key={r.meta.id} value={r.meta.id}>
+                <TabsTrigger key={r.meta.id} value={r.meta.id} className="flex-none">
                   {r.meta.name}（{r.meta.hit_count}）
                 </TabsTrigger>
               ))}
@@ -182,16 +238,16 @@ export default function Screener() {
               <TabsContent key={r.meta.id} value={r.meta.id}>
                 <Card>
                   <CardContent className="p-0">
-                    <HitTable r={r} />
+                    <HitList r={r} />
                   </CardContent>
                 </Card>
-                <p className="mt-2 text-xs text-amber-600">风险提示：{r.meta.risk}</p>
+                <p className="mt-2 text-xs text-amber-600 leading-relaxed">风险提示：{r.meta.risk}</p>
               </TabsContent>
             ))}
           </Tabs>
         </section>
 
-        <p className="text-center text-xs text-muted-foreground pb-6">
+        <p className="text-center text-xs text-muted-foreground pb-6 leading-relaxed">
           筛选结果仅为量化初筛，不构成投资建议；红涨绿跌。
           数据源：{data.data_source ?? '富途 OpenAPI 全市场快照'}。
         </p>
