@@ -12,6 +12,7 @@ import type {
   Bar,
   EquityPoint,
   Metrics,
+  SignalProvider,
   StockSeries,
   StrategyModule,
   Trade,
@@ -226,12 +227,13 @@ function computeMetrics(
   }
 }
 
-export function runBacktest(
+/** 组合/单策略通用入口：provider.prepare 产出每只股票的信号数组 */
+export function runBacktestCore(
   stocks: StockSeries[],
-  strategy: StrategyModule,
-  params: Record<string, number>,
+  provider: SignalProvider,
   opts: BacktestOptions,
   bench?: Bar[],
+  label?: string,
 ): BacktestResult {
   const t0 = performance.now()
   const cost = opts.costPct / 100
@@ -242,7 +244,7 @@ export function runBacktest(
   const prepared: Prepared[] = []
   for (const s of stocks) {
     if (s.bars.length < 60) continue
-    const { entries, exits } = strategy.prepare(s.bars, params)
+    const { entries, exits } = provider.prepare(s.bars)
     const dateIdx = new Map<number, number>()
     s.bars.forEach((b, i) => dateIdx.set(b.d, i))
     prepared.push({ s, entries, exits, dateIdx })
@@ -394,10 +396,29 @@ export function runBacktest(
     equity,
     drawdown,
     trades,
-    strategyId: strategy.id,
-    params,
+    strategyId: provider.id,
+    label,
+    params: {},
     options: opts,
     stockCount: prepared.length,
     elapsedMs: Math.round(performance.now() - t0),
   }
+}
+
+/** 单策略回测（兼容入口）：包装为 provider 后走核心模拟 */
+export function runBacktest(
+  stocks: StockSeries[],
+  strategy: StrategyModule,
+  params: Record<string, number>,
+  opts: BacktestOptions,
+  bench?: Bar[],
+): BacktestResult {
+  const res = runBacktestCore(
+    stocks,
+    { id: strategy.id, prepare: (bars) => strategy.prepare(bars, params) },
+    opts,
+    bench,
+  )
+  res.params = params
+  return res
 }

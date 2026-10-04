@@ -18,6 +18,15 @@ export interface StockSeries {
   bars: Bar[]
 }
 
+/**
+ * 信号提供者：单策略或组合策略的统一入口。
+ * prepare 对单只股票一次性算好信号数组；entries[i]/exits[i] 表示「第 i 根 K 线收盘时」的信号。
+ */
+export interface SignalProvider {
+  id: string
+  prepare(bars: Bar[]): { entries: boolean[]; exits: boolean[] }
+}
+
 /** 策略参数说明：驱动网页表单自动生成 */
 export interface ParamSpec {
   key: string
@@ -96,6 +105,8 @@ export interface BacktestResult {
   drawdown: { d: number; dd: number }[]
   trades: Trade[]
   strategyId: string
+  /** 展示用标签（组合回测时为组合描述，如「拼图组合 · 3 块 · 加权投票≥60%」） */
+  label?: string
   params: Record<string, number>
   options: BacktestOptions
   stockCount: number
