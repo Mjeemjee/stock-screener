@@ -1,4 +1,5 @@
 import { Link } from 'react-router'
+import AppShell from '@/components/AppShell'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 
@@ -10,20 +11,8 @@ function Code({ children }: { children: string }) {
 
 export default function Guide() {
   return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b">
-        <div className="mx-auto max-w-3xl px-6 py-4 flex items-center justify-between">
-          <h1 className="text-xl font-bold">策略进化指南</h1>
-          <nav className="flex gap-4 text-sm">
-            <Link to="/" className="text-muted-foreground hover:text-foreground">选股</Link>
-            <Link to="/backtest" className="text-muted-foreground hover:text-foreground">回测</Link>
-            <Link to="/holdings" className="text-muted-foreground hover:text-foreground">持仓</Link>
-            <span className="font-medium">策略进化指南</span>
-          </nav>
-        </div>
-      </header>
-
-      <main className="mx-auto max-w-3xl px-6 py-6 space-y-4">
+    <AppShell title="策略进化指南" subtitle="策略库如何长大、回测拼图怎么玩、以及这个网站的边界">
+      <div className="mx-auto max-w-3xl space-y-4">
         <Card>
           <CardHeader className="pb-2"><CardTitle className="text-base">这个网站的核心：策略库会不断长大</CardTitle></CardHeader>
           <CardContent className="text-sm text-muted-foreground space-y-2">
@@ -56,6 +45,17 @@ export default function Guide() {
         </Card>
 
         <Card>
+          <CardHeader className="pb-2"><CardTitle className="text-base">回测拼图：多个策略组合着用</CardTitle></CardHeader>
+          <CardContent className="text-sm text-muted-foreground space-y-2">
+            <p>回测页的策略不再是单选——点「＋」把多个策略块拼在一起，每块有自己的参数和权重：</p>
+            <p><b>买入表决三选一</b>：全部同意才买（信号少而稳）/ 任一同意即买（信号多而杂）/ 加权投票（同意的块权重占比 ≥ 阈值才买，信任哪个策略就给它加大权重）。</p>
+            <p><b>卖出</b>：默认任一块发出出场信号就卖（风控优先），也可切成全部块同意才卖。</p>
+            <p><b>代码模式</b>：点「代码」切换到 JSON 视图，直接改数字、整块复制粘贴都行，点「应用代码」即生效——参数写超范围会自动收敛回合法区间，写错了会告诉你哪一行有问题。</p>
+            <p>一个好用的起手组合：<Badge variant="secondary">均线交叉</Badge> + <Badge variant="secondary">N日新高突破</Badge> 加权投票 ≥50%——趋势与突破互相确认，比单用一个信号更耐震荡。</p>
+          </CardContent>
+        </Card>
+
+        <Card>
           <CardHeader className="pb-2"><CardTitle className="text-base">常见问题</CardTitle></CardHeader>
           <CardContent className="text-sm text-muted-foreground space-y-3">
             <div>
@@ -68,7 +68,7 @@ export default function Guide() {
             </div>
             <div>
               <p className="font-medium text-foreground">我想调整某个策略的参数/阈值？</p>
-              <p>选股策略的参数直接告诉我即可（如「把动量突破的市值门槛提到 50 亿」），我会改参数并重新扫描；回测策略的参数在<Link to="/backtest" className="underline">回测页</Link>自己拖数字就能实时重跑。</p>
+              <p>选股策略的参数直接告诉我即可（如「把动量突破的市值门槛提到 50 亿」），我会改参数并重新扫描；回测策略的参数在<Link to="/backtest" className="underline">回测页</Link>自己拖数字（或切「代码」模式改 JSON）就能实时重跑。</p>
             </div>
             <div>
               <p className="font-medium text-foreground">回测结果可信吗？</p>
@@ -82,7 +82,7 @@ export default function Guide() {
         </Card>
 
         <p className="text-center text-xs text-muted-foreground pb-6">本工具仅作研究筛选，不构成投资建议。</p>
-      </main>
-    </div>
+      </div>
+    </AppShell>
   )
 }

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router'
+import AppShell from '@/components/AppShell'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
@@ -60,12 +61,12 @@ function StrategyCard({ r }: { r: StrategyResult }) {
         <p className="text-muted-foreground">{r.meta.principle}</p>
         <p className="text-xs text-muted-foreground">来源：{r.meta.source}</p>
         {r.meta.cloud_note && (
-          <p className="text-xs text-sky-600">云端版说明：{r.meta.cloud_note}</p>
+          <p className="text-xs text-sky-400">云端版说明：{r.meta.cloud_note}</p>
         )}
         <details className="text-xs">
           <summary className="cursor-pointer text-muted-foreground hover:text-foreground">参数与风险</summary>
           <pre className="mt-1 rounded bg-muted p-2 overflow-x-auto">{JSON.stringify(r.meta.params, null, 2)}</pre>
-          <p className="mt-1 text-amber-600">{r.meta.risk}</p>
+          <p className="mt-1 text-amber-400">{r.meta.risk}</p>
         </details>
       </CardContent>
     </Card>
@@ -89,8 +90,8 @@ function HitCardList({ hits }: { hits: ScreenHit[] }) {
               </div>
             </div>
             <div className="text-right shrink-0">
-              <div className="font-medium leading-tight">{h.last_price?.toFixed(2)}</div>
-              <div className="text-xs">
+              <div className="font-medium leading-tight tnum">{h.last_price?.toFixed(2)}</div>
+              <div className="text-xs tnum">
                 <ChangeText value={h.change_rate} />
               </div>
             </div>
@@ -129,11 +130,11 @@ function HitTable({ hits }: { hits: ScreenHit[] }) {
                 </div>
               </div>
             </TableCell>
-            <TableCell className="text-right">{h.last_price?.toFixed(2)}</TableCell>
-            <TableCell className="text-right">
+            <TableCell className="text-right tnum">{h.last_price?.toFixed(2)}</TableCell>
+            <TableCell className="text-right tnum">
               <ChangeText value={h.change_rate} />
             </TableCell>
-            <TableCell className="text-right">{fmtMv(h.circular_market_val)}</TableCell>
+            <TableCell className="text-right tnum">{fmtMv(h.circular_market_val)}</TableCell>
             <TableCell className="text-xs text-muted-foreground max-w-[280px]">{h.reason}</TableCell>
           </TableRow>
         ))}
@@ -149,7 +150,7 @@ function HitList({ r }: { r: StrategyResult }) {
     return (
       <p className="p-4 text-sm text-muted-foreground">
         本期无命中标的。
-        {r.meta.cloud_note && <span className="block mt-1 text-sky-600">{r.meta.cloud_note}</span>}
+        {r.meta.cloud_note && <span className="block mt-1 text-sky-400">{r.meta.cloud_note}</span>}
       </p>
     )
   return (
@@ -190,28 +191,18 @@ export default function Screener() {
   const active = data.strategies.filter((s) => s.meta.status !== 'paused')
 
   return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 py-4 space-y-1.5">
-          <div className="flex items-center justify-between gap-2">
-            <h1 className="text-lg sm:text-xl font-bold">港美股选股台</h1>
-            <nav className="flex gap-3 sm:gap-4 text-sm shrink-0">
-              <span className="font-medium">选股</span>
-              <Link to="/backtest" className="text-muted-foreground hover:text-foreground">回测</Link>
-              <Link to="/holdings" className="text-muted-foreground hover:text-foreground">持仓</Link>
-              <Link to="/guide" className="text-muted-foreground hover:text-foreground">指南</Link>
-            </nav>
-          </div>
-          <p className="text-xs text-muted-foreground leading-relaxed">
-            全市场 {data.universe_total.toLocaleString()} 只 → 过滤后 {data.universe_after_filter.toLocaleString()} 只
-            <span className="hidden sm:inline">｜</span>
-            <br className="sm:hidden" />
-            扫描于 {data.generated_at}
-          </p>
-        </div>
-      </header>
-
-      <main className="mx-auto max-w-6xl px-4 sm:px-6 py-5 sm:py-6 space-y-8">
+    <AppShell
+      title="港美股选股台"
+      subtitle={
+        <>
+          全市场 {data.universe_total.toLocaleString()} 只 → 过滤后 {data.universe_after_filter.toLocaleString()} 只
+          <span className="hidden sm:inline">｜</span>
+          <br className="sm:hidden" />
+          扫描于 {data.generated_at}
+        </>
+      }
+    >
+      <div className="space-y-8">
         <section>
           <h2 className="text-base sm:text-lg font-semibold mb-3">策略库（{data.strategies.length} 个策略，持续进化中）</h2>
           <div className="grid md:grid-cols-2 gap-4">
@@ -242,7 +233,7 @@ export default function Screener() {
                     <HitList r={r} />
                   </CardContent>
                 </Card>
-                <p className="mt-2 text-xs text-amber-600 leading-relaxed">风险提示：{r.meta.risk}</p>
+                <p className="mt-2 text-xs text-amber-400/90 leading-relaxed">风险提示：{r.meta.risk}</p>
               </TabsContent>
             ))}
           </Tabs>
@@ -252,7 +243,7 @@ export default function Screener() {
           筛选结果仅为量化初筛，不构成投资建议；红涨绿跌。
           数据源：{data.data_source ?? '富途 OpenAPI 全市场快照'}。
         </p>
-      </main>
-    </div>
+      </div>
+    </AppShell>
   )
 }

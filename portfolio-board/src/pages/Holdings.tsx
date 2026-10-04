@@ -1,4 +1,4 @@
-import { Link } from 'react-router'
+import AppShell from '@/components/AppShell'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import {
@@ -12,10 +12,10 @@ import {
 import { fmt, toHKD, usePortfolio } from '@/hooks/usePortfolio'
 
 function PnlText({ value, suffix = '' }: { value: number; suffix?: string }) {
-  const cls = value > 0 ? 'text-red-500' : value < 0 ? 'text-emerald-500' : 'text-muted-foreground'
+  const cls = value > 0 ? 'text-rose-400' : value < 0 ? 'text-emerald-400' : 'text-muted-foreground'
   const sign = value > 0 ? '+' : ''
   return (
-    <span className={cls}>
+    <span className={`tnum ${cls}`}>
       {sign}
       {fmt(value)}
       {suffix}
@@ -30,7 +30,7 @@ export default function Holdings() {
   if (error || !positions)
     return (
       <div className="p-10 text-center">
-        <p className="text-red-500 mb-2">持仓数据加载失败：{error}</p>
+        <p className="text-rose-400 mb-2">持仓数据加载失败：{error}</p>
         <p className="text-muted-foreground text-sm max-w-md mx-auto">
           持仓页只在本机版可用（需富途 OpenD 运行并在项目根目录执行 <code>refresh_data.py</code>）。
           云端部署的网页不含持仓数据——这是刻意的：持仓是隐私，不该上公网。
@@ -46,35 +46,23 @@ export default function Holdings() {
   const usPct = totalHKD > 0 ? (usHKD / totalHKD) * 100 : 0
 
   return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b">
-        <div className="mx-auto max-w-6xl px-6 py-4 flex items-center justify-between">
-          <div>
-            <h1 className="text-xl font-bold">我的持仓</h1>
-            <p className="text-xs text-muted-foreground">数据更新于 {positions.fetched_at}（本地数据，刷新请运行 refresh_data.py）</p>
-          </div>
-          <nav className="flex gap-4 text-sm">
-            <Link to="/" className="text-muted-foreground hover:text-foreground">选股</Link>
-            <Link to="/backtest" className="text-muted-foreground hover:text-foreground">回测</Link>
-            <span className="font-medium">持仓</span>
-            <Link to="/guide" className="text-muted-foreground hover:text-foreground">策略进化指南</Link>
-          </nav>
-        </div>
-      </header>
-
-      <main className="mx-auto max-w-6xl px-6 py-6 space-y-6">
+    <AppShell
+      title="我的持仓"
+      subtitle={`数据更新于 ${positions.fetched_at}（本地数据，刷新请运行 refresh_data.py）`}
+    >
+      <div className="space-y-6">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <Card>
             <CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">总资产</CardTitle></CardHeader>
-            <CardContent><p className="text-2xl font-bold">{funds ? fmt(funds.total_assets) : '-'} <span className="text-sm font-normal text-muted-foreground">{funds?.currency}</span></p></CardContent>
+            <CardContent><p className="text-2xl font-bold tnum">{funds ? fmt(funds.total_assets) : '-'} <span className="text-sm font-normal text-muted-foreground">{funds?.currency}</span></p></CardContent>
           </Card>
           <Card>
             <CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">持仓市值</CardTitle></CardHeader>
-            <CardContent><p className="text-2xl font-bold">{funds ? fmt(funds.market_val) : '-'} <span className="text-sm font-normal text-muted-foreground">{funds?.currency}</span></p></CardContent>
+            <CardContent><p className="text-2xl font-bold tnum">{funds ? fmt(funds.market_val) : '-'} <span className="text-sm font-normal text-muted-foreground">{funds?.currency}</span></p></CardContent>
           </Card>
           <Card>
             <CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">可用现金</CardTitle></CardHeader>
-            <CardContent><p className="text-2xl font-bold">{funds ? fmt(funds.cash) : '-'} <span className="text-sm font-normal text-muted-foreground">{funds?.currency}</span></p></CardContent>
+            <CardContent><p className="text-2xl font-bold tnum">{funds ? fmt(funds.cash) : '-'} <span className="text-sm font-normal text-muted-foreground">{funds?.currency}</span></p></CardContent>
           </Card>
           <Card>
             <CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">当日参考盈亏（按昨收估算）</CardTitle></CardHeader>
@@ -129,15 +117,15 @@ export default function Holdings() {
                         </div>
                       </div>
                     </TableCell>
-                    <TableCell className="text-right">{r.qty}</TableCell>
-                    <TableCell className="text-right">{fmt(r.cost_price)}</TableCell>
-                    <TableCell className="text-right">{fmt(r.last_price)}</TableCell>
-                    <TableCell className="text-right">{fmt(r.market_val)} <span className="text-xs text-muted-foreground">{r.currency}</span></TableCell>
+                    <TableCell className="text-right tnum">{r.qty}</TableCell>
+                    <TableCell className="text-right tnum">{fmt(r.cost_price)}</TableCell>
+                    <TableCell className="text-right tnum">{fmt(r.last_price)}</TableCell>
+                    <TableCell className="text-right tnum">{fmt(r.market_val)} <span className="text-xs text-muted-foreground">{r.currency}</span></TableCell>
                     <TableCell className="text-right">
                       <PnlText value={r.pl_val} />
                       <div className="text-xs"><PnlText value={r.pl_ratio} suffix="%" /></div>
                     </TableCell>
-                    <TableCell className="text-right">{totalHKD > 0 ? fmt((toHKD(r.market_val, r.currency) / totalHKD) * 100, 1) : '-'}%</TableCell>
+                    <TableCell className="text-right tnum">{totalHKD > 0 ? fmt((toHKD(r.market_val, r.currency) / totalHKD) * 100, 1) : '-'}%</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -148,7 +136,7 @@ export default function Holdings() {
         <p className="text-center text-xs text-muted-foreground pb-6">
           本看板仅为个人持仓信息展示，不构成投资建议。红涨绿跌。
         </p>
-      </main>
-    </div>
+      </div>
+    </AppShell>
   )
 }
