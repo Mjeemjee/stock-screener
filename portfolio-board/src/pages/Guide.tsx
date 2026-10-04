@@ -56,6 +56,21 @@ export default function Guide() {
         </Card>
 
         <Card>
+          <CardHeader className="pb-2"><CardTitle className="text-base">全天候本机部署（预留）</CardTitle></CardHeader>
+          <CardContent className="text-sm text-muted-foreground space-y-2">
+            <p>网站当前完全运行在云端（GitHub Actions 每日扫描 + Pages 托管），不依赖任何一台开机电脑。如果你有一台全天候运行的机器，可以让它承担数据刷新职责，获得更及时的行情与更全的字段（本机版经富途 OpenD 可取到 PB、股息率、换手率等云端缺失字段）。</p>
+            <p>标准拓扑为三段式：</p>
+            <Code>{`① Futu OpenD 在该机常驻并保持登录（行情网关，不涉及交易）
+② refresh_data.py 定时运行（如每小时），把最新快照写入本机数据目录
+③ 本机静态服务对外提供该目录（如 http://192.168.x.x:8080/data）`}</Code>
+            <p>随后在任何设备上打开本站，附加一次数据源参数即可改读本机数据，选择会被浏览器记住：</p>
+            <Code>{`?data=http://192.168.x.x:8080/data   → 改从本机取数
+?data=local                       → 恢复云端默认`}</Code>
+            <p>说明：该参数只改变数据的来源，不改变网站本体；云端数据仍每日更新，可随时作为回退。持仓类隐私数据（positions / quotes）只应经此本机通道分发，不会、也不应出现在公网部署中。</p>
+          </CardContent>
+        </Card>
+
+        <Card>
           <CardHeader className="pb-2"><CardTitle className="text-base">常见问题</CardTitle></CardHeader>
           <CardContent className="text-sm text-muted-foreground space-y-3">
             <div>
@@ -68,7 +83,7 @@ export default function Guide() {
             </div>
             <div>
               <p className="font-medium text-foreground">我想调整某个策略的参数/阈值？</p>
-              <p>选股策略的参数直接告诉我即可（如「把动量突破的市值门槛提到 50 亿」），我会改参数并重新扫描；回测策略的参数在<Link to="/backtest" className="underline">回测页</Link>自己拖数字（或切「代码」模式改 JSON）就能实时重跑。</p>
+              <p>选股策略的参数直接告诉我即可（如「把动量突破的市值门槛提到 50 亿」），我会改参数并重新扫描；回测策略的参数在<Link to="/backtest" className="underline">回测页</Link>自己拖数字就能实时重跑。</p>
             </div>
             <div>
               <p className="font-medium text-foreground">回测结果可信吗？</p>

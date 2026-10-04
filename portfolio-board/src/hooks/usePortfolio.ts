@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { dataUrl } from '@/lib/dataSource'
 import type { HoldingRow, PositionsFile, QuotesFile } from '@/types/portfolio'
 
 export const USDHKD = 7.8 // 估算汇率，仅用于跨币种权重折算
@@ -22,11 +23,11 @@ export function usePortfolio(): PortfolioState {
 
   useEffect(() => {
     Promise.all([
-      fetch('./data/positions.json').then((r) => {
+      fetch(dataUrl('positions.json')).then((r) => {
         if (!r.ok) throw new Error('positions.json 加载失败')
         return r.json() as Promise<PositionsFile>
       }),
-      fetch('./data/quotes.json').then((r) => {
+      fetch(dataUrl('quotes.json')).then((r) => {
         if (!r.ok) throw new Error('quotes.json 加载失败')
         return r.json() as Promise<QuotesFile>
       }),

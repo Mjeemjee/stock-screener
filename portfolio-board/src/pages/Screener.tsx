@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router'
+import { dataUrl } from '@/lib/dataSource'
 import AppShell from '@/components/AppShell'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -61,12 +62,12 @@ function StrategyCard({ r }: { r: StrategyResult }) {
         <p className="text-muted-foreground">{r.meta.principle}</p>
         <p className="text-xs text-muted-foreground">来源：{r.meta.source}</p>
         {r.meta.cloud_note && (
-          <p className="text-xs text-sky-400">云端版说明：{r.meta.cloud_note}</p>
+          <p className="text-xs text-sky-600">云端版说明：{r.meta.cloud_note}</p>
         )}
         <details className="text-xs">
           <summary className="cursor-pointer text-muted-foreground hover:text-foreground">参数与风险</summary>
           <pre className="mt-1 rounded bg-muted p-2 overflow-x-auto">{JSON.stringify(r.meta.params, null, 2)}</pre>
-          <p className="mt-1 text-amber-400">{r.meta.risk}</p>
+          <p className="mt-1 text-amber-600">{r.meta.risk}</p>
         </details>
       </CardContent>
     </Card>
@@ -90,8 +91,8 @@ function HitCardList({ hits }: { hits: ScreenHit[] }) {
               </div>
             </div>
             <div className="text-right shrink-0">
-              <div className="font-medium leading-tight tnum">{h.last_price?.toFixed(2)}</div>
-              <div className="text-xs tnum">
+              <div className="font-medium leading-tight">{h.last_price?.toFixed(2)}</div>
+              <div className="text-xs">
                 <ChangeText value={h.change_rate} />
               </div>
             </div>
@@ -130,11 +131,11 @@ function HitTable({ hits }: { hits: ScreenHit[] }) {
                 </div>
               </div>
             </TableCell>
-            <TableCell className="text-right tnum">{h.last_price?.toFixed(2)}</TableCell>
-            <TableCell className="text-right tnum">
+            <TableCell className="text-right">{h.last_price?.toFixed(2)}</TableCell>
+            <TableCell className="text-right">
               <ChangeText value={h.change_rate} />
             </TableCell>
-            <TableCell className="text-right tnum">{fmtMv(h.circular_market_val)}</TableCell>
+            <TableCell className="text-right">{fmtMv(h.circular_market_val)}</TableCell>
             <TableCell className="text-xs text-muted-foreground max-w-[280px]">{h.reason}</TableCell>
           </TableRow>
         ))}
@@ -150,7 +151,7 @@ function HitList({ r }: { r: StrategyResult }) {
     return (
       <p className="p-4 text-sm text-muted-foreground">
         本期无命中标的。
-        {r.meta.cloud_note && <span className="block mt-1 text-sky-400">{r.meta.cloud_note}</span>}
+        {r.meta.cloud_note && <span className="block mt-1 text-sky-600">{r.meta.cloud_note}</span>}
       </p>
     )
   return (
@@ -170,7 +171,7 @@ export default function Screener() {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    fetch('./data/screener_results.json')
+    fetch(dataUrl('screener_results.json'))
       .then((r) => {
         if (!r.ok) throw new Error('screener_results.json 加载失败')
         return r.json()
@@ -233,7 +234,7 @@ export default function Screener() {
                     <HitList r={r} />
                   </CardContent>
                 </Card>
-                <p className="mt-2 text-xs text-amber-400/90 leading-relaxed">风险提示：{r.meta.risk}</p>
+                <p className="mt-2 text-xs text-amber-600 leading-relaxed">风险提示：{r.meta.risk}</p>
               </TabsContent>
             ))}
           </Tabs>

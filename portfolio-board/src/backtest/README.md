@@ -38,10 +38,6 @@ export const strategy: StrategyModule = {
 5. **共用交易规则**（引擎统一执行，策略不用管）：T+1 开盘成交、等权分仓、单边成本、止损/止盈/最大持有天数（用户在网页高级参数里配）。
 6. 出场若只依赖策略信号不够，提示用户在高级参数里加止损——在 description 里写明。
 
-## 拼图组合（多策略）
-
-策略模块本身不用关心组合：用户把多个模块拼成一个组合后，由 `../combo.ts` 的 `combineSignals` 按买入表决逻辑（all/any/vote）与出场逻辑（any/all）把各块的 entries/exits 合成一组信号，再交给引擎统一模拟。组合可序列化为 JSON（`serializeStack`/`parseStack`），即回测页的「代码」模式。
-
 ## 入库流程
 
 新策略文件 → `npm run build` 通过 → 回测页验证结果合理（对照已知行情段）→ 在 `releases/TEST_REPORT.md` 记录验证 → 完成。
@@ -50,9 +46,10 @@ export const strategy: StrategyModule = {
 
 ```bash
 cd portfolio-board
-npx tsc src/backtest/engine.ts src/backtest/combo.ts src/backtest/strategies/maCross.ts \
+npx tsc src/backtest/engine.ts src/backtest/combo.ts src/backtest/srLevels.ts src/backtest/strategies/maCross.ts \
   src/backtest/strategies/breakout.ts src/backtest/strategies/rsiReversal.ts \
   src/backtest/strategies/bollingerRevert.ts src/backtest/strategies/macdCross.ts \
+  src/backtest/strategies/srBounce.ts src/backtest/strategies/srBreakout.ts \
   --outDir .bt-test --module commonjs --target es2020 --moduleResolution node --skipLibCheck
 # 在 .bt-test/ 写入 {"type":"commonjs"} 的 package.json（项目根是 ESM，需要覆盖）
 node scripts/validate-backtest.cjs                   # 在 portfolio-board 根目录运行

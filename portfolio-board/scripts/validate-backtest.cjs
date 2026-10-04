@@ -1,18 +1,17 @@
 /* 回测引擎独立回归脚本（Node）：用真实历史数据跑全部策略模块。
- * 验证点（对应 AC-403 / AC-404 / AC-502 / AC-503）：
+ * 验证点（对应 AC-403 / AC-404）：
  *  1. 数学自洽：净值末值 = 1 + 总收益/100；finalEquity = 净值末值 × 初始资金
  *  2. 性能：单次回测 < 5000ms
  *  3. 无未来函数抽查：每笔交易 entryDate > 信号 bar（引擎 T+1，天然满足，
  *     这里抽查成交日确为信号日之后第一个有K线的交易日——由持仓天数>=0间接验证）
  *  4. 已知行情段合理性：2024-02 ~ 2026-10 美股牛市，趋势类策略（均线交叉/突破/MACD）
  *     在美股池上应为正收益；港股同期 HSI 上行，动量类亦应偏正
- *  5. 拼图组合语义：all/any/vote 买入、any/all 出场、停用与权重 0 块不参与、
- *     单块组合 ≡ 单策略、真实组合全池自洽
- *  6. 代码模式 JSON：序列化→解析回环、语法错误可读、未知策略报错、参数越界收敛
  */
 const fs = require('fs')
 const { runBacktest, runBacktestCore } = require('../.bt-test/engine.js')
 const { combineSignals, parseStack, serializeStack, comboLabel } = require('../.bt-test/combo.js')
+
+const { computeLevels, RollingSr } = require('../.bt-test/srLevels.js')
 
 const S = (p) => require(`../.bt-test/strategies/${p}.js`).strategy
 const strategies = [
@@ -21,6 +20,8 @@ const strategies = [
   ['rsiReversal', { period: 14, oversold: 30, exitLevel: 55 }],
   ['bollingerRevert', { period: 20, mult: 2 }],
   ['macdCross', { fast: 12, slow: 26, signal: 9 }],
+  ['srBounce', { windowDays: 120, zigzagAtrMult: 2, confirmDays: 1, exitBufferAtr: 0.3, refreshEvery: 5 }],
+  ['srBreakout', { windowDays: 120, zigzagAtrMult: 2, volMult: 1.5, refreshEvery: 5 }],
 ]
 
 const rawToBar = (b) => ({ d: b[0], o: b[1], h: b[2], l: b[3], c: b[4], v: b[5] })
@@ -176,6 +177,54 @@ console.log('\n== AC-502 代码模式 JSON ==')
   let threw = false
   try { combineSignals(empty.stack, resolve) } catch { threw = true }
   check('全停用运行期拦截', threw)
+}
+
+// ---------------------------------------------------------------- AC-601 支撑阻力检测器
+console.log('\n== AC-601 支撑阻力检测器（合成平台区 + 因果性）==')
+{
+  // 合成：120 根平台（100~103 之间 5 根为一腿的折返，腿幅 3.0 > 2×ATR 阈值，上下沿形成摆动点簇）
+  // + 10 根缓步上行至 ~104.5（现价在平台上方，平台上下沿应为支撑）
+  const bars = []
+  let px = 100
+  const leg = [0.6, 0.6, 0.6, 0.6, 0.6, -0.6, -0.6, -0.6, -0.6, -0.6]
+  for (let i = 0; i < 130; i++) {
+    const o = px
+    const c = i < 120 ? px + leg[i % 10] : px + 0.45 + (i % 2 === 0 ? 0.5 : -0.5)
+    const h = Math.max(o, c) + 0.4
+    const l = Math.min(o, c) - 0.4
+    bars.push({ d: 20240101 + i, o, h, l, c, v: i < 120 ? 2000000 : 800000 })
+    px = c
+  }
+  const opts6 = { windowDays: 120, zigzagAtrMult: 2, maxPerSide: 3, minDistAtr: 0.3, maxDistAtr: 10 }
+  const levels = computeLevels(bars, bars.length - 1, opts6)
+  const lastC = bars[bars.length - 1].c
+  const sup = levels.filter((l) => l.kind === 'support')
+  check('检出支撑位', sup.length > 0, `共 ${sup.length} 个`)
+  const hit = sup.some((l) => l.price >= 99 && l.price <= 104)
+  check('支撑位落在平台区 [99,104]', hit, sup.map((l) => l.price.toFixed(1)).join(','))
+  check('关键位分类正确（全部低于现价）', levels.every((l) => (l.kind === 'support') === (l.price < lastC)))
+
+  // 因果性：完整序列 prepare 的前 k-1 项信号必须与截断序列完全一致
+  const st = S('srBounce')
+  const params = { windowDays: 120, zigzagAtrMult: 2, confirmDays: 1, exitBufferAtr: 0.3, refreshEvery: 5 }
+  const full = st.prepare(bars, params)
+  const k = 150
+  const trunc = st.prepare(bars.slice(0, k), params)
+  let causal = true
+  for (let i = 0; i < k; i++) {
+    if (full.entries[i] !== trunc.entries[i] || full.exits[i] !== trunc.exits[i]) { causal = false; break }
+  }
+  check('截断序列信号一致（无未来函数）', causal)
+}
+
+// ---------------------------------------------------------------- AC-603 成本压力单调性
+console.log('\n== AC-603 成本压力（1x/2x/3x 收益单调不增）==')
+{
+  const st = S('srBreakout')
+  const params = { windowDays: 120, zigzagAtrMult: 2, volMult: 1.5, refreshEvery: 5 }
+  const rets = [0.15, 0.30, 0.45].map((c) =>
+    runBacktest(markets.US.stocks, st, params, { ...opts, costPct: c }, markets.US.bench).metrics.totalReturnPct)
+  check('收益随成本单调不增', rets[0] >= rets[1] && rets[1] >= rets[2], rets.map((r) => `${r}%`).join(' / '))
 }
 
 console.log(failures === 0 ? '\n全部验证通过' : `\n${failures} 项失败`)

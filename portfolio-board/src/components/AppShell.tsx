@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router'
 const NAV = [
   { to: '/', label: '选股' },
   { to: '/backtest', label: '回测' },
+  { to: '/learn', label: '学习' },
   { to: '/holdings', label: '持仓' },
   { to: '/guide', label: '指南' },
 ]

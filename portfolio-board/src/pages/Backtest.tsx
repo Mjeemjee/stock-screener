@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { Link } from 'react-router'
+import { dataUrl } from '@/lib/dataSource'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -72,7 +74,7 @@ const rawToBar = (b: RawBar): Bar => ({ d: b[0], o: b[1], h: b[2], l: b[3], c: b
 async function loadMarket(m: MarketKey): Promise<MarketData> {
   const hit = dataCache[m]
   if (hit) return hit
-  const r = await fetch(`./data/history/${m.toLowerCase()}.json`)
+  const r = await fetch(dataUrl(`history/${m.toLowerCase()}.json`))
   if (!r.ok) throw new Error(`${m} 历史数据加载失败（HTTP ${r.status}）`)
   const j = (await r.json()) as HistoryFile
   const stocks: StockSeries[] = j.stocks.map((s) => ({
@@ -96,7 +98,7 @@ async function loadBench(m: MarketKey): Promise<Bar[] | undefined> {
   if (!benchCache) {
     benchCache = { US: undefined, HK: undefined }
     try {
-      const r = await fetch('./data/history/index.json')
+      const r = await fetch(dataUrl('history/index.json'))
       if (r.ok) {
         const j = (await r.json()) as IndexFile
         if (j.indexes.SPX) benchCache.US = j.indexes.SPX.bars.map(rawToBar)
@@ -343,6 +345,8 @@ export default function Backtest() {
   const [loadError, setLoadError] = useState<string | null>(null)
   const [running, setRunning] = useState(false)
   const [result, setResult] = useState<BacktestResult | null>(null)
+  const [costStress, setCostStress] = useState(true)
+  const [stress, setStress] = useState<{ mult: number; ret: number; sharpe: number }[] | null>(null)
   const resultRef = useRef<HTMLDivElement>(null)
 
   // 切换市场 → 懒加载该市场数据
@@ -351,6 +355,7 @@ export default function Backtest() {
     setLoading(true)
     setLoadError(null)
     setResult(null)
+    setStress(null)
     loadMarket(market)
       .then((d) => {
         if (cancelled) return
@@ -424,9 +429,27 @@ export default function Backtest() {
     // 让出一帧渲染 loading，再跑计算
     setTimeout(() => {
       void loadBench(market)
-        .then((bench) => {
+        .then(async (bench) => {
           const provider = combineSignals(stack, resolveStrategy)
-          return runBacktestCore(md.stocks, provider, opts, bench, comboLabel(stack))
+          const res = runBacktestCore(md.stocks, provider, opts, bench, comboLabel(stack))
+          if (costStress) {
+            // 成本压力：同一组合在 2×/3× 成本下重跑，检验策略对交易成本的敏感度
+            const rows = [{ mult: 1, ret: res.metrics.totalReturnPct, sharpe: res.metrics.sharpe }]
+            for (const mult of [2, 3]) {
+              const r = runBacktestCore(
+                md.stocks,
+                combineSignals(stack, resolveStrategy),
+                { ...opts, costPct: costPct * mult },
+                bench,
+                comboLabel(stack),
+              )
+              rows.push({ mult, ret: r.metrics.totalReturnPct, sharpe: r.metrics.sharpe })
+            }
+            setStress(rows)
+          } else {
+            setStress(null)
+          }
+          return res
         })
         .then((res) => {
           setResult(res)
@@ -477,6 +500,12 @@ export default function Backtest() {
               <Badge variant="outline" className="tnum">
                 {activeCount} 块生效
               </Badge>
+              <Link
+                to="/learn"
+                className="text-xs font-normal text-muted-foreground underline-offset-4 hover:text-primary hover:underline"
+              >
+                各策略的底层逻辑 →
+              </Link>
               <div className="ml-auto flex rounded-full border border-border/60 bg-card/60 p-0.5 text-xs">
                 {(['visual', 'code'] as const).map((mode) => (
                   <button
@@ -772,6 +801,15 @@ export default function Backtest() {
               >
                 {loading ? '数据加载中…' : running ? '回测运行中…' : `运行回测（${activeCount} 块）`}
               </Button>
+              <label className="flex items-center gap-2 text-sm text-muted-foreground cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  checked={costStress}
+                  onChange={(e) => setCostStress(e.target.checked)}
+                  className="accent-[hsl(var(--primary))] w-4 h-4"
+                />
+                成本压力测试（同参数 1×/2×/3× 成本各跑一次）
+              </label>
               {result && (
                 <span className="text-xs text-muted-foreground tnum">
                   本次用时 {result.elapsedMs}ms · 覆盖 {result.stockCount} 只股票
@@ -801,6 +839,32 @@ export default function Backtest() {
                 </div>
               ))}
             </div>
+
+            {stress && (
+              <div className="rounded-2xl border border-border/70 bg-card/80 px-4 py-3.5 shadow-[0_12px_40px_-16px_rgb(0_0_0/0.65)] backdrop-blur-sm">
+                <p className="text-[11px] uppercase tracking-wider text-muted-foreground">
+                  成本压力 · 总收益 / 夏普 随成本倍数变化
+                </p>
+                <div className="mt-2 flex items-center gap-4 sm:gap-8 flex-wrap">
+                  {stress.map((s) => (
+                    <div key={s.mult} className="flex items-baseline gap-2">
+                      <span className="text-xs text-muted-foreground tnum">{s.mult}×</span>
+                      <span className="text-lg font-semibold tnum">
+                        <Pct v={s.ret} />
+                      </span>
+                      <span className="text-xs text-muted-foreground tnum">夏普 {s.sharpe}</span>
+                    </div>
+                  ))}
+                  <span className="text-xs text-muted-foreground">
+                    {stress[2].ret <= 0
+                      ? '成本翻倍即吞噬全部收益——策略对成本高度敏感，审慎对待'
+                      : stress[0].ret - stress[2].ret > stress[0].ret * 0.5
+                        ? '成本敏感度偏高，收益过半依赖低摩擦环境'
+                        : '成本敏感度可控'}
+                  </span>
+                </div>
+              </div>
+            )}
 
             <Card>
               <CardHeader className="pb-2">
