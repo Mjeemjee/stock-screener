@@ -120,7 +120,7 @@ const fmtD = (d: number) => toIso(d)
 const fmtPct = (v: number) => `${v >= 0 ? '+' : ''}${v.toFixed(2)}%`
 
 /** 拼图块的强调色（按在组合中的位置循环） */
-const BLOCK_COLORS = ['#fb7185', '#60a5fa', '#fbbf24', '#34d399', '#a78bfa', '#22d3ee']
+const BLOCK_COLORS = ['#e11d48', '#2563eb', '#d97706', '#059669', '#7c3aed', '#0891b2']
 
 const resolveStrategy = (id: string) => STRATEGIES.find((s) => s.id === id)
 
@@ -138,7 +138,7 @@ function mkBlock(strategyId: string): StrategyBlock | null {
 
 function Pct({ v }: { v: number }) {
   return (
-    <span className={`tnum ${v >= 0 ? 'text-rose-400' : 'text-emerald-400'}`}>{fmtPct(v)}</span>
+    <span className={`tnum ${v >= 0 ? 'text-rose-600' : 'text-emerald-600'}`}>{fmtPct(v)}</span>
   )
 }
 
@@ -206,10 +206,11 @@ function TradeTable({ trades }: { trades: BacktestResult['trades'] }) {
 }
 
 const TOOLTIP_STYLE = {
-  background: 'hsl(224 44% 9%)',
-  border: '1px solid hsl(220 22% 20%)',
-  borderRadius: 12,
+  background: 'hsl(0 0% 100%)',
+  border: '1px solid hsl(220 16% 88%)',
+  borderRadius: 10,
   fontSize: 12,
+  boxShadow: '0 8px 24px -12px rgb(16 24 40 / 0.25)',
 } as const
 
 /** 拼图块：一个策略实例卡片 */
@@ -467,7 +468,7 @@ export default function Backtest() {
         { label: '年化收益', node: <Pct v={m.cagrPct} /> },
         {
           label: '最大回撤',
-          node: <span className="tnum text-amber-400">{m.maxDrawdownPct.toFixed(2)}%</span>,
+          node: <span className="tnum text-amber-600">{m.maxDrawdownPct.toFixed(2)}%</span>,
         },
         { label: '夏普比率', node: <span className="tnum">{m.sharpe.toFixed(2)}</span> },
         { label: '胜率', node: <span className="tnum">{m.winRatePct.toFixed(1)}%</span> },
@@ -553,10 +554,10 @@ export default function Backtest() {
                   >
                     还原为当前组合
                   </Button>
-                  {codeMsg && <span className="text-xs text-emerald-400">{codeMsg}</span>}
+                  {codeMsg && <span className="text-xs text-emerald-600">{codeMsg}</span>}
                 </div>
                 {codeErrors.length > 0 && (
-                  <div className="rounded-xl border border-destructive/40 bg-destructive/10 p-3 text-xs text-rose-300 space-y-1">
+                  <div className="rounded-xl border border-destructive/40 bg-destructive/10 p-3 text-xs text-rose-700 space-y-1">
                     {codeErrors.map((e, i) => (
                       <p key={i}>· {e}</p>
                     ))}
@@ -797,7 +798,7 @@ export default function Backtest() {
               <Button
                 onClick={handleRun}
                 disabled={loading || running || !md || activeCount === 0}
-                className="min-w-32 shadow-[0_0_24px_-6px] shadow-primary/60"
+                className="min-w-32 shadow-sm"
               >
                 {loading ? '数据加载中…' : running ? '回测运行中…' : `运行回测（${activeCount} 块）`}
               </Button>
@@ -816,10 +817,10 @@ export default function Backtest() {
                 </span>
               )}
               {activeCount === 0 && (
-                <span className="text-xs text-amber-400">至少启用 1 个权重 &gt; 0 的策略块</span>
+                <span className="text-xs text-amber-600">至少启用 1 个权重 &gt; 0 的策略块</span>
               )}
             </div>
-            {loadError && <p className="text-sm text-rose-400">{loadError}</p>}
+            {loadError && <p className="text-sm text-rose-600">{loadError}</p>}
           </CardContent>
         </Card>
 
@@ -830,7 +831,7 @@ export default function Backtest() {
               {metricCards.map((c) => (
                 <div
                   key={c.label}
-                  className="rounded-2xl border border-border/70 bg-card/80 p-3.5 sm:p-4 shadow-[0_12px_40px_-16px_rgb(0_0_0/0.65)] backdrop-blur-sm"
+                  className="rounded-xl border border-border bg-card p-3.5 sm:p-4 shadow-[0_1px_2px_rgb(16_24_40/0.05),0_8px_24px_-16px_rgb(16_24_40/0.12)]"
                 >
                   <p className="text-[11px] uppercase tracking-wider text-muted-foreground">
                     {c.label}
@@ -841,7 +842,7 @@ export default function Backtest() {
             </div>
 
             {stress && (
-              <div className="rounded-2xl border border-border/70 bg-card/80 px-4 py-3.5 shadow-[0_12px_40px_-16px_rgb(0_0_0/0.65)] backdrop-blur-sm">
+              <div className="rounded-xl border border-border bg-card px-4 py-3.5 shadow-[0_1px_2px_rgb(16_24_40/0.05),0_8px_24px_-16px_rgb(16_24_40/0.12)]">
                 <p className="text-[11px] uppercase tracking-wider text-muted-foreground">
                   成本压力 · 总收益 / 夏普 随成本倍数变化
                 </p>
@@ -877,16 +878,16 @@ export default function Backtest() {
                 <div className="h-64 sm:h-80">
                   <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={result.equity} margin={{ top: 8, right: 8, bottom: 0, left: -12 }}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="hsl(220 22% 20%)" opacity={0.5} />
+                      <CartesianGrid strokeDasharray="3 3" stroke="hsl(220 16% 90%)" opacity={0.8} />
                       <XAxis
                         dataKey="d"
                         tickFormatter={(d: number) => toIso(d).slice(0, 7)}
-                        tick={{ fontSize: 11, fill: 'hsl(217 15% 62%)' }}
+                        tick={{ fontSize: 11, fill: 'hsl(220 12% 42%)' }}
                         minTickGap={48}
                       />
                       <YAxis
                         tickFormatter={(v: number) => v.toFixed(2)}
-                        tick={{ fontSize: 11, fill: 'hsl(217 15% 62%)' }}
+                        tick={{ fontSize: 11, fill: 'hsl(220 12% 42%)' }}
                         domain={['auto', 'auto']}
                       />
                       <Tooltip
@@ -903,7 +904,7 @@ export default function Backtest() {
                         type="monotone"
                         dataKey="v"
                         name="策略净值"
-                        stroke="#fb7185"
+                        stroke="#e11d48"
                         dot={false}
                         strokeWidth={2}
                       />
@@ -931,16 +932,16 @@ export default function Backtest() {
                 <div className="h-40 sm:h-48">
                   <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={result.drawdown} margin={{ top: 8, right: 8, bottom: 0, left: -12 }}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="hsl(220 22% 20%)" opacity={0.5} />
+                      <CartesianGrid strokeDasharray="3 3" stroke="hsl(220 16% 90%)" opacity={0.8} />
                       <XAxis
                         dataKey="d"
                         tickFormatter={(d: number) => toIso(d).slice(0, 7)}
-                        tick={{ fontSize: 11, fill: 'hsl(217 15% 62%)' }}
+                        tick={{ fontSize: 11, fill: 'hsl(220 12% 42%)' }}
                         minTickGap={48}
                       />
                       <YAxis
                         tickFormatter={(v: number) => v.toFixed(0)}
-                        tick={{ fontSize: 11, fill: 'hsl(217 15% 62%)' }}
+                        tick={{ fontSize: 11, fill: 'hsl(220 12% 42%)' }}
                       />
                       <Tooltip
                         contentStyle={TOOLTIP_STYLE}
@@ -951,7 +952,7 @@ export default function Backtest() {
                           '回撤',
                         ]}
                       />
-                      <Area type="monotone" dataKey="dd" stroke="#fbbf24" fill="#fbbf2422" strokeWidth={1.4} />
+                      <Area type="monotone" dataKey="dd" stroke="#d97706" fill="#d9770622" strokeWidth={1.4} />
                     </AreaChart>
                   </ResponsiveContainer>
                 </div>
@@ -1005,7 +1006,7 @@ export default function Backtest() {
           <p>
             口径说明：前复权日K；信号当日收盘产生、次日开盘成交（T+1）；等权分仓、允许零碎股；单边成本含佣金与滑点。
           </p>
-          <p className="text-amber-400/90">
+          <p className="text-amber-600">
             {md?.note ?? '股票池按当日成交额选取，回测存在幸存者偏差，结果偏乐观。'}
             历史回测不代表未来收益，结果仅供研究，不构成投资建议。
           </p>

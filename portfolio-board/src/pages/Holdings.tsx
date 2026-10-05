@@ -12,10 +12,10 @@ import {
 import { fmt, toHKD, usePortfolio } from '@/hooks/usePortfolio'
 
 function PnlText({ value, suffix = '' }: { value: number; suffix?: string }) {
-  const cls = value > 0 ? 'text-rose-400' : value < 0 ? 'text-emerald-400' : 'text-muted-foreground'
+  const cls = value > 0 ? 'text-red-600' : value < 0 ? 'text-emerald-600' : 'text-muted-foreground'
   const sign = value > 0 ? '+' : ''
   return (
-    <span className={`tnum ${cls}`}>
+    <span className={cls}>
       {sign}
       {fmt(value)}
       {suffix}
@@ -30,7 +30,7 @@ export default function Holdings() {
   if (error || !positions)
     return (
       <div className="p-10 text-center">
-        <p className="text-rose-400 mb-2">持仓数据加载失败：{error}</p>
+        <p className="text-red-600 mb-2">持仓数据加载失败：{error}</p>
         <p className="text-muted-foreground text-sm max-w-md mx-auto">
           持仓页只在本机版可用（需富途 OpenD 运行并在项目根目录执行 <code>refresh_data.py</code>）。
           云端部署的网页不含持仓数据——这是刻意的：持仓是隐私，不该上公网。
@@ -54,15 +54,15 @@ export default function Holdings() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <Card>
             <CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">总资产</CardTitle></CardHeader>
-            <CardContent><p className="text-2xl font-bold tnum">{funds ? fmt(funds.total_assets) : '-'} <span className="text-sm font-normal text-muted-foreground">{funds?.currency}</span></p></CardContent>
+            <CardContent><p className="text-2xl font-bold">{funds ? fmt(funds.total_assets) : '-'} <span className="text-sm font-normal text-muted-foreground">{funds?.currency}</span></p></CardContent>
           </Card>
           <Card>
             <CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">持仓市值</CardTitle></CardHeader>
-            <CardContent><p className="text-2xl font-bold tnum">{funds ? fmt(funds.market_val) : '-'} <span className="text-sm font-normal text-muted-foreground">{funds?.currency}</span></p></CardContent>
+            <CardContent><p className="text-2xl font-bold">{funds ? fmt(funds.market_val) : '-'} <span className="text-sm font-normal text-muted-foreground">{funds?.currency}</span></p></CardContent>
           </Card>
           <Card>
             <CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">可用现金</CardTitle></CardHeader>
-            <CardContent><p className="text-2xl font-bold tnum">{funds ? fmt(funds.cash) : '-'} <span className="text-sm font-normal text-muted-foreground">{funds?.currency}</span></p></CardContent>
+            <CardContent><p className="text-2xl font-bold">{funds ? fmt(funds.cash) : '-'} <span className="text-sm font-normal text-muted-foreground">{funds?.currency}</span></p></CardContent>
           </Card>
           <Card>
             <CardHeader className="pb-2"><CardTitle className="text-sm text-muted-foreground">当日参考盈亏（按昨收估算）</CardTitle></CardHeader>
@@ -117,15 +117,15 @@ export default function Holdings() {
                         </div>
                       </div>
                     </TableCell>
-                    <TableCell className="text-right tnum">{r.qty}</TableCell>
-                    <TableCell className="text-right tnum">{fmt(r.cost_price)}</TableCell>
-                    <TableCell className="text-right tnum">{fmt(r.last_price)}</TableCell>
-                    <TableCell className="text-right tnum">{fmt(r.market_val)} <span className="text-xs text-muted-foreground">{r.currency}</span></TableCell>
+                    <TableCell className="text-right">{r.qty}</TableCell>
+                    <TableCell className="text-right">{fmt(r.cost_price)}</TableCell>
+                    <TableCell className="text-right">{fmt(r.last_price)}</TableCell>
+                    <TableCell className="text-right">{fmt(r.market_val)} <span className="text-xs text-muted-foreground">{r.currency}</span></TableCell>
                     <TableCell className="text-right">
                       <PnlText value={r.pl_val} />
                       <div className="text-xs"><PnlText value={r.pl_ratio} suffix="%" /></div>
                     </TableCell>
-                    <TableCell className="text-right tnum">{totalHKD > 0 ? fmt((toHKD(r.market_val, r.currency) / totalHKD) * 100, 1) : '-'}%</TableCell>
+                    <TableCell className="text-right">{totalHKD > 0 ? fmt((toHKD(r.market_val, r.currency) / totalHKD) * 100, 1) : '-'}%</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

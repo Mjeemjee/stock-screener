@@ -4,65 +4,35 @@
 
 @layer base {
   :root {
-    --background: 224 47% 5%;
-    --foreground: 213 31% 91%;
-    --card: 224 44% 8%;
-    --card-foreground: 213 31% 91%;
-    --popover: 224 44% 7%;
-    --popover-foreground: 213 31% 91%;
-    --primary: 346 84% 61%;
+    /* 浅色机构风：纸白底 + 墨蓝正文 + 单一深蓝强调（参照严肃金融资讯站） */
+    --background: 36 30% 98%;
+    --foreground: 222 40% 14%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 40% 14%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 40% 14%;
+    --primary: 215 78% 36%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 220 26% 14%;
-    --secondary-foreground: 213 31% 91%;
-    --muted: 220 24% 13%;
-    --muted-foreground: 217 15% 62%;
-    --accent: 220 26% 16%;
-    --accent-foreground: 213 31% 91%;
-    --destructive: 0 72% 51%;
+    --secondary: 220 20% 96%;
+    --secondary-foreground: 222 35% 22%;
+    --muted: 220 18% 96%;
+    --muted-foreground: 220 12% 42%;
+    --accent: 215 60% 95%;
+    --accent-foreground: 215 78% 30%;
+    --destructive: 0 70% 44%;
     --destructive-foreground: 0 0% 98%;
-    --border: 220 22% 17%;
-    --input: 220 22% 22%;
-    --ring: 346 84% 61%;
-    --radius: 0.75rem;
-    --sidebar-background: 224 44% 7%;
-    --sidebar-foreground: 213 31% 91%;
-    --sidebar-primary: 346 84% 61%;
+    --border: 220 16% 88%;
+    --input: 220 14% 80%;
+    --ring: 215 78% 36%;
+    --radius: 0.625rem;
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 222 40% 14%;
+    --sidebar-primary: 215 78% 36%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 26% 16%;
-    --sidebar-accent-foreground: 213 31% 91%;
-    --sidebar-border: 220 22% 17%;
-    --sidebar-ring: 346 84% 61%;
-  }
-
-  .dark {
-    --background: 224 47% 5%;
-    --foreground: 213 31% 91%;
-    --card: 224 44% 8%;
-    --card-foreground: 213 31% 91%;
-    --popover: 224 44% 7%;
-    --popover-foreground: 213 31% 91%;
-    --primary: 346 84% 61%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 220 26% 14%;
-    --secondary-foreground: 213 31% 91%;
-    --muted: 220 24% 13%;
-    --muted-foreground: 217 15% 62%;
-    --accent: 220 26% 16%;
-    --accent-foreground: 213 31% 91%;
-    --destructive: 0 72% 51%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 220 22% 17%;
-    --input: 220 22% 22%;
-    --ring: 346 84% 61%;
-    --radius: 0.75rem;
-    --sidebar-background: 224 44% 7%;
-    --sidebar-foreground: 213 31% 91%;
-    --sidebar-primary: 346 84% 61%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 26% 16%;
-    --sidebar-accent-foreground: 213 31% 91%;
-    --sidebar-border: 220 22% 17%;
-    --sidebar-ring: 346 84% 61%;
+    --sidebar-accent: 215 60% 95%;
+    --sidebar-accent-foreground: 215 78% 30%;
+    --sidebar-border: 220 16% 88%;
+    --sidebar-ring: 215 78% 36%;
   }
 }
 
@@ -71,26 +41,14 @@
     @apply border-border;
   }
   html {
-    color-scheme: dark;
+    color-scheme: light;
   }
   body {
     @apply bg-background text-foreground antialiased;
     font-feature-settings: 'cv02', 'cv03', 'cv04';
   }
-  /* 顶部氛围光 */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    background:
-      radial-gradient(55rem 26rem at 12% -12%, hsl(346 84% 61% / 0.09), transparent 62%),
-      radial-gradient(48rem 24rem at 88% -10%, hsl(217 91% 60% / 0.10), transparent 60%),
-      radial-gradient(40rem 30rem at 50% 115%, hsl(160 84% 39% / 0.05), transparent 65%);
-  }
   ::selection {
-    background: hsl(var(--primary) / 0.35);
+    background: hsl(var(--primary) / 0.18);
   }
 }
 
@@ -99,15 +57,20 @@
   .tnum {
     font-variant-numeric: tabular-nums;
   }
+  /* 衬线标题：机构出版物质感（品牌、页面标题、章节题） */
+  .font-display {
+    font-family: Georgia, 'Times New Roman', 'Songti SC', 'Noto Serif SC', SimSun, serif;
+    letter-spacing: -0.01em;
+  }
   .text-gradient {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(120deg, hsl(346 84% 66%), hsl(28 95% 60%));
+    background-image: linear-gradient(120deg, hsl(215 80% 30%), hsl(215 62% 44%));
   }
   .glass {
-    background: hsl(var(--card) / 0.7);
+    background: hsl(var(--card) / 0.85);
     backdrop-filter: blur(10px);
   }
-  /* 代码编辑框 */
+  /* 代码编辑框（浅底墨色） */
   .code-editor {
     font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
     font-variant-numeric: tabular-nums;
@@ -126,9 +89,12 @@ input[type='range'] {
   height: 10px;
 }
 ::-webkit-scrollbar-thumb {
-  background: hsl(220 22% 22%);
+  background: hsl(220 14% 82%);
   border-radius: 8px;
   border: 2px solid hsl(var(--background));
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(220 12% 70%);
 }
 ::-webkit-scrollbar-track {
   background: transparent;

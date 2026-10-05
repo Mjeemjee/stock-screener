@@ -4,11 +4,11 @@ import { Badge } from '@/components/ui/badge'
 import { CHAPTERS } from '@/content/learn'
 
 const TAG_STYLE: Record<string, string> = {
-  方法论: 'border-sky-400/40 text-sky-300',
-  趋势: 'border-emerald-400/40 text-emerald-300',
-  动量: 'border-amber-400/40 text-amber-300',
-  反转: 'border-rose-400/40 text-rose-300',
-  关键位: 'border-violet-400/40 text-violet-300',
+  方法论: 'border-sky-300 bg-sky-50 text-sky-700',
+  趋势: 'border-emerald-300 bg-emerald-50 text-emerald-700',
+  动量: 'border-amber-300 bg-amber-50 text-amber-700',
+  反转: 'border-rose-300 bg-rose-50 text-rose-700',
+  关键位: 'border-violet-300 bg-violet-50 text-violet-700',
 }
 
 /** 学习板块：每个策略的底层逻辑与回测方法论，面向零基础但行文不降格 */
@@ -36,11 +36,11 @@ export default function Learn() {
           <article
             key={c.id}
             id={c.id}
-            className="scroll-mt-24 rounded-2xl border border-border/70 bg-card/80 p-5 sm:p-7 shadow-[0_12px_40px_-16px_rgb(0_0_0/0.65)] backdrop-blur-sm"
+            className="scroll-mt-24 rounded-xl border border-border bg-card p-5 sm:p-7 shadow-[0_1px_2px_rgb(16_24_40/0.05),0_8px_24px_-16px_rgb(16_24_40/0.12)]"
           >
             <header className="mb-4 flex items-center gap-3 flex-wrap">
               <span className="text-xs tracking-widest text-muted-foreground">{c.no}</span>
-              <h2 className="text-lg sm:text-xl font-semibold tracking-tight">{c.title}</h2>
+              <h2 className="font-display text-lg sm:text-xl font-semibold tracking-tight">{c.title}</h2>
               <Badge variant="outline" className={TAG_STYLE[c.tag]}>
                 {c.tag}
               </Badge>

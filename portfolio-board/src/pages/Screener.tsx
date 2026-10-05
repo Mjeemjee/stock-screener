@@ -35,7 +35,7 @@ function fmtMv(v?: number) {
 function ChangeText({ value }: { value?: number }) {
   if (value == null) return <span>-</span>
   return (
-    <span className={value >= 0 ? 'text-red-500' : 'text-emerald-500'}>
+    <span className={value >= 0 ? 'text-red-600' : 'text-emerald-600'}>
       {value >= 0 ? '+' : ''}
       {value.toFixed(2)}%
     </span>
@@ -146,7 +146,7 @@ function HitTable({ hits }: { hits: ScreenHit[] }) {
 
 function HitList({ r }: { r: StrategyResult }) {
   if (r.meta.error)
-    return <p className="p-4 text-sm text-red-500">策略执行出错：{r.meta.error}</p>
+    return <p className="p-4 text-sm text-red-600">策略执行出错：{r.meta.error}</p>
   if (r.hits.length === 0)
     return (
       <p className="p-4 text-sm text-muted-foreground">
@@ -183,7 +183,7 @@ export default function Screener() {
   if (error)
     return (
       <div className="p-10 text-center">
-        <p className="text-red-500 mb-2">选股数据加载失败：{error}</p>
+        <p className="text-red-600 mb-2">选股数据加载失败：{error}</p>
         <p className="text-muted-foreground text-sm">请先运行 <code>python -m screener.cloud_engine</code>（详见 <Link to="/guide" className="underline">策略进化指南</Link>）</p>
       </div>
     )
