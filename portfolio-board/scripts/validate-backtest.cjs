@@ -22,6 +22,9 @@ const strategies = [
   ['macdCross', { fast: 12, slow: 26, signal: 9 }],
   ['srBounce', { windowDays: 120, zigzagAtrMult: 2, confirmDays: 1, exitBufferAtr: 0.3, refreshEvery: 5 }],
   ['srBreakout', { windowDays: 120, zigzagAtrMult: 2, volMult: 1.5, refreshEvery: 5 }],
+  ['biasMomentum', { biasN: 25, momN: 25, threshold: 0 }],
+  ['slopeR2', { period: 25, threshold: 0 }],
+  ['priceEfficiency', { period: 25, threshold: 0, exitThreshold: 0 }],
 ]
 
 const rawToBar = (b) => ({ d: b[0], o: b[1], h: b[2], l: b[3], c: b[4], v: b[5] })
@@ -68,9 +71,9 @@ for (const [mkt, { stocks, bench }] of Object.entries(markets)) {
 
 // AC-404：美股牛市段（2024-02 起）趋势类策略应为正
 console.log('\n== AC-404 已知行情段验证（US 全程 ≈ 2024-02~2026-10 牛市）==')
-for (const file of ['maCross', 'breakout', 'macdCross']) {
+for (const file of ['maCross', 'breakout', 'macdCross', 'biasMomentum', 'slopeR2', 'priceEfficiency']) {
   const st = S(file)
-  const params = file === 'maCross' ? { fast: 5, slow: 20 } : file === 'breakout' ? { lookback: 20, volMult: 1.5, exitLookback: 10 } : { fast: 12, slow: 26, signal: 9 }
+  let params; if (file === 'maCross') params = { fast: 5, slow: 20 }; else if (file === 'breakout') params = { lookback: 20, volMult: 1.5, exitLookback: 10 }; else if (file === 'macdCross') params = { fast: 12, slow: 26, signal: 9 }; else if (file === 'biasMomentum') params = { biasN: 25, momN: 25, threshold: 0 }; else if (file === 'slopeR2') params = { period: 25, threshold: 0 }; else if (file === 'priceEfficiency') params = { period: 25, threshold: 0, exitThreshold: 0 }
   const res = runBacktest(markets.US.stocks, st, params, opts, markets.US.bench)
   check(`${st.id} 牛市段为正收益`, res.metrics.totalReturnPct > 0, `${res.metrics.totalReturnPct}%`)
 }

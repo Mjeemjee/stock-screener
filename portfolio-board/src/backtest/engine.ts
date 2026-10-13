@@ -179,9 +179,9 @@ interface Position {
   lastDate: number
 }
 
-const r4 = (x: number) => Math.round(x * 10000) / 10000
+export const r4 = (x: number) => Math.round(x * 10000) / 10000
 
-function computeMetrics(
+export function computeMetrics(
   equity: EquityPoint[],
   trades: Trade[],
   initialCash: number,

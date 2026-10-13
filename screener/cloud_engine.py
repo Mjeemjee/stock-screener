@@ -207,6 +207,13 @@ def main() -> None:
     except Exception as e:
         print(f"[history] 历史数据管道失败（不影响选股结果）：{e}", flush=True)
 
+    # ETF 轮动池数据管道（横截面轮动回测用，固定 4 只 A 股 ETF，无需快照）
+    try:
+        from screener import etf_fetch
+        etf_fetch.main()
+    except Exception as e:
+        print(f"[etf] ETF 轮动池数据管道失败（不影响选股结果）：{e}", flush=True)
+
 
 if __name__ == "__main__":
     main()

@@ -35,6 +35,7 @@ import {
 } from 'recharts'
 import AppShell from '@/components/AppShell'
 import { runBacktestCore } from '@/backtest/engine'
+import { runRotationBacktest, type RotationResult } from '@/backtest/rotation'
 import { STRATEGIES } from '@/backtest/strategies'
 import {
   DEFAULT_COMBO,
@@ -109,6 +110,58 @@ async function loadBench(m: MarketKey): Promise<Bar[] | undefined> {
     }
   }
   return benchCache[m]
+}
+
+/** ETF 轮动池数据文件结构（screener/etf_fetch.py 产出） */
+interface EtfFile {
+  generated_at: string
+  pool: [string, string, string][]
+  bench: string
+  bench_bars: RawBar[]
+  survivorship_note: string
+  source: string
+  stocks: { code: string; name: string; bars: RawBar[] }[]
+}
+
+interface RotationData {
+  stocks: StockSeries[]
+  bench: Bar[]
+  generatedAt: string
+  note: string
+  source: string
+  minDate: number
+  maxDate: number
+}
+
+let etfCache: RotationData | null = null
+
+async function loadEtf(): Promise<RotationData> {
+  if (etfCache) return etfCache
+  const r = await fetch(dataUrl('history/etf.json'))
+  if (!r.ok) throw new Error(`ETF 轮动池数据加载失败（HTTP ${r.status}）`)
+  const j = (await r.json()) as EtfFile
+  const stocks: StockSeries[] = j.stocks.map((s) => ({
+    code: s.code,
+    name: s.name,
+    bars: s.bars.map(rawToBar),
+  }))
+  let minDate = Infinity
+  let maxDate = 0
+  for (const s of stocks)
+    for (const b of s.bars) {
+      if (b.d < minDate) minDate = b.d
+      if (b.d > maxDate) maxDate = b.d
+    }
+  etfCache = {
+    stocks,
+    bench: (j.bench_bars ?? []).map(rawToBar),
+    generatedAt: j.generated_at,
+    note: j.survivorship_note,
+    source: j.source,
+    minDate,
+    maxDate,
+  }
+  return etfCache
 }
 
 const toIso = (d: number) => {
@@ -324,6 +377,17 @@ function BlockCard({
 }
 
 export default function Backtest() {
+  const [mode, setMode] = useState<'single' | 'rotation'>('single')
+  const [rot, setRot] = useState({
+    biasN: 25,
+    momN: 25,
+    slopeN: 25,
+    effN: 25,
+    wBias: 0.3,
+    wSlope: 0.3,
+    wEff: 0.4,
+    threshold: 1.5,
+  })
   const [market, setMarket] = useState<MarketKey>('US')
   const [stack, setStack] = useState<StackConfig>(() => ({
     combo: { ...DEFAULT_COMBO },
@@ -414,6 +478,10 @@ export default function Backtest() {
   }
 
   function handleRun() {
+    if (mode === 'rotation') {
+      handleRunRotation()
+      return
+    }
     if (!md) return
     setRunning(true)
     setLoadError(null)
@@ -461,6 +529,47 @@ export default function Backtest() {
     }, 60)
   }
 
+  function handleRunRotation() {
+    setRunning(true)
+    setLoadError(null)
+    const opts = {
+      initialCash,
+      maxPositions: 1,
+      costPct,
+      startDate: startIso ? toYmd(startIso) : undefined,
+      endDate: endIso ? toYmd(endIso) : undefined,
+      stopLossPct: stopLoss,
+      takeProfitPct: takeProfit,
+      maxHoldDays: maxHold,
+    }
+    setTimeout(() => {
+      void loadEtf()
+        .then((etf) => {
+          const res = runRotationBacktest(
+            etf.stocks,
+            {
+              biasN: rot.biasN,
+              momN: rot.momN,
+              slopeN: rot.slopeN,
+              effN: rot.effN,
+              weights: { bias: rot.wBias, slope: rot.wSlope, efficiency: rot.wEff },
+              rebalanceThreshold: rot.threshold,
+            },
+            opts,
+            etf.bench,
+          )
+          setStress(null)
+          return res
+        })
+        .then((res: RotationResult) => {
+          setResult(res)
+          setTimeout(() => resultRef.current?.scrollIntoView({ behavior: 'smooth' }), 80)
+        })
+        .catch((e: Error) => setLoadError(`轮动回测运行失败：${e.message}`))
+        .finally(() => setRunning(false))
+    }, 60)
+  }
+
   const m = result?.metrics
   const metricCards = m
     ? [
@@ -493,7 +602,87 @@ export default function Backtest() {
       }
     >
       <div className="space-y-5 sm:space-y-6">
-        {/* ① 策略拼图 */}
+        {/* ⓪ 模式切换：单标的组合 vs 横截面轮动 */}
+        <Card>
+          <CardContent className="py-3">
+            <div className="flex flex-wrap items-center gap-2.5">
+              <span className="text-sm font-medium">回测模式</span>
+              <div className="flex rounded-full border border-border/60 bg-card/60 p-0.5 text-xs">
+                {(['single', 'rotation'] as const).map((m) => (
+                  <button
+                    key={m}
+                    type="button"
+                    onClick={() => {
+                      setMode(m)
+                      setResult(null)
+                      setStress(null)
+                    }}
+                    className={`rounded-full px-4 py-1.5 transition-colors ${
+                      mode === m ? 'bg-primary font-medium text-primary-foreground' : 'text-muted-foreground hover:text-foreground'
+                    }`}
+                  >
+                    {m === 'single' ? '单标的 · 策略拼图' : '横截面 · ETF 轮动'}
+                  </button>
+                ))}
+              </div>
+              <p className="text-[11px] leading-relaxed text-muted-foreground">
+                {mode === 'single'
+                  ? '每只标的独立出信号、等权分仓、最多持有 N 只——用于个股策略研究。'
+                  : '复现聚宽 81505「ETF 三因子轮动」：固定池打分、满仓单标的、挑战者 > 持仓 × 阈值才换仓。'}
+              </p>
+            </div>
+            {mode === 'rotation' && (
+              <div className="mt-3 grid grid-cols-2 md:grid-cols-4 gap-3 border-t border-border/60 pt-3">
+                <div className="space-y-1.5">
+                  <Label>Bias 周期</Label>
+                  <Input type="number" min={10} max={60} step={1} value={rot.biasN}
+                    onChange={(e) => setRot({ ...rot, biasN: Math.min(60, Math.max(10, Math.round(Number(e.target.value) || 25))) })} className="tnum" />
+                </div>
+                <div className="space-y-1.5">
+                  <Label>回归窗口（bias 动量）</Label>
+                  <Input type="number" min={10} max={50} step={5} value={rot.momN}
+                    onChange={(e) => setRot({ ...rot, momN: Math.min(50, Math.max(10, Math.round(Number(e.target.value) || 25))) })} className="tnum" />
+                </div>
+                <div className="space-y-1.5">
+                  <Label>Slope / 效率窗口</Label>
+                  <Input type="number" min={10} max={60} step={5} value={rot.slopeN}
+                    onChange={(e) => {
+                      const v = Math.min(60, Math.max(10, Math.round(Number(e.target.value) || 25)))
+                      setRot({ ...rot, slopeN: v, effN: v })
+                    }} className="tnum" />
+                </div>
+                <div className="space-y-1.5">
+                  <Label>换仓阈值（乘法）</Label>
+                  <Input type="number" min={1} max={3} step={0.1} value={rot.threshold}
+                    onChange={(e) => setRot({ ...rot, threshold: Math.min(3, Math.max(1, Number(e.target.value) || 1.5)) })} className="tnum" />
+                </div>
+                <div className="space-y-1.5">
+                  <Label>权重 bias</Label>
+                  <Input type="number" min={0} max={1} step={0.05} value={rot.wBias}
+                    onChange={(e) => setRot({ ...rot, wBias: Math.min(1, Math.max(0, Number(e.target.value) || 0)) })} className="tnum" />
+                </div>
+                <div className="space-y-1.5">
+                  <Label>权重 slope×R²</Label>
+                  <Input type="number" min={0} max={1} step={0.05} value={rot.wSlope}
+                    onChange={(e) => setRot({ ...rot, wSlope: Math.min(1, Math.max(0, Number(e.target.value) || 0)) })} className="tnum" />
+                </div>
+                <div className="space-y-1.5">
+                  <Label>权重 efficiency</Label>
+                  <Input type="number" min={0} max={1} step={0.05} value={rot.wEff}
+                    onChange={(e) => setRot({ ...rot, wEff: Math.min(1, Math.max(0, Number(e.target.value) || 0)) })} className="tnum" />
+                </div>
+                <div className="flex items-end pb-0.5">
+                  <p className="text-[11px] leading-relaxed text-muted-foreground">
+                    原文默认 0.3 / 0.3 / 0.4，阈值 1.5。
+                  </p>
+                </div>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+{/* ① 策略拼图 */}
+        {mode === 'single' && (
         <Card>
           <CardHeader className="pb-1">
             <CardTitle className="flex items-center gap-2.5 text-base flex-wrap">
@@ -692,6 +881,8 @@ export default function Backtest() {
           </CardContent>
         </Card>
 
+        )}
+
         {/* ② 运行条件 */}
         <Card>
           <CardHeader className="pb-1">
@@ -701,15 +892,21 @@ export default function Backtest() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               <div className="space-y-1.5">
                 <Label>市场</Label>
-                <Select value={market} onValueChange={(v) => setMarket(v as MarketKey)}>
-                  <SelectTrigger className="w-full">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="US">美股（标普500 基准）</SelectItem>
-                    <SelectItem value="HK">港股（恒生指数 基准）</SelectItem>
-                  </SelectContent>
-                </Select>
+                {mode === 'single' ? (
+                  <Select value={market} onValueChange={(v) => setMarket(v as MarketKey)}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="US">美股（标普500 基准）</SelectItem>
+                      <SelectItem value="HK">港股（恒生指数 基准）</SelectItem>
+                    </SelectContent>
+                  </Select>
+                ) : (
+                  <div className="rounded-lg border border-border/60 bg-secondary/30 px-3 py-2 text-xs text-muted-foreground">
+                    A股 ETF 池 · 4 只（基准沪深300）
+                  </div>
+                )}
               </div>
               <div className="space-y-1.5">
                 <Label>开始日期</Label>
@@ -734,16 +931,22 @@ export default function Backtest() {
             <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
               <div className="space-y-1.5">
                 <Label>最大持仓只数</Label>
-                <Input
-                  type="number"
-                  min={1}
-                  max={50}
-                  value={maxPositions}
-                  onChange={(e) =>
-                    setMaxPositions(Math.min(50, Math.max(1, Math.round(Number(e.target.value) || 1))))
-                  }
-                  className="tnum"
-                />
+                {mode === 'single' ? (
+                  <Input
+                    type="number"
+                    min={1}
+                    max={50}
+                    value={maxPositions}
+                    onChange={(e) =>
+                      setMaxPositions(Math.min(50, Math.max(1, Math.round(Number(e.target.value) || 1))))
+                    }
+                    className="tnum"
+                  />
+                ) : (
+                  <div className="rounded-lg border border-border/60 bg-secondary/30 px-3 py-2 text-xs text-muted-foreground tnum">
+                    1（轮动满仓单标的）
+                  </div>
+                )}
               </div>
               <div className="space-y-1.5">
                 <Label>单边成本 %</Label>
@@ -797,20 +1000,33 @@ export default function Backtest() {
             <div className="flex items-center gap-3 flex-wrap pt-1">
               <Button
                 onClick={handleRun}
-                disabled={loading || running || !md || activeCount === 0}
+                disabled={
+                  running ||
+                  (mode === 'single' ? loading || !md || activeCount === 0 : false)
+                }
                 className="min-w-32 shadow-sm"
               >
-                {loading ? '数据加载中…' : running ? '回测运行中…' : `运行回测（${activeCount} 块）`}
+                {mode === 'rotation'
+                  ? running
+                    ? '轮动回测运行中…'
+                    : '运行轮动回测'
+                  : loading
+                    ? '数据加载中…'
+                    : running
+                      ? '回测运行中…'
+                      : `运行回测（${activeCount} 块）`}
               </Button>
-              <label className="flex items-center gap-2 text-sm text-muted-foreground cursor-pointer select-none">
-                <input
-                  type="checkbox"
-                  checked={costStress}
-                  onChange={(e) => setCostStress(e.target.checked)}
-                  className="accent-[hsl(var(--primary))] w-4 h-4"
-                />
-                成本压力测试（同参数 1×/2×/3× 成本各跑一次）
-              </label>
+              {mode === 'single' && (
+                <label className="flex items-center gap-2 text-sm text-muted-foreground cursor-pointer select-none">
+                  <input
+                    type="checkbox"
+                    checked={costStress}
+                    onChange={(e) => setCostStress(e.target.checked)}
+                    className="accent-[hsl(var(--primary))] w-4 h-4"
+                  />
+                  成本压力测试（同参数 1×/2×/3× 成本各跑一次）
+                </label>
+              )}
               {result && (
                 <span className="text-xs text-muted-foreground tnum">
                   本次用时 {result.elapsedMs}ms · 覆盖 {result.stockCount} 只股票
@@ -1004,10 +1220,14 @@ export default function Backtest() {
 
         <div className="space-y-1 pb-6 text-xs leading-relaxed text-muted-foreground">
           <p>
-            口径说明：前复权日K；信号当日收盘产生、次日开盘成交（T+1）；等权分仓、允许零碎股；单边成本含佣金与滑点。
+            {mode === 'single'
+              ? '口径说明：前复权日K；信号当日收盘产生、次日开盘成交（T+1）；等权分仓、允许零碎股；单边成本含佣金与滑点。'
+              : '口径说明：前复权日K；固定 4 只 A股 ETF 池横截面打分、满仓单标的；挑战者分数 > 持仓分数 × 阈值才换仓（原文 1.5）；信号当日收盘产生、次日开盘成交（T+1）；单边成本含佣金与滑点。'}
           </p>
           <p className="text-amber-600">
-            {md?.note ?? '股票池按当日成交额选取，回测存在幸存者偏差，结果偏乐观。'}
+            {mode === 'rotation'
+              ? 'ETF 池为原文标的（无幸存者偏差）；历史回测不代表未来收益，结果仅供研究，不构成投资建议。'
+              : md?.note ?? '股票池按当日成交额选取，回测存在幸存者偏差，结果偏乐观。'}
             历史回测不代表未来收益，结果仅供研究，不构成投资建议。
           </p>
         </div>

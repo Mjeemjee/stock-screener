@@ -38,6 +38,26 @@ export const strategy: StrategyModule = {
 5. **共用交易规则**（引擎统一执行，策略不用管）：T+1 开盘成交、等权分仓、单边成本、止损/止盈/最大持有天数（用户在网页高级参数里配）。
 6. 出场若只依赖策略信号不够，提示用户在高级参数里加止损——在 description 里写明。
 
+## 横截面轮动（另一类引擎）
+
+单标的策略模块（上面这一套）与横截面轮动是两类不同的回测结构：
+
+- 单标的：`engine.ts`，每只股票独立出信号，等权分仓、最多持有 N 只。
+- 横截面轮动：`rotation.ts`，固定池内打分排名，满仓持有单一标的，乘法换仓阈值（挑战者 > 持仓 × 阈值）才换仓。
+
+三因子的数学定义抽在 `threeFactors.ts`（biasScore / slopeR2Score / efficiencyScore），
+单标的策略模块与轮动引擎共用同一份实现，保证口径一致。
+
+轮动回归（含样本外验证）：
+```bash
+cd portfolio-board
+node scripts/validate-rotation.cjs          # 数学自洽 / 满仓单标的 / 阈值与成本单调 / 样本外区间
+node scripts/crosscheck-rotation.cjs <ref.json>   # 与原文 Python 参考实现逐日交叉验证
+# 生成参考分：cd .. && python scripts/ref_rotation.py > ref.json
+```
+
+ETF 池数据由 `screener/etf_fetch.py` 生成（东财前复权），产出 `public/data/history/etf.json`。
+
 ## 入库流程
 
 新策略文件 → `npm run build` 通过 → 回测页验证结果合理（对照已知行情段）→ 在 `releases/TEST_REPORT.md` 记录验证 → 完成。
