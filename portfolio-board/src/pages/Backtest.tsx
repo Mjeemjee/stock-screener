@@ -435,6 +435,26 @@ export default function Backtest() {
     }
   }, [market])
 
+  // 切到轮动模式 → 预加载 ETF 池并把日期区间切到 ETF 数据的真实范围
+  // （ETF 池回溯至 2013，港美股池仅 2024 起；不切换会让样本外区间无法选择）
+  useEffect(() => {
+    if (mode !== 'rotation') return
+    let cancelled = false
+    setLoading(true)
+    setLoadError(null)
+    loadEtf()
+      .then((etf) => {
+        if (cancelled) return
+        setStartIso(toIso(etf.minDate))
+        setEndIso(toIso(etf.maxDate))
+      })
+      .catch((e: Error) => !cancelled && setLoadError(e.message))
+      .finally(() => !cancelled && setLoading(false))
+    return () => {
+      cancelled = true
+    }
+  }, [mode])
+
   const updateBlock = useCallback((idx: number, patch: Partial<StrategyBlock>) => {
     setStack((prev) => ({
       ...prev,
