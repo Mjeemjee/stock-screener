@@ -190,12 +190,22 @@ def main() -> None:
             results.append({"meta": meta, "hits": []})
             print(f"  - {meta['id']}: 执行失败 {e}", flush=True)
 
+    # 三因子二次筛（方案 B）：对初筛命中名单拉 K 线做横截面重排序。
+    # 失败不影响选股结果——策略本身的命中名单仍然完整可用。
+    factor_summary = {"applied": False}
+    try:
+        from screener import factor_rank
+        factor_summary = factor_rank.rerank(results)
+    except Exception as e:
+        print(f"[factor] 三因子二次筛失败（不影响选股结果）：{e}", flush=True)
+
     payload = {
         "generated_at": time.strftime("%Y-%m-%d %H:%M:%S"),
         "elapsed_sec": round(time.time() - t0, 1),
         "data_source": "cloud (HKEX + NASDAQ + Tencent)",
         "universe_total": int(len(uni)),
         "universe_after_filter": int(len(df)),
+        "factor_rank": factor_summary,
         "strategies": results,
     }
     save_payload(payload)

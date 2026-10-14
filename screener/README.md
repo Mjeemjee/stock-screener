@@ -9,6 +9,7 @@ screener/
 ├─ cloud_engine.py      # 云端版引擎：HKEX + NASDAQ + 腾讯快照，无需密钥，GitHub Actions 可跑
 ├─ engine.py            # 本机版引擎：富途 OpenD（需本机 OpenD 启动并登录）
 ├─ common.py            # 两版共用的清洗/策略发现/序列化
+├─ factor_rank.py       # 三因子二次筛（方案 B）：对初筛命中名单做横截面重排序
 ├─ strategies/          # 策略库：一个文件 = 一个策略，引擎自动发现
 │  ├─ momentum_breakout.py     # 动量突破（52周新高）
 │  ├─ value_dividend.py        # 低估值高股息（仅本机版产出，云端缺 PB/股息率源）
@@ -48,6 +49,20 @@ def run(df, params):
 3. 写成 `strategies/<id>.py` 模块，`status` 先标 `watch`（观察中）。
 4. 跑 `python -m screener.cloud_engine` 验证输出合理性。
 5. 网站「策略库」页展示全部策略（含观察中），用户确认后调为 `active`。
+
+## 三因子二次筛（factor_rank）
+
+初筛策略（动量/超跌/低估值）只基于单日快照，无法刻画"趋势质量"。`factor_rank.py`
+对初筛命中名单拉历史 K 线，用聚宽 81505 的三因子（bias 偏移动量 / slope×R² 趋势
+质量 / efficiency 价格效率比）做横截面 Z-Score 加权（0.3/0.3/0.4），把命中标的
+按"趋势越干净越靠前"重排序。**它不改变命中名单，只改变排序**——这是方案 B 的核心。
+
+有效性：`scripts/factor_ic_check.py` 在 547 只个股（2023-12~2026-10）上实测复合
+因子 N=20 的 Rank IC 0.0385（>0.03 有效阈值）、ICIR 0.285、t=6.96。但 N=5 时 IC
+仅 0.011，说明它是**中期（约 20 交易日）排序工具**，不是短线择时信号。
+
+输出：每个命中标的附带 `factor_score / factor_rank / factor_note` 字段；`results`
+顶层附带 `factor_rank` 摘要。取数失败不影响选股结果（因子缺失的标的置底）。
 
 ## 数据说明
 

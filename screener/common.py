@@ -57,7 +57,9 @@ def load_strategies():
 
 
 def to_records(df: pd.DataFrame, limit: int) -> list:
-    cols = [c for c in KEEP_COLS + ["off_52w_high_pct", "off_52w_low_pct", "reason"] if c in df.columns]
+    cols = [c for c in KEEP_COLS + ["off_52w_high_pct", "off_52w_low_pct",
+                             "factor_score", "factor_rank", "factor_note", "reason"]
+            if c in df.columns]
     out = df[cols].head(limit).copy()
     out = out.astype(object).where(out.notna(), None)
     return json.loads(json.dumps(out.to_dict("records"), default=str), parse_constant=lambda _: None)

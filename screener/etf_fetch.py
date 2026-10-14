@@ -104,6 +104,11 @@ def main():
         print(f"[etf] 基准 {BENCH[2]}: {len(bench_bars)} 根 "
               f"{bench_bars[0][0]}~{bench_bars[-1][0]}", flush=True)
 
+    # 全部失败时不得覆盖旧数据：轮动回测依赖 etf.json，东财故障不应清空它
+    if not stocks and not bench_bars:
+        print("[etf] 本次全部取数失败，保留既有 etf.json（不覆盖）", flush=True)
+        return
+
     payload = {
         "generated_at": time.strftime("%Y-%m-%d %H:%M:%S"),
         "pool": ETF_POOL,

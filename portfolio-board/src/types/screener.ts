@@ -33,6 +33,9 @@ export interface ScreenHit {
   amplitude?: number
   off_52w_high_pct?: number
   off_52w_low_pct?: number
+  factor_score?: number
+  factor_rank?: number
+  factor_note?: string
   reason: string
 }
 

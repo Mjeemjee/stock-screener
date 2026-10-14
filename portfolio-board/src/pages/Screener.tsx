@@ -100,6 +100,9 @@ function HitCardList({ hits }: { hits: ScreenHit[] }) {
           <p className="text-xs text-muted-foreground leading-relaxed">
             市值 {fmtMv(h.circular_market_val)} · {h.reason}
           </p>
+          {h.factor_note && (
+            <p className="text-xs text-primary/80 leading-relaxed tnum">三因子 {h.factor_note}</p>
+          )}
         </div>
       ))}
     </div>
@@ -117,6 +120,7 @@ function HitTable({ hits }: { hits: ScreenHit[] }) {
           <TableHead className="text-right">当日涨跌</TableHead>
           <TableHead className="text-right">市值</TableHead>
           <TableHead>命中原因</TableHead>
+          <TableHead className="text-right">三因子</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -137,6 +141,16 @@ function HitTable({ hits }: { hits: ScreenHit[] }) {
             </TableCell>
             <TableCell className="text-right">{fmtMv(h.circular_market_val)}</TableCell>
             <TableCell className="text-xs text-muted-foreground max-w-[280px]">{h.reason}</TableCell>
+            <TableCell className="text-right text-xs tnum whitespace-nowrap">
+              {h.factor_rank ? (
+                <span title={h.factor_note}>
+                  #{h.factor_rank}
+                  <span className="ml-1 text-muted-foreground">{h.factor_score?.toFixed(2)}</span>
+                </span>
+              ) : (
+                <span className="text-muted-foreground">—</span>
+              )}
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>
