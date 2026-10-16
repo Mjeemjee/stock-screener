@@ -26,6 +26,14 @@ META = {
 }
 
 
+def required_fields(params):
+    p = {**META["params"], **(params or {})}
+    fields = ["off_52w_low_pct", "circular_market_val"]
+    if p["require_profitable"]:
+        fields.append(("pe_ttm_ratio", "pe_ratio"))
+    return fields
+
+
 def run(df, params):
     p = {**META["params"], **(params or {})}
     pe = df["pe_ttm_ratio"].fillna(df["pe_ratio"])
@@ -37,8 +45,9 @@ def run(df, params):
     if p["require_profitable"]:
         mask &= pe > 0
     hits = df[mask].copy()
-    hits["reason"] = hits.apply(
-        lambda r: f"距52周低点仅 +{r['off_52w_low_pct']:.1f}%，市值 {r['circular_market_val']/1e9:.0f}B，仍盈利",
-        axis=1,
-    )
-    return hits.sort_values("off_52w_low_pct", ascending=True)
+    profit_note = "，仍盈利" if p["require_profitable"] else "，未要求盈利"
+    hits["reason"] = [
+        f"距52周低点仅 +{r['off_52w_low_pct']:.1f}%，市值 {r['circular_market_val']/1e9:.0f}B 原币{profit_note}"
+        for _, r in hits.iterrows()
+    ]
+    return hits.sort_values(["off_52w_low_pct", "code"], ascending=True)

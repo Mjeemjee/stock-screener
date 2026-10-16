@@ -1,18 +1,28 @@
+import { lazy, Suspense } from 'react'
 import { Routes, Route } from 'react-router'
 import Screener from './pages/Screener'
-import Holdings from './pages/Holdings'
-import Guide from './pages/Guide'
-import Backtest from './pages/Backtest'
-import Learn from './pages/Learn'
+
+const Holdings = lazy(() => import('./pages/Holdings'))
+const Guide = lazy(() => import('./pages/Guide'))
+const Backtest = lazy(() => import('./pages/Backtest'))
+const Learn = lazy(() => import('./pages/Learn'))
+const Tracking = lazy(() => import('./pages/Tracking'))
+const StockDetail = lazy(() => import('./pages/StockDetail'))
+const Watchlist = lazy(() => import('./pages/Watchlist'))
 
 export default function App() {
   return (
-    <Routes>
+    <Suspense fallback={<div className="p-8 text-center text-muted-foreground" role="status">正在加载页面...</div>}>
+      <Routes>
       <Route path="/" element={<Screener />} />
       <Route path="/backtest" element={<Backtest />} />
       <Route path="/learn" element={<Learn />} />
       <Route path="/holdings" element={<Holdings />} />
       <Route path="/guide" element={<Guide />} />
-    </Routes>
+      <Route path="/tracking" element={<Tracking />} />
+      <Route path="/stock/:code" element={<StockDetail />} />
+      <Route path="/watchlist" element={<Watchlist />} />
+      </Routes>
+    </Suspense>
   )
 }

@@ -1,0 +1,18 @@
+{
+  "version": "market-v1",
+  "note": "Initial currency-scale alignment at a fixed reference of 7.8 HKD/USD, not an optimized or live FX rate. Median liquidity filtering is opt-in.",
+  "strategies": {
+    "momentum_breakout": {
+      "US": {"min_market_val": 2000000000, "min_turnover": 20000000, "min_median_turnover_20d": 10000000, "use_median_liquidity": false},
+      "HK": {"min_market_val": 15600000000, "min_turnover": 156000000, "min_median_turnover_20d": 78000000, "use_median_liquidity": false}
+    },
+    "oversold_watch": {
+      "US": {"min_market_val": 10000000000},
+      "HK": {"min_market_val": 78000000000}
+    },
+    "value_dividend": {
+      "US": {"min_market_val": 5000000000},
+      "HK": {"min_market_val": 39000000000}
+    }
+  }
+}

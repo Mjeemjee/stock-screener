@@ -8,6 +8,11 @@ on:
 
 permissions:
   contents: write
+  actions: write
+
+concurrency:
+  group: daily-screener
+  cancel-in-progress: false
 
 jobs:
   scan-build-deploy:
@@ -22,11 +27,54 @@ jobs:
       - name: 安装取数依赖
         run: pip install -r requirements-cloud.txt
 
+      - name: 策略与发布回归测试
+        run: |
+          python -m unittest discover -s screener/tests -v
+          python -m unittest discover -s scripts -p test_validate_factor_optimization.py -v
+          python -m unittest discover -s scripts -p test_verify_public_build.py -v
+
+      - name: 恢复累计选股档案
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          archive_run_id=$(gh api "repos/${GITHUB_REPOSITORY}/actions/artifacts?name=screening-archive&per_page=100" --jq '[.artifacts[] | select(.name == "screening-archive" and .expired == false)] | sort_by(.created_at) | reverse | .[0].workflow_run.id // empty')
+          if [ -n "$archive_run_id" ]; then
+            gh run download "$archive_run_id" --name screening-archive --dir data/screening_archive
+          fi
+
       - name: 运行云端选股引擎（HKEX + NASDAQ + 腾讯快照）
         run: python -m screener.cloud_engine
 
+      - name: 保存累计选股档案
+        id: screening_archive
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screening-archive
+          path: data/screening_archive/
+          retention-days: 90
+          if-no-files-found: ignore
+          compression-level: 9
+
+      - name: 保留最近三份累计备份
+        if: success() && steps.screening_archive.outputs.artifact-id != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh api "repos/${GITHUB_REPOSITORY}/actions/artifacts?name=screening-archive&per_page=100" --jq '[.artifacts[] | select(.name == "screening-archive" and .expired == false)] | sort_by(.created_at) | reverse | .[3:][].id' > old-screening-artifacts.txt
+          while read -r artifact_id; do
+            gh api --method DELETE "repos/${GITHUB_REPOSITORY}/actions/artifacts/${artifact_id}"
+          done < old-screening-artifacts.txt
+
       - name: 同步筛选结果到前端数据目录
         run: cp data/screener_results.json portfolio-board/public/data/screener_results.json
+
+      - name: 验证完整归档与公开追踪一致
+        run: python scripts/verify_tracking_delivery.py
 
       - uses: actions/setup-node@v4
         with:
@@ -36,7 +84,11 @@ jobs:
         working-directory: portfolio-board
         run: |
           npm install --no-audit --no-fund
+          node --test src/lib/screener.test.cjs
           npm run build
+
+      - name: 阻止私人持仓和非公开数据发布
+        run: python scripts/verify_public_build.py
 
       - name: 部署到 GitHub Pages
         uses: peaceiris/actions-gh-pages@v4

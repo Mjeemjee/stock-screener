@@ -1,5 +1,35 @@
 # 选股引擎与策略库
 
+## 每日归档与效果追踪（2026-10-15）
+
+两套引擎在截取展示名单前冻结全部候选到 `data/screening_archive/snapshots/`：包括实际参数、冻结时源码摘要、原市场内排序、最终市场内排序和行情/因子字段。新档只创建不覆盖，读取时核对哈希和排序注解。旧文件可导入但标记为历史导入，不参与前瞻汇总。
+
+本地扫描并直接更新网页数据：
+
+```powershell
+.venv/Scripts/python.exe -X utf8 -m screener.cloud_engine --skip-history --output portfolio-board/public/data/screener_results.json --archive-dir data/screening_archive
+.venv/Scripts/python.exe -X utf8 -m screener.tracking --sync-latest
+.venv/Scripts/python.exe -X utf8 scripts/verify_tracking_delivery.py
+```
+
+完整默认扫描会刷新历史池，并按预算补充归档名单中缺失的价格；`--skip-history` 适合快速冻结最新名单。单独更新追踪及补价：
+
+```powershell
+.venv/Scripts/python.exe -X utf8 -m screener.tracking --fetch-missing
+```
+
+追踪协议：每市场原排序 Top 10 与最终排序 Top 10 等权，分别持有 5/20/60 个交易日。入场为冻结之后的第一次市场开盘，退出为 H 个交易日后的开盘；用 `exchange-calendars==4.13.2` 的 XNYS/XHKG 日历处理假日、夏令时和半日市，指数缺数据不会推迟入场。单边成本假设 15bp，指数为未扣费的价格基准。停牌无成交权重留现金；未知入场/退出价格不重分配，整个篮子不显示完整收益。同一入场日与版本只汇总最早冻结样本，重叠期间不复合为净值。
+
+配置在 `market_rules.json`：港美门槛独立，港股初始金额按固定 7.8 HKD/USD 参考比例对齐规模，这不是最优参数或实时汇率。动量策略的 `use_median_liquidity` 默认关闭；开启时必须具备有效 20 日成交额中位数估算，否则标记数据不可用。中位数估算为日收盘价 × 成交股数，受复权和成交量口径影响。
+
+风险字段为已完成日线计算的 20 日年化波动、最多 120 日回撤及成交额中位数；过期/不足数据不填零。行业来自可得元数据，财报日期暂无可靠源，页面明确显示缺失。
+
+网站新增 `/tracking`、`/stock/:code` 和 `/watchlist`；观察名单仅保存在当前浏览器。展示上限仍为每策略 50 条，跨市场按各自排序交替取出，避免一个市场挤掉另一个市场。
+
+每日工作流恢复最近累计档案，扫描后上传整份累计档案；新备份成功才清理多余同名备份，保留最近三份，每份均保留全部内部历史记录。单份 artifact 保存 90 天；长时间停跑仍需另行备份。此轮只验证本地归档恢复流程及工作流语法，尚未运行 GitHub 云端流程。
+
+方法依据：[交易日历库](https://github.com/gerrymanoim/exchange_calendars)、[HKMA 联系汇率制度](https://www.hkma.gov.hk/eng/key-functions/money/linked-exchange-rate-system/)、[GitHub artifact 文档](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/download-workflow-artifacts)。
+
 本目录是选股网站的核心：**引擎负责取数和调度，策略库里的每个文件就是一个可独立进化的选股策略**。
 
 ## 目录结构
@@ -52,17 +82,40 @@ def run(df, params):
 
 ## 三因子二次筛（factor_rank）
 
-初筛策略（动量/超跌/低估值）只基于单日快照，无法刻画"趋势质量"。`factor_rank.py`
-对初筛命中名单拉历史 K 线，用聚宽 81505 的三因子（bias 偏移动量 / slope×R² 趋势
-质量 / efficiency 价格效率比）做横截面 Z-Score 加权（0.3/0.3/0.4），把命中标的
-按"趋势越干净越靠前"重排序。**它不改变命中名单，只改变排序**——这是方案 B 的核心。
+`factor_rank.py` 仅对启用中的 **美股动量突破** 候选拉历史日线，使用 bias / slope×R² /
+efficiency 做横截面 Z-Score 加权（0.3/0.3/0.4）。港股、超跌观察与价值策略保留各自原始顺序。
+先收集完整初筛名单，再对最多 150 个适用候选计算，最后截取每策略 50 条展示。
+港股在混合名单中的位置保持不变，美股只在自身位置间重排。
 
-有效性：`scripts/factor_ic_check.py` 在 547 只个股（2023-12~2026-10）上实测复合
-因子 N=20 的 Rank IC 0.0385（>0.03 有效阈值）、ICIR 0.285、t=6.96。但 N=5 时 IC
-仅 0.011，说明它是**中期（约 20 交易日）排序工具**，不是短线择时信号。
+历史混市场 IC 不能证明逐市场或完整选股流程有效。2026-10-14 的固定参数对照使用分市场、
+次日开盘成交、20 日持有、双边费用与时间隔离验证，没有找到足够证据支持 MAD 抗极值标准化
+替代默认算法。详见 `reports/factor_optimization_report.md`。历史池存在幸存者偏差，
+缺少逐日初筛名单；上述实验只验证打分方法，不能证明完整选股策略的实盘收益。
 
-输出：每个命中标的附带 `factor_score / factor_rank / factor_note` 字段；`results`
-顶层附带 `factor_rank` 摘要。取数失败不影响选股结果（因子缺失的标的置底）。
+输出：`factor_score / factor_rank / factor_note / factor_status / factor_as_of` 及总体覆盖率。
+只使用 UTC 当日之前的完整美股日线；过期、交易日期不同、异常或不足 49 根的数据不参与打分。
+有效同日样本不足 20 只时保留初筛顺序；未评分的美股在美股槽位中置后。
+`winsorized_zscore` 仅是研究选项，默认仍为 `zscore`。
+
+策略元数据区分 `execution_status=ok/unavailable/paused/error`，并提供
+`hit_count/displayed_count/truncated/eligible_count/unavailable_count`。
+缺失必要字段与正常零命中是不同状态；暂停策略不会执行。
+
+快速独立扫描（跳过回测历史池刷新，不修改默认数据文件）：
+
+```powershell
+.venv/Scripts/python.exe -X utf8 -m screener.cloud_engine --skip-history --output reports/live_scan/screener_results.json
+```
+
+离线验收：
+
+```powershell
+.venv/Scripts/python.exe -m unittest discover -s screener/tests -v
+python scripts/validate_factor_optimization.py --as-of 2026-10-14
+python -m unittest discover -s scripts -p test_validate_factor_optimization.py
+```
+
+图表生成需要已安装 matplotlib 的 Python；本机系统 Python 具备它，项目 `.venv` 不具备。
 
 ## 数据说明
 

@@ -27,6 +27,10 @@ META = {
 }
 
 
+def required_fields(params):
+    return [("pe_ttm_ratio", "pe_ratio"), "pb_ratio", "dividend_ratio_ttm", "circular_market_val"]
+
+
 def run(df, params):
     p = {**META["params"], **(params or {})}
     # 云端数据源缺少 PB/股息率字段：直接返回空名单，不降级产出误导性结果
@@ -43,11 +47,10 @@ def run(df, params):
         & (df["circular_market_val"] >= p["min_market_val"])
     )
     hits = df[mask].copy()
-    hits["reason"] = hits.apply(
-        lambda r: (
-            f"PE_TTM {(r['pe_ttm_ratio'] if r['pe_ttm_ratio'] == r['pe_ttm_ratio'] else r['pe_ratio']):.1f}，"
-            f"PB {r['pb_ratio']:.2f}，股息率 {r['dividend_ratio_ttm']:.1f}%"
-        ),
-        axis=1,
-    )
-    return hits.sort_values("dividend_ratio_ttm", ascending=False)
+    hits["reason"] = [
+        (f"PE_TTM {r['pe_ttm_ratio']:.1f}" if r['pe_ttm_ratio'] == r['pe_ttm_ratio']
+         else f"PE {r['pe_ratio']:.1f}（TTM 缺失）")
+        + f"，PB {r['pb_ratio']:.2f}，股息率 {r['dividend_ratio_ttm']:.1f}%"
+        for _, r in hits.iterrows()
+    ]
+    return hits.sort_values(["dividend_ratio_ttm", "code"], ascending=[False, True])

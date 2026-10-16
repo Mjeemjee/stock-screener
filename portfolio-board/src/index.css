@@ -60,7 +60,7 @@
   /* 衬线标题：机构出版物质感（品牌、页面标题、章节题） */
   .font-display {
     font-family: Georgia, 'Times New Roman', 'Songti SC', 'Noto Serif SC', SimSun, serif;
-    letter-spacing: -0.01em;
+    letter-spacing: 0;
   }
   .text-gradient {
     @apply bg-clip-text text-transparent;
