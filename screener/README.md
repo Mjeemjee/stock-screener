@@ -26,7 +26,7 @@
 
 网站新增 `/tracking`、`/stock/:code` 和 `/watchlist`；观察名单仅保存在当前浏览器。展示上限仍为每策略 50 条，跨市场按各自排序交替取出，避免一个市场挤掉另一个市场。
 
-每日工作流恢复最近累计档案，扫描后上传整份累计档案；新备份成功才清理多余同名备份，保留最近三份，每份均保留全部内部历史记录。单份 artifact 保存 90 天；长时间停跑仍需另行备份。此轮只验证本地归档恢复流程及工作流语法，尚未运行 GitHub 云端流程。
+每日工作流恢复最近累计档案，扫描后上传整份累计档案；新备份成功才清理多余同名备份，保留最近三份，每份均保留全部内部历史记录。单份 artifact 保存 90 天；长时间停跑仍需另行备份。2026-10-16 已完成首轮云端扫描和公网部署，并下载累计备份验证三份档案哈希，原两份初始档案完整保留。公网验收记录见 `reports/PUBLIC_DEPLOYMENT_20261016.md`。
 
 方法依据：[交易日历库](https://github.com/gerrymanoim/exchange_calendars)、[HKMA 联系汇率制度](https://www.hkma.gov.hk/eng/key-functions/money/linked-exchange-rate-system/)、[GitHub artifact 文档](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/download-workflow-artifacts)。
 
