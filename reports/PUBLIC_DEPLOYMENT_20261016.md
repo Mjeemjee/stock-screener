@@ -22,6 +22,7 @@
 ## Checks
 
 - 63 regression tests passed: 44 strategy/tracking, 9 research validation, 4 publication privacy, 6 frontend helpers.
+- Follow-up: direct `gh run download` over tracked seed files refused to overwrite existing files. Daily restore now downloads to a fresh directory and validates/merges snapshots without replacing immutable originals. Six additional regression tests cover collisions, CRLF differences, derived cache refresh, tampering, invalid IDs, and empty/self restores.
 - 19 browser checks passed against the public website, with no uncaught page errors.
 - Search, market filters, stable sorting, CSV, retry, lazy navigation, tracking controls, stock charts, and persistent watchlists passed.
 - Desktop and 390/320 px mobile layouts passed overflow checks and screenshot inspection.
@@ -35,6 +36,7 @@
 python -m unittest discover -s screener/tests -v
 python -m unittest discover -s scripts -p test_validate_factor_optimization.py -v
 python -m unittest discover -s scripts -p test_verify_public_build.py -v
+python -m unittest discover -s scripts -p test_restore_screening_archive.py -v
 cd portfolio-board
 node --test src/lib/screener.test.cjs
 node scripts/verify-screener-browser.cjs https://mjeemjee.github.io/stock-screener/

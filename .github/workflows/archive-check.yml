@@ -1,0 +1,34 @@
+name: verify-archive-restore
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install -r requirements-cloud.txt
+      - name: Restore regression tests
+        run: python -m unittest discover -s scripts -p test_restore_screening_archive.py -v
+      - name: Restore actual cumulative backup twice over tracked seeds
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          archive_run_id=$(gh api "repos/${GITHUB_REPOSITORY}/actions/artifacts?name=screening-archive&per_page=100" --jq '[.artifacts[] | select(.name == "screening-archive" and .expired == false)] | sort_by(.created_at) | reverse | .[0].workflow_run.id // empty')
+          test -n "$archive_run_id"
+          restored_archive=$(mktemp -d)
+          gh run download "$archive_run_id" --name screening-archive --dir "$restored_archive"
+          python scripts/restore_screening_archive.py "$restored_archive" data/screening_archive
+          python scripts/restore_screening_archive.py "$restored_archive" data/screening_archive

@@ -32,6 +32,7 @@ jobs:
           python -m unittest discover -s screener/tests -v
           python -m unittest discover -s scripts -p test_validate_factor_optimization.py -v
           python -m unittest discover -s scripts -p test_verify_public_build.py -v
+          python -m unittest discover -s scripts -p test_restore_screening_archive.py -v
 
       - name: 恢复累计选股档案
         env:
@@ -41,7 +42,9 @@ jobs:
           set -euo pipefail
           archive_run_id=$(gh api "repos/${GITHUB_REPOSITORY}/actions/artifacts?name=screening-archive&per_page=100" --jq '[.artifacts[] | select(.name == "screening-archive" and .expired == false)] | sort_by(.created_at) | reverse | .[0].workflow_run.id // empty')
           if [ -n "$archive_run_id" ]; then
-            gh run download "$archive_run_id" --name screening-archive --dir data/screening_archive
+            restored_archive=$(mktemp -d)
+            gh run download "$archive_run_id" --name screening-archive --dir "$restored_archive"
+            python scripts/restore_screening_archive.py "$restored_archive" data/screening_archive
           fi
 
       - name: 运行云端选股引擎（HKEX + NASDAQ + 腾讯快照）
