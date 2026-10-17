@@ -27,6 +27,7 @@ jobs:
           python -m unittest discover -s scripts -p test_restore_screening_archive.py -v
           python -m unittest discover -s scripts -p test_verify_public_build.py -v
           python -m unittest scripts.test_prepare_public_build -v
+          python -m unittest scripts.test_fetch_public_data -v
           python -m unittest discover -s scripts -p test_validate_factor_optimization.py -v
       - name: Restore cumulative archive
         env:

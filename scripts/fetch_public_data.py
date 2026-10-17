@@ -8,14 +8,17 @@ FILES = ("screener_results.json", "tracking.json", "history/hk.json", "history/u
          "history/index.json", "history/etf.json")
 
 
-def main():
+def main(output=OUT, get=requests.get):
     for name in FILES:
-        response = requests.get(BASE + name, timeout=90, headers={"Cache-Control": "no-cache"})
+        response = get(BASE + name, timeout=90, headers={"Cache-Control": "no-cache"})
+        if response.status_code == 404 and name == "history/etf.json":
+            print("Optional ETF history is not published; retaining the current availability state")
+            continue
         response.raise_for_status()
         payload = response.json()
         if not isinstance(payload, dict):
             raise ValueError(f"Invalid public payload: {name}")
-        target = OUT / name
+        target = Path(output) / name
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_bytes(response.content)
         print("Restored public market data:", name)
