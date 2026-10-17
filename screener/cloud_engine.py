@@ -12,7 +12,7 @@
 未确认字段（[43]/[71]/[72] 疑似换手/PE静/股息率但样本矛盾）一律不映射。
 
 与本机版（engine.py）的差异：
-  - 无 pe_ttm_ratio / pb_ratio / dividend_ratio_ttm / turnover_rate / amplitude（全为 NaN）
+  - 港股 PE_TTM/PB/股息由免费东方财富接口补充，逐条与腾讯价格核对；美股仍缺这些字段
   - circular_market_val 用总市值代替流通市值（筛选口径影响可接受）
   - 美股代码格式与 futu 对齐：US.AAPL / US.BRK.B（NASDAQ 的 BRK/B → BRK.B）
   - 港股代码格式与 futu 对齐：HK.00700
@@ -182,12 +182,18 @@ def main(*, output_path=None, include_history=True, archive_dir=None) -> None:
     snap["name"] = snap["name"].fillna(snap.get("name_nasdaq"))
     snap = snap.drop(columns=[c for c in ["name_nasdaq"] if c in snap.columns])
 
+    from screener.free_hk_fundamentals import enrich, cloud_strategy
+    snap, fundamentals_summary = enrich(snap, hk["code"].tolist())
+    print(f"[fundamentals] {fundamentals_summary}", flush=True)
     df = clean(snap)
     from screener.risk import enrich_snapshot
     df = enrich_snapshot(df)
     print(f"[clean] 流动性过滤后 {len(df)} 只", flush=True)
 
     strategies = load_strategies()
+    # The cloud listed-share-cap variant has a new identity; local Futu keeps its original rules.
+    strategies = [cloud_strategy(fundamentals_summary) if mod.META["id"] == "value_dividend" else mod
+                  for mod in strategies]
     print(f"[strategies] 发现 {len(strategies)} 个策略", flush=True)
 
     results = run_strategies(df, strategies)
@@ -204,7 +210,8 @@ def main(*, output_path=None, include_history=True, archive_dir=None) -> None:
     payload = {
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "elapsed_sec": round(time.time() - t0, 1),
-        "data_source": "cloud (HKEX + NASDAQ + Tencent)",
+        "data_source": "cloud (HKEX + NASDAQ + Tencent + Eastmoney HK fundamentals)",
+        "fundamentals": fundamentals_summary,
         "universe_total": int(len(uni)),
         "universe_after_filter": int(len(df)),
         "data_quality": {**df.attrs.get("data_quality", {}), **snapshot_quality},

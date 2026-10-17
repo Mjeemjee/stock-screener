@@ -19,11 +19,13 @@ KEEP_COLS = [
     "code", "name", "last_price", "prev_close_price", "change_rate",
     "pe_ratio", "pe_ttm_ratio", "pb_ratio", "dividend_ratio_ttm",
     "highest52weeks_price", "lowest52weeks_price",
-    "circular_market_val", "turnover", "turnover_rate", "volume", "amplitude",
+    "circular_market_val", "hk_market_val", "turnover", "turnover_rate", "volume", "amplitude",
 ]
 EXTRA_COLS = ["sector", "industry", "quote_time", "risk_status", "risk_as_of",
               "volatility_20d_pct", "drawdown_120d_pct", "risk_window_sessions",
-              "median_turnover_20d", "earnings_date"]
+              "median_turnover_20d", "earnings_date", "market_cap_basis", "fundamentals_source",
+              "fundamentals_fetched_at", "fundamentals_report_date", "fundamentals_quote_date",
+              "fundamentals_status"]
 
 
 def clean(df: pd.DataFrame) -> pd.DataFrame:

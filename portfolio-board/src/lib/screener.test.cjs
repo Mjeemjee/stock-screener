@@ -61,6 +61,20 @@ test('missing prices format as a placeholder while zero remains a number', () =>
   assert.equal(formatNumber(0), '0.00')
 })
 
+test('listed-cap variant sorts and exports its declared cap and financial provenance', () => {
+  const a = hit('HK.00941', null, { market_cap_basis: 'hk_listed', hk_market_val: 50e9,
+    circular_market_val: 1, pe_ttm_ratio: 8, pb_ratio: 1, dividend_ratio_ttm: 6,
+    fundamentals_source: 'Eastmoney HK F10', fundamentals_fetched_at: '2026-10-17T12:00:00Z',
+    fundamentals_report_date: '2026-06-30' })
+  const b = hit('HK.00005', null, { market_cap_basis: 'hk_listed', hk_market_val: 40e9, circular_market_val: 99e9 })
+  assert.deepEqual(filterAndSortHits([b, a], '', 'HK', 'circular_market_val', 'desc').map(h => h.code), ['HK.00941', 'HK.00005'])
+  const csv = hitsToCsv([a], 'HK value', '2026-10-17T12:00:00Z')
+  assert.ok(csv.includes('"50000000000"'))
+  assert.ok(csv.includes('"hk_listed"'))
+  assert.ok(csv.includes('"Eastmoney HK F10"'))
+  assert.ok(csv.includes('"dividend_yield_ttm_pct"'))
+})
+
 test('malformed feed is rejected before rendering and shipped legacy data remains compatible', () => {
   const legacy = JSON.parse(fs.readFileSync(path.join(__dirname, '../../public/data/screener_results.json'), 'utf8').replace(/^\uFEFF/, ''))
   assert.equal(isScreenerResults(legacy), true)

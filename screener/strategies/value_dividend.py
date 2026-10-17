@@ -44,7 +44,7 @@ def run(df, params):
         & (df["pb_ratio"] > 0)
         & (df["pb_ratio"] <= p["pb_max"])
         & (df["dividend_ratio_ttm"] >= p["dividend_min"])
-        & (df["circular_market_val"] >= p["min_market_val"])
+        & (df[p.get("market_value_field", "circular_market_val")] >= p["min_market_val"])
     )
     hits = df[mask].copy()
     hits["reason"] = [

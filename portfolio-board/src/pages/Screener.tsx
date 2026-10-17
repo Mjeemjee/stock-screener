@@ -4,7 +4,7 @@ import { AlertTriangle, ArrowDownWideNarrow, ArrowUpNarrowWide, Download, Loader
 import { dataUrl } from '@/lib/dataSource'
 import {
   currencyOf, filterAndSortHits, formatNumber, hitsToCsv, isFiniteNumber,
-  isScreenerResults, marketOf, scanTimeInfo,
+  isScreenerResults, marketOf, marketValue, scanTimeInfo,
   type MarketFilter, type SortDirection, type SortKey,
 } from '@/lib/screener'
 import AppShell from '@/components/AppShell'
@@ -67,6 +67,7 @@ function StrategyDetails({ result }: { result: StrategyResult }) {
       <p>{result.meta.principle}</p>
       <p className="text-xs text-muted-foreground break-words">来源：{result.meta.source}</p>
       {result.meta.cloud_note && <p className="text-xs text-sky-700">{result.meta.cloud_note}</p>}
+      {result.meta.fundamentals && <p className="text-xs text-muted-foreground">财务数据：{result.meta.fundamentals.source}；匹配 {result.meta.fundamentals.matched_count}/{result.meta.fundamentals.requested_count}，价格核对通过 {result.meta.fundamentals.verified_count}，股息可用 {result.meta.fundamentals.dividend_available_count}。{result.meta.fundamentals.error && '本期数据源请求失败。'}采集时间 {scanTimeInfo(result.meta.fundamentals.fetched_at).display}，不是财报公告时间。</p>}
       {result.meta.market_params && <div className="overflow-x-auto"><table className="w-full text-left text-xs"><thead><tr className="border-b text-muted-foreground"><th className="p-2">市场</th><th className="p-2">市值下限</th><th className="p-2">成交额下限</th><th className="p-2">20 日中位数过滤</th></tr></thead><tbody>{Object.entries(result.meta.market_params).map(([market, params]) => <tr key={market} className="border-b"><td className="p-2">{market}</td><td className="whitespace-nowrap p-2">{fmtMv(params.min_market_val)} {market === 'US' ? 'USD' : 'HKD'}</td><td className="whitespace-nowrap p-2">{fmtMv(params.min_turnover)} {market === 'US' ? 'USD' : 'HKD'}</td><td className="p-2">{params.use_median_liquidity ? fmtMv(params.min_median_turnover_20d) : '未启用'}</td></tr>)}</tbody></table><p className="mt-2 text-xs text-muted-foreground">市场配置 {result.meta.policy_version}；港币门槛以固定 7.8 比例作规模对齐，属于初始参数，未声称已优化收益。</p></div>}
       <pre className="max-w-full overflow-x-auto rounded-md bg-muted p-3 text-xs">{JSON.stringify(result.meta.params, null, 2)}</pre>
       <p className="text-xs text-amber-700">{result.meta.risk}</p>
@@ -92,7 +93,7 @@ function HitRows({ hits }: { hits: ScreenHit[] }) {
           </div>
         </div>
         <div className="grid grid-cols-2 gap-2 text-xs tnum">
-          <div><span className="text-muted-foreground">市值 </span>{fmtMv(hit.circular_market_val)} {currencyOf(hit.code)}</div>
+          <div><span className="text-muted-foreground">{hit.market_cap_basis === 'hk_listed' ? '港股市值' : '市值'} </span>{fmtMv(marketValue(hit))} {currencyOf(hit.code)}</div>
           <div className="text-right"><span className="text-muted-foreground">因子 </span><FactorValue hit={hit} /></div>
         </div>
         <p className="break-words text-xs leading-relaxed text-muted-foreground">{hit.reason}</p>
@@ -115,7 +116,7 @@ function HitRows({ hits }: { hits: ScreenHit[] }) {
           </div></TableCell>
           <TableCell className="text-right tnum">{formatNumber(hit.last_price)}<div className="text-[10px] text-muted-foreground">{currencyOf(hit.code)}</div></TableCell>
           <TableCell className="text-right tnum"><ChangeText value={hit.change_rate} /></TableCell>
-          <TableCell className="text-right tnum">{fmtMv(hit.circular_market_val)}<div className="text-[10px] text-muted-foreground">{currencyOf(hit.code)}</div></TableCell>
+          <TableCell className="text-right tnum">{fmtMv(marketValue(hit))}<div className="text-[10px] text-muted-foreground">{currencyOf(hit.code)}{hit.market_cap_basis === 'hk_listed' ? ' · 港股市值' : ''}</div></TableCell>
           <TableCell className="whitespace-normal break-words text-xs leading-relaxed text-muted-foreground">{hit.reason}</TableCell>
           <TableCell className="whitespace-normal break-words text-right text-xs tnum"><FactorValue hit={hit} /></TableCell>
         </TableRow>)}</TableBody>

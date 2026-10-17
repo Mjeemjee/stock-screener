@@ -21,6 +21,16 @@ export interface StrategyMeta {
   unavailable_count?: number
   error?: string
   cloud_note?: string
+  fundamentals?: {
+    source: string
+    status: string
+    fetched_at: string
+    requested_count: number
+    matched_count: number
+    verified_count: number
+    dividend_available_count: number
+    error?: string
+  }
 }
 
 export interface ScreenHit {
@@ -36,6 +46,13 @@ export interface ScreenHit {
   highest52weeks_price?: number | null
   lowest52weeks_price?: number | null
   circular_market_val?: number | null
+  hk_market_val?: number | null
+  market_cap_basis?: string
+  fundamentals_source?: string | null
+  fundamentals_fetched_at?: string | null
+  fundamentals_report_date?: string | null
+  fundamentals_quote_date?: string | null
+  fundamentals_status?: string | null
   turnover?: number | null
   turnover_rate?: number | null
   volume?: number | null

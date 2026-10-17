@@ -1,0 +1,306 @@
+import type { InvestmentMethod } from '../types/investmentMethods'
+
+// Curated source summaries; source verification and strategy validation are separate.
+export const INVESTMENT_METHODS: InvestmentMethod[] = [
+  {
+    "id": "buffett-quality-value",
+    "version": "1",
+    "people": [
+      "沃伦·巴菲特"
+    ],
+    "name": "优质企业与合理价格",
+    "style": "质量价值",
+    "targetMarkets": [
+      "US",
+      "HK"
+    ],
+    "representation": "reference_only",
+    "evidenceStatus": "concept_checked",
+    "summary": "以企业长期经济特征、管理质量和价格判断为研究重点。",
+    "sources": [
+      {
+        "title": "Berkshire Hathaway 1989 shareholder letter",
+        "url": "https://www.berkshirehathaway.com/letters/1989.html",
+        "sourceType": "author_original",
+        "checkedOn": "2026-10-16",
+        "supports": "企业质量、合理价格、盈利与资本结构的理念",
+        "limitations": "不能推出统一的 ROE 或估值买入阈值"
+      }
+    ],
+    "requiredData": [
+      "历史盈利与权益",
+      "经营现金流与资本开支",
+      "债务与现金",
+      "财报公告时点",
+      "竞争优势与管理层人工判断"
+    ],
+    "quantitativeRules": [],
+    "projectAddedRules": [],
+    "limitations": [
+      "尚无完整财务数据接入",
+      "未定义替代主观判断的量化规则"
+    ],
+    "executionBinding": {
+      "screenerId": null,
+      "backtestId": null,
+      "learningId": null
+    },
+    "validationEvidence": []
+  },
+  {
+    "id": "graham-defensive",
+    "version": "1",
+    "people": [
+      "本杰明·格雷厄姆"
+    ],
+    "name": "防御型价值投资",
+    "style": "防御价值",
+    "targetMarkets": [
+      "US",
+      "HK"
+    ],
+    "representation": "reference_only",
+    "evidenceStatus": "bibliography_checked_rules_pending",
+    "summary": "从价值与安全边际的角度研究企业；具体防御型筛选规则待版本核对。",
+    "sources": [
+      {
+        "title": "The Intelligent Investor — Jason Zweig book introduction",
+        "url": "https://jasonzweig.com/books/the-intelligent-investor/",
+        "sourceType": "book_introduction",
+        "checkedOn": "2026-10-16",
+        "supports": "作者、书目与价值投资理念",
+        "limitations": "未核对目标版本选股章节，不能据此发布数值阈值"
+      }
+    ],
+    "requiredData": [
+      "多年盈利与分红",
+      "资产负债项目",
+      "股价与股数",
+      "财报公告时点"
+    ],
+    "quantitativeRules": [],
+    "projectAddedRules": [],
+    "limitations": [
+      "规则章节待核对",
+      "多年财务与分红数据未接入"
+    ],
+    "executionBinding": {
+      "screenerId": null,
+      "backtestId": null,
+      "learningId": null
+    },
+    "validationEvidence": []
+  },
+  {
+    "id": "lynch-garp",
+    "version": "1",
+    "people": [
+      "彼得·林奇"
+    ],
+    "name": "合理价格成长（GARP 机构参考版）",
+    "style": "成长价值",
+    "targetMarkets": [
+      "US",
+      "HK"
+    ],
+    "representation": "institutional_reference",
+    "evidenceStatus": "concept_checked_rules_pending",
+    "summary": "同时关注成长与估值，收录 Fidelity 对 GARP 的机构说明作为参考。",
+    "sources": [
+      {
+        "title": "Fidelity — Growth at a Reasonable Price",
+        "url": "https://research2.fidelity.com/fidelity/screeners/commonstock/strategy.asp?simpleStrategy=%7BF61E8D5C-32C9-499B-8F6D-DD6DAF53EB78%7D",
+        "sourceType": "related_institution",
+        "checkedOn": "2026-10-16",
+        "supports": "GARP 的成长与估值双重筛选概念及与林奇的关联",
+        "limitations": "该机构筛选不等于林奇原始完整策略；不混用历史增长与预期增长 PEG"
+      }
+    ],
+    "requiredData": [
+      "明确口径的 PE",
+      "季度和年度盈利增长",
+      "历史或预测增长率的来源与有效时点",
+      "财报公告时点"
+    ],
+    "quantitativeRules": [],
+    "projectAddedRules": [],
+    "limitations": [
+      "增长率与预测历史未接入",
+      "未冻结 PEG 的具体计算口径"
+    ],
+    "executionBinding": {
+      "screenerId": null,
+      "backtestId": null,
+      "learningId": null
+    },
+    "validationEvidence": []
+  },
+  {
+    "id": "greenblatt-magic-formula",
+    "version": "1",
+    "people": [
+      "乔尔·格林布拉特"
+    ],
+    "name": "Magic Formula",
+    "style": "质量价值",
+    "targetMarkets": [
+      "US"
+    ],
+    "representation": "reference_only",
+    "evidenceStatus": "concept_checked_rules_pending",
+    "summary": "研究以合理价格选择优质企业的系统化方法；精确公式与执行口径待核对。",
+    "sources": [
+      {
+        "title": "Magic Formula Investing — About the Book",
+        "url": "https://www.magicformulainvesting.com/home/aboutthebook",
+        "sourceType": "author_affiliated",
+        "checkedOn": "2026-10-16",
+        "supports": "作者、著作、系统化选股理念与网站关联",
+        "limitations": "本页没有充分披露全部计算公式和数据处理"
+      },
+      {
+        "title": "Magic Formula Investing — FAQs",
+        "url": "https://www.magicformulainvesting.com/Home/Faqs",
+        "sourceType": "author_affiliated",
+        "checkedOn": "2026-10-16",
+        "supports": "官网选股工具的美股范围与长期分散持有说明",
+        "limitations": "港股迁移需另建版本并验证，不照搬官网美股结果"
+      }
+    ],
+    "requiredData": [
+      "EBIT",
+      "企业价值组成项目",
+      "营运资本和净固定资产",
+      "行业分类",
+      "财报公告时点"
+    ],
+    "quantitativeRules": [],
+    "projectAddedRules": [],
+    "limitations": [
+      "详细公式、行业排除和持有安排待核对",
+      "所需财务与企业价值数据未接入"
+    ],
+    "executionBinding": {
+      "screenerId": null,
+      "backtestId": null,
+      "learningId": null
+    },
+    "validationEvidence": []
+  },
+  {
+    "id": "oneil-canslim",
+    "version": "1",
+    "people": [
+      "威廉·欧奈尔"
+    ],
+    "name": "CAN SLIM",
+    "style": "成长趋势",
+    "targetMarkets": [
+      "US",
+      "HK"
+    ],
+    "representation": "reference_only",
+    "evidenceStatus": "concept_checked_rules_pending",
+    "summary": "以基本面与技术分析结合研究成长股，尚未建立完整可执行规则。",
+    "sources": [
+      {
+        "title": "IBD — How to Use SwingTrader (2025)",
+        "url": "https://get.investors.com/wp-content/uploads/2025/01/How-To-Use-SwingTrader-2025.pdf",
+        "sourceType": "related_institution",
+        "checkedOn": "2026-10-16",
+        "supports": "IBD 对 CAN SLIM 来源与基本面/技术分析结合的说明",
+        "limitations": "SwingTrader 是适配版本，其说明不支持复原完整 CAN SLIM 全部阈值"
+      }
+    ],
+    "requiredData": [
+      "季度和年度盈利",
+      "营收增长",
+      "价格成交量",
+      "市场相对强弱",
+      "机构持仓时点",
+      "新产品等人工判断"
+    ],
+    "quantitativeRules": [],
+    "projectAddedRules": [],
+    "limitations": [
+      "财务和机构历史未接入",
+      "定性条件未量化",
+      "不能把现有突破策略直接命名为 CAN SLIM"
+    ],
+    "executionBinding": {
+      "screenerId": null,
+      "backtestId": null,
+      "learningId": null
+    },
+    "validationEvidence": []
+  },
+  {
+    "id": "turtle-breakout-adapted",
+    "version": "1",
+    "people": [
+      "理查德·丹尼斯",
+      "威廉·埃克哈特"
+    ],
+    "name": "海龟趋势交易（项目突破简化版）",
+    "style": "趋势突破",
+    "targetMarkets": [
+      "US",
+      "HK"
+    ],
+    "representation": "quantitative_approximation",
+    "evidenceStatus": "local_integration_validation",
+    "summary": "绑定网站已有突破模块，提供收盘突破与成交量过滤的股票回测。",
+    "sources": [
+      {
+        "title": "Original Turtles — A Complete Mechanical Trading System",
+        "url": "https://www.tradingblox.com/originalturtles/system.htm",
+        "sourceType": "participant_archive",
+        "checkedOn": "2026-10-16",
+        "supports": "原海龟系统涵盖市场、仓位、入场、止损、出场与执行",
+        "limitations": "本项目未完整复现，原规则 PDF 全文仍需进一步核对"
+      }
+    ],
+    "requiredData": [
+      "有日期的完整日线 OHLCV",
+      "前复权与成交量口径说明"
+    ],
+    "quantitativeRules": [
+      {
+        "origin": "project",
+        "rule": "收盘超过之前 N 根最高收盘且成交量超过 20 根均量乘 K 时入场",
+        "implementation": "portfolio-board/src/backtest/strategies/breakout.ts"
+      },
+      {
+        "origin": "project",
+        "rule": "收盘跌破之前 M 根最低收盘时出场，信号后下一根开盘成交",
+        "implementation": "portfolio-board/src/backtest/strategies/breakout.ts"
+      }
+    ],
+    "projectAddedRules": [
+      "收盘价突破",
+      "成交量过滤",
+      "股票只做多",
+      "等权分仓",
+      "T+1 开盘执行"
+    ],
+    "limitations": [
+      "不含完整波动仓位、加仓、空头和组合风险限制",
+      "初始参数是项目默认值",
+      "现有历史池有幸存者偏差",
+      "工程验证不代表实盘有效；尚无前瞻收益证据"
+    ],
+    "executionBinding": {
+      "screenerId": null,
+      "backtestId": "breakout",
+      "learningId": null
+    },
+    "initialParams": {
+      "lookback": 20,
+      "volMult": 1.5,
+      "exitLookback": 10
+    },
+    "validationEvidence": [
+      "项目简化版绑定已有 breakout 模块；工程验证不代表收益有效性。"
+    ]
+  }
+]

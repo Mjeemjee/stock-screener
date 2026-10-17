@@ -19,6 +19,7 @@ export default function Learn() {
       subtitle="理解策略，先于使用策略。本板块逐一拆解站内每个策略的构造原理、数学形式与失效条件，不预设任何金融背景。全部内容仅作方法论说明，不构成投资建议。"
     >
       {/* 目录 */}
+      <p className="mb-5 rounded-md border bg-muted/20 p-4 text-sm leading-7"><Link to="/methods" className="font-medium text-primary underline">投资方法库</Link>：按人物与流派查看六组方法的公开出处、量化差异、数据需求和可用回测入口。</p>
       <nav className="mb-6 flex flex-wrap gap-2">
         {CHAPTERS.map((c) => (
           <a

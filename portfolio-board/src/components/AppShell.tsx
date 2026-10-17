@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router'
 
 const NAV = [
   { to: '/', label: '选股' },
+  { to: '/methods', label: '方法库' },
   { to: '/tracking', label: '追踪' },
   { to: '/watchlist', label: '自选' },
   { to: '/backtest', label: '回测' },
@@ -41,7 +42,7 @@ export default function AppShell({
             </div>
             <nav aria-label="主导航" className="grid w-full shrink-0 grid-cols-4 gap-0.5 rounded-md border border-border bg-secondary/70 p-1 text-sm sm:flex sm:w-auto">
               {NAV.map((n) => {
-                const active = pathname === n.to
+                const active = pathname === n.to || (n.to !== '/' && pathname.startsWith(n.to + '/'))
                 return (
                   <Link
                     key={n.to}

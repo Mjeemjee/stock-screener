@@ -1,5 +1,25 @@
 # 选股引擎与策略库
 
+## 免费港股财务补数（2026-10-17）
+
+`free_hk_fundamentals.py` 以既有 requests 请求东方财富公开接口，完整校验分页，按官方港股普通股池匹配，再核对最新已收盘交易日的腾讯价格、港股市值/股数与股息率算术。缺失、陈旧、未来行情和不一致数据不进入价值筛选；接口失败不影响其他策略，不复用旧数据冒充新结果。无需 OpenD、API key 或新依赖。
+
+云端将本机 `value_dividend` 替换为独立观察策略 `value_dividend_hk`：PE_TTM≤12、PB≤1.5、股息率≥5%、港股上市股份市值≥390亿港元；PE/PB需为正。市值口径与本机版不同，使用独立策略ID与归档；其他策略不变。美股 PE/PB/股息的补数尚未接入。
+
+完整扫描使用原 `python -m screener.cloud_engine`，部署后既有定时流程自动调用；CI 同步运行方法库和公开暂存回归测试。独立、不更新追踪/不发布的源探测命令：
+
+```powershell
+.venv/Scripts/python.exe -X utf8 -m scripts.probe_free_hk_value --output reports/free_hk_probe.json
+```
+
+本机含私人数据时，不能直接把普通 dist 全目录当作发布包；使用白名单暂存并核验：
+
+```powershell
+.venv/Scripts/python.exe -X utf8 -m scripts.prepare_public_build portfolio-board/dist reports/public-release-20261017
+```
+
+港股市值口径独立于本机版；方法库中的原始理念、项目改编和数据缺口分别展示。
+
 ## 每日归档与效果追踪（2026-10-15）
 
 两套引擎在截取展示名单前冻结全部候选到 `data/screening_archive/snapshots/`：包括实际参数、冻结时源码摘要、原市场内排序、最终市场内排序和行情/因子字段。新档只创建不覆盖，读取时核对哈希和排序注解。旧文件可导入但标记为历史导入，不参与前瞻汇总。

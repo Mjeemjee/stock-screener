@@ -20,6 +20,10 @@ export function formatNumber(value: unknown, digits = 2) {
   return isFiniteNumber(value) ? value.toFixed(digits) : '-'
 }
 
+export function marketValue(hit: ScreenHit) {
+  return hit.market_cap_basis === 'hk_listed' ? hit.hk_market_val : hit.circular_market_val
+}
+
 export function filterAndSortHits(
   hits: ScreenHit[],
   query: string,
@@ -36,8 +40,8 @@ export function filterAndSortHits(
   const sign = direction === 'asc' ? 1 : -1
   return selected.map((hit, index) => ({ hit, index })).sort((a, b) => {
     if (sort === 'code') return sign * a.hit.code.localeCompare(b.hit.code) || a.index - b.index
-    const av = a.hit[sort]
-    const bv = b.hit[sort]
+    const av = sort === 'circular_market_val' ? marketValue(a.hit) : a.hit[sort]
+    const bv = sort === 'circular_market_val' ? marketValue(b.hit) : b.hit[sort]
     // Missing values stay last for both sort directions; ties retain strategy order.
     if (!isFiniteNumber(av)) return isFiniteNumber(bv) ? 1 : a.index - b.index
     if (!isFiniteNumber(bv)) return -1
@@ -56,12 +60,15 @@ export function hitsToCsv(hits: ScreenHit[], strategyName: string, generatedAt: 
   const rows: unknown[][] = [[
     'strategy', 'generated_at', 'code', 'name', 'market', 'currency', 'last_price',
     'change_rate_pct', 'market_cap', 'turnover', 'factor_rank', 'factor_score',
-    'factor_status', 'factor_as_of', 'reason',
+    'factor_status', 'factor_as_of', 'reason', 'market_cap_basis', 'pe_ttm', 'pb',
+    'dividend_yield_ttm_pct', 'fundamentals_source', 'fundamentals_fetched_at', 'report_period_end',
   ]]
   for (const hit of hits) rows.push([
     strategyName, generatedAt, hit.code, hit.name, marketOf(hit.code), currencyOf(hit.code),
-    hit.last_price, hit.change_rate, hit.circular_market_val, hit.turnover,
+    hit.last_price, hit.change_rate, marketValue(hit), hit.turnover,
     hit.factor_rank, hit.factor_score, hit.factor_status, hit.factor_as_of, hit.reason,
+    hit.market_cap_basis, hit.pe_ttm_ratio, hit.pb_ratio, hit.dividend_ratio_ttm,
+    hit.fundamentals_source, hit.fundamentals_fetched_at, hit.fundamentals_report_date,
   ])
   return '\uFEFF' + rows.map((row) => row.map(csvCell).join(',')).join('\r\n') + '\r\n'
 }

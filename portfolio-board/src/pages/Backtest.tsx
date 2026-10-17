@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { Link } from 'react-router'
+import { Link, useSearchParams } from 'react-router'
+import { investmentMethodPreset } from '@/lib/investmentMethods'
 import { dataUrl } from '@/lib/dataSource'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -377,6 +378,9 @@ function BlockCard({
 }
 
 export default function Backtest() {
+  const [searchParams] = useSearchParams()
+  const methodId = searchParams.get('method')
+  const methodPreset = useMemo(() => investmentMethodPreset(methodId, resolveStrategy), [methodId])
   const [mode, setMode] = useState<'single' | 'rotation'>('single')
   const [rot, setRot] = useState({
     biasN: 25,
@@ -389,7 +393,7 @@ export default function Backtest() {
     threshold: 1.5,
   })
   const [market, setMarket] = useState<MarketKey>('US')
-  const [stack, setStack] = useState<StackConfig>(() => ({
+  const [stack, setStack] = useState<StackConfig>(() => methodPreset.stack ?? ({
     combo: { ...DEFAULT_COMBO },
     blocks: [mkBlock('ma-cross'), mkBlock('breakout')].filter((b): b is StrategyBlock => b != null),
   }))
@@ -413,6 +417,19 @@ export default function Backtest() {
   const [costStress, setCostStress] = useState(true)
   const [stress, setStress] = useState<{ mult: number; ret: number; sharpe: number }[] | null>(null)
   const resultRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (methodPreset.stack) {
+      setStack(methodPreset.stack)
+      setMode('single')
+      setCodeMode(false)
+      setResult(null)
+      setStress(null)
+    }
+  }, [methodPreset])
+  const methodCustom = methodPreset.stack != null && (mode !== 'single' ||
+    serializeStack(stack) !== serializeStack(methodPreset.stack) || initialCash !== 1000000 ||
+    maxPositions !== 10 || costPct !== .15 || stopLoss !== 0 || takeProfit !== 0 || maxHold !== 0)
 
   // 切换市场 → 懒加载该市场数据
   useEffect(() => {
@@ -498,6 +515,7 @@ export default function Backtest() {
   }
 
   function handleRun() {
+    if (methodPreset.error) return
     if (mode === 'rotation') {
       handleRunRotation()
       return
@@ -622,6 +640,8 @@ export default function Backtest() {
       }
     >
       <div className="space-y-5 sm:space-y-6">
+        {methodPreset.error && <div role="alert" className="rounded-md border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">{methodPreset.error} <Link to="/methods" className="underline">返回方法库</Link>；<Link to="/backtest" className="underline">使用普通回测</Link>。</div>}
+        {methodPreset.method && !methodPreset.error && <div className="space-y-2 rounded-md border bg-muted/20 p-4 text-sm" data-testid="method-backtest-context"><p className="font-medium">{methodPreset.method.name} · {methodCustom ? '自定义配置' : '项目初始配置'}</p><p className="leading-6 text-muted-foreground">收盘突破、放量过滤、股票只做多、等权分仓、次一交易日开盘成交；未复现原系统的波动仓位、加仓和空头规则。多模块权重是信号票数，不是资金比例。</p><Link to={`/methods/${methodPreset.method.id}`} className="inline-block text-xs text-primary underline">查看来源与完整差异说明</Link></div>}
         {/* ⓪ 模式切换：单标的组合 vs 横截面轮动 */}
         <Card>
           <CardContent className="py-3">
@@ -1021,7 +1041,7 @@ export default function Backtest() {
               <Button
                 onClick={handleRun}
                 disabled={
-                  running ||
+                  !!methodPreset.error || running ||
                   (mode === 'single' ? loading || !md || activeCount === 0 : false)
                 }
                 className="min-w-32 shadow-sm"
