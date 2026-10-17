@@ -5,7 +5,7 @@ from pathlib import Path
 
 
 PUBLIC_DATA = {
-    "screener_results.json", "tracking.json", "history/hk.json",
+    "screener_results.json", "tracking.json", "lab.json", "history/hk.json",
     "history/us.json", "history/index.json", "history/etf.json",
 }
 

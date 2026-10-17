@@ -1,0 +1,79 @@
+name: review-strategy-lab
+
+on:
+  workflow_dispatch:
+    inputs:
+      trial_id:
+        description: Trial ID from the downloaded review request
+        required: true
+        type: string
+      evidence_hash:
+        description: Exact evidence hash from the request (definition hash for early pause)
+        required: true
+        type: string
+      decision:
+        description: Explicit owner decision
+        required: true
+        type: choice
+        options: [pause, reject, approve]
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: daily-screener
+  cancel-in-progress: false
+
+jobs:
+  review:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements-cloud.txt
+      - name: Restore cumulative archive
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          archive_run_id=$(gh api "repos/${GITHUB_REPOSITORY}/actions/artifacts?name=screening-archive&per_page=100" --jq '[.artifacts[] | select(.name == "screening-archive" and .expired == false)] | sort_by(.created_at) | reverse | .[0].workflow_run.id // empty')
+          test -n "$archive_run_id"
+          restored_archive=$(mktemp -d)
+          gh run download "$archive_run_id" --name screening-archive --dir "$restored_archive"
+          python scripts/restore_screening_archive.py "$restored_archive" data/screening_archive
+      - name: Validate owner decision and apply allowlisted policy change
+        env:
+          TRIAL_ID: ${{ inputs.trial_id }}
+          EVIDENCE_HASH: ${{ inputs.evidence_hash }}
+          DECISION: ${{ inputs.decision }}
+          REVIEW_ACTOR: ${{ github.actor }}
+        run: |
+          python -m screener.research_lab --trial "$TRIAL_ID" --evidence-hash "$EVIDENCE_HASH" --decision "$DECISION" --actor "$REVIEW_ACTOR"
+      - name: Commit approved market policy only
+        if: inputs.decision == 'approve'
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add screener/market_rules.json
+          git commit -m "Approve strategy lab policy after explicit owner review"
+          git push origin HEAD:main
+      - uses: actions/upload-artifact@v4
+        with:
+          name: screening-archive
+          path: data/screening_archive/
+          retention-days: 90
+      - name: Refresh publication or run approved policy
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DECISION: ${{ inputs.decision }}
+        run: |
+          if [ "$DECISION" = "approve" ]; then
+            gh workflow run daily.yml --ref main
+          else
+            gh workflow run publish.yml --ref main
+          fi

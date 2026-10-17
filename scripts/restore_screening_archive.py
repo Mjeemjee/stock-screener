@@ -40,6 +40,29 @@ def restore(source, destination):
         path = destination / file.relative_to(source)
         path.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(file, path)
+    # Laboratory definitions, decisions and immutable paired runs are cumulative too.
+    if (source / "lab/state.json").exists():
+        from screener.research_lab import load_state
+        incoming_state = load_state(source)
+        if (destination / "lab/state.json").exists():
+            current_state = load_state(destination)
+            incoming_trials = {trial["id"]: trial for trial in incoming_state["trials"]}
+            if (not {trial["id"] for trial in current_state["trials"]} <= incoming_trials.keys()
+                    or incoming_state["events"][:len(current_state["events"])] != current_state["events"]
+                    or any(incoming_state["processed_sources"].get(key) != value
+                           for key, value in current_state["processed_sources"].items())):
+                raise ValueError("Lab backup would roll back the trial budget or decision history")
+        read_archives(source / "lab")
+        for file in sorted((source / "lab").rglob("*.json")):
+            if file.is_symlink():
+                raise ValueError("Lab backup symlinks are not accepted")
+            path = destination / file.relative_to(source)
+            path.parent.mkdir(parents=True, exist_ok=True)
+            if file.parent.name in ("snapshots", "evidence") and path.exists():
+                if json.loads(file.read_text(encoding="utf-8")) != json.loads(path.read_text(encoding="utf-8")):
+                    raise ValueError("Conflicting immutable lab snapshot")
+                continue
+            shutil.copy2(file, path)
     return len(read_archives(destination))
 
 

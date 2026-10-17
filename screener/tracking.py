@@ -49,7 +49,7 @@ def write_json(path, data):
 
 def strategy_version():
     digest = hashlib.sha256()
-    files = sorted((ROOT / "screener").rglob("*.py")) + [ROOT / "screener/market_rules.json"]
+    files = sorted((ROOT / "screener").rglob("*.py")) + [ROOT / "screener/market_rules.json", ROOT / "screener/lab_policy.json"]
     for file in files:
         if "tests" in file.parts:
             continue
@@ -178,7 +178,7 @@ def evaluate_holding(bars, entry_day, exit_day, *, cost_bps=COST_BPS):
             "entry_price": entry[1], "exit_price": exit_row[1]}
 
 
-def evaluate_record(record, stocks, indexes, *, as_of=None):
+def evaluate_record(record, stocks, indexes, *, as_of=None, horizons=HORIZONS):
     now = as_of or datetime.now(timezone.utc)
     cutoff = instant(record["frozen_at"])
     rows = []
@@ -201,7 +201,7 @@ def evaluate_record(record, stocks, indexes, *, as_of=None):
             if original_known:
                 modes["original"] = sorted(candidates, key=lambda hit: hit["original_market_rank"])[:TOP_N]
             benchmark = price_rows(index_bars)
-            for horizon in HORIZONS:
+            for horizon in horizons:
                 exit_session = calendar.session_offset(entry_session, horizon)
                 exit_day = (int(exit_session.strftime("%Y%m%d"))
                             if entry_day and calendar.session_open(exit_session).to_pydatetime() <= now else None)
@@ -264,6 +264,8 @@ def update_tracking(archive_dir=ARCHIVE_DIR, history_dir=HISTORY_DIR, output_pat
                     *, as_of=None, fetch_missing=False, max_fetch=80):
     now = as_of or datetime.now(timezone.utc)
     records = read_archives(archive_dir)
+    from screener.research_lab import prepare, needed_prices, update_lab
+    prepare(records, archive_dir, now)
     stocks, indexes = load_histories(history_dir)
     cached = Path(archive_dir) / "prices"
     for file in sorted(cached.glob("*.json")):
@@ -274,6 +276,7 @@ def update_tracking(archive_dir=ARCHIVE_DIR, history_dir=HISTORY_DIR, output_pat
     rows = [row for record in records for row in evaluate_record(record, stocks, indexes, as_of=now)]
     needed = sorted({h["code"] for row in rows if row["prospective"] for basket in row["baskets"].values() for h in basket["holdings"]
                      if h["status"] in ("missing_entry", "missing_exit")})
+    needed = sorted(set(needed) | needed_prices(archive_dir, stocks, indexes, now))
     fetched, failed = 0, []
     if fetch_missing:
         from screener.history_fetch import hk_bars, us_bars
@@ -333,6 +336,9 @@ def update_tracking(archive_dir=ARCHIVE_DIR, history_dir=HISTORY_DIR, output_pat
     result["securities"] = securities
     result["appearances"] = {code: entries[-100:] for code, entries in appearances.items()}
     write_json(output_path, result)
+    decision_time = now if as_of is not None else datetime.now(timezone.utc)
+    update_lab(records, result, stocks, indexes, archive_dir, decision_time,
+               output_path=Path(output_path).parent / "lab.json")
     return result
 
 

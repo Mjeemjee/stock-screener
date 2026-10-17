@@ -10,6 +10,7 @@ const Tracking = lazy(() => import('./pages/Tracking'))
 const StockDetail = lazy(() => import('./pages/StockDetail'))
 const Watchlist = lazy(() => import('./pages/Watchlist'))
 const InvestmentMethods = lazy(() => import('./pages/InvestmentMethods'))
+const StrategyLab = lazy(() => import('./pages/StrategyLab'))
 
 export default function App() {
   return (
@@ -23,6 +24,7 @@ export default function App() {
       <Route path="/holdings" element={<Holdings />} />
       <Route path="/guide" element={<Guide />} />
       <Route path="/tracking" element={<Tracking />} />
+      <Route path="/lab" element={<StrategyLab />} />
       <Route path="/stock/:code" element={<StockDetail />} />
       <Route path="/watchlist" element={<Watchlist />} />
       </Routes>

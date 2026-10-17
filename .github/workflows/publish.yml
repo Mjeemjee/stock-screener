@@ -1,0 +1,63 @@
+name: publish-verified-site
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: daily-screener
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements-cloud.txt
+      - name: Regression checks
+        run: |
+          python -m unittest discover -s screener/tests -v
+          python -m unittest discover -s scripts -p test_restore_screening_archive.py -v
+          python -m unittest discover -s scripts -p test_verify_public_build.py -v
+          python -m unittest scripts.test_prepare_public_build -v
+          python -m unittest discover -s scripts -p test_validate_factor_optimization.py -v
+      - name: Restore cumulative archive
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          archive_run_id=$(gh api "repos/${GITHUB_REPOSITORY}/actions/artifacts?name=screening-archive&per_page=100" --jq '[.artifacts[] | select(.name == "screening-archive" and .expired == false)] | sort_by(.created_at) | reverse | .[0].workflow_run.id // empty')
+          test -n "$archive_run_id"
+          restored_archive=$(mktemp -d)
+          gh run download "$archive_run_id" --name screening-archive --dir "$restored_archive"
+          python scripts/restore_screening_archive.py "$restored_archive" data/screening_archive
+      - name: Reuse published market data and update laboratory
+        run: |
+          python scripts/fetch_public_data.py
+          python -m screener.research_lab --report-only
+      - uses: actions/upload-artifact@v4
+        with:
+          name: screening-archive
+          path: data/screening_archive/
+          retention-days: 90
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Build and verify
+        working-directory: portfolio-board
+        run: |
+          npm install --no-audit --no-fund
+          node --test src/lib/screener.test.cjs src/lib/investmentMethods.test.cjs src/lib/lab.test.cjs
+          npm run build
+          python ../scripts/verify_public_build.py dist
+      - uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./portfolio-board/dist

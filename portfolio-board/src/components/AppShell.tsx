@@ -5,6 +5,7 @@ const NAV = [
   { to: '/', label: '选股' },
   { to: '/methods', label: '方法库' },
   { to: '/tracking', label: '追踪' },
+  { to: '/lab', label: '实验室' },
   { to: '/watchlist', label: '自选' },
   { to: '/backtest', label: '回测' },
   { to: '/learn', label: '学习' },
@@ -29,7 +30,7 @@ export default function AppShell({
       <div className="h-0.5 w-full bg-primary" />
       <header className="sticky top-0 z-40 border-b border-border bg-card/90 backdrop-blur-md">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 py-3 space-y-2">
-          <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-col items-start gap-3 lg:flex-row lg:items-center lg:justify-between">
             <div className="flex items-center gap-2.5 min-w-0">
               <div className="h-7 w-7 shrink-0 rounded-md bg-primary shadow-sm flex items-center justify-center">
                 <span className="font-display text-primary-foreground text-sm leading-none font-bold">
@@ -40,7 +41,7 @@ export default function AppShell({
                 {title}
               </h1>
             </div>
-            <nav aria-label="主导航" className="grid w-full shrink-0 grid-cols-4 gap-0.5 rounded-md border border-border bg-secondary/70 p-1 text-sm sm:flex sm:w-auto">
+            <nav aria-label="主导航" className="grid w-full shrink-0 grid-cols-3 gap-0.5 rounded-md border border-border bg-secondary/70 p-1 text-sm sm:grid-cols-5 lg:flex lg:w-auto">
               {NAV.map((n) => {
                 const active = pathname === n.to || (n.to !== '/' && pathname.startsWith(n.to + '/'))
                 return (

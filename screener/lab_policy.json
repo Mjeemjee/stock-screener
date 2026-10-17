@@ -1,0 +1,18 @@
+{
+  "version": "lab-v1",
+  "horizon": 5,
+  "spawn_after": 8,
+  "max_active": 6,
+  "max_trials": 12,
+  "max_generations": 2,
+  "children_per_parent": 2,
+  "checkpoints": [20, 40, 60],
+  "min_independent_periods": 6,
+  "min_coverage": 0.9,
+  "min_signal_rate": 0.5,
+  "cost_bps": 15,
+  "stress_cost_bps": 30,
+  "family_alpha": 0.05,
+  "bootstrap_samples": 10000,
+  "worst_period_floor_pct": -10
+}

@@ -88,7 +88,7 @@ jobs:
         working-directory: portfolio-board
         run: |
           npm install --no-audit --no-fund
-          node --test src/lib/screener.test.cjs src/lib/investmentMethods.test.cjs
+          node --test src/lib/screener.test.cjs src/lib/investmentMethods.test.cjs src/lib/lab.test.cjs
           npm run build
 
       - name: 阻止私人持仓和非公开数据发布
