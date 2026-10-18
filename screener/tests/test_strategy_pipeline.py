@@ -162,11 +162,17 @@ class CloudSnapshotTests(unittest.TestCase):
             results[0]["hits"].reverse()
             return {"applied": True}
 
+        def promote_after_ranking(results):
+            self.assertEqual(len(results[0]["hits"]), 75)
+            self.assertEqual(results[0]["hits"][0]["code"], "US.A074")
+            return results
+
         with patch.object(cloud_engine, "fetch_hk_universe", return_value=hk), \
                 patch.object(cloud_engine, "fetch_us_universe", return_value=us), \
                 patch.object(cloud_engine, "fetch_tx_snapshots", return_value=snap), \
                 patch.object(cloud_engine, "load_strategies", return_value=[momentum_breakout]), \
                 patch("screener.factor_rank.rerank", side_effect=rank_all), \
+                patch("screener.research_lab.apply_promotions", side_effect=promote_after_ranking) as promote, \
                 patch.object(cloud_engine, "save_payload") as save, \
                 patch("screener.tracking.freeze_snapshot", return_value={"id": "fixture", "strategy_version": "fixture"}), \
                 patch("screener.tracking.update_tracking"), \
@@ -179,6 +185,7 @@ class CloudSnapshotTests(unittest.TestCase):
         self.assertEqual(payload["strategies"][0]["hits"][0]["code"], "US.A074")
         self.assertTrue(payload["generated_at"].endswith("+00:00"))
         history.assert_not_called()
+        promote.assert_called_once()
 
     def test_tencent_parser_rejects_nonfinite_fields(self):
         rec = cloud_engine.parse_tx_line(tx_line(**{"3": "Infinity", "39": "NaN"}))

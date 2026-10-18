@@ -53,3 +53,12 @@ the trial budget. Source or mother-parameter changes pause incompatible branches
 Approval requires matching evidence hash, current gates, and unchanged mother
 code/parameters. It produces an allowlisted market_rules.json change, committed
 by the owner-triggered workflow. It does not silently modify trading code.
+
+Approved refinements are stored in `market_rules.json` under `promotions`, not
+in the prescreen parameter map. The cloud scanner ranks the unchanged mother
+universe first, then applies the approved narrowing without recomputing scores.
+Exported effective market parameters and promotion evidence remain auditable.
+Later refinements keep the same underlying ranking universe. Incompatible mother
+parameter changes fail closed until explicitly revalidated. Evidence must bind
+to the exact current definition and policy, and backup restoration cannot redefine
+an existing trial.

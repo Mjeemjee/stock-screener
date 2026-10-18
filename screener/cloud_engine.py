@@ -207,6 +207,8 @@ def main(*, output_path=None, include_history=True, archive_dir=None) -> None:
     except Exception as e:
         factor_summary = {"applied": False, "reason": str(e)}
         print(f"[factor] 三因子二次筛失败（不影响选股结果）：{e}", flush=True)
+    from screener.research_lab import apply_promotions
+    apply_promotions(results)
     payload = {
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "elapsed_sec": round(time.time() - t0, 1),

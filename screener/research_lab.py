@@ -42,6 +42,8 @@ def load_state(directory):
         raise ValueError("Lab policy changed: migrate the study explicitly; do not reset its budget")
     if len(state["trials"]) > rules["max_trials"]:
         raise ValueError("Lab trial budget exceeded")
+    if len({trial["id"] for trial in state["trials"]}) != len(state["trials"]):
+        raise ValueError("Duplicate lab trial IDs")
     for trial in state["trials"]:
         if trial["definition_hash"] != digest({key: trial[key] for key in CORE}):
             raise ValueError("Lab definition integrity mismatch")
@@ -110,6 +112,49 @@ def selected(hits, market, base, params):
         hit["parent_original_market_rank"] = hit.get("original_market_rank")
         hit["original_rank"] = hit["original_market_rank"] = rank
     return output
+
+
+def apply_promotions(results, config=None):
+    """Apply approved refinements AFTER ranking on the unchanged mother universe."""
+    if config is None:
+        from screener.market_policy import RULES_PATH
+        config = json.loads(RULES_PATH.read_text(encoding="utf-8"))
+    plans = []
+    for result in results:
+        meta = result["meta"]
+        promotions = config.get("promotions", {}).get(meta["id"], {})
+        if not promotions:
+            continue
+        policies = meta.get("market_params", {})
+        for market, promotion in promotions.items():
+            if policies.get(market) != promotion["base_params"]:
+                raise ValueError("Promoted mother parameters changed; explicit revalidation required")
+            validate_params(promotion["base_params"], promotion["params"])
+        # Validate every strategy before changing any results.
+        plans.append((result, promotions))
+    for result, promotions in plans:
+        meta = result["meta"]
+        keep = {market: {hit["code"] for hit in selected(result["hits"], market,
+                    promotion["base_params"], promotion["params"])}
+                for market, promotion in promotions.items()}
+        hits = [deepcopy(hit) for hit in result["hits"]
+                if hit["code"].split(".")[0] not in keep
+                or hit["code"] in keep[hit["code"].split(".")[0]]]
+        # Restore contiguous ORIGINAL ranks without disturbing final factor ordering.
+        market_ranks = {}
+        for rank, hit in enumerate(sorted(hits, key=lambda h: h["original_rank"]), 1):
+            market = hit["code"].split(".")[0]
+            market_ranks[market] = market_ranks.get(market, 0) + 1
+            hit["parent_original_market_rank"] = hit["original_market_rank"]
+            hit["original_rank"] = rank
+            hit["original_market_rank"] = market_ranks[market]
+        meta["pre_rank_market_params"] = deepcopy(meta["market_params"])
+        meta["post_rank_promotions"] = deepcopy(promotions)
+        for market, promotion in promotions.items():
+            meta["market_params"][market] = deepcopy(promotion["params"])
+        meta.update(hit_count=len(hits), displayed_count=len(hits), truncated=False)
+        result["hits"] = hits
+    return results
 
 
 def prepare(records, directory, now):
@@ -357,9 +402,17 @@ def review(directory, trial_id, decision, evidence_hash, actor, rules_path=None,
         raise ValueError("Review is stale or this trial is not eligible")
     if digest({key: value for key, value in evidence.items() if key != "hash"}) != evidence_hash:
         raise ValueError("Evidence integrity mismatch")
+    if (evidence["definition_hash"] != trial["definition_hash"]
+            or evidence["policy_hash"] != state["policy_hash"]):
+        raise ValueError("Evidence belongs to a different definition or policy")
     frozen = json.loads((Path(directory) / "lab/evidence" / (evidence_hash + ".json")).read_text(encoding="utf-8"))
     if frozen["assessment"] != evidence or digest(frozen["cohorts"]) != evidence["cohort_hash"]:
         raise ValueError("Frozen evidence prices or observations were changed")
+    if (evidence["checkpoint"] not in policy()["checkpoints"]
+            or len(frozen["cohorts"]) != evidence["checkpoint"]
+            or any(row["trial_id"] != trial_id or row["definition_hash"] != trial["definition_hash"]
+                   for row in frozen["cohorts"])):
+        raise ValueError("Frozen cohorts do not match the reviewed experiment")
     if decision == "approve":
         if (not all(gates(metrics(frozen["cohorts"], policy()), policy()).values())
                 or not all(evidence["gates"].values()) or trial["source_version"] != strategy_version()):
@@ -373,10 +426,21 @@ def review(directory, trial_id, decision, evidence_hash, actor, rules_path=None,
         config = json.loads(path.read_text(encoding="utf-8"))
         current = {**module.META["params"], **config["strategies"].get(trial["root_id"], {}).get(trial["market"], {}),
                    **module.META.get("market_params", {}).get(trial["market"], {})}
+        underlying = current
+        previous = config.get("promotions", {}).get(trial["root_id"], {}).get(trial["market"])
+        if previous:
+            if previous["base_params"] != underlying:
+                raise ValueError("Promoted mother parameters changed; explicit revalidation required")
+            validate_params(underlying, previous["params"])
+            current = previous["params"]
         if current != trial["base_params"]:
             raise ValueError("Mother parameters changed since this experiment was created")
         validate_params(trial["base_params"], trial["params"])
-        config["strategies"].setdefault(trial["root_id"], {})[trial["market"]] = trial["params"]
+        validate_params(underlying, trial["params"])
+        config.setdefault("promotions", {}).setdefault(trial["root_id"], {})[trial["market"]] = {
+            "base_params": underlying, "params": trial["params"], "trial_id": trial_id,
+            "definition_hash": trial["definition_hash"], "evidence_hash": evidence_hash,
+            "actor": actor, "approved_at": now.isoformat(timespec="seconds")}
         write_json(path, config)
     trial["status"] = "approved" if decision == "approve" else "rejected"
     event(state, trial_id, decision, now, actor=actor, evidence_hash=evidence_hash)

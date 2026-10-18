@@ -46,6 +46,14 @@ class LabTests(unittest.TestCase):
                 'branch': {'complete': complete, 'count': 1, 'holdings': [holding], 'return_pct': 3 + delta if complete else None},
                 'parent': {'complete': True, 'count': 1, 'holdings': [holding], 'return_pct': 3}, 'benchmark_pct': 1.0}
 
+    def qualify(self, trial=None):
+        trial = trial or self.spawn()
+        rows = [{**self.observation(i), 'trial_id': trial['id'], 'definition_hash': trial['definition_hash']}
+                for i in range(40)]
+        with patch.object(lab, 'observations', return_value=rows):
+            report = lab.update_lab([], {'evaluations': []}, {}, {}, self.path, self.now, self.path / 'public.json')
+        return next(t for t in report['trials'] if t['id'] == trial['id'])
+
     def test_spawn_is_single_change_bounded_and_idempotent(self):
         self.spawn()
         self.assertEqual(len(self.state['trials']), 2)
@@ -212,9 +220,132 @@ class LabTests(unittest.TestCase):
         evidence = trial['assessments'][-1]['hash']
         lab.review(self.path, trial['id'], 'approve', evidence, 'repository-owner', config)
         after = json.loads(config.read_text())
-        self.assertEqual(after['strategies']['momentum_breakout']['HK'], before['strategies']['momentum_breakout']['HK'])
-        self.assertEqual(after['strategies']['momentum_breakout']['US']['near_high_pct'], 2.0)
+        self.assertEqual(after['strategies'], before['strategies'])
+        promotion = after['promotions']['momentum_breakout']['US']
+        self.assertEqual(promotion['params']['near_high_pct'], 2.0)
+        self.assertEqual(promotion['base_params'], self.params)
+        self.assertEqual(promotion['evidence_hash'], evidence)
         self.assertEqual(lab.load_state(self.path)['events'][-1]['actor'], 'repository-owner')
+
+    def test_promotion_preserves_lab_order_scores_and_complete_original_ranks(self):
+        trial = self.spawn()
+        result = deepcopy(self.source()['payload']['strategies'][0])
+        result['hits'] = [dict(code='US.THREE', off_52w_high_pct=-1, original_rank=3,
+                               original_market_rank=3, factor_score=9, factor_rank=1),
+                          dict(code='HK.00001', original_rank=4, original_market_rank=1),
+                          dict(code='US.TWO', off_52w_high_pct=-2.5, original_rank=2,
+                               original_market_rank=2, factor_score=8, factor_rank=2),
+                          dict(code='US.ONE', off_52w_high_pct=-1.5, original_rank=1,
+                               original_market_rank=1, factor_score=7, factor_rank=3)]
+        result['meta']['hit_count'] = 4
+        expected = lab.selected(result['hits'], 'US', self.params, trial['params'])
+        config = {'promotions': {'momentum_breakout': {'US': {
+            'base_params': self.params, 'params': trial['params']}}}}
+        lab.apply_promotions([result], config)
+        actual = [h for h in result['hits'] if h['code'].startswith('US.')]
+        for key in ('code', 'factor_score', 'factor_rank'):
+            self.assertEqual([h[key] for h in actual], [h[key] for h in expected])
+        self.assertEqual([h['original_market_rank'] for h in actual], [2, 1])
+        self.assertEqual(result['meta']['market_params']['US'], trial['params'])
+        self.assertEqual(result['meta']['pre_rank_market_params']['US'], self.params)
+        freeze_snapshot({'generated_at': self.now.isoformat(), 'strategies': [result]}, self.path, frozen_at=self.now)
+
+    def test_stale_promotion_fails_before_mutating_any_result(self):
+        trial = self.spawn()
+        result = self.source()['payload']['strategies'][0]
+        before = deepcopy(result)
+        config = {'promotions': {'momentum_breakout': {'US': {
+            'base_params': {**self.params, 'near_high_pct': 4}, 'params': trial['params']}}}}
+        with self.assertRaisesRegex(ValueError, 'revalidation'):
+            lab.apply_promotions([result], config)
+        self.assertEqual(result, before)
+        lab.apply_promotions([result], {})
+        self.assertEqual(result, before)
+
+    def test_later_promotion_keeps_original_prescreen_universe(self):
+        trial = self.qualify()
+        config = self.path / 'rules.json'
+        config.write_bytes((lab.ROOT / 'screener/market_rules.json').read_bytes())
+        original = json.loads(config.read_text())
+        lab.review(self.path, trial['id'], 'approve', trial['assessments'][-1]['hash'], 'owner', config)
+        self.state = lab.load_state(self.path)
+        mother = {**self.mother, 'id': 'new_formal_root', 'base_params': trial['params'], 'params': trial['params'],
+                  'source_version': 'after-approval'}
+        lab.spawn(self.state, mother, self.now + timedelta(days=90), {**lab.policy(), 'max_active': 100})
+        lab.save_state(self.path, self.state)
+        next_trial = self.qualify(next(t for t in self.state['trials'] if t['parent_id'] == mother['id']))
+        with patch.object(lab, 'strategy_version', return_value='after-approval'):
+            lab.review(self.path, next_trial['id'], 'approve', next_trial['assessments'][-1]['hash'], 'owner', config)
+        after = json.loads(config.read_text())
+        self.assertEqual(after['strategies'], original['strategies'])
+        self.assertEqual(after['promotions']['momentum_breakout']['US']['base_params'], self.params)
+        self.assertEqual(after['promotions']['momentum_breakout']['US']['params'], next_trial['params'])
+
+    def test_rehashed_definition_cannot_reuse_old_review_evidence(self):
+        trial = self.qualify()
+        state = lab.load_state(self.path)
+        changed = next(t for t in state['trials'] if t['id'] == trial['id'])
+        changed['params']['near_high_pct'] = 1.5
+        changed['definition_hash'] = lab.digest({key: changed[key] for key in lab.CORE})
+        lab.save_state(self.path, state)
+        with self.assertRaisesRegex(ValueError, 'different definition'):
+            lab.review(self.path, trial['id'], 'approve', trial['assessments'][-1]['hash'], 'owner')
+
+    def test_backup_cannot_redefine_an_existing_trial(self):
+        self.spawn()
+        self.source()
+        from scripts.restore_screening_archive import restore
+        destination = self.path / 'restored'
+        restore(self.path, destination)
+        changed = self.state['trials'][0]
+        changed['params']['near_high_pct'] = 1.5
+        changed['definition_hash'] = lab.digest({key: changed[key] for key in lab.CORE})
+        lab.save_state(self.path, self.state)
+        with self.assertRaisesRegex(ValueError, 'roll back'):
+            restore(self.path, destination)
+        self.assertEqual(lab.load_state(destination)['trials'][0]['params']['near_high_pct'], 2)
+
+    def test_duplicate_trial_ids_are_rejected(self):
+        trial = self.spawn()
+        self.state['trials'].append(deepcopy(trial))
+        lab.save_state(self.path, self.state)
+        with self.assertRaisesRegex(ValueError, 'Duplicate'):
+            lab.load_state(self.path)
+
+    def test_calendar_lifecycle_matures_branches_then_requires_owner_approval(self):
+        from screener.risk import exchange_calendar
+        from screener.tracking import evaluate_record
+        calendar = exchange_calendar('US')
+        sessions = calendar.sessions_in_range('2026-01-02', '2026-05-29')
+        bars = lambda growth: [[int(day.strftime('%Y%m%d')), 100 * growth ** i,
+            102 * growth ** i, 99 * growth ** i, 101 * growth ** i, 1000] for i, day in enumerate(sessions)]
+        stocks, indexes = {'US.ONE': bars(1.02), 'US.TWO': bars(1)}, {'SPX': bars(1.001)}
+        main = [self.source(calendar.session_close(day).to_pydatetime()) for day in sessions[:8]]
+        birth = calendar.session_close(sessions[14]).to_pydatetime()
+        evaluations = [row for record in main for row in evaluate_record(record, stocks, indexes, as_of=birth, horizons=(5,))]
+        report = lab.update_lab(main, {'evaluations': evaluations}, stocks, indexes, self.path, birth, self.path / 'public.json')
+        self.assertEqual(len(report['trials']), 2)
+        trial_id = report['trials'][0]['id']
+        for day in sessions[15:55]:
+            now = calendar.session_close(day).to_pydatetime()
+            source = self.source(now)
+            lab.prepare([source], self.path, now + timedelta(seconds=1))
+        finish = calendar.session_close(sessions[61]).to_pydatetime()
+        report = lab.update_lab(main, {'evaluations': evaluations}, stocks, indexes, self.path, finish, self.path / 'public.json')
+        trial = next(t for t in report['trials'] if t['id'] == trial_id)
+        self.assertEqual(trial['status'], 'review')
+        self.assertEqual(trial['last_checkpoint'], 40)
+        self.assertTrue(any(t['generation'] == 2 for t in report['trials']))
+        self.assertFalse(any(t['status'] == 'approved' for t in report['trials']))
+        config = self.path / 'rules.json'
+        config.write_bytes((lab.ROOT / 'screener/market_rules.json').read_bytes())
+        lab.review(self.path, trial_id, 'approve', trial['assessments'][-1]['hash'], 'owner', config, finish)
+        formal = deepcopy(main[-1]['payload']['strategies'][0])
+        expected = lab.selected(formal['hits'], 'US', self.params, trial['params'])
+        for rank, hit in enumerate(formal['hits'], 1):
+            hit['original_rank'] = rank
+        lab.apply_promotions([formal], json.loads(config.read_text()))
+        self.assertEqual([h['code'] for h in formal['hits']], [h['code'] for h in expected])
 
     def test_mutated_evidence_prices_cannot_be_approved(self):
         trial = self.spawn()

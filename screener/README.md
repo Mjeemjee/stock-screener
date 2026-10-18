@@ -15,6 +15,8 @@
 审核时从页面下载申请，使用 GitHub Actions 的 `review-strategy-lab`，填入 `trial_id`、`evidence_hash` 和决定：
 `pause` 可手动暂停观察；`reject` 拒绝候选；`approve` 仅在证据哈希、源码、母策略参数和门槛均匹配时，
 提交对应市场的 `market_rules.json` 修改并触发新扫描。权限由 GitHub 仓库控制，公开网页没有写入凭据。
+晋级写入独立的 `promotions` 配置，先对原母策略候选完整排名，再收紧条件，不改变因子计算的候选范围。
+正式名单与实验继承相同的排名语义；导出的市场参数为晋级后有效条件，并保留原始初筛参数及审批证据。
 
 完整协议与初始假设见 `LAB_EVALUATION.md`，研究规则在 `lab_policy.json`。修改规则需要显式开启新研究或迁移，不能静默清空试验预算。
 

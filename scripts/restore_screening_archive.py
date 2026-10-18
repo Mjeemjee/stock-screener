@@ -48,6 +48,8 @@ def restore(source, destination):
             current_state = load_state(destination)
             incoming_trials = {trial["id"]: trial for trial in incoming_state["trials"]}
             if (not {trial["id"] for trial in current_state["trials"]} <= incoming_trials.keys()
+                    or any(incoming_trials.get(trial["id"], {}).get("definition_hash") != trial["definition_hash"]
+                           for trial in current_state["trials"])
                     or incoming_state["events"][:len(current_state["events"])] != current_state["events"]
                     or any(incoming_state["processed_sources"].get(key) != value
                            for key, value in current_state["processed_sources"].items())):
