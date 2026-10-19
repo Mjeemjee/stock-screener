@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-19T13:40:06.429824+00:00",
+  "generated_at": "2026-10-19T15:34:08.920700+00:00",
   "policy": {
     "version": "factor-study-v1",
     "pool_size": 40,
@@ -452,7 +452,7 @@
       "coverage": 1.0,
       "missing": {},
       "status": "ready",
-      "already_frozen": false
+      "already_frozen": true
     },
     {
       "market": "HK",
@@ -462,7 +462,7 @@
       "coverage": 1.0,
       "missing": {},
       "status": "ready",
-      "already_frozen": false
+      "already_frozen": true
     }
   ],
   "programs": [
@@ -4249,5 +4249,15 @@
   "searches": [],
   "review_workflow": "https://github.com/Mjeemjee/stock-screener/actions/workflows/review-factor-research.yml",
   "generator": "bounded_formula_research",
-  "model_connected": false
+  "model_connected": true,
+  "model_research": {
+    "provider": "DeepSeek",
+    "model": "deepseek-flash",
+    "connection": "verified",
+    "checked_at": "2026-10-19T15:34:11.238273+00:00",
+    "max_calls": 6,
+    "calls": [],
+    "mode": "owner_review",
+    "min_cohorts": 20
+  }
 }
