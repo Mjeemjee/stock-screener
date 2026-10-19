@@ -65,6 +65,17 @@ class ArchiveRestoreTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             restore(self.source, self.source)
 
+    def test_model_request_reservations_are_immutable_and_cannot_be_rolled_back(self):
+        from screener.factor_research import load_state, save_state, sealed, read_sealed
+        save_state(self.source, load_state(self.source))
+        sealed(self.source / 'research/ai_requests/a.request.json', {'model': 'deepseek-flash', 'max_attempts': 2})
+        restore(self.source, self.target)
+        restore(self.source, self.target)
+        self.assertEqual(read_sealed(self.target / 'research/ai_requests/a.request.json')['max_attempts'], 2)
+        sealed(self.target / 'research/ai_requests/b.request.json', {'model': 'deepseek-flash'})
+        with self.assertRaisesRegex(ValueError, 'model request budget'):
+            restore(self.source, self.target)
+
     def test_rejects_snapshot_ids_that_are_not_safe_filenames(self):
         file = self.source / "snapshots" / f"{self.record['id']}.json"
         changed = json.loads(file.read_text())

@@ -70,6 +70,16 @@ export function isResearchData(v: unknown): v is ResearchData {
       && ['branch', 'parent', 'pool'].every(k => object(r[k]) && typeof r[k].complete === 'boolean' && nullable(r[k].return_pct))
       && object(r.branch) && number(r.branch.count) && array(r.branch.holdings, h => object(h) && text(h.code) && text(h.status) && nullable(h.return_pct)))) return false
   if (!array(v.events, e => object(e) && text(e.action) && text(e.at))) return false
+  if (v.model_research !== undefined) {
+    const m = v.model_research
+    if (!object(m) || !['provider', 'model', 'connection', 'checked_at'].every(k => text(m[k]))
+        || m.mode !== 'owner_review' || !number(m.max_calls) || !number(m.min_cohorts)
+        || !array(m.calls, c => object(c) && ['id', 'at', 'parent_id', 'status'].every(k => text(c[k]))
+          && number(c.rejected_count) && object(c.usage) && Object.values(c.usage).every(number)
+          && array(c.proposals, p => object(p) && spec(p.proposal, names) && object(p.proposal)
+            && text(p.proposal.market) && text(p.proposal.parent_id)
+            && (p.started_program_id === null || text(p.started_program_id))))) return false
+  }
   return array(v.searches, s => object(s) && ['hash', 'at', 'parent_id', 'market'].every(k => text(s[k])) && number(s.cohort_count) && number(s.last_label_date)
     && array(s.candidates, c => object(c) && spec(c.spec, names) && nullable(c.rank_ic) && nullable(c.novelty) && number(c.mean_delta_pp) && number(c.signal_rate)
       && typeof c.qualified === 'boolean' && typeof c.duplicate === 'boolean'))

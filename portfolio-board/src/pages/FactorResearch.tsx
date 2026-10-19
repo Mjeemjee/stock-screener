@@ -5,6 +5,7 @@ import { Check, Download, ExternalLink, FlaskConical, RefreshCw, Search, X } fro
 import AppShell from '@/components/AppShell'
 import LabTabs from '@/components/LabTabs'
 import ResearchProposal from '@/components/ResearchProposal'
+import ModelResearch, { modelConnection } from '@/components/ModelResearch'
 import { Button } from '@/components/ui/button'
 import { useResearch } from '@/hooks/useResearch'
 import { downloadJson, formula } from '@/lib/research'
@@ -106,7 +107,7 @@ export default function FactorResearch() {
     {error && <div role="alert" className="flex flex-wrap items-center gap-3 py-5 text-sm text-destructive">{error}<Button variant="outline" onClick={retry}><RefreshCw className="mr-2 h-4 w-4" />重试</Button></div>}
     {data && <div className="space-y-5 pt-4">
       <div className="flex flex-wrap gap-x-5 gap-y-2 text-xs text-muted-foreground"><span>{scanTimeInfo(data.generated_at).display}</span>
-        <span>自动公式研究：{data.searches.length >= data.policy.max_searches ? '研究轮次已用完' : `等待 / 检查 ${data.policy.discovery_after} 期完整样本`}</span><span>生成来源：量化公式搜索</span></div>
+        <span>自动公式研究：{data.searches.length >= data.policy.max_searches ? '研究轮次已用完' : `等待 / 检查 ${data.policy.discovery_after} 期完整样本`}</span><span>{modelConnection(data)}</span></div>
       <div className="flex flex-wrap gap-1 border-b" role="group" aria-label="因子研究视图">{[['experiments', '研究实验'], ['proposals', '研究提案'], ['universe', '数据与股票池'], ['features', '因子库']].map(([key, label]) => <button key={key} onClick={() => setTab(key)} aria-pressed={tab === key}
         className={`border-b-2 px-3 py-2 text-sm ${tab === key ? 'border-primary font-semibold text-primary' : 'border-transparent text-muted-foreground'}`}>{label}</button>)}</div>
       {tab === 'experiments' && <>
@@ -118,7 +119,7 @@ export default function FactorResearch() {
             <td className="p-2">{p.market}</td><td className="p-2">{STATUS[p.status]}</td><td className="p-2">{p.latest_selection.length}</td><td className="p-2">{p.metrics?.due ?? 0} / {p.metrics?.paired ?? 0}</td><td className="p-2">{metric(p.metrics?.mean_delta_pp, ' pp')}</td><td className="p-2">{metric(p.metrics?.novelty)}</td></tr>)}</tbody></table></div>}
         {chosen && <Detail key={chosen.id} program={chosen} data={data} />}
       </>}
-      {tab === 'proposals' && <><ResearchProposal data={data} /><section className="border-t pt-5"><h2 className="text-sm font-semibold">自动研究记录</h2>
+      {tab === 'proposals' && <><ModelResearch data={data} /><ResearchProposal data={data} /><section className="border-t pt-5"><h2 className="text-sm font-semibold">自动研究记录</h2>
         {!data.searches.length ? <p className="py-6 text-sm text-muted-foreground">尚无完成的公式研究轮次。首次触发需要 {data.policy.discovery_after} 期完整结果。</p> : <div className="mt-3 divide-y">{data.searches.slice().reverse().map(search => <details key={search.hash} className="py-3"><summary className="cursor-pointer text-sm">{scanTimeInfo(search.at).display} · {search.market} · {search.candidates.length} 个候选 / {search.candidates.filter(c => c.qualified).length} 个通过探索检查</summary>
           <p className="mt-2 text-xs text-amber-900">探索样本 {search.cohort_count} 期，标签截至 {day(search.last_label_date)}。探索成绩不计入新实验的前瞻成绩。</p>
           <div className="mt-3 overflow-x-auto"><table className="w-full min-w-[620px] text-left text-xs"><thead><tr>{['候选改动', '探索改善', 'Rank IC', '重复性', '信号比例', '探索结果'].map(v => <th className="p-2" key={v}>{v}</th>)}</tr></thead><tbody>{search.candidates.map((c, i) => <tr key={i} className="border-t"><td className="p-2">{c.spec.change}</td><td className="p-2">{metric(c.mean_delta_pp, ' pp')}</td><td className="p-2">{metric(c.rank_ic)}</td><td className="p-2">{metric(c.novelty)}</td><td className="p-2">{metric(c.signal_rate * 100, '%')}</td><td className="p-2">{c.duplicate ? '重复公式' : c.qualified ? '通过探索检查' : '未通过'}</td></tr>)}</tbody></table></div>

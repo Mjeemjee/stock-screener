@@ -30,6 +30,11 @@ export interface ResearchRow {
 export interface ResearchData {
   schema_version: number; generated_at: string; policy_hash: string; engine_version: string; review_workflow: string
   generator: string; model_connected: boolean
+  model_research?: {
+    provider: string; model: string; connection: string; checked_at: string; max_calls: number; min_cohorts: number; mode: 'owner_review'
+    calls: { id: string; at: string; parent_id: string; status: string; rejected_count: number; usage: Record<string, number>
+      proposals: { proposal: Proposal; started_program_id: string | null }[] }[]
+  }
   policy: { version: string; pool_size: number; horizon: number; max_programs: number; max_searches: number
     max_active: number; comparison_budget: number; discovery_after: number; checkpoints: number[]
     max_correlation: number; min_data_coverage: number; cost_bps: number; stress_cost_bps: number }

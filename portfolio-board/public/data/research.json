@@ -4249,5 +4249,15 @@
   "searches": [],
   "review_workflow": "https://github.com/Mjeemjee/stock-screener/actions/workflows/review-factor-research.yml",
   "generator": "bounded_formula_research",
-  "model_connected": false
+  "model_connected": false,
+  "model_research": {
+    "provider": "DeepSeek",
+    "model": "deepseek-flash",
+    "connection": "missing_key",
+    "checked_at": "2026-10-19T15:27:07.339953+00:00",
+    "max_calls": 6,
+    "calls": [],
+    "mode": "owner_review",
+    "min_cohorts": 20
+  }
 }

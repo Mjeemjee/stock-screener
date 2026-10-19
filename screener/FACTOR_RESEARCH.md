@@ -44,6 +44,39 @@ their validation. Owner-submitted proposals use the same typed formula contract,
 trial budget, fingerprint checks and future-only clock. AI-generated proposals
 can use this interface; no model provider/credentials are assumed or fabricated.
 
+## External Proposal Assistant
+
+`deepseek_research.py` adds an optional DeepSeek Flash assistant without changing
+the frozen signal/evaluation engine. The official model ID is `deepseek-flash`;
+the API key is injected only into the relevant cloud step as `DEEPSEEK_API_KEY`.
+Connection status is checked against the authenticated model listing, not inferred
+from the presence of a key. A verified connection is not a successful inference.
+
+After a parent has 20 fully settled paired cohorts, the daily assistant can produce
+up to three proposals. It sends only the feature registry, parent definition and
+completed aggregate outcomes, not positions, account information or raw holdings.
+All input strings are treated as data. No tools, external browsing or generated
+code execution are enabled. Only assistant final JSON is parsed; reasoning text,
+authorization headers and provider error bodies are never stored or published.
+
+Calls are limited to six lifetime rounds, at most one round per seven days and one
+round per parent. Each round has at most two HTTP attempts, 24KB context and 4,096
+output tokens including thinking. Reservations are sealed before network access;
+interrupted/failed rounds still consume quota. This bounds requests/tokens, not a
+guaranteed currency bill if provider prices change. Publish/review workflows only
+check connectivity and render records; they never initiate proposal generation.
+
+Valid, nonduplicate proposals remain pending owner review. JSON validity is not
+evidence of alpha. Owners may download and submit the proposal through the normal
+start workflow; the existing 18-program, generation and forward-validation gates
+still apply. Formula-search automation remains unchanged. Missing credentials or
+provider errors leave that existing process operational. New data families remain
+unsupported until their sources, timestamps and feature implementations are added.
+
+Provider contracts checked on 2026-10-19:
+- https://api-docs.deepseek.com/quick_start/pricing/
+- https://api-docs.deepseek.com/api/create-response/
+
 ## Evaluation
 
 Primary horizon is five exchange sessions: first open strictly after decision,

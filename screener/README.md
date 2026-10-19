@@ -183,8 +183,27 @@ python -m unittest discover -s scripts -p test_validate_factor_optimization.py
 网页可构建、保存、导入和导出研究提案。启动、暂停、拒绝和审核通过由仓库
 所有者在 GitHub Actions 的 `review-factor-research` 工作流执行；提交页面
 下载的研究 ID、证据哈希或提案 JSON。审核通过仅标记纸面研究，不替换正式
-选股、不下单。当前自动研究使用受限公式搜索，未连接外部大模型；提案接口
-可接受通过校验的模型输出，但绝不执行模型生成的代码。
+选股、不下单。自动公式搜索继续运行；可选 DeepSeek Flash 提案助手只生成
+待人工审核的提案，绝不执行模型生成的代码。
+
+### DeepSeek Flash 接入
+
+在仓库 Settings > Secrets and variables > Actions 中添加 `DEEPSEEK_API_KEY`。
+不要提交密钥文件或放入前端环境变量。手动运行 `publish-verified-site` 后，
+网站会显示真实连接状态；认证失败、模型不可用与未配置密钥会分别显示。
+这里的“连接已验证”只表示模型列表接口验证成功，不代表已完成付费推理。
+
+每日跟踪后运行 `python -m screener.deepseek_research --generate`。某项研究
+有 20 期完整配对结果时，最多每七天调用一次，一项母策略最多一轮，累计
+六轮。每轮最多两次请求、每次最多 4,096 输出 token（含思考）、最多三个
+提案。调用前冻结额度，失败或中断也计数，防止重跑重复收费。请求数量和
+token 有上限，但不承诺固定金额；供应商价格、重试会影响账单。
+
+模型仅接收因子定义、母策略和已完成收益摘要，不发送持仓、账户或密钥。
+模型输出经过公式、字段、重复性校验后在“研究提案”显示；收益仍未验证。
+下载提案后通过 `review-factor-research` 的 `start` 操作启动新实验，再按
+原有规则跟踪。云端累计档案 `research/ai_requests/` 保存请求和结果证据。
+无密钥或服务故障时，原有公式搜索、选股及跟踪不受影响。
 
 累计证据保存在 `screening_archive/research/` 并随云端累计备份恢复。修改
 引擎会暂停受影响的实验；策略定义、池成员和研究预算不能静默重置。

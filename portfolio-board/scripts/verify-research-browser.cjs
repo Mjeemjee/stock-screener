@@ -82,6 +82,15 @@ async function main() {
       assert.ok(await page.getByRole('button', { name: '导出提案', exact: true }).isEnabled())
     })
     const fixture = structuredClone(actual)
+    const modelProposal = Object.fromEntries(['name', 'market', 'op_type', 'hypothesis', 'change', 'expected', 'expression', 'filters'].map(k => [k, actual.programs[0][k]]))
+    modelProposal.parent_id = actual.programs[0].id
+    modelProposal.name = '模型测试提案'
+    fixture.model_research = { provider: 'DeepSeek', model: 'deepseek-flash', connection: 'verified',
+      checked_at: actual.generated_at, max_calls: 6, min_cohorts: 20, mode: 'owner_review', calls: [{
+        id: 'model-fixture', at: actual.generated_at, parent_id: actual.programs[0].id, status: 'completed',
+        rejected_count: 1, usage: { input_tokens: 10, output_tokens: 20 },
+        proposals: [{ proposal: modelProposal, started_program_id: null }],
+      }] }
     const program = fixture.programs[0]
     program.status = 'review'
     program.metrics = { due: 40, paired: 40, coverage: 1, signal_rate: 1, independent: 8, mean_delta_pp: 1.2,
@@ -106,6 +115,22 @@ async function main() {
       assert.equal(request.program_id, program.id)
       assert.equal(request.evidence_hash, 'fixture-evidence')
       await page.screenshot({ path: path.join(reports, 'research-review-desktop.png'), fullPage: true })
+    })
+    await check('model proposals stay pending, export exact inputs and display recoverable connection failure', async () => {
+      await page.getByRole('button', { name: '研究提案', exact: true }).click()
+      await page.getByRole('heading', { name: 'DeepSeek Flash 研究提案', exact: true }).waitFor()
+      await page.getByText('格式校验通过 · 收益未经验证 · 待人工审核').waitFor()
+      const ready = page.waitForEvent('download')
+      await page.getByRole('button', { name: '下载模型提案', exact: true }).click()
+      assert.deepEqual(JSON.parse(fs.readFileSync(await (await ready).path(), 'utf8')), modelProposal)
+      await page.setViewportSize({ width: 320, height: 900 })
+      await noOverflow()
+      await page.screenshot({ path: path.join(reports, 'deepseek-proposals-mobile-320.png'), fullPage: true })
+      fixture.model_research.connection = 'authentication_failed'
+      await page.reload()
+      await page.getByText('DeepSeek Flash：认证失败', { exact: true }).waitFor()
+      await page.getByRole('button', { name: '下载审核申请', exact: true }).waitFor()
+      fixture.model_research.connection = 'verified'
     })
     for (const width of [768, 390, 320]) await check(`responsive research views at ${width}px`, async () => {
       await page.setViewportSize({ width, height: 900 })

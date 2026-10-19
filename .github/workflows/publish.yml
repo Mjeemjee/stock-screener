@@ -44,6 +44,10 @@ jobs:
           python scripts/fetch_public_data.py
           python -m screener.research_lab --report-only
           python -m screener.factor_research
+      - name: Verify DeepSeek connection and publish proposal status
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+        run: python -m screener.deepseek_research
       - uses: actions/upload-artifact@v4
         with:
           name: screening-archive

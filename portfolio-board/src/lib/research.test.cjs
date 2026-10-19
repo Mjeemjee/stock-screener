@@ -50,3 +50,18 @@ test('bounded formulas render as named factors with the correct operator', () =>
   for (let i = 0; i < 6; i++) deep = { op: 'neg', arg: deep }
   assert.equal(validExpression(deep, Object.keys(actual.features)), false)
 })
+
+test('model status and proposals are optional for old reports and validated when present', () => {
+  const legacy = { ...actual }; delete legacy.model_research
+  assert.ok(isResearchData(legacy))
+  const model = { provider: 'DeepSeek', model: 'deepseek-flash', connection: 'missing_key', checked_at: actual.generated_at,
+    max_calls: 6, min_cohorts: 20, mode: 'owner_review', calls: [] }
+  assert.ok(isResearchData({ ...actual, model_research: model }))
+  for (const m of [{}, { ...model, calls: [{}] }, { ...model, max_calls: 'six' }, { ...model, mode: 'auto_trade' }]) {
+    assert.equal(isResearchData({ ...actual, model_research: m }), false)
+  }
+  const call = { id: 'fixture', at: actual.generated_at, parent_id: actual.programs[0].id, status: 'completed',
+    rejected_count: 0, usage: { output_tokens: 10 }, proposals: [{ proposal: { ...proposal, parent_id: actual.programs[0].id }, started_program_id: null }] }
+  assert.ok(isResearchData({ ...actual, model_research: { ...model, calls: [call] } }))
+  assert.equal(isResearchData({ ...actual, model_research: { ...model, calls: [{ ...call, proposals: [{}] }] } }), false)
+})

@@ -54,6 +54,11 @@ jobs:
       - name: 固定股票池因子研究与前瞻跟踪
         run: python -m screener.factor_research --fetch-missing
 
+      - name: DeepSeek Flash research proposals
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+        run: python -m screener.deepseek_research --generate
+
       - name: 保存累计选股档案
         id: screening_archive
         if: always()

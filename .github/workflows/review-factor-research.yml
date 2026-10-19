@@ -59,6 +59,10 @@ jobs:
           RESEARCH_PROPOSAL: ${{ inputs.proposal_json }}
           RESEARCH_ACTOR: ${{ github.actor }}
         run: python -m screener.factor_research --action-env
+      - name: Refresh model proposal status
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+        run: python -m screener.deepseek_research
       - uses: actions/upload-artifact@v4
         with:
           name: screening-archive

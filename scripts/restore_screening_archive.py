@@ -78,6 +78,9 @@ def restore(source, destination):
                     or any(incoming_state["universes"].get(k) != v for k, v in current["universes"].items())):
                 raise ValueError("Research backup would roll back or redefine the study")
         read_archives(source / "research/runs")
+        for file in (destination / "research/ai_requests").glob("*.json"):
+            if not (source / file.relative_to(destination)).exists():
+                raise ValueError("Research backup would roll back model request budget")
         files = sorted((source / "research").rglob("*.json"))
         for file in files:
             if file.is_symlink():
