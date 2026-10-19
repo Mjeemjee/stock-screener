@@ -16,9 +16,13 @@ const proposal = { name: 'Gap hypothesis', market: actual.universes[0].market, p
   op_type: 'new_factor_family', hypothesis: 'Test forward gap information', change: 'gap input',
   expected: 'Future net improvement', expression: { op: 'feature', name: 'gap' }, filters: [] }
 
-test('real independent research report validates without fabricated mature outcomes', () => {
+test('research report retains seed families and accepts future custom families', () => {
   assert.ok(isResearchData(actual))
-  assert.equal(new Set(actual.programs.map(p => p.family)).size, 3)
+  const families = new Set(actual.programs.map(p => p.family))
+  for (const family of ['volume_breakout', 'compression_breakout', 'short_reversal']) assert.ok(families.has(family))
+  const extended = structuredClone(actual)
+  extended.programs.push({ ...extended.programs[0], id: 'future-custom-study', family: 'custom' })
+  assert.ok(isResearchData(extended))
 })
 test('malformed nested reports fail before a page can render them', () => {
   for (const value of [null, {}, { ...actual, programs: [{}] }, { ...actual, observations: [{}] },

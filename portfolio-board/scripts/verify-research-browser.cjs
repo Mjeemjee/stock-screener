@@ -12,11 +12,13 @@ async function main() {
   const errors = [], writes = []
   page.on('pageerror', e => errors.push(e.message))
   page.on('request', r => { if (!['GET', 'HEAD'].includes(r.method())) writes.push(r.url()) })
-  const actual = await (await context.request.get(new URL('data/research.json', base).href)).json()
   let count = 0
   const check = async (name, fn) => { await fn(); count++; console.log(`PASS ${name}`) }
   const noOverflow = async () => assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth))
   try {
+    const response = await context.request.get(new URL('data/research.json', base).href)
+    assert.equal(response.status(), 200, 'Published research report must be available')
+    const actual = await response.json()
     await check('real independent families load with honest pending outcomes', async () => {
       await page.goto(base + '#/lab/research')
       await page.getByRole('heading', { name: '因子研究实验室' }).waitFor()
