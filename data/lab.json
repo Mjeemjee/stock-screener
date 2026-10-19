@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-19T15:34:08+00:00",
+  "generated_at": "2026-10-19T19:30:20+00:00",
   "policy": {
     "version": "lab-v1",
     "horizon": 5,
@@ -26,12 +26,12 @@
   "policy_hash": "14d8fded59daf00d577a19baf1b60e83a60245cf1f4214a0f67b8c3dba4c0962",
   "parents": [
     {
-      "id": "root_d718ac4ebe5eaa0a",
+      "id": "root_75516aa0ac285724",
       "root_id": "momentum_breakout",
       "name": "动量突破 · 52周新高",
       "generation": 0,
       "market": "US",
-      "source_version": "23ab346a05aa2e6e9696a6327e461159cc8788169521d148841d4c6fe83bcc09",
+      "source_version": "b767de2ea256a7dff7b9a16d959104a39ab062c67384628fb744f91564ed2b2e",
       "base_params": {
         "near_high_pct": 3.0,
         "min_market_val": 2000000000,
@@ -54,12 +54,12 @@
       "supported": true
     },
     {
-      "id": "root_67ff7d6581f99c69",
+      "id": "root_46479f0d753017e7",
       "root_id": "momentum_breakout",
       "name": "动量突破 · 52周新高",
       "generation": 0,
       "market": "HK",
-      "source_version": "23ab346a05aa2e6e9696a6327e461159cc8788169521d148841d4c6fe83bcc09",
+      "source_version": "b767de2ea256a7dff7b9a16d959104a39ab062c67384628fb744f91564ed2b2e",
       "base_params": {
         "near_high_pct": 3.0,
         "min_market_val": 15600000000,
@@ -82,12 +82,12 @@
       "supported": true
     },
     {
-      "id": "root_1e787c52817c6db3",
+      "id": "root_9df40baef22e7218",
       "root_id": "oversold_watch",
       "name": "超跌观察 · 逆向名单",
       "generation": 0,
       "market": "US",
-      "source_version": "23ab346a05aa2e6e9696a6327e461159cc8788169521d148841d4c6fe83bcc09",
+      "source_version": "b767de2ea256a7dff7b9a16d959104a39ab062c67384628fb744f91564ed2b2e",
       "base_params": {
         "near_low_pct": 12.0,
         "min_market_val": 10000000000,
@@ -102,12 +102,12 @@
       "supported": true
     },
     {
-      "id": "root_0b0656c16e714407",
+      "id": "root_88fdbd22c356c8a0",
       "root_id": "oversold_watch",
       "name": "超跌观察 · 逆向名单",
       "generation": 0,
       "market": "HK",
-      "source_version": "23ab346a05aa2e6e9696a6327e461159cc8788169521d148841d4c6fe83bcc09",
+      "source_version": "b767de2ea256a7dff7b9a16d959104a39ab062c67384628fb744f91564ed2b2e",
       "base_params": {
         "near_low_pct": 12.0,
         "min_market_val": 78000000000,
@@ -122,12 +122,12 @@
       "supported": true
     },
     {
-      "id": "root_e7249eae013091f1",
+      "id": "root_2c87adfd512c639a",
       "root_id": "value_dividend_hk",
       "name": "低估值高股息 · 港股市值版",
       "generation": 0,
       "market": "HK",
-      "source_version": "23ab346a05aa2e6e9696a6327e461159cc8788169521d148841d4c6fe83bcc09",
+      "source_version": "b767de2ea256a7dff7b9a16d959104a39ab062c67384628fb744f91564ed2b2e",
       "base_params": {
         "pe_ttm_max": 12.0,
         "pb_max": 1.5,

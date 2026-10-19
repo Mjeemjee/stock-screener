@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-19T15:34:08.920700+00:00",
+  "generated_at": "2026-10-19T19:31:31.786372+00:00",
   "policy": {
     "version": "factor-study-v1",
     "pool_size": 40,
@@ -4254,7 +4254,7 @@
     "provider": "DeepSeek",
     "model": "deepseek-flash",
     "connection": "verified",
-    "checked_at": "2026-10-19T15:34:11.238273+00:00",
+    "checked_at": "2026-10-19T19:31:33.671205+00:00",
     "max_calls": 6,
     "calls": [],
     "mode": "owner_review",
