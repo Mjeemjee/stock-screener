@@ -1,0 +1,4253 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-10-19T13:40:06.429824+00:00",
+  "policy": {
+    "version": "factor-study-v1",
+    "pool_size": 40,
+    "min_cross_section": 20,
+    "min_data_coverage": 0.8,
+    "lookback": 61,
+    "top_n": 10,
+    "horizon": 5,
+    "cost_bps": 15,
+    "stress_cost_bps": 30,
+    "checkpoints": [
+      20,
+      40,
+      60
+    ],
+    "min_coverage": 0.9,
+    "min_signal_rate": 0.5,
+    "min_independent_periods": 6,
+    "worst_period_floor_pct": -10,
+    "family_alpha": 0.05,
+    "bootstrap_samples": 20000,
+    "max_programs": 18,
+    "max_active": 10,
+    "max_generations": 3,
+    "max_searches": 6,
+    "max_candidates_per_search": 20,
+    "comparison_budget": 160,
+    "discovery_after": 20,
+    "search_interval_days": 7,
+    "max_correlation": 0.85,
+    "min_discovery_ic": 0.02,
+    "history_train": 60,
+    "history_test": 20,
+    "history_folds": 3,
+    "embargo": 5
+  },
+  "policy_hash": "e46354853226b1044c026ba30ad08a8070d42c89e9533beb1321230268df34ab",
+  "engine_version": "db7b29ce2b1976ad815c320dd80b11c4486dadabf2b6a6c81551b7bf91847db7",
+  "universes": [
+    {
+      "market": "US",
+      "members": [
+        {
+          "code": "US.MU",
+          "name": "美光科技"
+        },
+        {
+          "code": "US.NVDA",
+          "name": "英伟达"
+        },
+        {
+          "code": "US.TSLA",
+          "name": "特斯拉"
+        },
+        {
+          "code": "US.AAPL",
+          "name": "苹果"
+        },
+        {
+          "code": "US.META",
+          "name": "Meta Platforms"
+        },
+        {
+          "code": "US.MSFT",
+          "name": "微软"
+        },
+        {
+          "code": "US.AMD",
+          "name": "超威半导体"
+        },
+        {
+          "code": "US.INTC",
+          "name": "英特尔"
+        },
+        {
+          "code": "US.AMZN",
+          "name": "亚马逊"
+        },
+        {
+          "code": "US.AVGO",
+          "name": "博通"
+        },
+        {
+          "code": "US.GOOGL",
+          "name": "谷歌-A"
+        },
+        {
+          "code": "US.TSM",
+          "name": "台积电"
+        },
+        {
+          "code": "US.PLTR",
+          "name": "Palantir"
+        },
+        {
+          "code": "US.NBIS",
+          "name": "Nebius集团"
+        },
+        {
+          "code": "US.GOOG",
+          "name": "谷歌-C"
+        },
+        {
+          "code": "US.MRVL",
+          "name": "迈威尔科技"
+        },
+        {
+          "code": "US.ORCL",
+          "name": "甲骨文"
+        },
+        {
+          "code": "US.MRNA",
+          "name": "莫德纳"
+        },
+        {
+          "code": "US.MSTR",
+          "name": "Strategy"
+        },
+        {
+          "code": "US.STX",
+          "name": "希捷科技"
+        },
+        {
+          "code": "US.DELL",
+          "name": "戴尔科技"
+        },
+        {
+          "code": "US.AMAT",
+          "name": "应用材料"
+        },
+        {
+          "code": "US.LITE",
+          "name": "Lumentum"
+        },
+        {
+          "code": "US.BAC",
+          "name": "美国银行"
+        },
+        {
+          "code": "US.UNH",
+          "name": "联合健康"
+        },
+        {
+          "code": "US.CRWD",
+          "name": "CrowdStrike"
+        },
+        {
+          "code": "US.ASML",
+          "name": "阿斯麦"
+        },
+        {
+          "code": "US.NFLX",
+          "name": "奈飞"
+        },
+        {
+          "code": "US.BE",
+          "name": "Bloom Energy"
+        },
+        {
+          "code": "US.LLY",
+          "name": "礼来"
+        },
+        {
+          "code": "US.PANW",
+          "name": "派拓网络"
+        },
+        {
+          "code": "US.LRCX",
+          "name": "泛林集团"
+        },
+        {
+          "code": "US.MDT",
+          "name": "美敦力"
+        },
+        {
+          "code": "US.JPM",
+          "name": "摩根大通"
+        },
+        {
+          "code": "US.SNOW",
+          "name": "Snowflake Inc."
+        },
+        {
+          "code": "US.V",
+          "name": "Visa"
+        },
+        {
+          "code": "US.WDC",
+          "name": "西部数据"
+        },
+        {
+          "code": "US.WFC",
+          "name": "富国银行"
+        },
+        {
+          "code": "US.SHOP",
+          "name": "Shopify Inc."
+        },
+        {
+          "code": "US.COST",
+          "name": "好市多"
+        }
+      ],
+      "created_at": "2026-10-19T13:40:06.429824+00:00",
+      "source_generated_at": "2026-10-17 16:36:32",
+      "source_count": 292,
+      "basis": "首次可用流动性历史池的前40只；固定成员，不随策略命中名单变化",
+      "hash": "e7bc3278230e2c559b3f116952f947b1466ad874882bc62e8a7ab0e935949bb9"
+    },
+    {
+      "market": "HK",
+      "members": [
+        {
+          "code": "HK.00700",
+          "name": "腾讯控股"
+        },
+        {
+          "code": "HK.09988",
+          "name": "阿里巴巴-W"
+        },
+        {
+          "code": "HK.00992",
+          "name": "联想集团"
+        },
+        {
+          "code": "HK.01810",
+          "name": "小米集团-W"
+        },
+        {
+          "code": "HK.02269",
+          "name": "药明生物"
+        },
+        {
+          "code": "HK.06869",
+          "name": "长飞光纤光缆"
+        },
+        {
+          "code": "HK.01299",
+          "name": "友邦保险"
+        },
+        {
+          "code": "HK.02318",
+          "name": "中国平安"
+        },
+        {
+          "code": "HK.02359",
+          "name": "药明康德"
+        },
+        {
+          "code": "HK.01888",
+          "name": "建滔积层板"
+        },
+        {
+          "code": "HK.00005",
+          "name": "汇丰控股"
+        },
+        {
+          "code": "HK.00939",
+          "name": "建设银行"
+        },
+        {
+          "code": "HK.00981",
+          "name": "中芯国际"
+        },
+        {
+          "code": "HK.01548",
+          "name": "金斯瑞生物-一千"
+        },
+        {
+          "code": "HK.01378",
+          "name": "中国宏桥"
+        },
+        {
+          "code": "HK.03690",
+          "name": "美团-W"
+        },
+        {
+          "code": "HK.02628",
+          "name": "中国人寿"
+        },
+        {
+          "code": "HK.01024",
+          "name": "快手-W"
+        },
+        {
+          "code": "HK.01347",
+          "name": "华虹宏力"
+        },
+        {
+          "code": "HK.01398",
+          "name": "工商银行"
+        },
+        {
+          "code": "HK.02899",
+          "name": "紫金矿业"
+        },
+        {
+          "code": "HK.09992",
+          "name": "泡泡玛特"
+        },
+        {
+          "code": "HK.00883",
+          "name": "中国海洋石油"
+        },
+        {
+          "code": "HK.02020",
+          "name": "安踏体育"
+        },
+        {
+          "code": "HK.00388",
+          "name": "香港交易所"
+        },
+        {
+          "code": "HK.03988",
+          "name": "中国银行"
+        },
+        {
+          "code": "HK.09888",
+          "name": "百度集团-W"
+        },
+        {
+          "code": "HK.09926",
+          "name": "康方生物"
+        },
+        {
+          "code": "HK.06160",
+          "name": "百济神州"
+        },
+        {
+          "code": "HK.01211",
+          "name": "比亚迪股份"
+        },
+        {
+          "code": "HK.01801",
+          "name": "信达生物"
+        },
+        {
+          "code": "HK.01109",
+          "name": "华润置地"
+        },
+        {
+          "code": "HK.00857",
+          "name": "中国石油股份"
+        },
+        {
+          "code": "HK.00941",
+          "name": "中国移动"
+        },
+        {
+          "code": "HK.02268",
+          "name": "药明合联"
+        },
+        {
+          "code": "HK.09999",
+          "name": "网易"
+        },
+        {
+          "code": "HK.01772",
+          "name": "赣锋锂业"
+        },
+        {
+          "code": "HK.02313",
+          "name": "申洲国际"
+        },
+        {
+          "code": "HK.02328",
+          "name": "中国财险"
+        },
+        {
+          "code": "HK.02338",
+          "name": "潍柴动力"
+        }
+      ],
+      "created_at": "2026-10-19T13:40:06.429824+00:00",
+      "source_generated_at": "2026-10-17 16:35:09",
+      "source_count": 241,
+      "basis": "首次可用流动性历史池的前40只；固定成员，不随策略命中名单变化",
+      "hash": "fb755bb40e5de83d856056138b761837f221faf369b68c6e6c90ce82593dc871"
+    }
+  ],
+  "features": {
+    "relative_volume": {
+      "name": "相对成交量",
+      "formula": "V[t] / mean(V[t-20:t])",
+      "family": "volume"
+    },
+    "close_location": {
+      "name": "收盘位置",
+      "formula": "(C-L)/(H-L)",
+      "family": "price_action"
+    },
+    "breakout": {
+      "name": "突破幅度",
+      "formula": "C[t]/max(H[t-20:t])-1",
+      "family": "trend"
+    },
+    "compression": {
+      "name": "波动收缩",
+      "formula": "-std(r[-5:])/std(r[-20:])",
+      "family": "volatility"
+    },
+    "reversal3": {
+      "name": "三日反转",
+      "formula": "1-C/C[-4]",
+      "family": "reversal"
+    },
+    "recovery": {
+      "name": "日内修复",
+      "formula": "(C-O)/mean(TR[-20:])",
+      "family": "price_action"
+    },
+    "gap": {
+      "name": "隔夜跳空",
+      "formula": "O/C[-2]-1",
+      "family": "overnight"
+    },
+    "downside_stability": {
+      "name": "下行稳定性",
+      "formula": "-sqrt(mean(min(r,0)^2))",
+      "family": "risk"
+    },
+    "volume_price": {
+      "name": "量价协同",
+      "formula": "corr(r[-20:],diff(log(V))[-20:])",
+      "family": "volume"
+    },
+    "legacy_bias": {
+      "name": "原有乖离趋势",
+      "formula": "legacy bias slope",
+      "family": "control"
+    },
+    "legacy_slope": {
+      "name": "原有趋势斜率",
+      "formula": "legacy slope * R2",
+      "family": "control"
+    },
+    "legacy_efficiency": {
+      "name": "原有趋势效率",
+      "formula": "legacy efficiency",
+      "family": "control"
+    }
+  },
+  "quality": [
+    {
+      "market": "US",
+      "session": 20261016,
+      "valid": 40,
+      "total": 40,
+      "coverage": 1.0,
+      "missing": {},
+      "status": "ready",
+      "already_frozen": false
+    },
+    {
+      "market": "HK",
+      "session": 20261016,
+      "valid": 40,
+      "total": 40,
+      "coverage": 1.0,
+      "missing": {},
+      "status": "ready",
+      "already_frozen": false
+    }
+  ],
+  "programs": [
+    {
+      "name": "放量确认突破",
+      "op_type": "new_factor_family",
+      "hypothesis": "突破伴随相对放量和高位收盘，可能减少突破后回落。",
+      "change": "独立引入相对成交量、收盘位置与突破幅度",
+      "expected": "验证未来5日扣费收益是否优于同期研究池；不预设收益幅度",
+      "expression": {
+        "op": "mean",
+        "args": [
+          {
+            "op": "feature",
+            "name": "relative_volume"
+          },
+          {
+            "op": "feature",
+            "name": "close_location"
+          },
+          {
+            "op": "feature",
+            "name": "breakout"
+          }
+        ]
+      },
+      "filters": [
+        {
+          "feature": "breakout",
+          "gte": 0
+        },
+        {
+          "feature": "relative_volume",
+          "gte": 1.2
+        },
+        {
+          "feature": "close_location",
+          "gte": 0.65
+        }
+      ],
+      "family": "volume_breakout",
+      "market": "US",
+      "parent_id": null,
+      "generation": 1,
+      "baseline": null,
+      "controls": [
+        {
+          "op": "feature",
+          "name": "legacy_bias"
+        },
+        {
+          "op": "feature",
+          "name": "legacy_slope"
+        },
+        {
+          "op": "feature",
+          "name": "legacy_efficiency"
+        }
+      ],
+      "created_at": "2026-10-19T13:40:06.429824+00:00",
+      "engine_version": "db7b29ce2b1976ad815c320dd80b11c4486dadabf2b6a6c81551b7bf91847db7",
+      "policy_hash": "e46354853226b1044c026ba30ad08a8070d42c89e9533beb1321230268df34ab",
+      "universe_hash": "e7bc3278230e2c559b3f116952f947b1466ad874882bc62e8a7ab0e935949bb9",
+      "discovery": {
+        "kind": "predeclared",
+        "note": "预先声明的新策略家族"
+      },
+      "id": "factor_17ae34abae7e544a",
+      "definition_hash": "f78e43e47b61338b5321375539134d221215c65e1eff69fc8d89665b44531f57",
+      "status": "testing",
+      "assessments": [],
+      "last_checkpoint": 0,
+      "metrics": {
+        "due": 0,
+        "paired": 0,
+        "coverage": 0,
+        "signal_rate": 0,
+        "independent": 0,
+        "mean_delta_pp": null,
+        "lower_delta_pp": null,
+        "mean_return_pct": null,
+        "mean_excess_pp": null,
+        "stress_excess_pp": null,
+        "worst_period_pct": null,
+        "rank_ic": null,
+        "pearson_ic": null,
+        "novelty": null
+      },
+      "historical": {
+        "kind": "retrospective_diagnostic",
+        "as_of": "2026-10-19T13:40:06.429824+00:00",
+        "folds": [
+          {
+            "train_start": 20260413,
+            "train_end": 20260630,
+            "test_start": 20260716,
+            "test_end": 20260812,
+            "purged": 5,
+            "embargo": 5,
+            "test_periods": 20,
+            "complete": 20,
+            "train_rank_ic": -0.0012076862115937988,
+            "rank_ic": -0.06222910244104394,
+            "icir": -0.20944100529508414,
+            "ic_lower": -0.1677196507990912,
+            "ic_upper": 0.0753576792883884,
+            "degradation": null,
+            "q5_q1_pp": -0.9001928749999998,
+            "pearson_ic": -0.04737165265909018,
+            "mean_delta_pp": -1.4692018375,
+            "coverage": 1.0
+          },
+          {
+            "train_start": 20260511,
+            "train_end": 20260729,
+            "test_start": 20260813,
+            "test_end": 20260910,
+            "purged": 5,
+            "embargo": 5,
+            "test_periods": 20,
+            "complete": 20,
+            "train_rank_ic": 0.000813652998489044,
+            "rank_ic": -0.14809550679678865,
+            "icir": -0.7790634678302191,
+            "ic_lower": -0.23345729064182213,
+            "ic_upper": -0.07494640712221033,
+            "degradation": 183.01310272536625,
+            "q5_q1_pp": -1.4201153312500003,
+            "pearson_ic": -0.12419941717612296,
+            "mean_delta_pp": -1.0006402958333331,
+            "coverage": 1.0
+          },
+          {
+            "train_start": 20260609,
+            "train_end": 20260826,
+            "test_start": 20260911,
+            "test_end": 20261008,
+            "purged": 5,
+            "embargo": 5,
+            "test_periods": 20,
+            "complete": 20,
+            "train_rank_ic": -0.008162116557169937,
+            "rank_ic": -0.022140913879219605,
+            "icir": -0.08344189345499421,
+            "ic_lower": -0.14778743380547132,
+            "ic_upper": 0.08294868223013568,
+            "degradation": null,
+            "q5_q1_pp": 0.052750874999999905,
+            "pearson_ic": -0.030817552492382393,
+            "mean_delta_pp": 0.8340125174999997,
+            "coverage": 1.0
+          }
+        ],
+        "status": "available",
+        "note": "当前固定股票池的历史回溯，存在幸存者及复权修订偏差；不计入前瞻成绩。公式未在测试折调参。"
+      },
+      "latest_selection": [],
+      "latest_frozen_at": "2026-10-19T13:40:06+00:00"
+    },
+    {
+      "name": "波动收缩突破",
+      "op_type": "new_factor_family",
+      "hypothesis": "短期波动收窄后出现突破，可能包含不同于平稳趋势的信息。",
+      "change": "独立引入短长波动比，并结合突破与量能",
+      "expected": "验证未来5日相对研究池的增益及与原有趋势因子的重复性",
+      "expression": {
+        "op": "mean",
+        "args": [
+          {
+            "op": "feature",
+            "name": "compression"
+          },
+          {
+            "op": "feature",
+            "name": "breakout"
+          },
+          {
+            "op": "feature",
+            "name": "relative_volume"
+          }
+        ]
+      },
+      "filters": [
+        {
+          "feature": "compression",
+          "gte": -0.8
+        },
+        {
+          "feature": "breakout",
+          "gte": 0
+        }
+      ],
+      "family": "compression_breakout",
+      "market": "US",
+      "parent_id": null,
+      "generation": 1,
+      "baseline": null,
+      "controls": [
+        {
+          "op": "feature",
+          "name": "legacy_bias"
+        },
+        {
+          "op": "feature",
+          "name": "legacy_slope"
+        },
+        {
+          "op": "feature",
+          "name": "legacy_efficiency"
+        },
+        {
+          "op": "mean",
+          "args": [
+            {
+              "op": "feature",
+              "name": "relative_volume"
+            },
+            {
+              "op": "feature",
+              "name": "close_location"
+            },
+            {
+              "op": "feature",
+              "name": "breakout"
+            }
+          ]
+        }
+      ],
+      "created_at": "2026-10-19T13:40:06.429824+00:00",
+      "engine_version": "db7b29ce2b1976ad815c320dd80b11c4486dadabf2b6a6c81551b7bf91847db7",
+      "policy_hash": "e46354853226b1044c026ba30ad08a8070d42c89e9533beb1321230268df34ab",
+      "universe_hash": "e7bc3278230e2c559b3f116952f947b1466ad874882bc62e8a7ab0e935949bb9",
+      "discovery": {
+        "kind": "predeclared",
+        "note": "预先声明的新策略家族"
+      },
+      "id": "factor_6651b9e80063d61f",
+      "definition_hash": "7ef7439909467b75c7c8a2494c4c3e35f21ed82fcf6a209c36aa711a772ae99e",
+      "status": "testing",
+      "assessments": [],
+      "last_checkpoint": 0,
+      "metrics": {
+        "due": 0,
+        "paired": 0,
+        "coverage": 0,
+        "signal_rate": 0,
+        "independent": 0,
+        "mean_delta_pp": null,
+        "lower_delta_pp": null,
+        "mean_return_pct": null,
+        "mean_excess_pp": null,
+        "stress_excess_pp": null,
+        "worst_period_pct": null,
+        "rank_ic": null,
+        "pearson_ic": null,
+        "novelty": null
+      },
+      "historical": {
+        "kind": "retrospective_diagnostic",
+        "as_of": "2026-10-19T13:40:06.429824+00:00",
+        "folds": [
+          {
+            "train_start": 20260413,
+            "train_end": 20260630,
+            "test_start": 20260716,
+            "test_end": 20260812,
+            "purged": 5,
+            "embargo": 5,
+            "test_periods": 20,
+            "complete": 20,
+            "train_rank_ic": 0.032440360506899156,
+            "rank_ic": -0.09604090482269964,
+            "icir": -0.3117884776742929,
+            "ic_lower": -0.23764060992095096,
+            "ic_upper": 0.05905174057322839,
+            "degradation": 3.9605375317045084,
+            "q5_q1_pp": -2.4248807625000004,
+            "pearson_ic": -0.08292300608218488,
+            "mean_delta_pp": -2.1437610575,
+            "coverage": 1.0
+          },
+          {
+            "train_start": 20260511,
+            "train_end": 20260729,
+            "test_start": 20260813,
+            "test_end": 20260910,
+            "purged": 5,
+            "embargo": 5,
+            "test_periods": 20,
+            "complete": 20,
+            "train_rank_ic": 0.009690487808000503,
+            "rank_ic": -0.0982596870822062,
+            "icir": -0.4933650195720781,
+            "ic_lower": -0.18773888346060513,
+            "ic_upper": -0.0208387279273401,
+            "degradation": 11.13980813237107,
+            "q5_q1_pp": -1.1024161250000002,
+            "pearson_ic": -0.08327335741969552,
+            "mean_delta_pp": -2.3031579958333337,
+            "coverage": 1.0
+          },
+          {
+            "train_start": 20260609,
+            "train_end": 20260826,
+            "test_start": 20260911,
+            "test_end": 20261008,
+            "purged": 5,
+            "embargo": 5,
+            "test_periods": 20,
+            "complete": 20,
+            "train_rank_ic": -0.007943777807051284,
+            "rank_ic": -0.008457641466998506,
+            "icir": -0.03505668654216354,
+            "ic_lower": -0.12550931193240275,
+            "ic_upper": 0.09512712303802338,
+            "degradation": null,
+            "q5_q1_pp": -0.4480513249999996,
+            "pearson_ic": -0.013456756631831813,
+            "mean_delta_pp": -1.2437185058333333,
+            "coverage": 1.0
+          }
+        ],
+        "status": "available",
+        "note": "当前固定股票池的历史回溯，存在幸存者及复权修订偏差；不计入前瞻成绩。公式未在测试折调参。"
+      },
+      "latest_selection": [],
+      "latest_frozen_at": "2026-10-19T13:40:06+00:00"
+    },
+    {
+      "name": "短期超跌修复",
+      "op_type": "new_factor_family",
+      "hypothesis": "短期急跌后出现日内修复和量能变化，可能有五日反转效应。",
+      "change": "独立引入三日反转、日内修复与相对成交量",
+      "expected": "验证未来5日反转效果及扣费后相对研究池表现",
+      "expression": {
+        "op": "mean",
+        "args": [
+          {
+            "op": "feature",
+            "name": "reversal3"
+          },
+          {
+            "op": "feature",
+            "name": "recovery"
+          },
+          {
+            "op": "feature",
+            "name": "relative_volume"
+          }
+        ]
+      },
+      "filters": [
+        {
+          "feature": "reversal3",
+          "gte": 0.03
+        },
+        {
+          "feature": "recovery",
+          "gte": 0
+        }
+      ],
+      "family": "short_reversal",
+      "market": "US",
+      "parent_id": null,
+      "generation": 1,
+      "baseline": null,
+      "controls": [
+        {
+          "op": "feature",
+          "name": "legacy_bias"
+        },
+        {
+          "op": "feature",
+          "name": "legacy_slope"
+        },
+        {
+          "op": "feature",
+          "name": "legacy_efficiency"
+        },
+        {
+          "op": "mean",
+          "args": [
+            {
+              "op": "feature",
+              "name": "relative_volume"
+            },
+            {
+              "op": "feature",
+              "name": "close_location"
+            },
+            {
+              "op": "feature",
+              "name": "breakout"
+            }
+          ]
+        },
+        {
+          "op": "mean",
+          "args": [
+            {
+              "op": "feature",
+              "name": "compression"
+            },
+            {
+              "op": "feature",
+              "name": "breakout"
+            },
+            {
+              "op": "feature",
+              "name": "relative_volume"
+            }
+          ]
+        }
+      ],
+      "created_at": "2026-10-19T13:40:06.429824+00:00",
+      "engine_version": "db7b29ce2b1976ad815c320dd80b11c4486dadabf2b6a6c81551b7bf91847db7",
+      "policy_hash": "e46354853226b1044c026ba30ad08a8070d42c89e9533beb1321230268df34ab",
+      "universe_hash": "e7bc3278230e2c559b3f116952f947b1466ad874882bc62e8a7ab0e935949bb9",
+      "discovery": {
+        "kind": "predeclared",
+        "note": "预先声明的新策略家族"
+      },
+      "id": "factor_c37d333402b59ec1",
+      "definition_hash": "3f725506ff114c479f1da2492fefdbef9b5dc40e92384c21de75a529b39ca41e",
+      "status": "testing",
+      "assessments": [],
+      "last_checkpoint": 0,
+      "metrics": {
+        "due": 0,
+        "paired": 0,
+        "coverage": 0,
+        "signal_rate": 0,
+        "independent": 0,
+        "mean_delta_pp": null,
+        "lower_delta_pp": null,
+        "mean_return_pct": null,
+        "mean_excess_pp": null,
+        "stress_excess_pp": null,
+        "worst_period_pct": null,
+        "rank_ic": null,
+        "pearson_ic": null,
+        "novelty": null
+      },
+      "historical": {
+        "kind": "retrospective_diagnostic",
+        "as_of": "2026-10-19T13:40:06.429824+00:00",
+        "folds": [
+          {
+            "train_start": 20260413,
+            "train_end": 20260630,
+            "test_start": 20260716,
+            "test_end": 20260812,
+            "purged": 5,
+            "embargo": 5,
+            "test_periods": 20,
+            "complete": 20,
+            "train_rank_ic": -0.017182236171446777,
+            "rank_ic": 0.0999812369537472,
+            "icir": 0.3618853858241789,
+            "ic_lower": 0.012282578157065382,
+            "ic_upper": 0.19528110133787274,
+            "degradation": null,
+            "q5_q1_pp": 4.482030443749999,
+            "pearson_ic": 0.1303902560830143,
+            "mean_delta_pp": 0.8710018074999999,
+            "coverage": 1.0
+          },
+          {
+            "train_start": 20260511,
+            "train_end": 20260729,
+            "test_start": 20260813,
+            "test_end": 20260910,
+            "purged": 5,
+            "embargo": 5,
+            "test_periods": 20,
+            "complete": 20,
+            "train_rank_ic": 0.02856826083583745,
+            "rank_ic": 0.02098276641628658,
+            "icir": 0.12750212699118038,
+            "ic_lower": -0.030368746161925142,
+            "ic_upper": 0.06897648085960421,
+            "degradation": 0.2655217432779543,
+            "q5_q1_pp": 1.4643436312499998,
+            "pearson_ic": 0.0331326271913337,
+            "mean_delta_pp": 1.9110700649999999,
+            "coverage": 1.0
+          },
+          {
+            "train_start": 20260609,
+            "train_end": 20260826,
+            "test_start": 20260911,
+            "test_end": 20261008,
+            "purged": 5,
+            "embargo": 5,
+            "test_periods": 20,
+            "complete": 20,
+            "train_rank_ic": 0.034427766912743664,
+            "rank_ic": 0.02196735163059014,
+            "icir": 0.15978092582805037,
+            "ic_lower": -0.04131731418877402,
+            "ic_upper": 0.07736677958806419,
+            "degradation": 0.36192923327656257,
+            "q5_q1_pp": 0.4261207937500001,
+            "pearson_ic": -0.017853629043470064,
+            "mean_delta_pp": -0.7667750141666667,
+            "coverage": 1.0
+          }
+        ],
+        "status": "available",
+        "note": "当前固定股票池的历史回溯，存在幸存者及复权修订偏差；不计入前瞻成绩。公式未在测试折调参。"
+      },
+      "latest_selection": [],
+      "latest_frozen_at": "2026-10-19T13:40:06+00:00"
+    },
+    {
+      "name": "放量确认突破",
+      "op_type": "new_factor_family",
+      "hypothesis": "突破伴随相对放量和高位收盘，可能减少突破后回落。",
+      "change": "独立引入相对成交量、收盘位置与突破幅度",
+      "expected": "验证未来5日扣费收益是否优于同期研究池；不预设收益幅度",
+      "expression": {
+        "op": "mean",
+        "args": [
+          {
+            "op": "feature",
+            "name": "relative_volume"
+          },
+          {
+            "op": "feature",
+            "name": "close_location"
+          },
+          {
+            "op": "feature",
+            "name": "breakout"
+          }
+        ]
+      },
+      "filters": [
+        {
+          "feature": "breakout",
+          "gte": 0
+        },
+        {
+          "feature": "relative_volume",
+          "gte": 1.2
+        },
+        {
+          "feature": "close_location",
+          "gte": 0.65
+        }
+      ],
+      "family": "volume_breakout",
+      "market": "HK",
+      "parent_id": null,
+      "generation": 1,
+      "baseline": null,
+      "controls": [
+        {
+          "op": "feature",
+          "name": "legacy_bias"
+        },
+        {
+          "op": "feature",
+          "name": "legacy_slope"
+        },
+        {
+          "op": "feature",
+          "name": "legacy_efficiency"
+        }
+      ],
+      "created_at": "2026-10-19T13:40:06.429824+00:00",
+      "engine_version": "db7b29ce2b1976ad815c320dd80b11c4486dadabf2b6a6c81551b7bf91847db7",
+      "policy_hash": "e46354853226b1044c026ba30ad08a8070d42c89e9533beb1321230268df34ab",
+      "universe_hash": "fb755bb40e5de83d856056138b761837f221faf369b68c6e6c90ce82593dc871",
+      "discovery": {
+        "kind": "predeclared",
+        "note": "预先声明的新策略家族"
+      },
+      "id": "factor_9d65144e54b1fb7f",
+      "definition_hash": "d2914b0d11f44de4b66f0afb66d8bf84c36747947222f43cb5beeae6ad084fbc",
+      "status": "testing",
+      "assessments": [],
+      "last_checkpoint": 0,
+      "metrics": {
+        "due": 0,
+        "paired": 0,
+        "coverage": 0,
+        "signal_rate": 0,
+        "independent": 0,
+        "mean_delta_pp": null,
+        "lower_delta_pp": null,
+        "mean_return_pct": null,
+        "mean_excess_pp": null,
+        "stress_excess_pp": null,
+        "worst_period_pct": null,
+        "rank_ic": null,
+        "pearson_ic": null,
+        "novelty": null
+      },
+      "historical": {
+        "kind": "retrospective_diagnostic",
+        "as_of": "2026-10-19T13:40:06.429824+00:00",
+        "folds": [
+          {
+            "train_start": 20260410,
+            "train_end": 20260630,
+            "test_start": 20260716,
+            "test_end": 20260812,
+            "purged": 5,
+            "embargo": 5,
+            "test_periods": 20,
+            "complete": 20,
+            "train_rank_ic": 0.029244297317157962,
+            "rank_ic": -0.02328091449457694,
+            "icir": -0.07954269484330458,
+            "ic_lower": -0.20662867151634162,
+            "ic_upper": 0.1381366676024201,
+            "degradation": 1.7960839079870032,
+            "q5_q1_pp": 0.4257436812499999,
+            "pearson_ic": 0.015731135454263228,
+            "mean_delta_pp": -1.2450424462499998,
+            "coverage": 1.0
+          },
+          {
+            "train_start": 20260511,
+            "train_end": 20260729,
+            "test_start": 20260813,
+            "test_end": 20260909,
+            "purged": 5,
+            "embargo": 5,
+            "test_periods": 20,
+            "complete": 20,
+            "train_rank_ic": 0.010933017793761097,
+            "rank_ic": -0.028788143839841136,
+            "icir": -0.1719901587893332,
+            "ic_lower": -0.12045431144106926,
+            "ic_upper": 0.06044813514514597,
+            "degradation": 3.633137929791812,
+            "q5_q1_pp": -0.9462150812499999,
+            "pearson_ic": -0.04595609474846378,
+            "mean_delta_pp": 0.16937789083333338,
+            "coverage": 1.0
+          },
+          {
+            "train_start": 20260609,
+            "train_end": 20260826,
+            "test_start": 20260910,
+            "test_end": 20261008,
+            "purged": 5,
+            "embargo": 5,
+            "test_periods": 20,
+            "complete": 20,
+            "train_rank_ic": -0.04180167922619354,
+            "rank_ic": -0.044573376529100546,
+            "icir": -0.21226544032149125,
+            "ic_lower": -0.16391984357704084,
+            "ic_upper": 0.05300579345965223,
+            "degradation": null,
+            "q5_q1_pp": -0.23446931249999997,
+            "pearson_ic": -0.025281651155777053,
+            "mean_delta_pp": 0.8308952487499999,
+            "coverage": 1.0
+          }
+        ],
+        "status": "available",
+        "note": "当前固定股票池的历史回溯，存在幸存者及复权修订偏差；不计入前瞻成绩。公式未在测试折调参。"
+      },
+      "latest_selection": [],
+      "latest_frozen_at": "2026-10-19T13:40:06+00:00"
+    },
+    {
+      "name": "波动收缩突破",
+      "op_type": "new_factor_family",
+      "hypothesis": "短期波动收窄后出现突破，可能包含不同于平稳趋势的信息。",
+      "change": "独立引入短长波动比，并结合突破与量能",
+      "expected": "验证未来5日相对研究池的增益及与原有趋势因子的重复性",
+      "expression": {
+        "op": "mean",
+        "args": [
+          {
+            "op": "feature",
+            "name": "compression"
+          },
+          {
+            "op": "feature",
+            "name": "breakout"
+          },
+          {
+            "op": "feature",
+            "name": "relative_volume"
+          }
+        ]
+      },
+      "filters": [
+        {
+          "feature": "compression",
+          "gte": -0.8
+        },
+        {
+          "feature": "breakout",
+          "gte": 0
+        }
+      ],
+      "family": "compression_breakout",
+      "market": "HK",
+      "parent_id": null,
+      "generation": 1,
+      "baseline": null,
+      "controls": [
+        {
+          "op": "feature",
+          "name": "legacy_bias"
+        },
+        {
+          "op": "feature",
+          "name": "legacy_slope"
+        },
+        {
+          "op": "feature",
+          "name": "legacy_efficiency"
+        },
+        {
+          "op": "mean",
+          "args": [
+            {
+              "op": "feature",
+              "name": "relative_volume"
+            },
+            {
+              "op": "feature",
+              "name": "close_location"
+            },
+            {
+              "op": "feature",
+              "name": "breakout"
+            }
+          ]
+        }
+      ],
+      "created_at": "2026-10-19T13:40:06.429824+00:00",
+      "engine_version": "db7b29ce2b1976ad815c320dd80b11c4486dadabf2b6a6c81551b7bf91847db7",
+      "policy_hash": "e46354853226b1044c026ba30ad08a8070d42c89e9533beb1321230268df34ab",
+      "universe_hash": "fb755bb40e5de83d856056138b761837f221faf369b68c6e6c90ce82593dc871",
+      "discovery": {
+        "kind": "predeclared",
+        "note": "预先声明的新策略家族"
+      },
+      "id": "factor_54a2f22c16f0de4c",
+      "definition_hash": "944806671555fddbf8db298743720978cc2d573fba91fde5e424c1bde20394ff",
+      "status": "testing",
+      "assessments": [],
+      "last_checkpoint": 0,
+      "metrics": {
+        "due": 0,
+        "paired": 0,
+        "coverage": 0,
+        "signal_rate": 0,
+        "independent": 0,
+        "mean_delta_pp": null,
+        "lower_delta_pp": null,
+        "mean_return_pct": null,
+        "mean_excess_pp": null,
+        "stress_excess_pp": null,
+        "worst_period_pct": null,
+        "rank_ic": null,
+        "pearson_ic": null,
+        "novelty": null
+      },
+      "historical": {
+        "kind": "retrospective_diagnostic",
+        "as_of": "2026-10-19T13:40:06.429824+00:00",
+        "folds": [
+          {
+            "train_start": 20260410,
+            "train_end": 20260630,
+            "test_start": 20260716,
+            "test_end": 20260812,
+            "purged": 5,
+            "embargo": 5,
+            "test_periods": 20,
+            "complete": 20,
+            "train_rank_ic": 0.016641658830609585,
+            "rank_ic": -0.02792842051877173,
+            "icir": -0.10482054781004443,
+            "ic_lower": -0.19986431741958707,
+            "ic_upper": 0.17471656675318614,
+            "degradation": 2.678223355198342,
+            "q5_q1_pp": -0.18080548125000012,
+            "pearson_ic": 0.0013261412599568166,
+            "mean_delta_pp": 2.3313876479166664,
+            "coverage": 1.0
+          },
+          {
+            "train_start": 20260511,
+            "train_end": 20260729,
+            "test_start": 20260813,
+            "test_end": 20260909,
+            "purged": 5,
+            "embargo": 5,
+            "test_periods": 20,
+            "complete": 20,
+            "train_rank_ic": 0.019473307233794198,
+            "rank_ic": -0.019457842711188663,
+            "icir": -0.10475010904460696,
+            "ic_lower": -0.11997842251881355,
+            "ic_upper": 0.07475807852152992,
+            "degradation": 1.9992058604930394,
+            "q5_q1_pp": 0.11664662499999975,
+            "pearson_ic": -0.026363013293764236,
+            "mean_delta_pp": -0.830546955,
+            "coverage": 1.0
+          },
+          {
+            "train_start": 20260609,
+            "train_end": 20260826,
+            "test_start": 20260910,
+            "test_end": 20261008,
+            "purged": 5,
+            "embargo": 5,
+            "test_periods": 20,
+            "complete": 20,
+            "train_rank_ic": -0.058360891454187123,
+            "rank_ic": -0.008820004420251038,
+            "icir": -0.04156653375348778,
+            "ic_lower": -0.1406025584638775,
+            "ic_upper": 0.11525545448656596,
+            "degradation": null,
+            "q5_q1_pp": -0.6638231374999999,
+            "pearson_ic": -0.04065696410553465,
+            "mean_delta_pp": 0.83481542375,
+            "coverage": 1.0
+          }
+        ],
+        "status": "available",
+        "note": "当前固定股票池的历史回溯，存在幸存者及复权修订偏差；不计入前瞻成绩。公式未在测试折调参。"
+      },
+      "latest_selection": [],
+      "latest_frozen_at": "2026-10-19T13:40:06+00:00"
+    },
+    {
+      "name": "短期超跌修复",
+      "op_type": "new_factor_family",
+      "hypothesis": "短期急跌后出现日内修复和量能变化，可能有五日反转效应。",
+      "change": "独立引入三日反转、日内修复与相对成交量",
+      "expected": "验证未来5日反转效果及扣费后相对研究池表现",
+      "expression": {
+        "op": "mean",
+        "args": [
+          {
+            "op": "feature",
+            "name": "reversal3"
+          },
+          {
+            "op": "feature",
+            "name": "recovery"
+          },
+          {
+            "op": "feature",
+            "name": "relative_volume"
+          }
+        ]
+      },
+      "filters": [
+        {
+          "feature": "reversal3",
+          "gte": 0.03
+        },
+        {
+          "feature": "recovery",
+          "gte": 0
+        }
+      ],
+      "family": "short_reversal",
+      "market": "HK",
+      "parent_id": null,
+      "generation": 1,
+      "baseline": null,
+      "controls": [
+        {
+          "op": "feature",
+          "name": "legacy_bias"
+        },
+        {
+          "op": "feature",
+          "name": "legacy_slope"
+        },
+        {
+          "op": "feature",
+          "name": "legacy_efficiency"
+        },
+        {
+          "op": "mean",
+          "args": [
+            {
+              "op": "feature",
+              "name": "relative_volume"
+            },
+            {
+              "op": "feature",
+              "name": "close_location"
+            },
+            {
+              "op": "feature",
+              "name": "breakout"
+            }
+          ]
+        },
+        {
+          "op": "mean",
+          "args": [
+            {
+              "op": "feature",
+              "name": "compression"
+            },
+            {
+              "op": "feature",
+              "name": "breakout"
+            },
+            {
+              "op": "feature",
+              "name": "relative_volume"
+            }
+          ]
+        }
+      ],
+      "created_at": "2026-10-19T13:40:06.429824+00:00",
+      "engine_version": "db7b29ce2b1976ad815c320dd80b11c4486dadabf2b6a6c81551b7bf91847db7",
+      "policy_hash": "e46354853226b1044c026ba30ad08a8070d42c89e9533beb1321230268df34ab",
+      "universe_hash": "fb755bb40e5de83d856056138b761837f221faf369b68c6e6c90ce82593dc871",
+      "discovery": {
+        "kind": "predeclared",
+        "note": "预先声明的新策略家族"
+      },
+      "id": "factor_db7969eafdce83f7",
+      "definition_hash": "232b17591543c03a5c38f2250fd645909c0cadec9052f54ed38fd8509d49200f",
+      "status": "testing",
+      "assessments": [],
+      "last_checkpoint": 0,
+      "metrics": {
+        "due": 0,
+        "paired": 0,
+        "coverage": 0,
+        "signal_rate": 0,
+        "independent": 0,
+        "mean_delta_pp": null,
+        "lower_delta_pp": null,
+        "mean_return_pct": null,
+        "mean_excess_pp": null,
+        "stress_excess_pp": null,
+        "worst_period_pct": null,
+        "rank_ic": null,
+        "pearson_ic": null,
+        "novelty": null
+      },
+      "historical": {
+        "kind": "retrospective_diagnostic",
+        "as_of": "2026-10-19T13:40:06.429824+00:00",
+        "folds": [
+          {
+            "train_start": 20260410,
+            "train_end": 20260630,
+            "test_start": 20260716,
+            "test_end": 20260812,
+            "purged": 5,
+            "embargo": 5,
+            "test_periods": 20,
+            "complete": 20,
+            "train_rank_ic": 0.04202446398341305,
+            "rank_ic": -0.04140967371458659,
+            "icir": -0.15544080997437673,
+            "ic_lower": -0.14842691687423926,
+            "ic_upper": 0.07085893241104871,
+            "degradation": 1.9853706576943106,
+            "q5_q1_pp": -1.2283121937500003,
+            "pearson_ic": -0.05801433082981068,
+            "mean_delta_pp": 0.7269051599999998,
+            "coverage": 1.0
+          },
+          {
+            "train_start": 20260511,
+            "train_end": 20260729,
+            "test_start": 20260813,
+            "test_end": 20260909,
+            "purged": 5,
+            "embargo": 5,
+            "test_periods": 20,
+            "complete": 20,
+            "train_rank_ic": -0.047097887591813124,
+            "rank_ic": -0.05460196858268072,
+            "icir": -0.3280308082679533,
+            "ic_lower": -0.12156086005358833,
+            "ic_upper": 0.0048371039227755085,
+            "degradation": null,
+            "q5_q1_pp": -0.4883642375000001,
+            "pearson_ic": -0.058403465209091884,
+            "mean_delta_pp": 0.1876713124999999,
+            "coverage": 1.0
+          },
+          {
+            "train_start": 20260609,
+            "train_end": 20260826,
+            "test_start": 20260910,
+            "test_end": 20261008,
+            "purged": 5,
+            "embargo": 5,
+            "test_periods": 20,
+            "complete": 20,
+            "train_rank_ic": -0.08831412537671912,
+            "rank_ic": 0.009495756962843094,
+            "icir": 0.04277098950596075,
+            "ic_lower": -0.10063498616020862,
+            "ic_upper": 0.12072544381865799,
+            "degradation": null,
+            "q5_q1_pp": 0.45930508124999997,
+            "pearson_ic": 0.012168826349440604,
+            "mean_delta_pp": 1.7696596337500001,
+            "coverage": 1.0
+          }
+        ],
+        "status": "available",
+        "note": "当前固定股票池的历史回溯，存在幸存者及复权修订偏差；不计入前瞻成绩。公式未在测试折调参。"
+      },
+      "latest_selection": [
+        {
+          "code": "HK.00992",
+          "score": 2.1249921262763896,
+          "features": {
+            "relative_volume": 2.3717314158718237,
+            "close_location": 0.9345794392523362,
+            "breakout": -0.25923970432946153,
+            "compression": -1.4063795996121957,
+            "reversal3": 0.09774919614147914,
+            "recovery": 0.781099324975891,
+            "gap": 0.01770592763664358,
+            "downside_stability": -0.044888655761863926,
+            "volume_price": -0.33116771171213727,
+            "legacy_bias": -98.759572289253,
+            "legacy_slope": -11.297004280209105,
+            "legacy_efficiency": -3.2845817118117377
+          }
+        },
+        {
+          "code": "HK.01378",
+          "score": 2.1249921262763896,
+          "features": {
+            "relative_volume": 4.322437394335045,
+            "close_location": 0.9240506329113919,
+            "breakout": -0.12243074173369073,
+            "compression": -1.5269248830387794,
+            "reversal3": 0.08052434456928836,
+            "recovery": 0.2155504234026183,
+            "gap": -0.0005125576627371675,
+            "downside_stability": -0.018471247883793104,
+            "volume_price": -0.1329790380825509,
+            "legacy_bias": 3.2696856276025232,
+            "legacy_slope": -18.3022591600865,
+            "legacy_efficiency": -8.527011548387954
+          }
+        },
+        {
+          "code": "HK.02338",
+          "score": 1.299180954440899,
+          "features": {
+            "relative_volume": 1.3865837415995168,
+            "close_location": 0.5365853658536599,
+            "breakout": -0.21880762138905951,
+            "compression": -1.0048773289728155,
+            "reversal3": 0.06268436578171088,
+            "recovery": 0.2558314522197166,
+            "gap": 0.018683996750609166,
+            "downside_stability": -0.03126245093240573,
+            "volume_price": -0.25704270044731653,
+            "legacy_bias": -26.678242871695804,
+            "legacy_slope": -45.08058556894907,
+            "legacy_efficiency": -7.948756905231796
+          }
+        },
+        {
+          "code": "HK.01548",
+          "score": 0.8737671213010907,
+          "features": {
+            "relative_volume": 1.3130158564034036,
+            "close_location": 0.5229357798165124,
+            "breakout": -0.32672866963202596,
+            "compression": -1.1229620099346829,
+            "reversal3": 0.06355455568054003,
+            "recovery": 0.0,
+            "gap": 0.05379746835443022,
+            "downside_stability": -0.0566914544913084,
+            "volume_price": -0.4450884897746084,
+            "legacy_bias": -65.08758057414902,
+            "legacy_slope": 1.2561066747782266,
+            "legacy_efficiency": 0.1656228156503742
+          }
+        }
+      ],
+      "latest_frozen_at": "2026-10-19T13:40:06+00:00"
+    }
+  ],
+  "observations": [
+    {
+      "trial_id": "factor_17ae34abae7e544a",
+      "definition_hash": "f78e43e47b61338b5321375539134d221215c65e1eff69fc8d89665b44531f57",
+      "snapshot_id": "cbd59afbc6f7470f1b695917",
+      "input_id": "US_20261016",
+      "frozen_at": "2026-10-19T13:40:06+00:00",
+      "entry_date": 20261020,
+      "exit_date": 20261027,
+      "due": false,
+      "branch": {
+        "count": 0,
+        "holdings": [],
+        "complete": false,
+        "return_pct": null
+      },
+      "parent": {
+        "count": 40,
+        "complete": false,
+        "holdings": [
+          {
+            "code": "US.AAPL",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.AMAT",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.AMD",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.AMZN",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.ASML",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.AVGO",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.BAC",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.BE",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.COST",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.CRWD",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.DELL",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.GOOG",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.GOOGL",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.INTC",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.JPM",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.LITE",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.LLY",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.LRCX",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.MDT",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.META",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.MRNA",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.MRVL",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.MSFT",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.MSTR",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.MU",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.NBIS",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.NFLX",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.NVDA",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.ORCL",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.PANW",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.PLTR",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.SHOP",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.SNOW",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.STX",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.TSLA",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.TSM",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.UNH",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.V",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.WDC",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.WFC",
+            "status": "pending",
+            "return_pct": null
+          }
+        ],
+        "known_count": 0,
+        "return_pct": null
+      },
+      "pool": {
+        "count": 40,
+        "complete": false,
+        "holdings": [
+          {
+            "code": "US.AAPL",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.AMAT",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.AMD",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.AMZN",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.ASML",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.AVGO",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.BAC",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.BE",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.COST",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.CRWD",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.DELL",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.GOOG",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.GOOGL",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.INTC",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.JPM",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.LITE",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.LLY",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.LRCX",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.MDT",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.META",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.MRNA",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.MRVL",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.MSFT",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.MSTR",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.MU",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.NBIS",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.NFLX",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.NVDA",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.ORCL",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.PANW",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.PLTR",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.SHOP",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.SNOW",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.STX",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.TSLA",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.TSM",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.UNH",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.V",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.WDC",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.WFC",
+            "status": "pending",
+            "return_pct": null
+          }
+        ],
+        "known_count": 0,
+        "return_pct": null
+      },
+      "benchmark_pct": null,
+      "rank_ic": null,
+      "pearson_ic": null,
+      "novelty_max": null
+    },
+    {
+      "trial_id": "factor_54a2f22c16f0de4c",
+      "definition_hash": "944806671555fddbf8db298743720978cc2d573fba91fde5e424c1bde20394ff",
+      "snapshot_id": "e17b12ed20365318a67998eb",
+      "input_id": "HK_20261016",
+      "frozen_at": "2026-10-19T13:40:06+00:00",
+      "entry_date": 20261020,
+      "exit_date": 20261027,
+      "due": false,
+      "branch": {
+        "count": 0,
+        "holdings": [],
+        "complete": false,
+        "return_pct": null
+      },
+      "parent": {
+        "count": 40,
+        "complete": false,
+        "holdings": [
+          {
+            "code": "HK.00005",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00388",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00700",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00857",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00883",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00939",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00941",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00981",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00992",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01024",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01109",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01211",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01299",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01347",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01378",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01398",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01548",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01772",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01801",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01810",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01888",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02020",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02268",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02269",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02313",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02318",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02328",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02338",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02359",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02628",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02899",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.03690",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.03988",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.06160",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.06869",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.09888",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.09926",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.09988",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.09992",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.09999",
+            "status": "pending",
+            "return_pct": null
+          }
+        ],
+        "known_count": 0,
+        "return_pct": null
+      },
+      "pool": {
+        "count": 40,
+        "complete": false,
+        "holdings": [
+          {
+            "code": "HK.00005",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00388",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00700",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00857",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00883",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00939",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00941",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00981",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00992",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01024",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01109",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01211",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01299",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01347",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01378",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01398",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01548",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01772",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01801",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01810",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01888",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02020",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02268",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02269",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02313",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02318",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02328",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02338",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02359",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02628",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02899",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.03690",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.03988",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.06160",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.06869",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.09888",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.09926",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.09988",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.09992",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.09999",
+            "status": "pending",
+            "return_pct": null
+          }
+        ],
+        "known_count": 0,
+        "return_pct": null
+      },
+      "benchmark_pct": null,
+      "rank_ic": null,
+      "pearson_ic": null,
+      "novelty_max": null
+    },
+    {
+      "trial_id": "factor_6651b9e80063d61f",
+      "definition_hash": "7ef7439909467b75c7c8a2494c4c3e35f21ed82fcf6a209c36aa711a772ae99e",
+      "snapshot_id": "cbd59afbc6f7470f1b695917",
+      "input_id": "US_20261016",
+      "frozen_at": "2026-10-19T13:40:06+00:00",
+      "entry_date": 20261020,
+      "exit_date": 20261027,
+      "due": false,
+      "branch": {
+        "count": 0,
+        "holdings": [],
+        "complete": false,
+        "return_pct": null
+      },
+      "parent": {
+        "count": 40,
+        "complete": false,
+        "holdings": [
+          {
+            "code": "US.AAPL",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.AMAT",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.AMD",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.AMZN",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.ASML",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.AVGO",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.BAC",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.BE",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.COST",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.CRWD",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.DELL",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.GOOG",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.GOOGL",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.INTC",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.JPM",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.LITE",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.LLY",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.LRCX",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.MDT",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.META",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.MRNA",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.MRVL",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.MSFT",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.MSTR",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.MU",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.NBIS",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.NFLX",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.NVDA",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.ORCL",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.PANW",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.PLTR",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.SHOP",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.SNOW",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.STX",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.TSLA",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.TSM",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.UNH",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.V",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.WDC",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.WFC",
+            "status": "pending",
+            "return_pct": null
+          }
+        ],
+        "known_count": 0,
+        "return_pct": null
+      },
+      "pool": {
+        "count": 40,
+        "complete": false,
+        "holdings": [
+          {
+            "code": "US.AAPL",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.AMAT",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.AMD",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.AMZN",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.ASML",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.AVGO",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.BAC",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.BE",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.COST",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.CRWD",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.DELL",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.GOOG",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.GOOGL",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.INTC",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.JPM",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.LITE",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.LLY",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.LRCX",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.MDT",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.META",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.MRNA",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.MRVL",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.MSFT",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.MSTR",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.MU",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.NBIS",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.NFLX",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.NVDA",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.ORCL",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.PANW",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.PLTR",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.SHOP",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.SNOW",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.STX",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.TSLA",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.TSM",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.UNH",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.V",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.WDC",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.WFC",
+            "status": "pending",
+            "return_pct": null
+          }
+        ],
+        "known_count": 0,
+        "return_pct": null
+      },
+      "benchmark_pct": null,
+      "rank_ic": null,
+      "pearson_ic": null,
+      "novelty_max": null
+    },
+    {
+      "trial_id": "factor_9d65144e54b1fb7f",
+      "definition_hash": "d2914b0d11f44de4b66f0afb66d8bf84c36747947222f43cb5beeae6ad084fbc",
+      "snapshot_id": "e17b12ed20365318a67998eb",
+      "input_id": "HK_20261016",
+      "frozen_at": "2026-10-19T13:40:06+00:00",
+      "entry_date": 20261020,
+      "exit_date": 20261027,
+      "due": false,
+      "branch": {
+        "count": 0,
+        "holdings": [],
+        "complete": false,
+        "return_pct": null
+      },
+      "parent": {
+        "count": 40,
+        "complete": false,
+        "holdings": [
+          {
+            "code": "HK.00005",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00388",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00700",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00857",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00883",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00939",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00941",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00981",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00992",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01024",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01109",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01211",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01299",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01347",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01378",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01398",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01548",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01772",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01801",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01810",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01888",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02020",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02268",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02269",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02313",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02318",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02328",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02338",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02359",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02628",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02899",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.03690",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.03988",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.06160",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.06869",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.09888",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.09926",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.09988",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.09992",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.09999",
+            "status": "pending",
+            "return_pct": null
+          }
+        ],
+        "known_count": 0,
+        "return_pct": null
+      },
+      "pool": {
+        "count": 40,
+        "complete": false,
+        "holdings": [
+          {
+            "code": "HK.00005",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00388",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00700",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00857",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00883",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00939",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00941",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00981",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00992",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01024",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01109",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01211",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01299",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01347",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01378",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01398",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01548",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01772",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01801",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01810",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01888",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02020",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02268",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02269",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02313",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02318",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02328",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02338",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02359",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02628",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02899",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.03690",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.03988",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.06160",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.06869",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.09888",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.09926",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.09988",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.09992",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.09999",
+            "status": "pending",
+            "return_pct": null
+          }
+        ],
+        "known_count": 0,
+        "return_pct": null
+      },
+      "benchmark_pct": null,
+      "rank_ic": null,
+      "pearson_ic": null,
+      "novelty_max": null
+    },
+    {
+      "trial_id": "factor_c37d333402b59ec1",
+      "definition_hash": "3f725506ff114c479f1da2492fefdbef9b5dc40e92384c21de75a529b39ca41e",
+      "snapshot_id": "cbd59afbc6f7470f1b695917",
+      "input_id": "US_20261016",
+      "frozen_at": "2026-10-19T13:40:06+00:00",
+      "entry_date": 20261020,
+      "exit_date": 20261027,
+      "due": false,
+      "branch": {
+        "count": 0,
+        "holdings": [],
+        "complete": false,
+        "return_pct": null
+      },
+      "parent": {
+        "count": 40,
+        "complete": false,
+        "holdings": [
+          {
+            "code": "US.AAPL",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.AMAT",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.AMD",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.AMZN",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.ASML",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.AVGO",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.BAC",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.BE",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.COST",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.CRWD",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.DELL",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.GOOG",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.GOOGL",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.INTC",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.JPM",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.LITE",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.LLY",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.LRCX",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.MDT",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.META",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.MRNA",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.MRVL",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.MSFT",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.MSTR",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.MU",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.NBIS",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.NFLX",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.NVDA",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.ORCL",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.PANW",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.PLTR",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.SHOP",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.SNOW",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.STX",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.TSLA",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.TSM",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.UNH",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.V",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.WDC",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.WFC",
+            "status": "pending",
+            "return_pct": null
+          }
+        ],
+        "known_count": 0,
+        "return_pct": null
+      },
+      "pool": {
+        "count": 40,
+        "complete": false,
+        "holdings": [
+          {
+            "code": "US.AAPL",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.AMAT",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.AMD",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.AMZN",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.ASML",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.AVGO",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.BAC",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.BE",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.COST",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.CRWD",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.DELL",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.GOOG",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.GOOGL",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.INTC",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.JPM",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.LITE",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.LLY",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.LRCX",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.MDT",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.META",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.MRNA",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.MRVL",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.MSFT",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.MSTR",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.MU",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.NBIS",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.NFLX",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.NVDA",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.ORCL",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.PANW",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.PLTR",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.SHOP",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.SNOW",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.STX",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.TSLA",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.TSM",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.UNH",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.V",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.WDC",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.WFC",
+            "status": "pending",
+            "return_pct": null
+          }
+        ],
+        "known_count": 0,
+        "return_pct": null
+      },
+      "benchmark_pct": null,
+      "rank_ic": null,
+      "pearson_ic": null,
+      "novelty_max": null
+    },
+    {
+      "trial_id": "factor_db7969eafdce83f7",
+      "definition_hash": "232b17591543c03a5c38f2250fd645909c0cadec9052f54ed38fd8509d49200f",
+      "snapshot_id": "e17b12ed20365318a67998eb",
+      "input_id": "HK_20261016",
+      "frozen_at": "2026-10-19T13:40:06+00:00",
+      "entry_date": 20261020,
+      "exit_date": 20261027,
+      "due": false,
+      "branch": {
+        "count": 4,
+        "complete": false,
+        "holdings": [
+          {
+            "code": "HK.00992",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01378",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02338",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01548",
+            "status": "pending",
+            "return_pct": null
+          }
+        ],
+        "known_count": 0,
+        "return_pct": null
+      },
+      "parent": {
+        "count": 40,
+        "complete": false,
+        "holdings": [
+          {
+            "code": "HK.00005",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00388",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00700",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00857",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00883",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00939",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00941",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00981",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00992",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01024",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01109",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01211",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01299",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01347",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01378",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01398",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01548",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01772",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01801",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01810",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01888",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02020",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02268",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02269",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02313",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02318",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02328",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02338",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02359",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02628",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02899",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.03690",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.03988",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.06160",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.06869",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.09888",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.09926",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.09988",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.09992",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.09999",
+            "status": "pending",
+            "return_pct": null
+          }
+        ],
+        "known_count": 0,
+        "return_pct": null
+      },
+      "pool": {
+        "count": 40,
+        "complete": false,
+        "holdings": [
+          {
+            "code": "HK.00005",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00388",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00700",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00857",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00883",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00939",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00941",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00981",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00992",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01024",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01109",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01211",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01299",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01347",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01378",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01398",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01548",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01772",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01801",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01810",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01888",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02020",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02268",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02269",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02313",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02318",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02328",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02338",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02359",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02628",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02899",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.03690",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.03988",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.06160",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.06869",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.09888",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.09926",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.09988",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.09992",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.09999",
+            "status": "pending",
+            "return_pct": null
+          }
+        ],
+        "known_count": 0,
+        "return_pct": null
+      },
+      "benchmark_pct": null,
+      "rank_ic": null,
+      "pearson_ic": null,
+      "novelty_max": null
+    }
+  ],
+  "events": [
+    {
+      "action": "created",
+      "at": "2026-10-19T13:40:06.429824+00:00",
+      "program_id": "factor_17ae34abae7e544a",
+      "parent_id": null,
+      "origin": "predeclared"
+    },
+    {
+      "action": "created",
+      "at": "2026-10-19T13:40:06.429824+00:00",
+      "program_id": "factor_6651b9e80063d61f",
+      "parent_id": null,
+      "origin": "predeclared"
+    },
+    {
+      "action": "created",
+      "at": "2026-10-19T13:40:06.429824+00:00",
+      "program_id": "factor_c37d333402b59ec1",
+      "parent_id": null,
+      "origin": "predeclared"
+    },
+    {
+      "action": "created",
+      "at": "2026-10-19T13:40:06.429824+00:00",
+      "program_id": "factor_9d65144e54b1fb7f",
+      "parent_id": null,
+      "origin": "predeclared"
+    },
+    {
+      "action": "created",
+      "at": "2026-10-19T13:40:06.429824+00:00",
+      "program_id": "factor_54a2f22c16f0de4c",
+      "parent_id": null,
+      "origin": "predeclared"
+    },
+    {
+      "action": "created",
+      "at": "2026-10-19T13:40:06.429824+00:00",
+      "program_id": "factor_db7969eafdce83f7",
+      "parent_id": null,
+      "origin": "predeclared"
+    }
+  ],
+  "searches": [],
+  "review_workflow": "https://github.com/Mjeemjee/stock-screener/actions/workflows/review-factor-research.yml",
+  "generator": "bounded_formula_research",
+  "model_connected": false
+}
