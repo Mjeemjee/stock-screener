@@ -51,6 +51,9 @@ jobs:
       - name: 运行云端选股引擎（HKEX + NASDAQ + 腾讯快照）
         run: python -m screener.cloud_engine
 
+      - name: 固定股票池因子研究与前瞻跟踪
+        run: python -m screener.factor_research --fetch-missing
+
       - name: 保存累计选股档案
         id: screening_archive
         if: always()
@@ -88,7 +91,7 @@ jobs:
         working-directory: portfolio-board
         run: |
           npm install --no-audit --no-fund
-          node --test src/lib/screener.test.cjs src/lib/investmentMethods.test.cjs src/lib/lab.test.cjs
+          node --test src/lib/screener.test.cjs src/lib/investmentMethods.test.cjs src/lib/lab.test.cjs src/lib/research.test.cjs
           npm run build
 
       - name: 阻止私人持仓和非公开数据发布

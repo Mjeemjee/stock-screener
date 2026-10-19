@@ -1,0 +1,70 @@
+name: review-factor-research
+
+on:
+  workflow_dispatch:
+    inputs:
+      decision:
+        description: Start a future paper experiment, pause, reject, or approve paper evidence
+        required: true
+        type: choice
+        options: [start, pause, reject, approve]
+      program_id:
+        description: Program ID (existing experiments only)
+        type: string
+      evidence_hash:
+        description: Pinned hash from the downloaded request (existing experiments only)
+        type: string
+      proposal_json:
+        description: JSON from the proposal editor (start only)
+        type: string
+
+permissions:
+  contents: read
+  actions: write
+
+concurrency:
+  group: daily-screener
+  cancel-in-progress: false
+
+jobs:
+  review:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements-cloud.txt
+      - name: Regression checks
+        run: python -m unittest discover -s screener/tests -v
+      - name: Restore cumulative archive
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          archive_run_id=$(gh api "repos/${GITHUB_REPOSITORY}/actions/artifacts?name=screening-archive&per_page=100" --jq '[.artifacts[] | select(.name == "screening-archive" and .expired == false)] | sort_by(.created_at) | reverse | .[0].workflow_run.id // empty')
+          test -n "$archive_run_id"
+          restored_archive=$(mktemp -d)
+          gh run download "$archive_run_id" --name screening-archive --dir "$restored_archive"
+          python scripts/restore_screening_archive.py "$restored_archive" data/screening_archive
+      - name: Load public prices
+        run: python scripts/fetch_public_data.py
+      - name: Apply authenticated research decision
+        env:
+          RESEARCH_DECISION: ${{ inputs.decision }}
+          RESEARCH_PROGRAM: ${{ inputs.program_id }}
+          RESEARCH_EVIDENCE: ${{ inputs.evidence_hash }}
+          RESEARCH_PROPOSAL: ${{ inputs.proposal_json }}
+          RESEARCH_ACTOR: ${{ github.actor }}
+        run: python -m screener.factor_research --action-env
+      - uses: actions/upload-artifact@v4
+        with:
+          name: screening-archive
+          path: data/screening_archive/
+          retention-days: 90
+      - name: Refresh site
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run publish.yml --ref main

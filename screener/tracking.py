@@ -178,7 +178,7 @@ def evaluate_holding(bars, entry_day, exit_day, *, cost_bps=COST_BPS):
             "entry_price": entry[1], "exit_price": exit_row[1]}
 
 
-def evaluate_record(record, stocks, indexes, *, as_of=None, horizons=HORIZONS):
+def evaluate_record(record, stocks, indexes, *, as_of=None, horizons=HORIZONS, top_n=TOP_N, cost_bps=COST_BPS):
     now = as_of or datetime.now(timezone.utc)
     cutoff = instant(record["frozen_at"])
     rows = []
@@ -197,9 +197,9 @@ def evaluate_record(record, stocks, indexes, *, as_of=None, horizons=HORIZONS):
             entry_day = (int(entry_session.strftime("%Y%m%d"))
                          if calendar.session_open(entry_session).to_pydatetime() <= now else None)
             original_known = all(isinstance(hit.get("original_market_rank"), int) for hit in candidates)
-            modes = {"selected": candidates[:TOP_N]}
+            modes = {"selected": candidates[:top_n]}
             if original_known:
-                modes["original"] = sorted(candidates, key=lambda hit: hit["original_market_rank"])[:TOP_N]
+                modes["original"] = sorted(candidates, key=lambda hit: hit["original_market_rank"])[:top_n]
             benchmark = price_rows(index_bars)
             for horizon in horizons:
                 exit_session = calendar.session_offset(entry_session, horizon)
@@ -214,7 +214,7 @@ def evaluate_record(record, stocks, indexes, *, as_of=None, horizons=HORIZONS):
                        "prospective": record["provenance"] == "prospective",
                        "original_rank_known": original_known, "baskets": {}, "benchmark_pct": None}
                 for mode, chosen in modes.items():
-                    detail = [{"code": hit["code"], **(evaluate_holding(stocks.get(hit["code"], []), entry_day, exit_day)
+                    detail = [{"code": hit["code"], **(evaluate_holding(stocks.get(hit["code"], []), entry_day, exit_day, cost_bps=cost_bps)
                               if entry_day else {"status": "pending", "return_pct": None})} for hit in chosen]
                     complete = bool(exit_day) and all(item["return_pct"] is not None for item in detail)
                     row["baskets"][mode] = {

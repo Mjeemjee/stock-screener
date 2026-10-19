@@ -43,6 +43,7 @@ jobs:
         run: |
           python scripts/fetch_public_data.py
           python -m screener.research_lab --report-only
+          python -m screener.factor_research
       - uses: actions/upload-artifact@v4
         with:
           name: screening-archive
@@ -55,7 +56,7 @@ jobs:
         working-directory: portfolio-board
         run: |
           npm install --no-audit --no-fund
-          node --test src/lib/screener.test.cjs src/lib/investmentMethods.test.cjs src/lib/lab.test.cjs
+          node --test src/lib/screener.test.cjs src/lib/investmentMethods.test.cjs src/lib/lab.test.cjs src/lib/research.test.cjs
           npm run build
           python ../scripts/verify_public_build.py dist
       - uses: peaceiris/actions-gh-pages@v4

@@ -65,6 +65,35 @@ def restore(source, destination):
                     raise ValueError("Conflicting immutable lab snapshot")
                 continue
             shutil.copy2(file, path)
+    if (source / "research/state.json").exists():
+        from screener.factor_research import load_state, read_sealed
+        incoming_state = load_state(source)
+        if (destination / "research/state.json").exists():
+            current = load_state(destination)
+            by_id = {p["id"]: p for p in incoming_state["programs"]}
+            if (any(by_id.get(p["id"], {}).get("definition_hash") != p["definition_hash"] for p in current["programs"])
+                    or incoming_state["events"][:len(current["events"])] != current["events"]
+                    or incoming_state["searches"][:len(current["searches"])] != current["searches"]
+                    or any(incoming_state["inputs"].get(k) != v for k, v in current["inputs"].items())
+                    or any(incoming_state["universes"].get(k) != v for k, v in current["universes"].items())):
+                raise ValueError("Research backup would roll back or redefine the study")
+        read_archives(source / "research/runs")
+        files = sorted((source / "research").rglob("*.json"))
+        for file in files:
+            if file.is_symlink():
+                raise ValueError("Research backup symlinks are not accepted")
+            path = destination / file.relative_to(source)
+            if file.parent.name not in ("research", "prices", "snapshots"):
+                read_sealed(file)
+            if file.parent.name not in ("research", "prices") and path.exists():
+                if json.loads(file.read_text(encoding="utf-8")) != json.loads(path.read_text(encoding="utf-8")):
+                    raise ValueError("Conflicting immutable research evidence")
+        for file in files:
+            path = destination / file.relative_to(source)
+            if path.exists() and file.parent.name not in ("research", "prices"):
+                continue
+            path.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(file, path)
     return len(read_archives(destination))
 
 

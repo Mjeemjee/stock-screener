@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import LabTabs from '@/components/LabTabs'
 import { Link } from 'react-router'
 import { Check, Clock3, Download, ExternalLink, GitFork, RefreshCw, X } from 'lucide-react'
 import { Bar, BarChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
@@ -87,6 +88,7 @@ export default function StrategyLab() {
   const trials = data?.trials.filter(row => (market === 'ALL' || row.market === market) && (status === 'ALL' || row.status === status)) ?? []
   const selectedTrial = trials.find(row => row.id === selectedId) ?? trials[0]
   return <AppShell title="策略进化实验室" subtitle="独立前瞻验证 · 有限分支 · 人工晋级">
+    <LabTabs />
     <div className="flex flex-wrap items-center justify-between gap-3 border-b pb-4">
       <div className="flex flex-wrap gap-x-5 gap-y-1 text-sm"><span>累计试验 <strong>{data?.trials.length ?? 0} / {data?.policy.max_trials ?? '-'}</strong></span><span>待审核 <strong>{data?.trials.filter(row => row.status === 'review').length ?? 0}</strong></span><span>正式批准 <strong>{data?.trials.filter(row => row.status === 'approved').length ?? 0}</strong></span></div>
       <Button variant="outline" size="icon" aria-label="刷新实验室数据" title="刷新实验室数据" onClick={retry} disabled={loading}><RefreshCw /></Button>
