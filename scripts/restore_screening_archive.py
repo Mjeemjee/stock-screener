@@ -97,6 +97,31 @@ def restore(source, destination):
                 continue
             path.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(file, path)
+    long_source, long_target = source / 'long_study', destination / 'long_study'
+    if (long_target / 'definition.json').exists() and not (long_source / 'definition.json').exists():
+        raise ValueError('Backup would remove the long-horizon study')
+    if (long_source / 'definition.json').exists():
+        from screener.factor_research import read_sealed
+        read_sealed(long_source / 'definition.json')
+        read_archives(long_source)
+        for existing_file in long_target.rglob('*.json'):
+            if existing_file.parent.name != 'prices' and not (long_source / existing_file.relative_to(long_target)).exists():
+                raise ValueError('Backup would roll back long-horizon evidence')
+        files = sorted(long_source.rglob('*.json'))
+        for file in files:
+            if file.is_symlink():
+                raise ValueError('Long-horizon symlink is not accepted')
+            target_file = long_target / file.relative_to(long_source)
+            if file.parent.name not in ('prices', 'snapshots'):
+                read_sealed(file)
+            if file.parent.name != 'prices' and target_file.exists():
+                if json.loads(target_file.read_text(encoding='utf-8')) != json.loads(file.read_text(encoding='utf-8')):
+                    raise ValueError('Conflicting immutable long-horizon evidence')
+        for file in files:
+            target_file = long_target / file.relative_to(long_source)
+            target_file.parent.mkdir(parents=True, exist_ok=True)
+            if not target_file.exists() or file.parent.name == 'prices':
+                shutil.copy2(file, target_file)
     return len(read_archives(destination))
 
 

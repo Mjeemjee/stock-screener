@@ -1,0 +1,1975 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-10-21T01:56:52.820754+00:00",
+  "definition_hash": "ffac6ed3d6ab96da346e18a8b2e6da7fab8f376a907807291b2b5a3ad63b2fc9",
+  "policy": {
+    "version": "liq-momentum-forward-v2",
+    "horizon": 21,
+    "lookback": 251,
+    "top_fraction": 0.2,
+    "min_cross_section": 30,
+    "min_coverage": 0.8,
+    "cost_bps": 15,
+    "stress_cost_bps": 30,
+    "checkpoints": [
+      6,
+      12,
+      24
+    ],
+    "family_alpha": 0.05,
+    "comparison_count": 6,
+    "worst_period_floor_pct": -15
+  },
+  "markets": [
+    {
+      "market": "HK",
+      "quality": {
+        "market": "HK",
+        "session": 20261020,
+        "valid": 128,
+        "total": 218,
+        "status": "insufficient_data"
+      },
+      "metrics": {
+        "due": 0,
+        "total_due": 0,
+        "paired": 0,
+        "coverage": 0,
+        "mean_net_pct": null,
+        "mean_delta_pp": null,
+        "lower_delta_pp": null,
+        "mean_excess_pp": null,
+        "stress_excess_pp": null,
+        "worst_period_pct": null,
+        "adjusted_lower_pp": {},
+        "stage": "等待样本"
+      },
+      "latest": null
+    },
+    {
+      "market": "US",
+      "quality": {
+        "market": "US",
+        "session": 20261020,
+        "valid": 216,
+        "total": 259,
+        "status": "ready"
+      },
+      "metrics": {
+        "due": 0,
+        "total_due": 0,
+        "paired": 0,
+        "coverage": 0,
+        "mean_net_pct": null,
+        "mean_delta_pp": null,
+        "lower_delta_pp": null,
+        "mean_excess_pp": null,
+        "stress_excess_pp": null,
+        "worst_period_pct": null,
+        "adjusted_lower_pp": {},
+        "stage": "等待样本"
+      },
+      "latest": {
+        "id": "5f926808be7c24cb393a691c",
+        "market": "US",
+        "frozen_at": "2026-10-21T01:56:52+00:00",
+        "entry_date": 20261021,
+        "exit_date": 20261119,
+        "due": false,
+        "baskets": {
+          "combined": {
+            "count": 43,
+            "complete": false,
+            "holdings": [
+              {
+                "code": "US.RVMD",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.TSEM",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.TTMI",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.FLEX",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.HUT",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.AXTI",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.DVN",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.FIX",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.PBR",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.BP",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.ITUB",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.FTNT",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.SLB",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.TGT",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.HL",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.OXY",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.PSX",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.NTRA",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.ILMN",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.OKTA",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.REGN",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.WULF",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.EQIX",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.NOK",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.USB",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.PH",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.NEM",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.PWR",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.DAL",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.WELL",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.AKAM",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.FCX",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.UAL",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.TER",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.HLT",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.ELV",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.MPC",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.DDOG",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.WMB",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.AAOI",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.CMI",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.COP",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.DE",
+                "status": "pending",
+                "return_pct": null
+              }
+            ],
+            "return_pct": null
+          },
+          "momentum": {
+            "count": 43,
+            "complete": false,
+            "holdings": [
+              {
+                "code": "US.AXTI",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.MRNA",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.LITE",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.MU",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.STX",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.WDC",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.DELL",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.RVMD",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.INTC",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.AAOI",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.TSEM",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.MRVL",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.TER",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.HPE",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.BE",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.AMD",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.COHR",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.TWLO",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.ILMN",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.VLO",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.HUT",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.NBIS",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.TTMI",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.OKTA",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.CIEN",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.MPC",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.LRCX",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.AMAT",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.NTRA",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.PSX",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.FTNT",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.CRWD",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.FIX",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.NOK",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.PBR",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.GLW",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.FLEX",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.FCX",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.MRK",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.TGT",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.PANW",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.ASML",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.NET",
+                "status": "pending",
+                "return_pct": null
+              }
+            ],
+            "return_pct": null
+          },
+          "liquidity": {
+            "count": 43,
+            "complete": false,
+            "holdings": [
+              {
+                "code": "US.TTMI",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.ITUB",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.WDAY",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.FLEX",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.ICE",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.BP",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.VEEV",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.KMB",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.RVMD",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.RKT",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.DVN",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.SAP",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.TSEM",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.AZN",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.SE",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.KR",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.UAL",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.USB",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.PH",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.WULF",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.EQIX",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.F",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.HCA",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.HLT",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.HUT",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.TEAM",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.MMM",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.ELV",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.SHW",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.KKR",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.WMB",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.OXY",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.REGN",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.MO",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.SO",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.URI",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.AMT",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.HL",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.CIFR",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.FIX",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.PBR",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.WELL",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "US.HWM",
+                "status": "pending",
+                "return_pct": null
+              }
+            ],
+            "return_pct": null
+          }
+        },
+        "benchmark_pct": null,
+        "stress": {
+          "count": 43,
+          "complete": false,
+          "holdings": [
+            {
+              "code": "US.RVMD",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.TSEM",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.TTMI",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.FLEX",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.HUT",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.AXTI",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.DVN",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.FIX",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.PBR",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.BP",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.ITUB",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.FTNT",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.SLB",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.TGT",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.HL",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.OXY",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.PSX",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.NTRA",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.ILMN",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.OKTA",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.REGN",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.WULF",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.EQIX",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.NOK",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.USB",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.PH",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.NEM",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.PWR",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.DAL",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.WELL",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.AKAM",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.FCX",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.UAL",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.TER",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.HLT",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.ELV",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.MPC",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.DDOG",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.WMB",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.AAOI",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.CMI",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.COP",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.DE",
+              "status": "pending",
+              "return_pct": null
+            }
+          ],
+          "return_pct": null
+        }
+      }
+    }
+  ],
+  "cohorts": [
+    {
+      "id": "5f926808be7c24cb393a691c",
+      "market": "US",
+      "frozen_at": "2026-10-21T01:56:52+00:00",
+      "entry_date": 20261021,
+      "exit_date": 20261119,
+      "due": false,
+      "baskets": {
+        "combined": {
+          "count": 43,
+          "complete": false,
+          "holdings": [
+            {
+              "code": "US.RVMD",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.TSEM",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.TTMI",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.FLEX",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.HUT",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.AXTI",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.DVN",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.FIX",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.PBR",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.BP",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.ITUB",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.FTNT",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.SLB",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.TGT",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.HL",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.OXY",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.PSX",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.NTRA",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.ILMN",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.OKTA",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.REGN",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.WULF",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.EQIX",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.NOK",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.USB",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.PH",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.NEM",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.PWR",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.DAL",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.WELL",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.AKAM",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.FCX",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.UAL",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.TER",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.HLT",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.ELV",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.MPC",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.DDOG",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.WMB",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.AAOI",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.CMI",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.COP",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.DE",
+              "status": "pending",
+              "return_pct": null
+            }
+          ],
+          "return_pct": null
+        },
+        "momentum": {
+          "count": 43,
+          "complete": false,
+          "holdings": [
+            {
+              "code": "US.AXTI",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.MRNA",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.LITE",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.MU",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.STX",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.WDC",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.DELL",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.RVMD",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.INTC",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.AAOI",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.TSEM",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.MRVL",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.TER",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.HPE",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.BE",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.AMD",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.COHR",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.TWLO",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.ILMN",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.VLO",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.HUT",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.NBIS",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.TTMI",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.OKTA",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.CIEN",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.MPC",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.LRCX",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.AMAT",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.NTRA",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.PSX",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.FTNT",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.CRWD",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.FIX",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.NOK",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.PBR",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.GLW",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.FLEX",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.FCX",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.MRK",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.TGT",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.PANW",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.ASML",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.NET",
+              "status": "pending",
+              "return_pct": null
+            }
+          ],
+          "return_pct": null
+        },
+        "liquidity": {
+          "count": 43,
+          "complete": false,
+          "holdings": [
+            {
+              "code": "US.TTMI",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.ITUB",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.WDAY",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.FLEX",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.ICE",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.BP",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.VEEV",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.KMB",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.RVMD",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.RKT",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.DVN",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.SAP",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.TSEM",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.AZN",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.SE",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.KR",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.UAL",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.USB",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.PH",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.WULF",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.EQIX",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.F",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.HCA",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.HLT",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.HUT",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.TEAM",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.MMM",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.ELV",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.SHW",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.KKR",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.WMB",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.OXY",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.REGN",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.MO",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.SO",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.URI",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.AMT",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.HL",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.CIFR",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.FIX",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.PBR",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.WELL",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "US.HWM",
+              "status": "pending",
+              "return_pct": null
+            }
+          ],
+          "return_pct": null
+        }
+      },
+      "benchmark_pct": null,
+      "stress": {
+        "count": 43,
+        "complete": false,
+        "holdings": [
+          {
+            "code": "US.RVMD",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.TSEM",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.TTMI",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.FLEX",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.HUT",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.AXTI",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.DVN",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.FIX",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.PBR",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.BP",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.ITUB",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.FTNT",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.SLB",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.TGT",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.HL",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.OXY",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.PSX",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.NTRA",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.ILMN",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.OKTA",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.REGN",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.WULF",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.EQIX",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.NOK",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.USB",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.PH",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.NEM",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.PWR",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.DAL",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.WELL",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.AKAM",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.FCX",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.UAL",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.TER",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.HLT",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.ELV",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.MPC",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.DDOG",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.WMB",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.AAOI",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.CMI",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.COP",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.DE",
+            "status": "pending",
+            "return_pct": null
+          }
+        ],
+        "return_pct": null
+      }
+    }
+  ],
+  "historical": {
+    "kind": "retrospective_replay_not_independent_oos",
+    "policy": {
+      "version": "liq-momentum-forward-v2",
+      "horizon": 21,
+      "lookback": 251,
+      "top_fraction": 0.2,
+      "min_cross_section": 30,
+      "min_coverage": 0.8,
+      "cost_bps": 15,
+      "stress_cost_bps": 30,
+      "checkpoints": [
+        6,
+        12,
+        24
+      ],
+      "family_alpha": 0.05,
+      "comparison_count": 6
+    },
+    "summary": [
+      {
+        "market": "HK",
+        "variant": "combined",
+        "due": 140,
+        "complete": 101,
+        "coverage": 0.7214285714285714,
+        "mean_net_pct": 1.8683943421049354,
+        "mean_excess_pp": 1.1166383891217682,
+        "mean_combo_improvement_pp": 0.0,
+        "stress_mean_pct": 1.5633553558836253,
+        "ls_complete": 98,
+        "ls_mean_net_pct": 0.579804433369117
+      },
+      {
+        "market": "HK",
+        "variant": "liquidity",
+        "due": 140,
+        "complete": 81,
+        "coverage": 0.5785714285714286,
+        "mean_net_pct": 2.7050754354707287,
+        "mean_excess_pp": 1.1973886928305624,
+        "mean_combo_improvement_pp": -0.1251246692580915,
+        "stress_mean_pct": 2.3975572767818947,
+        "ls_complete": 74,
+        "ls_mean_net_pct": 0.8041251781759438
+      },
+      {
+        "market": "HK",
+        "variant": "momentum",
+        "due": 140,
+        "complete": 114,
+        "coverage": 0.8142857142857143,
+        "mean_net_pct": 1.685338981064139,
+        "mean_excess_pp": 1.4995374044370475,
+        "mean_combo_improvement_pp": 0.07307538764872232,
+        "stress_mean_pct": 1.3808358144935031,
+        "ls_complete": 90,
+        "ls_mean_net_pct": 0.2567450823148872
+      },
+      {
+        "market": "US",
+        "variant": "combined",
+        "due": 140,
+        "complete": 137,
+        "coverage": 0.9785714285714285,
+        "mean_net_pct": 2.5693516524363846,
+        "mean_excess_pp": 1.520079547349499,
+        "mean_combo_improvement_pp": 0.0,
+        "stress_mean_pct": 2.2622489960882226,
+        "ls_complete": 135,
+        "ls_mean_net_pct": 0.8945814441856191
+      },
+      {
+        "market": "US",
+        "variant": "liquidity",
+        "due": 140,
+        "complete": 126,
+        "coverage": 0.9,
+        "mean_net_pct": 2.604474763163286,
+        "mean_excess_pp": 1.6169228963085205,
+        "mean_combo_improvement_pp": -0.1523149880961928,
+        "stress_mean_pct": 2.297334921162645,
+        "ls_complete": 126,
+        "ls_mean_net_pct": 0.7259029674461417
+      },
+      {
+        "market": "US",
+        "variant": "momentum",
+        "due": 140,
+        "complete": 137,
+        "coverage": 0.9785714285714285,
+        "mean_net_pct": 2.4246778951309396,
+        "mean_excess_pp": 1.3754057900440542,
+        "mean_combo_improvement_pp": 0.1784709360242162,
+        "stress_mean_pct": 2.1179123969985123,
+        "ls_complete": 125,
+        "ls_mean_net_pct": -0.037767742267991164
+      }
+    ],
+    "note": "当前幸存者股票池历史回放；缺价期保留未知，不复合为净值。做空未模拟借券，仅作诊断。"
+  }
+}

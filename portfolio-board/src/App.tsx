@@ -12,6 +12,7 @@ const Watchlist = lazy(() => import('./pages/Watchlist'))
 const InvestmentMethods = lazy(() => import('./pages/InvestmentMethods'))
 const StrategyLab = lazy(() => import('./pages/StrategyLab'))
 const FactorResearch = lazy(() => import('./pages/FactorResearch'))
+const LongHorizon = lazy(() => import('./pages/LongHorizon'))
 
 export default function App() {
   return (
@@ -27,6 +28,7 @@ export default function App() {
       <Route path="/tracking" element={<Tracking />} />
       <Route path="/lab" element={<StrategyLab />} />
       <Route path="/lab/research" element={<FactorResearch />} />
+      <Route path="/lab/long-horizon" element={<LongHorizon />} />
       <Route path="/stock/:code" element={<StockDetail />} />
       <Route path="/watchlist" element={<Watchlist />} />
       </Routes>

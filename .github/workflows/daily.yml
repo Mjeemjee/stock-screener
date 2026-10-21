@@ -59,6 +59,11 @@ jobs:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
         run: python -m screener.deepseek_research --generate
 
+      - name: Long-horizon fixed forward study
+        run: |
+          python -m screener.long_history_refresh
+          python -m screener.long_horizon
+
       - name: 保存累计选股档案
         id: screening_archive
         if: always()
@@ -96,7 +101,7 @@ jobs:
         working-directory: portfolio-board
         run: |
           npm install --no-audit --no-fund
-          node --test src/lib/screener.test.cjs src/lib/investmentMethods.test.cjs src/lib/lab.test.cjs src/lib/research.test.cjs
+          node --test src/lib/screener.test.cjs src/lib/investmentMethods.test.cjs src/lib/lab.test.cjs src/lib/research.test.cjs src/lib/longResearch.test.cjs
           npm run build
 
       - name: 阻止私人持仓和非公开数据发布

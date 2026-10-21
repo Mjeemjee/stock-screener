@@ -1,0 +1,101 @@
+{
+  "kind": "retrospective_replay_not_independent_oos",
+  "policy": {
+    "version": "liq-momentum-forward-v2",
+    "horizon": 21,
+    "lookback": 251,
+    "top_fraction": 0.2,
+    "min_cross_section": 30,
+    "min_coverage": 0.8,
+    "cost_bps": 15,
+    "stress_cost_bps": 30,
+    "checkpoints": [
+      6,
+      12,
+      24
+    ],
+    "family_alpha": 0.05,
+    "comparison_count": 6
+  },
+  "summary": [
+    {
+      "market": "HK",
+      "variant": "combined",
+      "due": 140,
+      "complete": 101,
+      "coverage": 0.7214285714285714,
+      "mean_net_pct": 1.8683943421049354,
+      "mean_excess_pp": 1.1166383891217682,
+      "mean_combo_improvement_pp": 0.0,
+      "stress_mean_pct": 1.5633553558836253,
+      "ls_complete": 98,
+      "ls_mean_net_pct": 0.579804433369117
+    },
+    {
+      "market": "HK",
+      "variant": "liquidity",
+      "due": 140,
+      "complete": 81,
+      "coverage": 0.5785714285714286,
+      "mean_net_pct": 2.7050754354707287,
+      "mean_excess_pp": 1.1973886928305624,
+      "mean_combo_improvement_pp": -0.1251246692580915,
+      "stress_mean_pct": 2.3975572767818947,
+      "ls_complete": 74,
+      "ls_mean_net_pct": 0.8041251781759438
+    },
+    {
+      "market": "HK",
+      "variant": "momentum",
+      "due": 140,
+      "complete": 114,
+      "coverage": 0.8142857142857143,
+      "mean_net_pct": 1.685338981064139,
+      "mean_excess_pp": 1.4995374044370475,
+      "mean_combo_improvement_pp": 0.07307538764872232,
+      "stress_mean_pct": 1.3808358144935031,
+      "ls_complete": 90,
+      "ls_mean_net_pct": 0.2567450823148872
+    },
+    {
+      "market": "US",
+      "variant": "combined",
+      "due": 140,
+      "complete": 137,
+      "coverage": 0.9785714285714285,
+      "mean_net_pct": 2.5693516524363846,
+      "mean_excess_pp": 1.520079547349499,
+      "mean_combo_improvement_pp": 0.0,
+      "stress_mean_pct": 2.2622489960882226,
+      "ls_complete": 135,
+      "ls_mean_net_pct": 0.8945814441856191
+    },
+    {
+      "market": "US",
+      "variant": "liquidity",
+      "due": 140,
+      "complete": 126,
+      "coverage": 0.9,
+      "mean_net_pct": 2.604474763163286,
+      "mean_excess_pp": 1.6169228963085205,
+      "mean_combo_improvement_pp": -0.1523149880961928,
+      "stress_mean_pct": 2.297334921162645,
+      "ls_complete": 126,
+      "ls_mean_net_pct": 0.7259029674461417
+    },
+    {
+      "market": "US",
+      "variant": "momentum",
+      "due": 140,
+      "complete": 137,
+      "coverage": 0.9785714285714285,
+      "mean_net_pct": 2.4246778951309396,
+      "mean_excess_pp": 1.3754057900440542,
+      "mean_combo_improvement_pp": 0.1784709360242162,
+      "stress_mean_pct": 2.1179123969985123,
+      "ls_complete": 125,
+      "ls_mean_net_pct": -0.037767742267991164
+    }
+  ],
+  "note": "当前幸存者股票池历史回放；缺价期保留未知，不复合为净值。做空未模拟借券，仅作诊断。"
+}

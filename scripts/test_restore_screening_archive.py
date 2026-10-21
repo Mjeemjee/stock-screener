@@ -65,6 +65,17 @@ class ArchiveRestoreTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             restore(self.source, self.source)
 
+    def test_long_study_is_cumulative_and_immutable(self):
+        from screener.factor_research import sealed, read_sealed
+        sealed(self.source / 'long_study/definition.json', {'version': 'fixed-test'})
+        sealed(self.source / 'long_study/settled/a.json', {'net': 1})
+        restore(self.source, self.target)
+        restore(self.source, self.target)
+        self.assertEqual(read_sealed(self.target / 'long_study/settled/a.json'), {'net': 1})
+        sealed(self.target / 'long_study/settled/b.json', {'net': 2})
+        with self.assertRaisesRegex(ValueError, 'roll back long-horizon'):
+            restore(self.source, self.target)
+
     def test_model_request_reservations_are_immutable_and_cannot_be_rolled_back(self):
         from screener.factor_research import load_state, save_state, sealed, read_sealed
         save_state(self.source, load_state(self.source))
