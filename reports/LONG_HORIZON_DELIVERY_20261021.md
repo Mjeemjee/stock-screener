@@ -48,4 +48,25 @@ Full implementation rules: `screener/LONG_HORIZON_PROTOCOL.md`.
 - Legacy ledger digest unchanged; strict export retains real frozen records while
   all legacy imports remain historical. Separate preflight archive preserved.
 
-Deployment and live checks are recorded below after publication.
+## Publication And Live Verification
+
+- Code commit: `d62ce8ea8f152f499609c41b6bf2567031843159`.
+- [Verified publication](https://github.com/Mjeemjee/stock-screener/actions/runs/39577877368)
+  succeeded, including 124 + 26 Python tests, 20 Node tests, TypeScript/Vite build
+  and public-file allowlist verification.
+- [Pages deployment](https://github.com/Mjeemjee/stock-screener/actions/runs/39578040080)
+  succeeded. [Live study](https://mjeemjee.github.io/stock-screener/#/lab/long-horizon).
+- Live browser checks: long study 8/8, existing factor research 12/12, parameter
+  laboratory 8/8; responsive screens, nonblank charts, exports, errors and retry tested.
+- Cloud first US cohort frozen at `2026-10-21T09:34:06+00:00`, before the US open;
+  scheduled entry 2026-10-21 and exit 2026-11-19. Actual outcome still pending.
+- US input coverage 216/259. HK latest completed session is 2026-10-21, but
+  published history has not supplied usable current-session observations: 0/218,
+  so no cloud HK cohort was created. Daily rotation may recover availability;
+  no guaranteed recovery date and its own validation clock has not started.
+- Restored the downloaded cloud archive twice to an isolated directory: all 580
+  JSON files unchanged, all 8 production snapshots retained, 1 new strict forward
+  cohort retained, all 6 prior factor-study definition hashes unchanged.
+- Private `data/positions.json`, `data/quotes.json` and `.env` return HTTP 404.
+- Existing local edits to `screener_results.json` and `tracking.json` were neither
+  staged nor published. Publication reused the already-public market files.
