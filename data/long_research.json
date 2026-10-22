@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-21T18:19:52.524818+00:00",
+  "generated_at": "2026-10-22T04:15:40.572773+00:00",
   "definition_hash": "ffac6ed3d6ab96da346e18a8b2e6da7fab8f376a907807291b2b5a3ad63b2fc9",
   "policy": {
     "version": "liq-momentum-forward-v2",
@@ -50,8 +50,8 @@
       "market": "US",
       "quality": {
         "market": "US",
-        "session": 20261020,
-        "valid": 232,
+        "session": 20261021,
+        "valid": 219,
         "total": 259,
         "status": "ready"
       },
