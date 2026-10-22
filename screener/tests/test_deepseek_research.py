@@ -34,7 +34,9 @@ class DeepSeekTests(unittest.TestCase):
                        'definition_hash': 'definition', 'engine_version': research.engine_version(),
                        'status': 'testing', 'generation': 1}
         self.state = {'programs': [self.parent]}
-        self.proposal = {k: deepcopy(self.parent[k]) for k in model.FIELDS}
+        self.proposal = {k: deepcopy(self.parent[k]) for k in model.BASE_FIELDS}
+        self.proposal['research_card'] = {'version': 1, 'evidence': 'Supplied completed observations only',
+            'failure_condition': 'Reject at the original fixed gate if no net improvement', 'data_risks': 'No news or fundamental data'}
         self.proposal.update(name='New gap test', expression=signals.feature('gap'), filters=[])
         self.value = {'proposals': [self.proposal]}
 
@@ -115,7 +117,9 @@ class DeepSeekTests(unittest.TestCase):
                         {**self.proposal, 'expression': {'op': 'eval', 'code': 'shell'}},
                         {**self.proposal, 'expression': signals.feature('unavailable_news')},
                         {**self.proposal, 'filters': [{'feature': 'gap', 'gte': float('nan')}]},
-                        {k: self.parent[k] for k in model.FIELDS}]:
+                        {k: self.parent[k] for k in model.BASE_FIELDS},
+                        {**self.proposal, 'research_card': {'version': 1}},
+                        {**self.proposal, 'research_card': {**self.proposal['research_card'], 'failure_condition': ' '}}]:
             accepted, rejected = model.validate_proposals({'proposals': [invalid]}, self.parent, self.state)
             self.assertFalse(accepted)
             self.assertEqual(len(rejected), 1)

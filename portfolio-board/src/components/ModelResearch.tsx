@@ -32,6 +32,10 @@ export default function ModelResearch({ data }: { data: ResearchData }) {
       {call.proposals.map((item, i) => <div key={i} className="space-y-2 border-l-2 pl-3">
         <h3 className="break-words text-sm font-semibold">{item.proposal.name} · {item.proposal.market}</h3>
         <p className="text-xs leading-relaxed">{item.proposal.hypothesis}</p>
+        {item.proposal.research_card ? <dl className="space-y-2 text-xs leading-relaxed">{[
+          ['依据', item.proposal.research_card.evidence], ['失败条件', item.proposal.research_card.failure_condition], ['数据与执行限制', item.proposal.research_card.data_risks],
+        ].map(([label, value]) => <div key={label}><dt className="text-muted-foreground">{label}</dt><dd className="mt-1 break-words">{value}</dd></div>)}</dl>
+          : <p className="text-xs text-amber-800">旧提案未冻结假设卡，启动新实验前需在提案编辑器补充。</p>}
         <p className="break-words text-xs text-muted-foreground">{formula(item.proposal.expression, data.features)}</p>
         <p className="text-xs text-amber-800">{item.started_program_id ? `已启动实验 ${item.started_program_id}` : '格式校验通过 · 收益未经验证 · 待人工审核'}</p>
         <Button variant="outline" disabled={!!item.started_program_id} onClick={() => downloadJson(item.proposal, `deepseek-proposal-${call.id.slice(0, 8)}-${i + 1}.json`)}>

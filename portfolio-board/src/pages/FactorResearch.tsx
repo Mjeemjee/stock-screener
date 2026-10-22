@@ -5,6 +5,7 @@ import { Check, Download, ExternalLink, FlaskConical, RefreshCw, Search, X } fro
 import AppShell from '@/components/AppShell'
 import LabTabs from '@/components/LabTabs'
 import ResearchProposal from '@/components/ResearchProposal'
+import ResearchReview from '@/components/ResearchReview'
 import ModelResearch, { modelConnection } from '@/components/ModelResearch'
 import { Button } from '@/components/ui/button'
 import { useResearch } from '@/hooks/useResearch'
@@ -32,7 +33,7 @@ function Detail({ program: p, data }: { program: ResearchProgram; data: Research
     <div className="flex flex-wrap items-start justify-between gap-3"><div className="min-w-0"><h2 className="text-base font-semibold break-words">{p.name}</h2>
       <p className="mt-1 text-xs text-muted-foreground">{p.market} · 第 {p.generation} 代 · {parent ? `父策略：${parent.name}` : '独立家族 · 同期研究池等权对照'}</p></div>
       <span className={`text-xs ${p.status === 'review' ? 'text-amber-800' : p.status === 'rejected' ? 'text-rose-700' : 'text-emerald-800'}`}>{STATUS[p.status]}</span></div>
-    <div className="my-4 flex flex-wrap gap-1 border-b" role="group" aria-label="研究详情视图">{[['forward', '前瞻跟踪'], ['history', '历史诊断'], ['hypothesis', '研究依据']].map(([key, label]) =>
+    <div className="my-4 flex flex-wrap gap-1 border-b" role="group" aria-label="研究详情视图">{[['forward', '前瞻跟踪'], ['review', '研究复核'], ['history', '历史诊断'], ['hypothesis', '研究依据']].map(([key, label]) =>
       <button key={key} onClick={() => setTab(key)} aria-pressed={tab === key} className={`border-b-2 px-3 py-2 text-sm ${tab === key ? 'border-primary text-primary' : 'border-transparent text-muted-foreground'}`}>{label}</button>)}</div>
     {tab === 'forward' && <div className="space-y-5">
       <dl className="grid grid-cols-2 gap-x-4 gap-y-4 md:grid-cols-4">
@@ -64,6 +65,7 @@ function Detail({ program: p, data }: { program: ResearchProgram; data: Research
         <tbody>{own.slice().reverse().map(r => <tr key={r.entry_date} className="border-t"><td className="p-2">{day(r.entry_date)}</td><td className="p-2">{day(r.exit_date)}</td><td className="p-2">{!r.due ? '未到期' : r.branch.complete && r.parent.complete && r.benchmark_pct != null ? '完整' : '到期缺价'}</td>
           <td className="p-2">{metric(r.branch.return_pct, '%')}</td><td className="p-2">{metric(r.parent.return_pct, '%')}</td><td className="p-2">{metric(r.benchmark_pct, '%')}</td><td className="p-2">{metric(r.rank_ic)}</td></tr>)}</tbody></table></div></details>
     </div>}
+    {tab === 'review' && <ResearchReview program={p} data={data} />}
     {tab === 'history' && <div className="space-y-4"><p className="border-l-2 border-amber-500 pl-3 text-xs leading-relaxed text-amber-900">{p.historical.note}</p>
       <h3 className="text-sm font-semibold">按时间分段的测试折</h3>
       {p.historical.status === 'insufficient_data' && <p className="text-sm text-muted-foreground">部分测试折数据不足，保留缺失状态。</p>}

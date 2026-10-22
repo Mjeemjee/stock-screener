@@ -2,7 +2,7 @@ import { useRef, useState } from 'react'
 import { Download, ExternalLink, Save, Upload } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { downloadJson, formula, parseProposal } from '@/lib/research'
-import type { Expression, Proposal, ResearchData } from '@/types/research'
+import type { Expression, Proposal, ResearchData, ResearchCard } from '@/types/research'
 
 const STORAGE = 'factor-research-proposal-v1'
 const field = 'w-full min-w-0 rounded-md border bg-background px-3 py-2 text-sm'
@@ -12,6 +12,7 @@ export default function ResearchProposal({ data }: { data: ResearchData }) {
   const [parentId, setParentId] = useState('')
   const [name, setName] = useState('')
   const [hypothesis, setHypothesis] = useState('')
+  const [card, setCard] = useState<ResearchCard>({ version: 1, evidence: '', failure_condition: '', data_risks: '' })
   const [factor, setFactor] = useState('relative_volume')
   const [second, setSecond] = useState('recovery')
   const [op, setOp] = useState('mean')
@@ -27,10 +28,27 @@ export default function ResearchProposal({ data }: { data: ResearchData }) {
   const draft: Proposal = { name, market, parent_id: parent?.id ?? null, hypothesis,
     op_type: op === 'product' ? 'feature_interaction' : op === 'neg' ? 'negate_signal' : parent ? 'add_feature' : 'new_factor_family', change: formula(expression, data.features),
     expected: '仅使用创建后的未来样本，验证五日扣费收益增量及因子重复性', expression,
-    filters: parent?.filters ?? [] }
+    filters: parent?.filters ?? [], research_card: card }
   const source = mode === 'json' ? raw : JSON.stringify(draft, null, 2)
+  let shownCard = card
+  if (mode === 'json') {
+    try {
+      const c = JSON.parse(raw)?.research_card
+      shownCard = { version: 1, evidence: typeof c?.evidence === 'string' ? c.evidence : '',
+        failure_condition: typeof c?.failure_condition === 'string' ? c.failure_condition : '', data_risks: typeof c?.data_risks === 'string' ? c.data_risks : '' }
+    } catch { shownCard = { version: 1, evidence: '', failure_condition: '', data_risks: '' } }
+  }
+  const editCard = (key: 'evidence' | 'failure_condition' | 'data_risks', value: string) => {
+    const next = { ...shownCard, [key]: value }
+    if (mode === 'form') setCard(next)
+    else {
+      try { const parsed = JSON.parse(raw); if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new Error(); setRaw(JSON.stringify({ ...parsed, research_card: next }, null, 2)) }
+      catch { setNotice('先修正提案 JSON，再补充假设卡') }
+    }
+  }
   let valid: Proposal | null = null, error = ''
   try { valid = parseProposal(source, data) } catch (reason) { error = reason instanceof Error ? reason.message : '提案无效' }
+  const ready = !!valid?.research_card
   const safeLink = data.review_workflow.startsWith('https://github.com/Mjeemjee/stock-screener/') ? data.review_workflow : '#'
   return <section aria-label="研究提案编辑器" className="space-y-5">
     <div className="flex flex-wrap items-center justify-between gap-3">
@@ -56,10 +74,15 @@ export default function ResearchProposal({ data }: { data: ResearchData }) {
       <div className="border-y py-3 text-sm leading-relaxed sm:col-span-2"><span className="text-xs text-muted-foreground">候选公式</span><p className="mt-1 break-words">{formula(expression, data.features)}</p>
         {parent && <p className="mt-2 text-xs text-muted-foreground">继承父策略的 {parent.filters.length} 项原始因子条件</p>}</div>
     </div> : <label className="block text-xs">提案 JSON<textarea aria-label="提案 JSON" className={`${field} mt-2 min-h-80 font-mono text-xs`} spellCheck={false} value={raw} maxLength={16000} onChange={e => setRaw(e.target.value)} /></label>}
+    <fieldset className="min-w-0 space-y-3 border-t pt-4"><legend className="text-sm font-semibold">新实验假设卡</legend>
+      {([['evidence', '依据是什么'], ['failure_condition', '什么情况说明想法失败'], ['data_risks', '数据与执行有什么限制']] as const).map(([key, label]) =>
+        <label key={key} className="block space-y-1 text-xs">{label}<textarea aria-label={label} className={`${field} min-h-20`} value={shownCard[key]} maxLength={400} onChange={e => editCard(key, e.target.value)} /></label>)}
+    </fieldset>
     {error && <p role="status" className="text-xs text-amber-800">{error}</p>}
+    {valid && !ready && <p role="status" className="text-xs text-amber-800">旧提案缺少假设卡；补充依据、失败条件和数据限制后才能导出新实验。</p>}
     <div className="flex flex-wrap gap-2">
       <Button variant="outline" disabled={!valid} onClick={() => { try { localStorage.setItem(STORAGE, source); setRaw(source); setNotice('草稿已保存到本机，尚未提交云端') } catch { setNotice('浏览器未允许保存草稿') } }}><Save className="mr-2 h-4 w-4" />保存草稿</Button>
-      <Button disabled={!valid} onClick={() => { downloadJson(valid, 'factor-research-proposal.json'); setNotice('提案已导出，实验尚未启动') }}><Download className="mr-2 h-4 w-4" />导出提案</Button>
+      <Button disabled={!ready} onClick={() => { downloadJson(valid, 'factor-research-proposal.json'); setNotice('提案已导出，实验尚未启动') }}><Download className="mr-2 h-4 w-4" />导出提案</Button>
       <Button variant="outline" onClick={() => input.current?.click()}><Upload className="mr-2 h-4 w-4" />导入提案</Button>
       <input className="hidden" ref={input} aria-label="导入提案文件" type="file" accept="application/json,.json" onChange={async e => {
         const file = e.target.files?.[0]

@@ -10,17 +10,23 @@ import requests
 
 from screener import factor_research as research
 from screener import research_signals as signals
+from screener import research_review as review
 
 API = "https://api.deepseek.com"
 MODEL = "deepseek-flash"
 MAX_CALLS = 6
 MAX_OUTPUT = 4096
 MAX_INPUT_BYTES = 24000
-FIELDS = {"name", "op_type", "hypothesis", "change", "expected", "expression", "filters"}
+BASE_FIELDS = {"name", "op_type", "hypothesis", "change", "expected", "expression", "filters"}
+FIELDS = BASE_FIELDS | {"research_card"}
 PROMPT = """You are a quantitative research proposal assistant, not a trader.
 Return ONLY a JSON object with key proposals: an array of at most three proposals.
 Each proposal has exactly: name (1-60 characters), op_type, hypothesis, change,
-expected (each 1-400 characters), expression, filters. Write descriptions in Chinese.
+expected (each 1-400 characters), expression, filters, research_card. Write descriptions in Chinese.
+research_card has exactly version:1, evidence, failure_condition, data_risks.
+Each card text is 1-400 characters. Cite only supplied observations, not invented evidence.
+State a falsifiable mechanism and failure condition, plus unavailable data or execution risks.
+The card is explanatory: it cannot change fixed checkpoints, costs, budgets or approval gates.
 op_type is add_feature, feature_interaction, negate_signal, or new_factor_family.
 Make one interpretable change per proposal. Use ONLY the supplied feature registry.
 Expressions: {"op":"feature","name":"gap"}, {"op":"neg","arg":expression},
@@ -106,12 +112,13 @@ def validate_proposals(value, parent, state, existing=()):
         try:
             if not isinstance(spec, dict) or set(spec) != FIELDS:
                 raise ValueError("fields")
-            for field in FIELDS - {"expression", "filters"}:
+            for field in BASE_FIELDS - {"expression", "filters"}:
                 if not isinstance(spec[field], str) or not spec[field].strip() or len(spec[field]) > (60 if field == "name" else 400):
                     raise ValueError("description")
             if spec["op_type"] not in ("add_feature", "feature_interaction", "negate_signal", "new_factor_family"):
                 raise ValueError("operation")
             signals.validate_spec(spec)
+            review.validate_card(spec["research_card"])
             fingerprint = signals.fingerprint(spec)
             if fingerprint in seen:
                 raise ValueError("duplicate")
@@ -146,12 +153,14 @@ def generate(directory, state, now, key):
         if len(rows) < research.policy()["discovery_after"]:
             continue
         rows = rows[:research.policy()["discovery_after"]]
-        context = {"features": signals.FEATURES, "parent": {k: parent[k] for k in sorted(FIELDS)},
+        context = {"features": signals.FEATURES, "parent": {k: parent[k] for k in sorted(BASE_FIELDS)},
                    "market": parent["market"], "horizon": research.policy()["horizon"],
                    "cost_bps": research.policy()["cost_bps"], "metrics": research.assess(rows, research.policy())[0],
                    "outcomes": [{"entry": r["entry_date"], "exit": r["exit_date"],
                                  "branch": r["branch"]["return_pct"], "parent": r["parent"]["return_pct"],
-                                 "pool": r["pool"]["return_pct"], "benchmark": r["benchmark_pct"]} for r in rows]}
+                                 "pool": r["pool"]["return_pct"], "benchmark": r["benchmark_pct"]} for r in rows],
+                   "research_review": review.program_review(parent,
+                       [{**r, "trial_id": parent["id"]} for r in rows], research.policy())}
         request = {"at": now.isoformat(), "parent_id": parent["id"], "definition_hash": parent["definition_hash"],
                    "model": MODEL, "prompt_hash": research.digest(PROMPT), "context": context,
                    "cohort_hash": research.digest(rows), "max_output_tokens": MAX_OUTPUT, "max_attempts": 2}

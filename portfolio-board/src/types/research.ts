@@ -2,9 +2,21 @@ import type { LabMetrics } from './lab'
 
 export type Expression = { op: 'feature'; name: string } | { op: 'neg'; arg: Expression }
   | { op: 'mean' | 'product'; args: Expression[] }
+export interface ResearchCard { version: 1; evidence: string; failure_condition: string; data_risks: string }
 export interface Proposal {
   name: string; market: string; parent_id?: string | null; op_type: string; hypothesis: string
   change: string; expected: string; expression: Expression; filters: { feature: string; gte?: number; lte?: number }[]
+  research_card?: ResearchCard
+}
+export interface ProgramReview {
+  program_id: string; definition_hash: string; evidence_hash: string; assessment_hash: string | null; headline: string
+  card: { origin: 'frozen' | 'legacy'; hypothesis: string; change: string; expected: string; features: string[]
+    evidence: string; failure_condition: string; data_risks: string }
+  summary: { total: number; pending: number; due: number; paired: number; missing: number; duplicate: boolean
+    independent: number; wins: number; losses: number; flat: number; beat_parent: number; beat_benchmark: number; cash: number
+    mean_return_pct: number | null; mean_delta_pp: number | null; mean_excess_pp: number | null
+    stress_excess_pp: number | null; worst_period_pct: number | null }
+  checks: { id: string; label: string; status: 'pass' | 'fail' | 'pending'; detail: string }[]
 }
 export interface ResearchMetrics extends LabMetrics { rank_ic: number | null; pearson_ic: number | null; novelty: number | null }
 export interface ResearchFold {
@@ -16,7 +28,7 @@ export interface ResearchFold {
 export interface ResearchProgram extends Proposal {
   id: string; family: string; generation: number; created_at: string; definition_hash: string; engine_version: string
   universe_hash: string; policy_hash: string; status: 'testing' | 'review' | 'approved' | 'paused' | 'rejected'
-  discovery: { kind: string; note?: string; actor?: string; last_label_date?: number; exploratory_delta_pp?: number }
+  discovery: { kind: string; note?: string; actor?: string; last_label_date?: number; exploratory_delta_pp?: number; research_card?: ResearchCard }
   metrics?: ResearchMetrics; last_checkpoint: number
   assessments: { checkpoint: number; hash: string; metrics: ResearchMetrics; gates: Record<string, boolean> }[]
   historical: { kind: string; status: string; note: string; as_of: string; folds: ResearchFold[] }
@@ -30,6 +42,8 @@ export interface ResearchRow {
 export interface ResearchData {
   schema_version: number; generated_at: string; policy_hash: string; engine_version: string; review_workflow: string
   generator: string; model_connected: boolean
+  research_review?: { version: 'research-review-v1'; mode: 'read_only'; source_generated_at: string
+    source_engine_version: string; source_policy_hash: string; programs: ProgramReview[] }
   model_research?: {
     provider: string; model: string; connection: string; checked_at: string; max_calls: number; min_cohorts: number; mode: 'owner_review'
     calls: { id: string; at: string; parent_id: string; status: string; rejected_count: number; usage: Record<string, number>

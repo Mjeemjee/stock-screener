@@ -1,4 +1,4 @@
-import type { Expression, Proposal, ResearchData } from '../types/research'
+import type { Expression, Proposal, ResearchData, ResearchCard } from '../types/research'
 
 const object = (v: unknown): v is Record<string, unknown> => !!v && typeof v === 'object' && !Array.isArray(v)
 const text = (v: unknown): v is string => typeof v === 'string' && v.length > 0
@@ -15,8 +15,14 @@ export function validExpression(v: unknown, features: string[], depth = 0): v is
     && v.args.length >= 2 && v.args.length <= 3 && v.args.every(a => validExpression(a, features, depth + 1))
 }
 
+export function validResearchCard(v: unknown): v is ResearchCard {
+  return object(v) && keys(v, ['version', 'evidence', 'failure_condition', 'data_risks']) && v.version === 1
+    && ['evidence', 'failure_condition', 'data_risks'].every(k => text(v[k]) && !!v[k].trim() && v[k].length <= 400)
+}
+
 function spec(v: unknown, features: string[]) {
   return object(v) && ['name', 'op_type', 'hypothesis', 'change', 'expected'].every(k => text(v[k]))
+    && (v.research_card === undefined || validResearchCard(v.research_card))
     && validExpression(v.expression, features) && Array.isArray(v.filters) && v.filters.length <= 5 && v.filters.every(f =>
       object(f) && text(f.feature) && features.includes(f.feature) && keys(f, ['feature', 'gte', 'lte'])
       && ('gte' in f || 'lte' in f) && ['gte', 'lte'].every(k => !(k in f) || number(f[k]) && Math.abs(f[k]) <= 1e6)
@@ -27,11 +33,12 @@ export function parseProposal(raw: string, data: Pick<ResearchData, 'features' |
   if (raw.length > 16000) throw new Error('提案超过长度限制')
   let value: unknown
   try { value = JSON.parse(raw) } catch { throw new Error('提案 JSON 格式无效') }
-  if (!object(value) || !keys(value, ['name', 'op_type', 'hypothesis', 'change', 'expected', 'expression', 'filters', 'market', 'parent_id'])
+  if (!object(value) || !keys(value, ['name', 'op_type', 'hypothesis', 'change', 'expected', 'expression', 'filters', 'market', 'parent_id', 'research_card'])
       || !spec(value, Object.keys(data.features))) throw new Error('提案字段、因子或公式不符合研究规则')
   for (const key of ['name', 'op_type', 'hypothesis', 'change', 'expected']) {
     if (!text(value[key]) || !value[key].trim() || value[key].length > (key === 'name' ? 60 : 400)) throw new Error('名称或研究依据为空、超长')
   }
+  if (!['add_feature', 'feature_interaction', 'negate_signal', 'new_factor_family'].includes(String(value.op_type))) throw new Error('不支持的研究改动类型')
   if (!data.universes.some(u => u.market === value.market)) throw new Error('该市场尚未建立研究池')
   if (value.parent_id != null && !data.programs.some(p => p.id === value.parent_id && p.market === value.market)) throw new Error('父策略不存在或市场不一致')
   return value as unknown as Proposal
@@ -58,7 +65,7 @@ export function isResearchData(v: unknown): v is ResearchData {
     && ['mean_delta_pp', 'lower_delta_pp', 'mean_return_pct', 'mean_excess_pp', 'stress_excess_pp', 'worst_period_pct', 'rank_ic', 'pearson_ic', 'novelty'].every(k => nullable(m[k]))
   if (!array(v.programs, p => object(p) && spec(p, names) && ['id', 'family', 'market', 'created_at', 'definition_hash', 'engine_version'].every(k => text(p[k]))
       && number(p.generation) && ['testing', 'review', 'approved', 'paused', 'rejected'].includes(String(p.status))
-      && object(p.discovery) && text(p.discovery.kind) && (p.metrics === undefined || metrics(p.metrics))
+      && object(p.discovery) && text(p.discovery.kind) && (p.discovery.research_card === undefined || validResearchCard(p.discovery.research_card)) && (p.metrics === undefined || metrics(p.metrics))
       && array(p.assessments, a => object(a) && number(a.checkpoint) && text(a.hash) && object(a.gates) && Object.values(a.gates).every(g => typeof g === 'boolean'))
       && array(p.latest_selection, h => object(h) && text(h.code) && number(h.score) && object(h.features) && Object.values(h.features).every(number))
       && (p.latest_frozen_at === null || text(p.latest_frozen_at))
@@ -70,6 +77,25 @@ export function isResearchData(v: unknown): v is ResearchData {
       && ['branch', 'parent', 'pool'].every(k => object(r[k]) && typeof r[k].complete === 'boolean' && nullable(r[k].return_pct))
       && object(r.branch) && number(r.branch.count) && array(r.branch.holdings, h => object(h) && text(h.code) && text(h.status) && nullable(h.return_pct)))) return false
   if (!array(v.events, e => object(e) && text(e.action) && text(e.at))) return false
+  if (v.research_review !== undefined) {
+    const review = v.research_review
+    const count = (x: unknown) => number(x) && Number.isInteger(x) && x >= 0
+    if (!object(review) || review.version !== 'research-review-v1' || review.mode !== 'read_only'
+        || review.source_generated_at !== v.generated_at || review.source_engine_version !== v.engine_version
+        || review.source_policy_hash !== v.policy_hash
+        || !array(review.programs, r => object(r) && ['program_id', 'definition_hash', 'evidence_hash', 'headline'].every(k => text(r[k]))
+          && (r.assessment_hash === null || text(r.assessment_hash))
+          && Array.isArray(v.programs) && v.programs.some(p => object(p) && p.id === r.program_id && p.definition_hash === r.definition_hash)
+          && object(r.card) && ['frozen', 'legacy'].includes(String(r.card.origin))
+          && ['hypothesis', 'change', 'expected', 'evidence', 'failure_condition', 'data_risks'].every(k => object(r.card) && text(r.card[k]))
+          && array(r.card.features, f => text(f) && names.includes(f))
+          && object(r.summary) && typeof r.summary.duplicate === 'boolean'
+          && ['total', 'pending', 'due', 'paired', 'missing', 'independent', 'wins', 'losses', 'flat', 'beat_parent', 'beat_benchmark', 'cash'].every(k => object(r.summary) && count(r.summary[k]))
+          && ['mean_return_pct', 'mean_delta_pp', 'mean_excess_pp', 'stress_excess_pp', 'worst_period_pct'].every(k => object(r.summary) && nullable(r.summary[k]))
+          && array(r.checks, c => object(c) && ['id', 'label', 'detail'].every(k => text(c[k])) && ['pass', 'fail', 'pending'].includes(String(c.status))))) return false
+    const ids = (review.programs as Record<string, unknown>[]).map(r => r.program_id)
+    if (new Set(ids).size !== ids.length || !Array.isArray(v.programs) || ids.length !== v.programs.length) return false
+  }
   if (v.model_research !== undefined) {
     const m = v.model_research
     if (!object(m) || !['provider', 'model', 'connection', 'checked_at'].every(k => text(m[k]))

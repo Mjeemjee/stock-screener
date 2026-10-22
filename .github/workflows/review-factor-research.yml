@@ -58,11 +58,13 @@ jobs:
           RESEARCH_EVIDENCE: ${{ inputs.evidence_hash }}
           RESEARCH_PROPOSAL: ${{ inputs.proposal_json }}
           RESEARCH_ACTOR: ${{ github.actor }}
-        run: python -m screener.factor_research --action-env
+        run: python -m screener.research_review --action-env
       - name: Refresh model proposal status
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
-        run: python -m screener.deepseek_research
+        run: |
+          python -m screener.deepseek_research
+          python -m screener.research_review
       - uses: actions/upload-artifact@v4
         with:
           name: screening-archive

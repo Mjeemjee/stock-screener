@@ -57,7 +57,9 @@ jobs:
       - name: DeepSeek Flash research proposals
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
-        run: python -m screener.deepseek_research --generate
+        run: |
+          python -m screener.deepseek_research --generate
+          python -m screener.research_review
 
       - name: Long-horizon fixed forward study
         run: |

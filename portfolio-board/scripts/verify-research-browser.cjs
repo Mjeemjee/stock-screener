@@ -27,6 +27,27 @@ async function main() {
       await noOverflow()
       await page.screenshot({ path: path.join(reports, 'research-real-desktop.png'), fullPage: true })
     })
+    await check('read-only review displays pending evidence, exports source bindings and fits mobile', async () => {
+      await page.getByRole('button', { name: '研究复核', exact: true }).click()
+      await page.getByRole('heading', { name: '证据与压力检查', exact: true }).waitFor()
+      await page.getByRole('heading', { name: '结果出来了多少', exact: true }).waitFor()
+      assert.match(await page.getByLabel('研究复核', { exact: true }).innerText(), /缺价不补零/)
+      const ready = page.waitForEvent('download')
+      await page.getByRole('button', { name: '下载研究复核记录', exact: true }).click()
+      const record = JSON.parse(fs.readFileSync(await (await ready).path(), 'utf8'))
+      assert.equal(record.definition_hash, actual.programs[0].definition_hash)
+      assert.equal(record.engine_version, actual.engine_version)
+      assert.equal(record.policy_hash, actual.policy_hash)
+      assert.equal(record.summary.paired, actual.research_review.programs[0].summary.paired)
+      assert.match(record.evidence_hash, /^[a-f0-9]{64}$/)
+      for (const width of [1440, 768, 390, 320]) {
+        await page.setViewportSize({ width, height: 1000 })
+        await noOverflow()
+        await page.screenshot({ path: path.join(reports, `research-review-live-${width}.png`), fullPage: true })
+      }
+      await page.setViewportSize({ width: 1440, height: 1000 })
+      await page.getByRole('button', { name: '前瞻跟踪', exact: true }).click()
+    })
     await check('market/status/search filters and empty result recover', async () => {
       await page.getByLabel('研究市场', { exact: true }).selectOption('HK')
       assert.equal(await page.getByRole('button', { name: /^查看研究 / }).count(), actual.programs.filter(p => p.market === 'HK').length)
@@ -59,6 +80,9 @@ async function main() {
       await page.getByRole('button', { name: '研究提案', exact: true }).click()
       await page.getByLabel('研究名称', { exact: true }).fill('量价交互研究')
       await page.getByLabel('研究假设', { exact: true }).fill('检验量能与日内修复的交互是否改善未来五日表现。')
+      await page.getByLabel('依据是什么', { exact: true }).fill('观察已完成样本，尚未证明未来有效。')
+      await page.getByLabel('什么情况说明想法失败', { exact: true }).fill('固定关卡扣费改善不达标则失败，不删除亏损期。')
+      await page.getByLabel('数据与执行有什么限制', { exact: true }).fill('只有量价数据，不包含新闻和财报。')
       await page.getByLabel('组合方式').selectOption('product')
       await page.getByRole('button', { name: '保存草稿', exact: true }).click()
       const ready = page.waitForEvent('download')
@@ -68,6 +92,7 @@ async function main() {
       assert.equal(proposal.expression.op, 'product')
       assert.equal(proposal.name, '量价交互研究')
       assert.equal(proposal.parent_id, null)
+      assert.equal(proposal.research_card.version, 1)
       await page.reload()
       await page.getByRole('button', { name: '研究提案', exact: true }).click()
       assert.match(await page.getByLabel('提案 JSON', { exact: true }).inputValue(), /量价交互研究/)
@@ -79,9 +104,14 @@ async function main() {
       const proposal = Object.fromEntries(['name','market','op_type','hypothesis','change','expected','expression','filters'].map(k => [k, p[k]]))
       await page.getByLabel('导入提案文件').setInputFiles({ name: 'proposal.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(proposal)) })
       await page.getByText('已导入本机草稿，尚未启动实验').waitFor()
+      assert.ok(await page.getByRole('button', { name: '导出提案', exact: true }).isDisabled())
+      await page.getByLabel('依据是什么', { exact: true }).fill('Imported legacy hypothesis; no fabricated data.')
+      await page.getByLabel('什么情况说明想法失败', { exact: true }).fill('Use fixed original checkpoints.')
+      await page.getByLabel('数据与执行有什么限制', { exact: true }).fill('OHLCV only.')
       assert.ok(await page.getByRole('button', { name: '导出提案', exact: true }).isEnabled())
     })
     const fixture = structuredClone(actual)
+    delete fixture.research_review
     const modelProposal = Object.fromEntries(['name', 'market', 'op_type', 'hypothesis', 'change', 'expected', 'expression', 'filters'].map(k => [k, actual.programs[0][k]]))
     modelProposal.parent_id = actual.programs[0].id
     modelProposal.name = '模型测试提案'
@@ -131,6 +161,12 @@ async function main() {
       await page.getByText('DeepSeek Flash：认证失败', { exact: true }).waitFor()
       await page.getByRole('button', { name: '下载审核申请', exact: true }).waitFor()
       fixture.model_research.connection = 'verified'
+    })
+    await check('legacy reports stay usable without fabricated review evidence', async () => {
+      await page.getByRole('button', { name: '研究复核', exact: true }).click()
+      await page.getByText('这份档案尚无研究复核记录，原跟踪成绩仍然保留。', { exact: true }).waitFor()
+      assert.equal(await page.getByRole('button', { name: '下载研究复核记录', exact: true }).count(), 0)
+      await page.getByRole('button', { name: '前瞻跟踪', exact: true }).click()
     })
     for (const width of [768, 390, 320]) await check(`responsive research views at ${width}px`, async () => {
       await page.setViewportSize({ width, height: 900 })
