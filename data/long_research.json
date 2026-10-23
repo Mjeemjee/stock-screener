@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-22T18:13:13.977125+00:00",
+  "generated_at": "2026-10-23T18:06:18.683045+00:00",
   "definition_hash": "ffac6ed3d6ab96da346e18a8b2e6da7fab8f376a907807291b2b5a3ad63b2fc9",
   "policy": {
     "version": "liq-momentum-forward-v2",
@@ -25,8 +25,8 @@
       "market": "HK",
       "quality": {
         "market": "HK",
-        "session": 20261022,
-        "valid": 161,
+        "session": 20261023,
+        "valid": 116,
         "total": 218,
         "status": "insufficient_data"
       },
@@ -50,8 +50,8 @@
       "market": "US",
       "quality": {
         "market": "US",
-        "session": 20261021,
-        "valid": 233,
+        "session": 20261022,
+        "valid": 228,
         "total": 259,
         "status": "ready"
       },
@@ -161,8 +161,9 @@
               },
               {
                 "code": "US.TGT",
-                "status": "missing_entry",
-                "return_pct": null
+                "status": "pending",
+                "return_pct": null,
+                "entry_price": 153.33
               },
               {
                 "code": "US.HL",
@@ -579,8 +580,9 @@
               },
               {
                 "code": "US.TGT",
-                "status": "missing_entry",
-                "return_pct": null
+                "status": "pending",
+                "return_pct": null,
+                "entry_price": 153.33
               },
               {
                 "code": "US.PANW",
@@ -739,8 +741,9 @@
               },
               {
                 "code": "US.HCA",
-                "status": "missing_entry",
-                "return_pct": null
+                "status": "pending",
+                "return_pct": null,
+                "entry_price": 463.73
               },
               {
                 "code": "US.HLT",
@@ -950,8 +953,9 @@
             },
             {
               "code": "US.TGT",
-              "status": "missing_entry",
-              "return_pct": null
+              "status": "pending",
+              "return_pct": null,
+              "entry_price": 153.33
             },
             {
               "code": "US.HL",
@@ -1224,8 +1228,9 @@
             },
             {
               "code": "US.TGT",
-              "status": "missing_entry",
-              "return_pct": null
+              "status": "pending",
+              "return_pct": null,
+              "entry_price": 153.33
             },
             {
               "code": "US.HL",
@@ -1642,8 +1647,9 @@
             },
             {
               "code": "US.TGT",
-              "status": "missing_entry",
-              "return_pct": null
+              "status": "pending",
+              "return_pct": null,
+              "entry_price": 153.33
             },
             {
               "code": "US.PANW",
@@ -1802,8 +1808,9 @@
             },
             {
               "code": "US.HCA",
-              "status": "missing_entry",
-              "return_pct": null
+              "status": "pending",
+              "return_pct": null,
+              "entry_price": 463.73
             },
             {
               "code": "US.HLT",
@@ -2013,8 +2020,9 @@
           },
           {
             "code": "US.TGT",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 153.33
           },
           {
             "code": "US.HL",
