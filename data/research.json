@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-23T18:04:37.357966+00:00",
+  "generated_at": "2026-10-24T16:49:31.219550+00:00",
   "policy": {
     "version": "factor-study-v1",
     "pool_size": 40,
@@ -446,13 +446,11 @@
   "quality": [
     {
       "market": "US",
-      "session": 20261022,
-      "valid": 39,
+      "session": 20261023,
+      "valid": 40,
       "total": 40,
-      "coverage": 0.975,
-      "missing": {
-        "US.SNOW": "缺少连续有效行情或成交量为零"
-      },
+      "coverage": 1.0,
+      "missing": {},
       "status": "ready",
       "already_frozen": false
     },
@@ -464,7 +462,7 @@
       "coverage": 1.0,
       "missing": {},
       "status": "ready",
-      "already_frozen": false
+      "already_frozen": true
     }
   ],
   "programs": [
@@ -8273,8 +8271,9 @@
           },
           {
             "code": "US.SNOW",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 318.89
           },
           {
             "code": "US.STX",
@@ -8508,8 +8507,9 @@
           },
           {
             "code": "US.SNOW",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 318.89
           },
           {
             "code": "US.STX",
@@ -9287,8 +9287,9 @@
           },
           {
             "code": "US.SNOW",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 318.89
           },
           {
             "code": "US.STX",
@@ -9522,8 +9523,9 @@
           },
           {
             "code": "US.SNOW",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 318.89
           },
           {
             "code": "US.STX",
@@ -10301,8 +10303,9 @@
           },
           {
             "code": "US.SNOW",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 318.89
           },
           {
             "code": "US.STX",
@@ -10536,8 +10539,9 @@
           },
           {
             "code": "US.SNOW",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 318.89
           },
           {
             "code": "US.STX",
@@ -15375,7 +15379,7 @@
     "provider": "DeepSeek",
     "model": "deepseek-flash",
     "connection": "verified",
-    "checked_at": "2026-10-23T18:05:22.154432+00:00",
+    "checked_at": "2026-10-24T16:49:33.802512+00:00",
     "max_calls": 6,
     "calls": [],
     "mode": "owner_review",
@@ -15384,14 +15388,14 @@
   "research_review": {
     "version": "research-review-v1",
     "mode": "read_only",
-    "source_generated_at": "2026-10-23T18:04:37.357966+00:00",
+    "source_generated_at": "2026-10-24T16:49:31.219550+00:00",
     "source_engine_version": "db7b29ce2b1976ad815c320dd80b11c4486dadabf2b6a6c81551b7bf91847db7",
     "source_policy_hash": "e46354853226b1044c026ba30ad08a8070d42c89e9533beb1321230268df34ab",
     "programs": [
       {
         "program_id": "factor_17ae34abae7e544a",
         "definition_hash": "f78e43e47b61338b5321375539134d221215c65e1eff69fc8d89665b44531f57",
-        "evidence_hash": "2ccf21a65bf4ed156195514ba465c9ad81e8a0d80aef97b8933edc3ea094e2fc",
+        "evidence_hash": "f710582fc87874d3e6c20f9f95312dba5a612f9f44f93eca45fb81886df7246c",
         "card": {
           "origin": "legacy",
           "hypothesis": "突破伴随相对放量和高位收盘，可能减少突破后回落。",
@@ -15488,7 +15492,7 @@
       {
         "program_id": "factor_6651b9e80063d61f",
         "definition_hash": "7ef7439909467b75c7c8a2494c4c3e35f21ed82fcf6a209c36aa711a772ae99e",
-        "evidence_hash": "4eb49ed696382f93897ae0d5b0dd70624768f68d7a48f970671c78bcd74aefc4",
+        "evidence_hash": "7bb0c35deaf32f7e1fec0729b73ae95e408025f72e22ebad5437cb43d2c7973d",
         "card": {
           "origin": "legacy",
           "hypothesis": "短期波动收窄后出现突破，可能包含不同于平稳趋势的信息。",
@@ -15585,7 +15589,7 @@
       {
         "program_id": "factor_c37d333402b59ec1",
         "definition_hash": "3f725506ff114c479f1da2492fefdbef9b5dc40e92384c21de75a529b39ca41e",
-        "evidence_hash": "49d5a6df6dc50c77a31ceac06c2561e749d4cf01e2ee11a505eca08ba0e535a6",
+        "evidence_hash": "78fc426c3161d0097e4de2b649e7c33f582cd0ff3c198fed18161412901f47c0",
         "card": {
           "origin": "legacy",
           "hypothesis": "短期急跌后出现日内修复和量能变化，可能有五日反转效应。",

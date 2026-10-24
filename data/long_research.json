@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-23T18:06:18.683045+00:00",
+  "generated_at": "2026-10-24T16:50:29.877852+00:00",
   "definition_hash": "ffac6ed3d6ab96da346e18a8b2e6da7fab8f376a907807291b2b5a3ad63b2fc9",
   "policy": {
     "version": "liq-momentum-forward-v2",
@@ -26,9 +26,9 @@
       "quality": {
         "market": "HK",
         "session": 20261023,
-        "valid": 116,
+        "valid": 192,
         "total": 218,
-        "status": "insufficient_data"
+        "status": "ready"
       },
       "metrics": {
         "due": 0,
@@ -44,14 +44,812 @@
         "adjusted_lower_pp": {},
         "stage": "等待样本"
       },
-      "latest": null
+      "latest": {
+        "id": "544b4da69879cffd6fc37bf2",
+        "market": "HK",
+        "frozen_at": "2026-10-24T16:50:29+00:00",
+        "entry_date": 20261026,
+        "exit_date": 20261124,
+        "due": false,
+        "baskets": {
+          "combined": {
+            "count": 38,
+            "complete": false,
+            "holdings": [
+              {
+                "code": "HK.01112",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.02028",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.01070",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.09858",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.00019",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.01997",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.00622",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.01038",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.00991",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.00293",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.01199",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.00270",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.03393",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.01072",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.00826",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.00966",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.01086",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.00144",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.06127",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.03618",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.00066",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.00316",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.02142",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.09969",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.00267",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.03360",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.00189",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.03396",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.03808",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.03759",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.01729",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.01308",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.00322",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.02162",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.09688",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.00390",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.01113",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.02888",
+                "status": "pending",
+                "return_pct": null
+              }
+            ],
+            "return_pct": null
+          },
+          "momentum": {
+            "count": 38,
+            "complete": false,
+            "holdings": [
+              {
+                "code": "HK.02028",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.00622",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.06869",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.01888",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.00992",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.03396",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.01548",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.00148",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.01138",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.02359",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.02338",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.00522",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.01308",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.01070",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.02099",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.00019",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.02888",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.03808",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.00005",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.01997",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.02269",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.00293",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.00669",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.01112",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.01347",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.03988",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.06127",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.02388",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.01919",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.00001",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.01208",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.01113",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.00966",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.01038",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.01398",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.00270",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.00939",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.03759",
+                "status": "pending",
+                "return_pct": null
+              }
+            ],
+            "return_pct": null
+          },
+          "liquidity": {
+            "count": 38,
+            "complete": false,
+            "holdings": [
+              {
+                "code": "HK.01086",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.01302",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.00826",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.06055",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.01199",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.03393",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.01112",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.00991",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.00390",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.01072",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.03738",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.02400",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.03618",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.03360",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.00136",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.03898",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.09858",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.06855",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.00179",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.00780",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.09688",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.06969",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.00384",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.02208",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.02333",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.06881",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.01766",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.06886",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.00914",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.01038",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.01099",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.06088",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.01044",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.02618",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.00144",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.00916",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.00270",
+                "status": "pending",
+                "return_pct": null
+              },
+              {
+                "code": "HK.01988",
+                "status": "pending",
+                "return_pct": null
+              }
+            ],
+            "return_pct": null
+          }
+        },
+        "benchmark_pct": null,
+        "stress": {
+          "count": 38,
+          "complete": false,
+          "holdings": [
+            {
+              "code": "HK.01112",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.02028",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.01070",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.09858",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00019",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.01997",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00622",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.01038",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00991",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00293",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.01199",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00270",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.03393",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.01072",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00826",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00966",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.01086",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00144",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.06127",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.03618",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00066",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00316",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.02142",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.09969",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00267",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.03360",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00189",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.03396",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.03808",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.03759",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.01729",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.01308",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00322",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.02162",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.09688",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00390",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.01113",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.02888",
+              "status": "pending",
+              "return_pct": null
+            }
+          ],
+          "return_pct": null
+        }
+      }
     },
     {
       "market": "US",
       "quality": {
         "market": "US",
-        "session": 20261022,
-        "valid": 228,
+        "session": 20261023,
+        "valid": 220,
         "total": 259,
         "status": "ready"
       },
@@ -256,8 +1054,9 @@
               },
               {
                 "code": "US.WELL",
-                "status": "missing_entry",
-                "return_pct": null
+                "status": "pending",
+                "return_pct": null,
+                "entry_price": 238.57
               },
               {
                 "code": "US.AKAM",
@@ -623,8 +1422,9 @@
               },
               {
                 "code": "US.WDAY",
-                "status": "missing_entry",
-                "return_pct": null
+                "status": "pending",
+                "return_pct": null,
+                "entry_price": 203.66
               },
               {
                 "code": "US.FLEX",
@@ -855,8 +1655,9 @@
               },
               {
                 "code": "US.WELL",
-                "status": "missing_entry",
-                "return_pct": null
+                "status": "pending",
+                "return_pct": null,
+                "entry_price": 238.57
               },
               {
                 "code": "US.HWM",
@@ -1048,8 +1849,9 @@
             },
             {
               "code": "US.WELL",
-              "status": "missing_entry",
-              "return_pct": null
+              "status": "pending",
+              "return_pct": null,
+              "entry_price": 238.57
             },
             {
               "code": "US.AKAM",
@@ -1323,8 +2125,9 @@
             },
             {
               "code": "US.WELL",
-              "status": "missing_entry",
-              "return_pct": null
+              "status": "pending",
+              "return_pct": null,
+              "entry_price": 238.57
             },
             {
               "code": "US.AKAM",
@@ -1690,8 +2493,9 @@
             },
             {
               "code": "US.WDAY",
-              "status": "missing_entry",
-              "return_pct": null
+              "status": "pending",
+              "return_pct": null,
+              "entry_price": 203.66
             },
             {
               "code": "US.FLEX",
@@ -1922,8 +2726,9 @@
             },
             {
               "code": "US.WELL",
-              "status": "missing_entry",
-              "return_pct": null
+              "status": "pending",
+              "return_pct": null,
+              "entry_price": 238.57
             },
             {
               "code": "US.HWM",
@@ -2115,8 +2920,9 @@
           },
           {
             "code": "US.WELL",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 238.57
           },
           {
             "code": "US.AKAM",
@@ -2195,6 +3001,805 @@
             "status": "pending",
             "return_pct": null,
             "entry_price": 633.13
+          }
+        ],
+        "return_pct": null
+      }
+    },
+    {
+      "id": "544b4da69879cffd6fc37bf2",
+      "market": "HK",
+      "frozen_at": "2026-10-24T16:50:29+00:00",
+      "entry_date": 20261026,
+      "exit_date": 20261124,
+      "due": false,
+      "baskets": {
+        "combined": {
+          "count": 38,
+          "complete": false,
+          "holdings": [
+            {
+              "code": "HK.01112",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.02028",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.01070",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.09858",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00019",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.01997",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00622",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.01038",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00991",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00293",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.01199",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00270",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.03393",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.01072",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00826",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00966",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.01086",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00144",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.06127",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.03618",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00066",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00316",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.02142",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.09969",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00267",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.03360",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00189",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.03396",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.03808",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.03759",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.01729",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.01308",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00322",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.02162",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.09688",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00390",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.01113",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.02888",
+              "status": "pending",
+              "return_pct": null
+            }
+          ],
+          "return_pct": null
+        },
+        "momentum": {
+          "count": 38,
+          "complete": false,
+          "holdings": [
+            {
+              "code": "HK.02028",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00622",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.06869",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.01888",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00992",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.03396",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.01548",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00148",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.01138",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.02359",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.02338",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00522",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.01308",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.01070",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.02099",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00019",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.02888",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.03808",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00005",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.01997",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.02269",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00293",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00669",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.01112",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.01347",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.03988",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.06127",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.02388",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.01919",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00001",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.01208",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.01113",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00966",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.01038",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.01398",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00270",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00939",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.03759",
+              "status": "pending",
+              "return_pct": null
+            }
+          ],
+          "return_pct": null
+        },
+        "liquidity": {
+          "count": 38,
+          "complete": false,
+          "holdings": [
+            {
+              "code": "HK.01086",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.01302",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00826",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.06055",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.01199",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.03393",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.01112",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00991",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00390",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.01072",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.03738",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.02400",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.03618",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.03360",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00136",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.03898",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.09858",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.06855",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00179",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00780",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.09688",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.06969",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00384",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.02208",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.02333",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.06881",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.01766",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.06886",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00914",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.01038",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.01099",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.06088",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.01044",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.02618",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00144",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00916",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.00270",
+              "status": "pending",
+              "return_pct": null
+            },
+            {
+              "code": "HK.01988",
+              "status": "pending",
+              "return_pct": null
+            }
+          ],
+          "return_pct": null
+        }
+      },
+      "benchmark_pct": null,
+      "stress": {
+        "count": 38,
+        "complete": false,
+        "holdings": [
+          {
+            "code": "HK.01112",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02028",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01070",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.09858",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00019",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01997",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00622",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01038",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00991",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00293",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01199",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00270",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.03393",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01072",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00826",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00966",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01086",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00144",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.06127",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.03618",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00066",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00316",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02142",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.09969",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00267",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.03360",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00189",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.03396",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.03808",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.03759",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01729",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01308",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00322",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02162",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.09688",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00390",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01113",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02888",
+            "status": "pending",
+            "return_pct": null
           }
         ],
         "return_pct": null
