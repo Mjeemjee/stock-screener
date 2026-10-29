@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-28T19:04:44.582042+00:00",
+  "generated_at": "2026-10-29T19:11:54.674382+00:00",
   "definition_hash": "ffac6ed3d6ab96da346e18a8b2e6da7fab8f376a907807291b2b5a3ad63b2fc9",
   "policy": {
     "version": "liq-momentum-forward-v2",
@@ -25,8 +25,8 @@
       "market": "HK",
       "quality": {
         "market": "HK",
-        "session": 20261028,
-        "valid": 190,
+        "session": 20261029,
+        "valid": 185,
         "total": 218,
         "status": "ready"
       },
@@ -72,7 +72,7 @@
                 "code": "HK.01070",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 16.27
+                "entry_price": 16.09
               },
               {
                 "code": "HK.09858",
@@ -370,7 +370,7 @@
                 "code": "HK.01070",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 16.27
+                "entry_price": 16.09
               },
               {
                 "code": "HK.02099",
@@ -772,7 +772,7 @@
               "code": "HK.01070",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 16.27
+              "entry_price": 16.09
             },
             {
               "code": "HK.09858",
@@ -990,8 +990,8 @@
       "market": "US",
       "quality": {
         "market": "US",
-        "session": 20261027,
-        "valid": 224,
+        "session": 20261028,
+        "valid": 221,
         "total": 259,
         "status": "ready"
       },
@@ -3176,7 +3176,7 @@
               "code": "HK.01070",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 16.27
+              "entry_price": 16.09
             },
             {
               "code": "HK.09858",
@@ -3474,7 +3474,7 @@
               "code": "HK.01070",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 16.27
+              "entry_price": 16.09
             },
             {
               "code": "HK.02099",
@@ -3876,7 +3876,7 @@
             "code": "HK.01070",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 16.27
+            "entry_price": 16.09
           },
           {
             "code": "HK.09858",
