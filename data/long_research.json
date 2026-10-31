@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-30T18:51:07.310837+00:00",
+  "generated_at": "2026-10-31T17:59:47.378709+00:00",
   "definition_hash": "ffac6ed3d6ab96da346e18a8b2e6da7fab8f376a907807291b2b5a3ad63b2fc9",
   "policy": {
     "version": "liq-momentum-forward-v2",
@@ -184,7 +184,7 @@
                 "code": "HK.00316",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 149.1
+                "entry_price": 151.1
               },
               {
                 "code": "HK.02142",
@@ -887,7 +887,7 @@
               "code": "HK.00316",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 149.1
+              "entry_price": 151.1
             },
             {
               "code": "HK.02142",
@@ -994,8 +994,8 @@
       "market": "US",
       "quality": {
         "market": "US",
-        "session": 20261029,
-        "valid": 228,
+        "session": 20261030,
+        "valid": 229,
         "total": 259,
         "status": "ready"
       },
@@ -1539,7 +1539,7 @@
                 "code": "US.ASML",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 1678.303
+                "entry_price": 1678.316
               },
               {
                 "code": "US.NET",
@@ -2610,7 +2610,7 @@
               "code": "US.ASML",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 1678.303
+              "entry_price": 1678.316
             },
             {
               "code": "US.NET",
@@ -3292,7 +3292,7 @@
               "code": "HK.00316",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 149.1
+              "entry_price": 151.1
             },
             {
               "code": "HK.02142",
@@ -3995,7 +3995,7 @@
             "code": "HK.00316",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 149.1
+            "entry_price": 151.1
           },
           {
             "code": "HK.02142",
