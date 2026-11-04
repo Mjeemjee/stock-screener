@@ -6,7 +6,7 @@ import argparse
 from pathlib import Path
 import shutil
 
-from scripts.verify_public_build import PUBLIC_DATA, verify
+from scripts.verify_public_build import public_data_names, verify
 
 
 def prepare(source, output):
@@ -24,7 +24,7 @@ def prepare(source, output):
             target = output / file.relative_to(source)
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(file, target)
-    for name in sorted(PUBLIC_DATA):
+    for name in sorted(public_data_names(source / "data")):
         file = source / "data" / name
         if file.is_symlink():
             raise ValueError("Symlinks are not accepted in public data")

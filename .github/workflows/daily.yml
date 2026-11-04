@@ -33,6 +33,7 @@ jobs:
           python -m unittest discover -s scripts -p test_validate_factor_optimization.py -v
           python -m unittest discover -s scripts -p test_verify_public_build.py -v
           python -m unittest scripts.test_prepare_public_build -v
+          python -m unittest scripts.test_export_chart_history -v
           python -m unittest discover -s scripts -p test_restore_screening_archive.py -v
 
       - name: 恢复累计选股档案
@@ -65,6 +66,9 @@ jobs:
         run: |
           python -m screener.long_history_refresh
           python -m screener.long_horizon
+
+      - name: 导出跟踪股票日K（仅展示）
+        run: python -m scripts.export_chart_history --fetch-missing
 
       - name: 保存累计选股档案
         id: screening_archive
@@ -103,7 +107,7 @@ jobs:
         working-directory: portfolio-board
         run: |
           npm install --no-audit --no-fund
-          node --test src/lib/screener.test.cjs src/lib/investmentMethods.test.cjs src/lib/lab.test.cjs src/lib/research.test.cjs src/lib/longResearch.test.cjs
+          node --test src/lib/*.test.cjs
           npm run build
 
       - name: 阻止私人持仓和非公开数据发布

@@ -15,7 +15,7 @@ export interface Basket {
   complete: boolean
   known_count: number
   return_pct: number | null
-  holdings: { code: string; status: string; return_pct: number | null }[]
+  holdings: { code: string; status: string; return_pct: number | null; entry_price?: number; exit_price?: number }[]
 }
 
 export interface Evaluation {

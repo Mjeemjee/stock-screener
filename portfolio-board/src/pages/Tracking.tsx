@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { Link } from 'react-router'
 import { RefreshCw } from 'lucide-react'
 import AppShell from '@/components/AppShell'
 import { Button } from '@/components/ui/button'
@@ -57,13 +58,13 @@ export default function Tracking() {
       <section className="space-y-3">
         <h2 className="text-sm font-semibold">逐期结果</h2>
         {rows.length === 0 ? <p className="py-6 text-sm text-muted-foreground">当前市场和策略暂无记录。</p> : <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs"><thead className="border-b text-muted-foreground"><tr>{['冻结时间', '策略', '状态', '最终排序', '原排序', '指数'].map(label => <th key={label} className="whitespace-nowrap p-2 font-normal">{label}</th>)}</tr></thead>
+          <table className="w-full text-left text-xs"><thead className="border-b text-muted-foreground"><tr>{['冻结时间', '策略', '状态', '最终排序', '原排序', '指数', '股票 / K线'].map(label => <th key={label} className="whitespace-nowrap p-2 font-normal">{label}</th>)}</tr></thead>
             <tbody>{[...rows].reverse().map(row => {
               const archive = archives.get(row.snapshot_id)
               const selected = row.baskets.selected
               const status = !row.prospective ? '历史导入' : !row.exit_date ? '未到期' :
                 !selected.complete || !row.baskets.original?.complete ? '缺价格' : row.benchmark_pct == null ? '基准缺价' : '已到期'
-              return <tr key={`${row.snapshot_id}-${row.strategy_id}`} className="border-b"><td className="whitespace-nowrap p-2">{archive ? scanTimeInfo(archive.frozen_at).display : '-'}</td><td className="min-w-28 p-2">{row.strategy_name}</td><td className="whitespace-nowrap p-2">{status}<span className="block text-[10px] text-muted-foreground">{status === '未到期' ? `预计 ${dateLabel(row.scheduled_exit_date)}` : `价格 ${selected.known_count}/${selected.count}`}</span></td><td className="p-2 tnum">{percent(selected.return_pct)}</td><td className="p-2 tnum">{percent(row.baskets.original?.return_pct)}</td><td className="p-2 tnum">{percent(row.benchmark_pct)}</td></tr>
+              return <tr key={`${row.snapshot_id}-${row.strategy_id}`} className="border-b align-top"><td className="whitespace-nowrap p-2">{archive ? scanTimeInfo(archive.frozen_at).display : '-'}</td><td className="min-w-28 p-2">{row.strategy_name}</td><td className="whitespace-nowrap p-2">{status}<span className="block text-[10px] text-muted-foreground">{status === '未到期' ? `预计 ${dateLabel(row.scheduled_exit_date)}` : `价格 ${selected.known_count}/${selected.count}`}</span></td><td className="p-2 tnum">{percent(selected.return_pct)}</td><td className="p-2 tnum">{percent(row.baskets.original?.return_pct)}</td><td className="p-2 tnum">{percent(row.benchmark_pct)}</td><td className="min-w-48 p-2"><details><summary className="cursor-pointer whitespace-nowrap text-primary">查看股票 / K线</summary><div className="space-y-3 py-3">{(['selected', 'original'] as const).map(mode => row.baskets[mode] && <div key={mode}><p className="mb-1 font-medium">{mode === 'selected' ? '最终排序' : '原排序'}</p><ul className="space-y-2">{row.baskets[mode]!.holdings.map(h => <li key={h.code}><Link className="block text-primary underline underline-offset-2" to={`/stock/${encodeURIComponent(h.code)}?period=${encodeURIComponent(`${row.snapshot_id}:${row.strategy_id}:${row.horizon}:${mode}`)}`}>{data.securities[h.code]?.name ?? h.code} · {h.code}</Link><span className="text-muted-foreground tnum">{h.return_pct == null ? '收益待定' : percent(h.return_pct)}</span></li>)}</ul></div>)}</div></details></td></tr>
             })}</tbody>
           </table>
         </div>}
