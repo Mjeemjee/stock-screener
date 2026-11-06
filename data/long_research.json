@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-05T20:53:19.219540+00:00",
+  "generated_at": "2026-11-06T20:10:41.921933+00:00",
   "definition_hash": "ffac6ed3d6ab96da346e18a8b2e6da7fab8f376a907807291b2b5a3ad63b2fc9",
   "policy": {
     "version": "liq-momentum-forward-v2",
@@ -25,8 +25,8 @@
       "market": "HK",
       "quality": {
         "market": "HK",
-        "session": 20261105,
-        "valid": 116,
+        "session": 20261106,
+        "valid": 91,
         "total": 218,
         "status": "insufficient_data"
       },
@@ -676,7 +676,7 @@
                 "code": "HK.06881",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 6.905
+                "entry_price": 6.734
               },
               {
                 "code": "HK.01766",
@@ -994,8 +994,8 @@
       "market": "US",
       "quality": {
         "market": "US",
-        "session": 20261104,
-        "valid": 228,
+        "session": 20261105,
+        "valid": 225,
         "total": 259,
         "status": "ready"
       },
@@ -1171,8 +1171,9 @@
               },
               {
                 "code": "US.USB",
-                "status": "missing_entry",
-                "return_pct": null
+                "status": "pending",
+                "return_pct": null,
+                "entry_price": 59.37
               },
               {
                 "code": "US.PH",
@@ -1658,8 +1659,9 @@
               },
               {
                 "code": "US.USB",
-                "status": "missing_entry",
-                "return_pct": null
+                "status": "pending",
+                "return_pct": null,
+                "entry_price": 59.37
               },
               {
                 "code": "US.PH",
@@ -1966,8 +1968,9 @@
             },
             {
               "code": "US.USB",
-              "status": "missing_entry",
-              "return_pct": null
+              "status": "pending",
+              "return_pct": null,
+              "entry_price": 59.37
             },
             {
               "code": "US.PH",
@@ -2242,8 +2245,9 @@
             },
             {
               "code": "US.USB",
-              "status": "missing_entry",
-              "return_pct": null
+              "status": "pending",
+              "return_pct": null,
+              "entry_price": 59.37
             },
             {
               "code": "US.PH",
@@ -2729,8 +2733,9 @@
             },
             {
               "code": "US.USB",
-              "status": "missing_entry",
-              "return_pct": null
+              "status": "pending",
+              "return_pct": null,
+              "entry_price": 59.37
             },
             {
               "code": "US.PH",
@@ -3037,8 +3042,9 @@
           },
           {
             "code": "US.USB",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 59.37
           },
           {
             "code": "US.PH",
@@ -3784,7 +3790,7 @@
               "code": "HK.06881",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 6.905
+              "entry_price": 6.734
             },
             {
               "code": "HK.01766",
