@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-06T20:07:55+00:00",
+  "generated_at": "2026-11-07T18:23:24+00:00",
   "policy": {
     "version": "lab-v1",
     "horizon": 5,
@@ -78,7 +78,7 @@
         "min_median_turnover_20d": 78000000,
         "use_median_liquidity": false
       },
-      "matured": 4,
+      "matured": 5,
       "supported": true
     },
     {
@@ -118,7 +118,7 @@
         "min_market_val": 78000000000,
         "require_profitable": true
       },
-      "matured": 5,
+      "matured": 6,
       "supported": true
     },
     {
@@ -142,7 +142,7 @@
         "min_market_val": 39000000000.0,
         "market_value_field": "hk_market_val"
       },
-      "matured": 5,
+      "matured": 6,
       "supported": true
     }
   ],
