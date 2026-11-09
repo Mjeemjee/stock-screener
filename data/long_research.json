@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-07T18:23:57.149481+00:00",
+  "generated_at": "2026-11-09T23:19:19.214560+00:00",
   "definition_hash": "ffac6ed3d6ab96da346e18a8b2e6da7fab8f376a907807291b2b5a3ad63b2fc9",
   "policy": {
     "version": "liq-momentum-forward-v2",
@@ -25,7 +25,7 @@
       "market": "HK",
       "quality": {
         "market": "HK",
-        "session": 20261106,
+        "session": 20261109,
         "valid": 186,
         "total": 218,
         "status": "ready"
@@ -994,8 +994,8 @@
       "market": "US",
       "quality": {
         "market": "US",
-        "session": 20261106,
-        "valid": 223,
+        "session": 20261109,
+        "valid": 213,
         "total": 259,
         "status": "ready"
       },
@@ -1047,7 +1047,7 @@
                 "code": "US.FLEX",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 89.93
+                "entry_price": 89.925
               },
               {
                 "code": "US.HUT",
@@ -1510,7 +1510,7 @@
                 "code": "US.FLEX",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 89.93
+                "entry_price": 89.925
               },
               {
                 "code": "US.FCX",
@@ -1577,7 +1577,7 @@
                 "code": "US.FLEX",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 89.93
+                "entry_price": 89.925
               },
               {
                 "code": "US.ICE",
@@ -1844,7 +1844,7 @@
               "code": "US.FLEX",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 89.93
+              "entry_price": 89.925
             },
             {
               "code": "US.HUT",
@@ -2121,7 +2121,7 @@
               "code": "US.FLEX",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 89.93
+              "entry_price": 89.925
             },
             {
               "code": "US.HUT",
@@ -2584,7 +2584,7 @@
               "code": "US.FLEX",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 89.93
+              "entry_price": 89.925
             },
             {
               "code": "US.FCX",
@@ -2651,7 +2651,7 @@
               "code": "US.FLEX",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 89.93
+              "entry_price": 89.925
             },
             {
               "code": "US.ICE",
@@ -2918,7 +2918,7 @@
             "code": "US.FLEX",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 89.93
+            "entry_price": 89.925
           },
           {
             "code": "US.HUT",
