@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-09T23:19:00+00:00",
+  "generated_at": "2026-11-10T20:49:35+00:00",
   "policy": {
     "version": "lab-v1",
     "horizon": 5,
@@ -50,7 +50,7 @@
         "min_median_turnover_20d": 10000000,
         "use_median_liquidity": false
       },
-      "matured": 7,
+      "matured": 8,
       "supported": true
     },
     {
@@ -78,7 +78,7 @@
         "min_median_turnover_20d": 78000000,
         "use_median_liquidity": false
       },
-      "matured": 6,
+      "matured": 7,
       "supported": true
     },
     {
@@ -98,7 +98,7 @@
         "min_market_val": 10000000000,
         "require_profitable": true
       },
-      "matured": 7,
+      "matured": 8,
       "supported": true
     },
     {
@@ -118,7 +118,7 @@
         "min_market_val": 78000000000,
         "require_profitable": true
       },
-      "matured": 7,
+      "matured": 8,
       "supported": true
     },
     {
@@ -142,12 +142,282 @@
         "min_market_val": 39000000000.0,
         "market_value_field": "hk_market_val"
       },
-      "matured": 7,
+      "matured": 8,
       "supported": true
     }
   ],
-  "trials": [],
-  "events": [],
+  "trials": [
+    {
+      "id": "lab_a4e604408db11dc0",
+      "root_id": "momentum_breakout",
+      "parent_id": "root_0d74d9d06a916041",
+      "generation": 1,
+      "market": "US",
+      "source_version": "2334c207eb6b86dced174db76411a3f1f3a9fde3a62fe28a7e2f9eac93c6edd8",
+      "base_params": {
+        "near_high_pct": 3.0,
+        "min_market_val": 2000000000,
+        "min_turnover_rate": 0.5,
+        "min_turnover": 20000000,
+        "only_up_day": true,
+        "min_median_turnover_20d": 10000000,
+        "use_median_liquidity": false
+      },
+      "params": {
+        "near_high_pct": 2.0,
+        "min_market_val": 2000000000,
+        "min_turnover_rate": 0.5,
+        "min_turnover": 20000000,
+        "only_up_day": true,
+        "min_median_turnover_20d": 10000000,
+        "use_median_liquidity": false
+      },
+      "created_at": "2026-11-10T20:49:35+00:00",
+      "name": "更接近年内高点",
+      "hypothesis": "仅修改 near_high_pct，研究相对母策略的扣费后收益增量",
+      "expected": "改善5日配对收益；必须以未来样本验证，不预设胜率或收益幅度",
+      "change": {
+        "parameter": "near_high_pct",
+        "from": 3.0,
+        "to": 2.0
+      },
+      "status": "testing",
+      "last_checkpoint": 0,
+      "assessments": [],
+      "definition_hash": "1676a1f96dcaad5ebb37c1997a3b6a6e75afbb9454677ec3b93c4675c27e161a"
+    },
+    {
+      "id": "lab_b96b5f12f9eced9c",
+      "root_id": "momentum_breakout",
+      "parent_id": "root_0d74d9d06a916041",
+      "generation": 1,
+      "market": "US",
+      "source_version": "2334c207eb6b86dced174db76411a3f1f3a9fde3a62fe28a7e2f9eac93c6edd8",
+      "base_params": {
+        "near_high_pct": 3.0,
+        "min_market_val": 2000000000,
+        "min_turnover_rate": 0.5,
+        "min_turnover": 20000000,
+        "only_up_day": true,
+        "min_median_turnover_20d": 10000000,
+        "use_median_liquidity": false
+      },
+      "params": {
+        "near_high_pct": 3.0,
+        "min_market_val": 2000000000,
+        "min_turnover_rate": 0.5,
+        "min_turnover": 30000000,
+        "only_up_day": true,
+        "min_median_turnover_20d": 10000000,
+        "use_median_liquidity": false
+      },
+      "created_at": "2026-11-10T20:49:35+00:00",
+      "name": "提高成交额门槛",
+      "hypothesis": "仅修改 min_turnover，研究相对母策略的扣费后收益增量",
+      "expected": "改善5日配对收益；必须以未来样本验证，不预设胜率或收益幅度",
+      "change": {
+        "parameter": "min_turnover",
+        "from": 20000000,
+        "to": 30000000
+      },
+      "status": "testing",
+      "last_checkpoint": 0,
+      "assessments": [],
+      "definition_hash": "1f8d73ec7210a7a6c38eb39856206402cef5dad4dbf5d1397efb5fdafe9858fd"
+    },
+    {
+      "id": "lab_c418a17b0f2dadb5",
+      "root_id": "oversold_watch",
+      "parent_id": "root_1066c8a62b0dec9a",
+      "generation": 1,
+      "market": "US",
+      "source_version": "2334c207eb6b86dced174db76411a3f1f3a9fde3a62fe28a7e2f9eac93c6edd8",
+      "base_params": {
+        "near_low_pct": 12.0,
+        "min_market_val": 10000000000,
+        "require_profitable": true
+      },
+      "params": {
+        "near_low_pct": 8.0,
+        "min_market_val": 10000000000,
+        "require_profitable": true
+      },
+      "created_at": "2026-11-10T20:49:35+00:00",
+      "name": "更接近年内低点",
+      "hypothesis": "仅修改 near_low_pct，研究相对母策略的扣费后收益增量",
+      "expected": "改善5日配对收益；必须以未来样本验证，不预设胜率或收益幅度",
+      "change": {
+        "parameter": "near_low_pct",
+        "from": 12.0,
+        "to": 8.0
+      },
+      "status": "testing",
+      "last_checkpoint": 0,
+      "assessments": [],
+      "definition_hash": "d3d18b223c5d87cb82689cc071af14c537c5c3240e75bc51a5c0915d7ec641ff"
+    },
+    {
+      "id": "lab_350f0c5662a0850d",
+      "root_id": "oversold_watch",
+      "parent_id": "root_1066c8a62b0dec9a",
+      "generation": 1,
+      "market": "US",
+      "source_version": "2334c207eb6b86dced174db76411a3f1f3a9fde3a62fe28a7e2f9eac93c6edd8",
+      "base_params": {
+        "near_low_pct": 12.0,
+        "min_market_val": 10000000000,
+        "require_profitable": true
+      },
+      "params": {
+        "near_low_pct": 12.0,
+        "min_market_val": 15000000000,
+        "require_profitable": true
+      },
+      "created_at": "2026-11-10T20:49:35+00:00",
+      "name": "提高市值门槛",
+      "hypothesis": "仅修改 min_market_val，研究相对母策略的扣费后收益增量",
+      "expected": "改善5日配对收益；必须以未来样本验证，不预设胜率或收益幅度",
+      "change": {
+        "parameter": "min_market_val",
+        "from": 10000000000,
+        "to": 15000000000
+      },
+      "status": "testing",
+      "last_checkpoint": 0,
+      "assessments": [],
+      "definition_hash": "f721461cbd14afc7413fc1e04005e31926263d4c97bbd29eafd89ef37f161978"
+    },
+    {
+      "id": "lab_a1f4114a4660a2fe",
+      "root_id": "oversold_watch",
+      "parent_id": "root_8b4df5ad62a6e19a",
+      "generation": 1,
+      "market": "HK",
+      "source_version": "2334c207eb6b86dced174db76411a3f1f3a9fde3a62fe28a7e2f9eac93c6edd8",
+      "base_params": {
+        "near_low_pct": 12.0,
+        "min_market_val": 78000000000,
+        "require_profitable": true
+      },
+      "params": {
+        "near_low_pct": 8.0,
+        "min_market_val": 78000000000,
+        "require_profitable": true
+      },
+      "created_at": "2026-11-10T20:49:35+00:00",
+      "name": "更接近年内低点",
+      "hypothesis": "仅修改 near_low_pct，研究相对母策略的扣费后收益增量",
+      "expected": "改善5日配对收益；必须以未来样本验证，不预设胜率或收益幅度",
+      "change": {
+        "parameter": "near_low_pct",
+        "from": 12.0,
+        "to": 8.0
+      },
+      "status": "testing",
+      "last_checkpoint": 0,
+      "assessments": [],
+      "definition_hash": "851efd9ad5e53864a40afd8f55222cdb54102acffd0064e8dbcc57b554a6274a"
+    },
+    {
+      "id": "lab_b18054a20289abfd",
+      "root_id": "oversold_watch",
+      "parent_id": "root_8b4df5ad62a6e19a",
+      "generation": 1,
+      "market": "HK",
+      "source_version": "2334c207eb6b86dced174db76411a3f1f3a9fde3a62fe28a7e2f9eac93c6edd8",
+      "base_params": {
+        "near_low_pct": 12.0,
+        "min_market_val": 78000000000,
+        "require_profitable": true
+      },
+      "params": {
+        "near_low_pct": 12.0,
+        "min_market_val": 117000000000,
+        "require_profitable": true
+      },
+      "created_at": "2026-11-10T20:49:35+00:00",
+      "name": "提高市值门槛",
+      "hypothesis": "仅修改 min_market_val，研究相对母策略的扣费后收益增量",
+      "expected": "改善5日配对收益；必须以未来样本验证，不预设胜率或收益幅度",
+      "change": {
+        "parameter": "min_market_val",
+        "from": 78000000000,
+        "to": 117000000000
+      },
+      "status": "testing",
+      "last_checkpoint": 0,
+      "assessments": [],
+      "definition_hash": "49b351a1fbf542d364bfb1672aa6eab45838a86ed3da44b41e3d32e6f6217314"
+    }
+  ],
+  "events": [
+    {
+      "trial_id": "lab_a4e604408db11dc0",
+      "action": "created",
+      "at": "2026-11-10T20:49:35+00:00",
+      "parent_id": "root_0d74d9d06a916041",
+      "change": {
+        "parameter": "near_high_pct",
+        "from": 3.0,
+        "to": 2.0
+      }
+    },
+    {
+      "trial_id": "lab_b96b5f12f9eced9c",
+      "action": "created",
+      "at": "2026-11-10T20:49:35+00:00",
+      "parent_id": "root_0d74d9d06a916041",
+      "change": {
+        "parameter": "min_turnover",
+        "from": 20000000,
+        "to": 30000000
+      }
+    },
+    {
+      "trial_id": "lab_c418a17b0f2dadb5",
+      "action": "created",
+      "at": "2026-11-10T20:49:35+00:00",
+      "parent_id": "root_1066c8a62b0dec9a",
+      "change": {
+        "parameter": "near_low_pct",
+        "from": 12.0,
+        "to": 8.0
+      }
+    },
+    {
+      "trial_id": "lab_350f0c5662a0850d",
+      "action": "created",
+      "at": "2026-11-10T20:49:35+00:00",
+      "parent_id": "root_1066c8a62b0dec9a",
+      "change": {
+        "parameter": "min_market_val",
+        "from": 10000000000,
+        "to": 15000000000
+      }
+    },
+    {
+      "trial_id": "lab_a1f4114a4660a2fe",
+      "action": "created",
+      "at": "2026-11-10T20:49:35+00:00",
+      "parent_id": "root_8b4df5ad62a6e19a",
+      "change": {
+        "parameter": "near_low_pct",
+        "from": 12.0,
+        "to": 8.0
+      }
+    },
+    {
+      "trial_id": "lab_b18054a20289abfd",
+      "action": "created",
+      "at": "2026-11-10T20:49:35+00:00",
+      "parent_id": "root_8b4df5ad62a6e19a",
+      "change": {
+        "parameter": "min_market_val",
+        "from": 78000000000,
+        "to": 117000000000
+      }
+    }
+  ],
   "observations": [],
   "review_workflow": "https://github.com/Mjeemjee/stock-screener/actions/workflows/review-lab.yml"
 }
