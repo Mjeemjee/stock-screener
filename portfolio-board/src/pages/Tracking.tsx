@@ -29,6 +29,7 @@ export default function Tracking() {
     </div>
     {loading && !data && <p role="status" className="py-8 text-sm text-muted-foreground">读取追踪数据...</p>}
     {error && <p role="alert" className="py-4 text-sm text-destructive">{error}</p>}
+    <Link to="/validation" className="mt-4 block rounded-md border border-primary/20 bg-accent/50 px-4 py-3 text-sm text-primary underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring">期数很多，证据就充分了吗？查看重叠时间线与策略验证 →</Link>
     {data && <div className="space-y-6 pt-4">
       <div className="flex flex-wrap items-center gap-3">
         <div role="group" aria-label="追踪市场" className="flex rounded-md border p-0.5">

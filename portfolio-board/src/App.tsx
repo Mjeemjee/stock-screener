@@ -7,6 +7,7 @@ const Guide = lazy(() => import('./pages/Guide'))
 const Backtest = lazy(() => import('./pages/Backtest'))
 const Learn = lazy(() => import('./pages/Learn'))
 const Tracking = lazy(() => import('./pages/Tracking'))
+const Validation = lazy(() => import('./pages/Validation'))
 const StockDetail = lazy(() => import('./pages/StockDetail'))
 const Watchlist = lazy(() => import('./pages/Watchlist'))
 const InvestmentMethods = lazy(() => import('./pages/InvestmentMethods'))
@@ -26,6 +27,7 @@ export default function App() {
       <Route path="/holdings" element={<Holdings />} />
       <Route path="/guide" element={<Guide />} />
       <Route path="/tracking" element={<Tracking />} />
+      <Route path="/validation" element={<Validation />} />
       <Route path="/lab" element={<StrategyLab />} />
       <Route path="/lab/research" element={<FactorResearch />} />
       <Route path="/lab/long-horizon" element={<LongHorizon />} />

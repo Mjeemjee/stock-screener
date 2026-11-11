@@ -5,6 +5,7 @@ const NAV = [
   { to: '/', label: '选股' },
   { to: '/methods', label: '方法库' },
   { to: '/tracking', label: '追踪' },
+  { to: '/validation', label: '验证' },
   { to: '/lab', label: '实验室' },
   { to: '/watchlist', label: '自选' },
   { to: '/backtest', label: '回测' },

@@ -1,10 +1,12 @@
 const assert = require('node:assert/strict')
 const path = require('node:path')
+const fs = require('node:fs')
 const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright')
 
 async function main() {
   const base = process.argv[2] || 'http://127.0.0.1:5173/'
-  const reports = path.resolve(__dirname, '../../reports')
+  const reports = process.argv[3] ? path.resolve(process.argv[3]) : path.resolve(__dirname, '../../reports')
+  fs.mkdirSync(reports, { recursive: true })
   const browser = await chromium.launch({ channel: 'msedge', headless: true })
   const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } })
   const page = await context.newPage()
