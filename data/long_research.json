@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-12T21:04:31.057849+00:00",
+  "generated_at": "2026-11-13T20:42:00.675659+00:00",
   "definition_hash": "ffac6ed3d6ab96da346e18a8b2e6da7fab8f376a907807291b2b5a3ad63b2fc9",
   "policy": {
     "version": "liq-momentum-forward-v2",
@@ -25,8 +25,8 @@
       "market": "HK",
       "quality": {
         "market": "HK",
-        "session": 20261112,
-        "valid": 110,
+        "session": 20261113,
+        "valid": 109,
         "total": 218,
         "status": "insufficient_data"
       },
@@ -995,7 +995,7 @@
       "quality": {
         "market": "US",
         "session": 20261112,
-        "valid": 215,
+        "valid": 225,
         "total": 259,
         "status": "ready"
       },
@@ -1071,7 +1071,7 @@
                 "code": "US.FIX",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 1434.33
+                "entry_price": 1433.095
               },
               {
                 "code": "US.PBR",
@@ -1486,7 +1486,7 @@
                 "code": "US.FIX",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 1434.33
+                "entry_price": 1433.095
               },
               {
                 "code": "US.NOK",
@@ -1793,7 +1793,7 @@
                 "code": "US.FIX",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 1434.33
+                "entry_price": 1433.095
               },
               {
                 "code": "US.PBR",
@@ -1868,7 +1868,7 @@
               "code": "US.FIX",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 1434.33
+              "entry_price": 1433.095
             },
             {
               "code": "US.PBR",
@@ -2145,7 +2145,7 @@
               "code": "US.FIX",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 1434.33
+              "entry_price": 1433.095
             },
             {
               "code": "US.PBR",
@@ -2560,7 +2560,7 @@
               "code": "US.FIX",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 1434.33
+              "entry_price": 1433.095
             },
             {
               "code": "US.NOK",
@@ -2867,7 +2867,7 @@
               "code": "US.FIX",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 1434.33
+              "entry_price": 1433.095
             },
             {
               "code": "US.PBR",
@@ -2942,7 +2942,7 @@
             "code": "US.FIX",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 1434.33
+            "entry_price": 1433.095
           },
           {
             "code": "US.PBR",
