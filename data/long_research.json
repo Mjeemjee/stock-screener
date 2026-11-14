@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-13T20:42:00.675659+00:00",
+  "generated_at": "2026-11-14T18:55:43.747002+00:00",
   "definition_hash": "ffac6ed3d6ab96da346e18a8b2e6da7fab8f376a907807291b2b5a3ad63b2fc9",
   "policy": {
     "version": "liq-momentum-forward-v2",
@@ -26,9 +26,9 @@
       "quality": {
         "market": "HK",
         "session": 20261113,
-        "valid": 109,
+        "valid": 183,
         "total": 218,
-        "status": "insufficient_data"
+        "status": "ready"
       },
       "metrics": {
         "due": 0,
@@ -72,7 +72,7 @@
                 "code": "HK.01070",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 16.27
+                "entry_price": 16.09
               },
               {
                 "code": "HK.09858",
@@ -371,7 +371,7 @@
                 "code": "HK.01070",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 16.27
+                "entry_price": 16.09
               },
               {
                 "code": "HK.02099",
@@ -775,7 +775,7 @@
               "code": "HK.01070",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 16.27
+              "entry_price": 16.09
             },
             {
               "code": "HK.09858",
@@ -994,8 +994,8 @@
       "market": "US",
       "quality": {
         "market": "US",
-        "session": 20261112,
-        "valid": 225,
+        "session": 20261113,
+        "valid": 231,
         "total": 259,
         "status": "ready"
       },
@@ -1179,7 +1179,7 @@
                 "code": "US.PH",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 952.19
+                "entry_price": 950.202
               },
               {
                 "code": "US.NEM",
@@ -1504,7 +1504,7 @@
                 "code": "US.GLW",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 135.51
+                "entry_price": 135.192
               },
               {
                 "code": "US.FLEX",
@@ -1667,7 +1667,7 @@
                 "code": "US.PH",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 952.19
+                "entry_price": 950.202
               },
               {
                 "code": "US.WULF",
@@ -1715,7 +1715,7 @@
                 "code": "US.MMM",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 172.0
+                "entry_price": 171.28
               },
               {
                 "code": "US.ELV",
@@ -1727,7 +1727,7 @@
                 "code": "US.SHW",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 339.3
+                "entry_price": 338.528
               },
               {
                 "code": "US.KKR",
@@ -1976,7 +1976,7 @@
               "code": "US.PH",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 952.19
+              "entry_price": 950.202
             },
             {
               "code": "US.NEM",
@@ -2253,7 +2253,7 @@
               "code": "US.PH",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 952.19
+              "entry_price": 950.202
             },
             {
               "code": "US.NEM",
@@ -2578,7 +2578,7 @@
               "code": "US.GLW",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 135.51
+              "entry_price": 135.192
             },
             {
               "code": "US.FLEX",
@@ -2741,7 +2741,7 @@
               "code": "US.PH",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 952.19
+              "entry_price": 950.202
             },
             {
               "code": "US.WULF",
@@ -2789,7 +2789,7 @@
               "code": "US.MMM",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 172.0
+              "entry_price": 171.28
             },
             {
               "code": "US.ELV",
@@ -2801,7 +2801,7 @@
               "code": "US.SHW",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 339.3
+              "entry_price": 338.528
             },
             {
               "code": "US.KKR",
@@ -3050,7 +3050,7 @@
             "code": "US.PH",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 952.19
+            "entry_price": 950.202
           },
           {
             "code": "US.NEM",
@@ -3186,7 +3186,7 @@
               "code": "HK.01070",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 16.27
+              "entry_price": 16.09
             },
             {
               "code": "HK.09858",
@@ -3485,7 +3485,7 @@
               "code": "HK.01070",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 16.27
+              "entry_price": 16.09
             },
             {
               "code": "HK.02099",
@@ -3889,7 +3889,7 @@
             "code": "HK.01070",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 16.27
+            "entry_price": 16.09
           },
           {
             "code": "HK.09858",

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-13T20:39:59+00:00",
+  "generated_at": "2026-11-14T18:53:48+00:00",
   "policy": {
     "version": "lab-v1",
     "horizon": 5,
@@ -78,7 +78,7 @@
         "min_median_turnover_20d": 78000000,
         "use_median_liquidity": false
       },
-      "matured": 9,
+      "matured": 10,
       "supported": true
     },
     {
@@ -118,7 +118,7 @@
         "min_market_val": 78000000000,
         "require_profitable": true
       },
-      "matured": 10,
+      "matured": 11,
       "supported": true
     },
     {
@@ -142,7 +142,7 @@
         "min_market_val": 39000000000.0,
         "market_value_field": "hk_market_val"
       },
-      "matured": 10,
+      "matured": 11,
       "supported": true
     }
   ],
@@ -513,13 +513,13 @@
             "code": "US.MELI",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 1479.8
+            "entry_price": 1478.9
           },
           {
             "code": "US.NFLX",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 62.85
+            "entry_price": 62.88
           },
           {
             "code": "US.BABA",
@@ -587,13 +587,13 @@
             "code": "US.AGNC",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 8.26
+            "entry_price": 8.28
           },
           {
             "code": "US.MELI",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 1479.8
+            "entry_price": 1478.9
           },
           {
             "code": "US.SGI",
@@ -611,7 +611,7 @@
             "code": "US.NFLX",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 62.85
+            "entry_price": 62.88
           },
           {
             "code": "US.BBD",
@@ -1237,13 +1237,13 @@
             "code": "US.AGNC",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 8.26
+            "entry_price": 8.28
           },
           {
             "code": "US.MELI",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 1479.8
+            "entry_price": 1478.9
           },
           {
             "code": "US.SGI",
@@ -1261,7 +1261,7 @@
             "code": "US.NFLX",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 62.85
+            "entry_price": 62.88
           },
           {
             "code": "US.BBD",
@@ -1305,13 +1305,13 @@
             "code": "US.AGNC",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 8.26
+            "entry_price": 8.28
           },
           {
             "code": "US.MELI",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 1479.8
+            "entry_price": 1478.9
           },
           {
             "code": "US.SGI",
@@ -1329,7 +1329,7 @@
             "code": "US.NFLX",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 62.85
+            "entry_price": 62.88
           },
           {
             "code": "US.BBD",
