@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-17T01:14:22.568402+08:00",
+  "updated_at": "2026-11-17T01:23:02.908094+08:00",
   "market_data_through": "2026-11-16",
   "activity": {
-    "status": "checking",
-    "active_at_snapshot": true,
+    "status": "done",
+    "active_at_snapshot": false,
     "focus": "03195 · 1万港币账户",
-    "text": "固定后续段与连续账户检验",
+    "text": "本轮检验已验收",
     "snapshot_only": true,
     "fresh_for_minutes": 15
   },
@@ -29,44 +29,44 @@
     },
     {
       "name": "后续历史段",
-      "status": "active"
+      "status": "done"
     },
     {
       "name": "真实日期纸面",
-      "status": "pending"
+      "status": "not_opened"
     }
   ],
   "cards": [
     {
       "id": "sp500-03195",
       "name": "03195 · 小资金月度趋势",
-      "status": "candidate",
-      "status_label": "开发通过，后段待验收",
+      "status": "closed",
+      "status_label": "固定版本已关闭",
       "capital_hkd": 10000,
-      "period": "2025-02-01 — 2025-12-31",
-      "basis": "已独立复算的开发期结果，含开放持仓估值",
+      "period": "2026-01-01 — 2026-11-16",
+      "basis": "已独立复算的后续段，各案重新起账",
       "results": [
         {
           "cost": "base",
-          "net_hkd": 235.59,
+          "net_hkd": -25.23,
           "cagr_pct": null,
-          "risk_pct": 4.369845448065213,
-          "closed_net_hkd": -342.93,
-          "open_contribution_hkd": 578.52,
-          "open_quantity": 400
+          "risk_pct": 3.106149678583198,
+          "closed_net_hkd": -189.8,
+          "open_contribution_hkd": 164.57,
+          "open_quantity": 300
         },
         {
           "cost": "pressure",
-          "net_hkd": 172.59,
+          "net_hkd": -97.22,
           "cagr_pct": null,
-          "risk_pct": 4.798015068558749,
-          "closed_net_hkd": -384.93,
-          "open_contribution_hkd": 557.52,
-          "open_quantity": 400
+          "risk_pct": 3.113589120001916,
+          "closed_net_hkd": -237.79,
+          "open_contribution_hkd": 140.57,
+          "open_quantity": 300
         }
       ],
-      "conclusion": "两成本开发净正，统计样本仍有限。",
-      "next": "按预先协议核后续历史段。"
+      "conclusion": "固定检验门槛未通过，原结果保留。",
+      "next": "不以修改参数或打开后段补救此版。"
     },
     {
       "id": "nasdaq-monthly",
@@ -170,7 +170,7 @@
       "version": "V106C",
       "name": "V106C后续段及条件连续账户",
       "category": "recent",
-      "conclusion": "2026年215新会话；先固定1万两成本后段，门槛通过才开六资金连续案及两被动参考，最多10案；尚无root验收收益。",
+      "conclusion": "1万两成本标记−25.23/−97.22，各1闭合亏损+1开放300份；报价DD3.11%。93交付/138源/184冻结和430日账核过，净正门槛失败，八个条件案未运行，原版关闭。",
       "source_date": "2026-11-17",
       "source": "工作台记录同步"
     },
@@ -617,7 +617,7 @@
     }
   ],
   "paper": {
-    "checked_at": "2026-11-17T01:14:22.834828+08:00",
+    "checked_at": "2026-11-17T01:23:03.250140+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -675,6 +675,7 @@
   "source_hashes": {
     "nasdaq": "bdb900a98001538774d5ef16b95131ce24f52649020990f6194fb39ca330e3a3",
     "dividend": "567a54284d0e3795c8f03bc72be4332685daeb2d142e2e8707e1020622f5b647",
-    "sp500_source": "de510ca2bf034107855c3b89ca19ffc9be6c635844a940420e1a1117f27cb7af"
+    "sp500_source": "de510ca2bf034107855c3b89ca19ffc9be6c635844a940420e1a1117f27cb7af",
+    "sp500_accepted": "54337ab394afbab7f1bbae68204aa020bc39a8d1dfe5cb199804cb98b4b79433"
   }
 }
