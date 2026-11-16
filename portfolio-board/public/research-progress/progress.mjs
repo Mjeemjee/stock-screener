@@ -18,7 +18,7 @@ export function validateSnapshot(value) {
       const optional = [row.closed_net_hkd, row.open_contribution_hkd]
       if (!optional.every(v => v === undefined || v === null || typeof v === 'number' && Number.isFinite(v)) ||
           row.open_quantity !== undefined && row.open_quantity !== null && (!Number.isSafeInteger(row.open_quantity) || row.open_quantity < 0)) throw new Error('持仓拆分字段无效，暂不展示数字。')
-      if (card.status === 'pending' && [row.net_hkd, row.risk_pct, row.cagr_pct, ...optional, row.open_quantity].some(v => v !== undefined && v !== null)) throw new Error('待验收记录不能展示收益结论。')
+      if (['pending', 'unknown'].includes(card.status) && [row.net_hkd, row.risk_pct, row.cagr_pct, ...optional, row.open_quantity].some(v => v !== undefined && v !== null)) throw new Error('待验收或不可评估记录不能展示收益结论。')
     }
   }
   return value
@@ -62,7 +62,7 @@ if (typeof document !== 'undefined') {
         const row = element('div', undefined, 'result-row'), detail = element('div')
         row.append(element('span', result.cost === 'base' ? '基础' : '压力', 'cost-label'))
         const tone = result.net_hkd === null ? '' : result.net_hkd >= 0 ? 'positive' : 'negative'
-        detail.append(element('span', money(result.net_hkd), `money ${tone}`))
+        detail.append(element('span', card.status === 'unknown' ? '无法评估' : money(result.net_hkd), `money ${tone}`))
         if (result.risk_pct !== null) detail.append(element('span', `报价回撤代理 ${result.risk_pct.toFixed(2)}%`, 'risk'))
         if (result.cagr_pct !== null) detail.append(element('span', `历史日历复合年化 ${result.cagr_pct.toFixed(2)}%`, 'risk'))
         if (typeof result.closed_net_hkd === 'number') detail.append(element('span', `已闭合 ${money(result.closed_net_hkd)}`, 'risk'))
@@ -103,7 +103,7 @@ if (typeof document !== 'undefined') {
     find('focus-title').textContent = data.activity.focus
     find('activity-text').textContent = data.activity.text
     find('stages').replaceChildren()
-    const names = { done: '已完成', active: '同步时进行中', pending: '尚未开始', not_opened: '按规则未打开' }
+    const names = { done: '已完成', active: '同步时进行中', pending: '尚未开始', not_opened: '按规则未打开', unknown: '资料不足' }
     for (const stage of data.stages) {
       const item = element('li', stage.name, `stage ${stage.status}`)
       item.append(element('small', names[stage.status] ?? stage.status)); find('stages').append(item)

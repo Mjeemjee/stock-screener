@@ -14,9 +14,32 @@ def read(path):return json.loads(path.read_text(encoding='utf-8-sig'))
 def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 def clean(text):return re.sub(r'\[([^\]]+)\]\([^)]+\)',r'\1',text).replace('`','').replace('**','').strip()
 
+def accepted_card(card,accepted,later=None,study_only=False):
+    if not accepted.exists():return card
+    result=read(accepted);cases=result['cases']
+    assert len(cases)==2 and {v['cost'] for v in cases}=={'base','pressure'}
+    complete=all(type(v.get('net_hkd')) in (int,float) and math.isfinite(v['net_hkd']) and type(v.get('quote_drawdown_pct')) in (int,float) and math.isfinite(v['quote_drawdown_pct']) and not v.get('unknowns') for v in cases)
+    card['period']=' — '.join(result['period'])
+    if not complete:
+        assert result.get('complete_economics_evaluable') is False or any(v.get('unknowns') for v in cases),'Invalid result must not be silently hidden'
+        card.update(status='unknown',status_label='必要执行资料不足',basis='完整收益和风险无法评估，已知前缀不代替终点',
+            results=[dict(cost=k,net_hkd=None,cagr_pct=None,risk_pct=None) for k in ['base','pressure']],
+            conclusion=(f"{result['source_failure_date']} 必要退出 {result['required_exit_quantity']} 份缺可靠成交资料。" if result.get('source_failure_date') and result.get('required_exit_quantity') else '必要输入未知，完整经济结果保持未知。'),
+            next='本轮已归档，后续条件案未运行；其他候选继续独立研究。')
+        return card
+    positive=all(v['net_hkd']>0 and v['quote_drawdown_pct']<=20 for v in cases)
+    status='review' if positive and study_only else 'candidate' if positive else 'closed'
+    card.update(status=status,status_label='旧史诊断有条件正额' if status=='review' else ('后续段通过，保留候选' if later and later.exists() else '开发通过，待后段') if positive else '固定版本已关闭',
+        basis=result.get('site_basis','已见历史单独起账，净应收不当作可用现金' if study_only else '已独立复算，含开放持仓估值'),
+        results=[dict(cost=v['cost'],net_hkd=v['net_hkd'],cagr_pct=None,risk_pct=v['quote_drawdown_pct'],closed_net_hkd=v.get('closed_net_hkd'),open_contribution_hkd=v.get('open_contribution_hkd'),open_quantity=v.get('open_quantity')) for v in cases],
+        conclusion=result.get('site_conclusion','旧历史诊断正额不等于通过采用标准或取得独立验证。' if study_only and positive else '固定两成本净正，样本及执行限制保留。' if positive else '固定检验未通过，保留原结果。'),
+        next='下一步由原协议和证据决定，不调整参数救结果。' if positive else '原失败保留，不打开后段补救。')
+    return card
+
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--activity',choices=['preparing','checking','waiting','done'],required=True)
-    parser.add_argument('--phase',choices=['development','later'],default='development')
+    parser.add_argument('--phase',choices=['source','development','later'],default='development')
+    parser.add_argument('--focus',choices=['sp500','small-nasdaq','hsi-hold'],default='sp500')
     args=parser.parse_args();now=datetime.now(timezone(timedelta(hours=8))).isoformat()
     nasdaq=read(TEAM/'v103-review/DESCRIPTIVE-ACCOUNTS-v1.json')
     negative=read(TEAM/'v102-review/FINAL-REVIEW-v1.json')
@@ -59,6 +82,29 @@ def main():
         if not later_review.exists() and positive and args.phase=='later':latest['status_label']='开发通过，后段待验收'
         if later_review.exists() and positive:latest['status_label']='后续段通过，保留候选'
     cards.insert(0,latest)
+    small_review=TEAM/'v108-review/FINAL-REVIEW-v1.json'
+    small_later=TEAM/'v108c-review/FINAL-REVIEW-v1.json'
+    small_accepted=small_later if small_later.exists() else small_review
+    small=dict(id='nasdaq-03034',name='03034 · 小资金纳指月度趋势',status='pending',status_label='来源与代码准备',capital_hkd=10000,
+        period='2024-11-01 — 2025-12-31',basis='固定开发期；当前没有已验收账户结果',
+        results=[dict(cost=k,net_hkd=None,cagr_pct=None,risk_pct=None) for k in ['base','pressure']],
+        conclusion='已找到年度财务报告与目标切换首日整手原件；现金口径正在独立复核。',
+        next='来源通过后，一次执行固定两成本开发检验。')
+    small=accepted_card(small,small_accepted,small_later)
+    if not small_accepted.exists() and (TEAM/'v108-small-nasdaq-development-source/ROOT-SOURCE-ACCEPTANCE-v1.json').exists():
+        small.update(status_label='开发检验，待独立验收',conclusion='现金与起点整手条件已核；492日原价已取齐，零成交量和报价异常保留。',next='完成固定两成本账户及独立复算，必要执行资料未知时不展示完整收益。')
+    if (TEAM/'V108-SMALL-NASDAQ-PROTOCOL-20261117.md').exists():
+        cards=[small,*[v for v in cards if v['id']=='nasdaq-monthly'],*[v for v in cards if v['id']!='nasdaq-monthly']]
+    elif args.focus=='small-nasdaq':raise ValueError('03034事前协议不存在')
+    hsi_review=TEAM/'v109-review/FINAL-REVIEW-v1.json'
+    hsi=dict(id='hsi-02800-longhold',name='02800 · 每月复核取消到期',status='pending',status_label='既有历史单变体诊断',capital_hkd=30000,
+        period='2011—2018开发／2019—2023已见后段',basis='各段独立起账；原50%预算，未知支付日股息留净应收',
+        results=[dict(cost=k,net_hkd=None,cagr_pct=None,risk_pct=None) for k in ['base','pressure']],
+        conclusion='只取消三月到期退出；保留原1tick/15及2tick/30成本、量额资格与现金约束。',next='固定四案和原三月基线比较，不作为全盲验证或真实到账收入。')
+    hsi=accepted_card(hsi,hsi_review,study_only=True)
+    if (TEAM/'V109-HOLD-DIAGNOSTIC-EXECUTION-20261117.md').exists():cards.insert(0,hsi)
+    elif args.focus=='hsi-hold':raise ValueError('02800正式诊断协议不存在')
+    current,current_later={'sp500':(latest,later_review),'small-nasdaq':(small,small_later),'hsi-hold':(hsi,None)}[args.focus]
     registry=[]
     for i,line in enumerate((TEAM/'README.md').read_text(encoding='utf-8').splitlines()):
         if not line.startswith('| `/root'):continue
@@ -75,17 +121,25 @@ def main():
                  conclusion=clean(str(r.get('short_conclusion') or r.get('conclusion') or r['summary']))[:800],
                  source_date='2026-11-03',source='旧快照，结论日期保留'))
     stage_status=['done','done','done','active','pending','pending']
-    if latest['status']!='pending':stage_status=['done','done','done','done','pending' if latest['status']=='candidate' else 'not_opened','pending' if latest['status']=='candidate' else 'not_opened']
-    if args.phase=='later' and latest['status']=='candidate':stage_status=['done','done','done','done','active','pending']
-    if later_review.exists():stage_status=['done','done','done','done','done','pending' if latest['status']=='candidate' else 'not_opened']
+    if current['status']!='pending':stage_status=['done','done','done','done','pending' if current['status']=='candidate' else 'not_opened','pending' if current['status']=='candidate' else 'not_opened']
+    if args.phase=='source':stage_status=['done','active','pending','pending','pending','pending']
+    if args.phase=='later' and current['status']=='candidate':stage_status=['done','done','done','done','active','pending']
+    if current_later is not None and current_later.exists():stage_status=['done','done','done','done','done','pending' if current['status']=='candidate' else 'not_opened']
+    if current['status']=='unknown':stage_status=['done','done','done','unknown','not_opened','not_opened']
     if args.activity not in ['preparing','checking']:stage_status=['pending' if s=='active' else s for s in stage_status]
-    activity_active=args.activity in ['preparing','checking'] and latest['status'] in ['pending','candidate']
-    activity_text={'preparing':'准备固定开发检验','checking':'账户计算与独立复算','waiting':'等待下一项真实证据','done':'本轮检验已验收'}[args.activity]
+    activity_active=args.activity in ['preparing','checking'] and current['status'] in ['pending','candidate']
+    activity_text={'preparing':'准备固定开发检验','checking':'固定检验执行与独立核算','waiting':'等待下一项真实证据','done':'本轮检验已验收'}[args.activity]
+    if args.focus=='hsi-hold' and args.activity in ['preparing','checking']:activity_text='已见历史的固定四案单变体诊断'
     if args.phase=='later' and args.activity in ['preparing','checking']:activity_text='固定后续段与连续账户检验'
+    if args.phase=='source' and args.activity in ['preparing','checking']:activity_text='发行人现金事件复核与开发源准备'
     source_paths={'nasdaq':'v103-review/FINAL-REVIEW-v1.json','dividend':'v102-review/FINAL-REVIEW-v1.json','sp500_source':'v106-sp500-development-source/SOURCE-QUALIFICATION-v1.json'}
     if accepted.exists():source_paths['sp500_accepted']=str(accepted.relative_to(TEAM))
+    if small_accepted.exists():source_paths['small_nasdaq_accepted']=str(small_accepted.relative_to(TEAM))
+    if hsi_review.exists():source_paths['hsi_hold_accepted']=str(hsi_review.relative_to(TEAM))
+    if (TEAM/'V108-SMALL-NASDAQ-PROTOCOL-20261117.md').exists():source_paths['small_nasdaq_protocol']='V108-SMALL-NASDAQ-PROTOCOL-20261117.md'
+    if (TEAM/'V109-HOLD-DIAGNOSTIC-EXECUTION-20261117.md').exists():source_paths['hsi_hold_protocol']='V109-HOLD-DIAGNOSTIC-EXECUTION-20261117.md'
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
-      activity=dict(status=args.activity,active_at_snapshot=activity_active,focus='03195 · 1万港币账户',
+      activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户'}[args.focus],
                     text=activity_text,
                     snapshot_only=True,fresh_for_minutes=15),
       stages=[dict(name=n,status=s) for n,s in zip(['规则固定','原价与事件','现金与成本','开发检验','后续历史段','真实日期纸面'],stage_status)],
@@ -107,6 +161,6 @@ def main():
     with (OUT/'progress.json').open('w',encoding='utf-8',newline='\n') as f:json.dump(payload,f,ensure_ascii=False,indent=2,allow_nan=False);f.write('\n')
     shutil.copyfile(ROOT/'reports/hk-nasdaq-baseline-attribution-owner-20261116-v103/baseline-nav-close-drawdown-v1.png',OUT/'assets/nav-risk.png')
     if later_review.exists():shutil.copyfile(ROOT/'reports/hk-sp500-later-validation-owner-20261117-v106c/C-ONLY-NAV-DRAWDOWN-v2.png',OUT/'assets/sp500-later-risk.png')
-    print(json.dumps(dict(updated_at=now,records=len(registry),latest_status=latest['status'],paper_closed_rounds=payload['paper']['closed_rounds'],orders_sent=0),ensure_ascii=False))
+    print(json.dumps(dict(updated_at=now,records=len(registry),focus=args.focus,latest_status=current['status'],paper_closed_rounds=payload['paper']['closed_rounds'],orders_sent=0),ensure_ascii=False))
 
 if __name__=='__main__':main()
