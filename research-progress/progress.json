@@ -1,66 +1,72 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-17T04:34:24.768504+08:00",
+  "updated_at": "2026-11-17T05:31:15.113052+08:00",
   "market_data_through": "2026-11-16",
   "activity": {
-    "status": "preparing",
+    "status": "checking",
     "active_at_snapshot": true,
-    "focus": "黄金 ETF · 来源与小资金预检",
-    "text": "高价ETF执行、现金与独立核算代码准备",
+    "focus": "IPO · 09941前向资料核对",
+    "text": "09941现金路径核对，与新时点完整首日源补证并行；准入及温度仍待核",
     "snapshot_only": true,
     "fresh_for_minutes": 15
   },
   "stages": [
     {
-      "name": "规则固定",
+      "name": "原前向协议",
       "status": "done"
     },
     {
-      "name": "原价与事件",
-      "status": "done"
-    },
-    {
-      "name": "现金与成本",
+      "name": "发售资格与截止",
       "status": "active"
     },
     {
-      "name": "开发检验",
+      "name": "首日源补证",
+      "status": "active"
+    },
+    {
+      "name": "08:30资料固化",
       "status": "pending"
     },
     {
-      "name": "后续历史段",
-      "status": "pending"
+      "name": "分配与资金回流",
+      "status": "not_opened"
     },
     {
-      "name": "真实日期纸面",
-      "status": "pending"
+      "name": "首日退出证据",
+      "status": "not_opened"
     }
   ],
   "cards": [
     {
       "id": "gold-feasibility",
       "name": "02840 · 单份整手月度趋势",
-      "status": "pending",
-      "status_label": "执行代码准备，待验收",
+      "status": "closed",
+      "status_label": "固定版本已关闭",
       "capital_hkd": 10000,
-      "period": "2025-07-01 — 2026-11-16",
-      "basis": "固定新制度诊断；每月复核，40%预算，不设到期",
+      "period": "2026-01-01 — 2026-11-16",
+      "basis": "独立2026年起账的一万港币模型；零分派为政策/空事件条件推断，非完整现金认证",
       "results": [
         {
           "cost": "base",
-          "net_hkd": null,
+          "net_hkd": -248.75,
           "cagr_pct": null,
-          "risk_pct": null
+          "risk_pct": 10.77117372679851,
+          "closed_net_hkd": -248.75,
+          "open_contribution_hkd": 0.0,
+          "open_quantity": 0
         },
         {
           "cost": "pressure",
-          "net_hkd": null,
+          "net_hkd": -284.75,
           "cagr_pct": null,
-          "risk_pct": null
+          "risk_pct": 10.789037011648661,
+          "closed_net_hkd": -284.75,
+          "open_contribution_hkd": 0.0,
+          "open_quantity": 0
         }
       ],
-      "conclusion": "586实际日开收盘与成交量两源一致，无零量。保留最低价异常、风险代理及2026零分派条件；暂无本轮账户结论。",
-      "next": "高价ETF价位和独立核算准备通过后，一次运行固定账户；目前没有已验收收益。"
+      "conclusion": "连续2025年7月至2026年11月净+482.34／+446.34，但独立2026段两亏，固定版本未通过。单案仅0—1闭合，未证明稳定收入。",
+      "next": "原失败保留，不打开后段补救。"
     },
     {
       "id": "hsi-02800-longhold",
@@ -203,15 +209,33 @@
   "registry": [
     {
       "id": "team-6",
-      "version": "V111",
-      "name": "V111的02840单份整手月度趋势",
+      "version": "V112",
+      "name": "V112当前十只完整IPO首日源",
       "category": "recent",
-      "conclusion": "1万/40%、每月复核不限到期；仅2025Jul后交易，固定8诊断+条件2漏单。准备高价PartD生产/独立边界，账户尚未运行。",
+      "conclusion": "两旧缓存+八新字段；Futu八日已取，native参数错误保留并有界修正，总HTTP32不重置；不算聚合温度、不改T0。",
       "source_date": "2026-11-17",
       "source": "工作台记录同步"
     },
     {
       "id": "team-7",
+      "version": "V79",
+      "name": "V79原前向11月17新机会",
+      "category": "recent",
+      "conclusion": "确认09941真实公开发售；55交付/19外部已验，现金路径/费用等未齐仍PENDING。原T0、申购决定和收益未回填。",
+      "source_date": "2026-11-17",
+      "source": "工作台记录同步"
+    },
+    {
+      "id": "team-8",
+      "version": "V111",
+      "name": "V111的02840单份整手月度趋势",
+      "category": "recent",
+      "conclusion": "八案各一次；连续+482.34／+446.34，独立2026两亏−248.75／−284.75。194交付/2046日/4闭合记录已核，全部技能NOT_EVALUABLE，两个漏单未运行。",
+      "source_date": "2026-11-17",
+      "source": "工作台记录同步"
+    },
+    {
+      "id": "team-9",
       "version": "V110",
       "name": "V110黄金ETF来源与整手预检",
       "category": "recent",
@@ -220,7 +244,7 @@
       "source": "工作台记录同步"
     },
     {
-      "id": "team-8",
+      "id": "team-10",
       "version": "V109",
       "name": "V109的02800取消到期诊断",
       "category": "recent",
@@ -229,7 +253,7 @@
       "source": "工作台记录同步"
     },
     {
-      "id": "team-9",
+      "id": "team-11",
       "version": "V107R",
       "name": "V107R的03034直接发行人现金/整手源审",
       "category": "recent",
@@ -238,7 +262,7 @@
       "source": "工作台记录同步"
     },
     {
-      "id": "team-10",
+      "id": "team-12",
       "version": "V108",
       "name": "V108小资金纳指月度执行",
       "category": "recent",
@@ -247,7 +271,7 @@
       "source": "工作台记录同步"
     },
     {
-      "id": "team-11",
+      "id": "team-13",
       "version": "V98",
       "name": "V98更长持有、每月趋势复核",
       "category": "recent",
@@ -256,7 +280,7 @@
       "source": "工作台记录同步"
     },
     {
-      "id": "team-12",
+      "id": "team-14",
       "version": "V100",
       "name": "V100两版都持续月初入场",
       "category": "recent",
@@ -265,7 +289,7 @@
       "source": "工作台记录同步"
     },
     {
-      "id": "team-13",
+      "id": "team-15",
       "version": "V99",
       "name": "V99独立原审及修复后复核",
       "category": "recent",
@@ -274,7 +298,7 @@
       "source": "工作台记录同步"
     },
     {
-      "id": "team-14",
+      "id": "team-16",
       "version": "V99",
       "name": "V99纯函数现金引擎",
       "category": "recent",
@@ -283,16 +307,16 @@
       "source": "工作台记录同步"
     },
     {
-      "id": "team-15",
+      "id": "team-17",
       "version": "V111",
-      "name": "V111固定源及条件现金/grid／网页",
+      "name": "V111验收及图／09941准入与网页／六类信号结论",
       "category": "recent",
-      "conclusion": "586日=245暖机/126开发/215后段，OCV全同，无零量，一处原low异常保留；2026零分派条件推断、未来实际结算不认证。未跑本轮收益。",
+      "conclusion": "黄金固定版关闭；09941官方含费3434.29/50股，公众截止Nov19正午，SDK通用10点不冒充个人现金路径。温度与决定null。",
       "source_date": "2026-11-17",
       "source": "工作台记录同步"
     },
     {
-      "id": "team-16",
+      "id": "team-18",
       "version": "V107",
       "name": "V107小整手纳指执行预检",
       "category": "recent",
@@ -301,7 +325,7 @@
       "source": "工作台记录同步"
     },
     {
-      "id": "team-17",
+      "id": "team-19",
       "version": "V106C",
       "name": "V106C后续段及条件连续账户",
       "category": "recent",
@@ -310,7 +334,7 @@
       "source": "工作台记录同步"
     },
     {
-      "id": "team-18",
+      "id": "team-20",
       "version": "V106",
       "name": "V106的03195一万月度趋势开发",
       "category": "recent",
@@ -319,7 +343,7 @@
       "source": "工作台记录同步"
     },
     {
-      "id": "team-19",
+      "id": "team-21",
       "version": "V105",
       "name": "V105港元执行/美元现金组件复用",
       "category": "recent",
@@ -328,7 +352,7 @@
       "source": "工作台记录同步"
     },
     {
-      "id": "team-20",
+      "id": "team-22",
       "version": "V102",
       "name": "V102现代03110月度趋势、无到期强制退出",
       "category": "recent",
@@ -337,7 +361,7 @@
       "source": "工作台记录同步"
     },
     {
-      "id": "team-21",
+      "id": "team-23",
       "version": "V103",
       "name": "V103月度03086的简单基准及残余诊断",
       "category": "recent",
@@ -346,7 +370,7 @@
       "source": "工作台记录同步"
     },
     {
-      "id": "team-22",
+      "id": "team-24",
       "version": "V101",
       "name": "V101股息费用模块及18个既有账户只读审计",
       "category": "recent",
@@ -355,7 +379,7 @@
       "source": "工作台记录同步"
     },
     {
-      "id": "team-23",
+      "id": "team-25",
       "version": "V97D",
       "name": "V97D小资金/漏单/全连续诊断",
       "category": "recent",
@@ -364,7 +388,7 @@
       "source": "工作台记录同步"
     },
     {
-      "id": "team-24",
+      "id": "team-26",
       "version": "V97C",
       "name": "V97C固定2024—2026-11-13后续",
       "category": "recent",
@@ -373,7 +397,7 @@
       "source": "工作台记录同步"
     },
     {
-      "id": "team-25",
+      "id": "team-27",
       "version": "V97B",
       "name": "V97B同V97候选的源修复后开发",
       "category": "recent",
@@ -382,7 +406,7 @@
       "source": "工作台记录同步"
     },
     {
-      "id": "team-26",
+      "id": "team-28",
       "version": "V97",
       "name": "V97历史200份整手起点取证",
       "category": "recent",
@@ -391,7 +415,7 @@
       "source": "工作台记录同步"
     },
     {
-      "id": "team-27",
+      "id": "team-29",
       "version": "V97",
       "name": "V97来源准备原交付",
       "category": "recent",
@@ -400,7 +424,7 @@
       "source": "工作台记录同步"
     },
     {
-      "id": "team-28",
+      "id": "team-30",
       "version": "V96",
       "name": "V96旧窗03086必要执行UNKNOWN",
       "category": "recent",
@@ -409,7 +433,7 @@
       "source": "工作台记录同步"
     },
     {
-      "id": "team-29",
+      "id": "team-31",
       "version": "V93C",
       "name": "V93C阶段1：固定2018—2023双币后续检验",
       "category": "recent",
@@ -418,7 +442,7 @@
       "source": "工作台记录同步"
     },
     {
-      "id": "team-30",
+      "id": "team-32",
       "version": "V93C",
       "name": "V93C阶段0 USD/FX协议和源准备",
       "category": "recent",
@@ -427,7 +451,7 @@
       "source": "工作台记录同步"
     },
     {
-      "id": "team-31",
+      "id": "team-33",
       "version": "V93B",
       "name": "V93B SENSEX单次40%风险校准",
       "category": "recent",
@@ -436,7 +460,7 @@
       "source": "工作台记录同步"
     },
     {
-      "id": "team-32",
+      "id": "team-34",
       "version": "V95",
       "name": "V95普通恒指趋势决定03115／每日−1x07300方向",
       "category": "recent",
@@ -445,7 +469,7 @@
       "source": "工作台记录同步"
     },
     {
-      "id": "team-33",
+      "id": "team-35",
       "version": "V94",
       "name": "V94每日−1x恒指07300自身月度趋势，仅研究",
       "category": "recent",
@@ -454,7 +478,7 @@
       "source": "工作台记录同步"
     },
     {
-      "id": "team-34",
+      "id": "team-36",
       "version": "V93",
       "name": "V93印度SENSEX普通ETF02836固定月度趋势、最长三月",
       "category": "recent",
@@ -463,7 +487,7 @@
       "source": "工作台记录同步"
     },
     {
-      "id": "team-35",
+      "id": "team-37",
       "version": "V91",
       "name": "V91高股息03110及月度趋势，最长三月",
       "category": "recent",
@@ -472,7 +496,7 @@
       "source": "工作台记录同步"
     },
     {
-      "id": "team-36",
+      "id": "team-38",
       "version": "V92",
       "name": "V92印度Nifty普通ETF03015固定趋势",
       "category": "recent",
@@ -481,7 +505,7 @@
       "source": "工作台记录同步"
     },
     {
-      "id": "team-37",
+      "id": "team-39",
       "version": "V89",
       "name": "V89季度公开HSI池的六个月隔月价格动量，最长三月",
       "category": "recent",
@@ -490,7 +514,7 @@
       "source": "工作台记录同步"
     },
     {
-      "id": "team-38",
+      "id": "team-40",
       "version": "V90",
       "name": "V90事后ETF容量/1%费用门槛诊断",
       "category": "recent",
@@ -499,7 +523,7 @@
       "source": "工作台记录同步"
     },
     {
-      "id": "team-39",
+      "id": "team-41",
       "version": "V88",
       "name": "V88港元债券02819容量预检",
       "category": "recent",
@@ -508,7 +532,7 @@
       "source": "工作台记录同步"
     },
     {
-      "id": "team-40",
+      "id": "team-42",
       "version": "V87",
       "name": "V87港币现金收益基准",
       "category": "recent",
@@ -517,7 +541,7 @@
       "source": "工作台记录同步"
     },
     {
-      "id": "team-41",
+      "id": "team-43",
       "version": "V85",
       "name": "V85/V85B月度趋势",
       "category": "recent",
@@ -526,7 +550,7 @@
       "source": "工作台记录同步"
     },
     {
-      "id": "team-42",
+      "id": "team-44",
       "version": "V86",
       "name": "V86跨资产按月慢动量/新仓波动预算",
       "category": "recent",
@@ -535,7 +559,7 @@
       "source": "工作台记录同步"
     },
     {
-      "id": "team-43",
+      "id": "team-45",
       "version": "V79",
       "name": "V79现金打新冻结前向观察",
       "category": "recent",
@@ -544,7 +568,7 @@
       "source": "工作台记录同步"
     },
     {
-      "id": "team-44",
+      "id": "team-46",
       "version": "V82",
       "name": "V82旧成本约束股票突破",
       "category": "recent",
@@ -553,7 +577,7 @@
       "source": "工作台记录同步"
     },
     {
-      "id": "team-45",
+      "id": "team-47",
       "version": "V84",
       "name": "V84降低换手的ETF突破持有结构",
       "category": "recent",
@@ -562,7 +586,7 @@
       "source": "工作台记录同步"
     },
     {
-      "id": "team-46",
+      "id": "team-48",
       "version": "V83",
       "name": "V83南向恢复事件",
       "category": "recent",
@@ -571,13 +595,67 @@
       "source": "工作台记录同步"
     },
     {
-      "id": "team-47",
+      "id": "team-49",
       "version": "V81",
       "name": "V81上午急跌后的ETF午后修复",
       "category": "recent",
       "conclusion": "开发期失败：03033普通成本125笔净亏7685.54，毛亏691.60；复核02800也失败，停止调参。",
       "source_date": "2026-11-17",
       "source": "工作台记录同步"
+    },
+    {
+      "id": "signal-note-monthly-trend",
+      "version": "信号与规则综述",
+      "name": "十个月月末趋势信号",
+      "category": "recent",
+      "conclusion": "03086组合历史净正并保留纸面；03110、03195、02800后段及02840独立2026段未通过。证据支持特定账户继续观察，不能宣布十个月趋势为通用盈利因子；03086归因仍需复核。",
+      "source_date": "2026-11-17",
+      "source": "已验账户证据综述；本轮无新增IC"
+    },
+    {
+      "id": "signal-note-hold-no-expiry",
+      "version": "信号与规则综述",
+      "name": "取消到期退出：持仓政策",
+      "category": "recent",
+      "conclusion": "NASDAQ既有对照中月度复核改善结果，但02800取消到期四案均变差，已见2019—2023后段净−3192.17／−3722.28。延长持有不是普遍有效的收益因子，且应收/开放估值不等于现金收入。",
+      "source_date": "2026-11-17",
+      "source": "已验账户证据综述；本轮无新增IC"
+    },
+    {
+      "id": "signal-note-slow-momentum-risk-budget",
+      "version": "信号与规则综述",
+      "name": "12月相对动量＋60日风险预算",
+      "category": "recent",
+      "conclusion": "V86固定跨资产组合2018—2022基础净-790.93／压力-1078.42，毛损益也负，当前版本关闭。这是组合结果，未分离动量或波动预算各自的因果贡献，独立风险来源限制保留。",
+      "source_date": "2026-11-17",
+      "source": "已验账户证据综述；本轮无新增IC"
+    },
+    {
+      "id": "signal-note-inverse-monthly",
+      "version": "信号与规则综述",
+      "name": "每日−1倍产品自身月度趋势",
+      "category": "recent",
+      "conclusion": "07300既有2018—2022基础净+1669.17，但压力净−2971.94，固定规则关闭。基础有盈利不能替代压力检验；每日复位产品也不能当普通指数反向长期收益。没有重开原后段或推广为所有反向策略无效。",
+      "source_date": "2026-11-17",
+      "source": "已验账户证据综述；本轮无新增IC"
+    },
+    {
+      "id": "signal-note-ipo-temperature-heat",
+      "version": "信号与规则综述",
+      "name": "IPO温度与认购热度",
+      "category": "recent",
+      "conclusion": "09941公开发售已确认，现金路径与完整新时点首日源仍在核实。原T0不改，无新前向盈利证据；不把技能旧IC、最终认购倍数或旧盘中价当当前可用信号。",
+      "source_date": "2026-11-17",
+      "source": "已验账户证据综述；本轮无新增IC"
+    },
+    {
+      "id": "signal-note-execution-cost-source",
+      "version": "信号与规则综述",
+      "name": "整手、费用和成交资料约束",
+      "category": "recent",
+      "conclusion": "这些决定能否实现模型收益，本身不是预测因子。03034必要卖出资料不足，完整量保持未知；02840每手1份仅从2025-06-30起，官方高价档适配要先过边界。不能把缺数据写成0收益或借当前整手回填旧历史。",
+      "source_date": "2026-11-17",
+      "source": "已验账户证据综述；本轮无新增IC"
     },
     {
       "id": "archive-positive-profit-preannouncement-drift",
@@ -752,7 +830,7 @@
     }
   ],
   "paper": {
-    "checked_at": "2026-11-17T04:34:25.103638+08:00",
+    "checked_at": "2026-11-17T05:31:15.384127+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -818,6 +896,9 @@
     "hsi_hold_protocol": "34ea7b5d27f8212427ec04661f8f4ae8403b82ba400bcdc9cb27d6ef89d06f10",
     "gold_preflight_protocol": "96ec721140f4266a91ef59ac6668f69cccc0e8d6af68f57e612a9a2409cf7675",
     "gold_rule": "91a536b090a3e3db1927a35ee2cbdfe7667c2d06b13e993f2a486625906d652e",
-    "gold_window_source": "b1e960f732af016560b912d02751935a9cbbc22b898d4e4454af519cfe9a0156"
+    "gold_window_source": "b1e960f732af016560b912d02751935a9cbbc22b898d4e4454af519cfe9a0156",
+    "gold_accepted": "4983eea09f1a4054b066eed2410eef0e979313d274b02ad6a9551a36371a7c41",
+    "ipo_primary_accepted": "ca6f4d5bda2e83c0e564833d3f1b683983ccfef0a872f334ee0c73a2e812bba5",
+    "signal_and_rule_notes": "bf4e92fdb1ea915e404a4cea2b64e03530c62e3603ccc76a8eabee75cea42bf9"
   }
 }
