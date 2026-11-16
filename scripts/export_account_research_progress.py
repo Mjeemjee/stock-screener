@@ -38,7 +38,7 @@ def accepted_card(card,accepted,later=None,study_only=False):
 
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--activity',choices=['preparing','checking','waiting','done'],required=True)
-    parser.add_argument('--phase',choices=['source','development','later'],default='development')
+    parser.add_argument('--phase',choices=['source','implementation','development','later'],default='development')
     parser.add_argument('--focus',choices=['sp500','small-nasdaq','hsi-hold','gold'],default='sp500')
     args=parser.parse_args();now=datetime.now(timezone(timedelta(hours=8))).isoformat()
     nasdaq=read(TEAM/'v103-review/DESCRIPTIVE-ACCOUNTS-v1.json')
@@ -109,6 +109,19 @@ def main():
         results=[dict(cost=k,net_hkd=None,cagr_pct=None,risk_pct=None) for k in ['base','pressure']],
         conclusion='核对02840每手1份与03081每手100份的官方来源、现金事件和费用门槛；既有V86黄金规则失败保留。',
         next='源审与可执行性通过后，先固定规则及期间，再决定是否回测。')
+    gold_rule=TEAM/'V111-SPDR-LOT1-PREPARATION-20261117.md'
+    gold_source=TEAM/'v111-spdr-source/SOURCE-QUALIFICATION-v1.json'
+    gold_review=TEAM/'v111-review/FINAL-REVIEW-v1.json'
+    if gold_rule.exists():
+        gold.update(name='02840 · 单份整手月度趋势',capital_hkd=10000,period='2025-07-01 — 2026-11-16',
+            status_label='执行代码准备，待验收',basis='固定新制度诊断；每月复核，40%预算，不设到期',
+            conclusion='只在2025-06-30整手5→1后交易；2026零分派为条件推断，不能视为完整现金认证。',
+            next='高价ETF价位和独立核算准备通过后，一次运行固定账户；目前没有已验收收益。')
+        if gold_source.exists():
+            quality_gold=read(gold_source)
+            assert quality_gold['status']=='CONDITIONAL_FIXED_REGIME_SOURCE_READY'
+            gold['conclusion']=f"{quality_gold['actual_sessions']}实际日开收盘与成交量两源一致，无零量。保留最低价异常、风险代理及2026零分派条件；暂无本轮账户结论。"
+        gold=accepted_card(gold,gold_review,study_only=True)
     if (TEAM/'V110-GOLD-PREFLIGHT-20261117.md').exists():cards.insert(0,gold)
     elif args.focus=='gold':raise ValueError('黄金事前预检派单不存在')
     current,current_later={'sp500':(latest,later_review),'small-nasdaq':(small,small_later),'hsi-hold':(hsi,None),'gold':(gold,None)}[args.focus]
@@ -130,6 +143,7 @@ def main():
     stage_status=['done','done','done','active','pending','pending']
     if current['status']!='pending':stage_status=['done','done','done','done','pending' if current['status']=='candidate' else 'not_opened','pending' if current['status']=='candidate' else 'not_opened']
     if args.phase=='source':stage_status=['done','active','pending','pending','pending','pending']
+    if args.phase=='implementation' and current['status']=='pending':stage_status=['done','done','active','pending','pending','pending']
     if args.phase=='later' and current['status']=='candidate':stage_status=['done','done','done','done','active','pending']
     if current_later is not None and current_later.exists():stage_status=['done','done','done','done','done','pending' if current['status']=='candidate' else 'not_opened']
     if current['status']=='unknown':stage_status=['done','done','done','unknown','not_opened','not_opened']
@@ -140,6 +154,7 @@ def main():
     if args.phase=='later' and args.activity in ['preparing','checking']:activity_text='固定后续段与连续账户检验'
     if args.phase=='source' and args.activity in ['preparing','checking']:activity_text='发行人现金事件复核与开发源准备'
     if args.focus=='gold' and args.activity in ['preparing','checking']:activity_text='黄金ETF来源、整手与小资金费用预检'
+    if args.phase=='implementation' and args.activity in ['preparing','checking']:activity_text='高价ETF执行、现金与独立核算代码准备'
     source_paths={'nasdaq':'v103-review/FINAL-REVIEW-v1.json','dividend':'v102-review/FINAL-REVIEW-v1.json','sp500_source':'v106-sp500-development-source/SOURCE-QUALIFICATION-v1.json'}
     if accepted.exists():source_paths['sp500_accepted']=str(accepted.relative_to(TEAM))
     if small_accepted.exists():source_paths['small_nasdaq_accepted']=str(small_accepted.relative_to(TEAM))
@@ -147,6 +162,9 @@ def main():
     if (TEAM/'V108-SMALL-NASDAQ-PROTOCOL-20261117.md').exists():source_paths['small_nasdaq_protocol']='V108-SMALL-NASDAQ-PROTOCOL-20261117.md'
     if (TEAM/'V109-HOLD-DIAGNOSTIC-EXECUTION-20261117.md').exists():source_paths['hsi_hold_protocol']='V109-HOLD-DIAGNOSTIC-EXECUTION-20261117.md'
     if (TEAM/'V110-GOLD-PREFLIGHT-20261117.md').exists():source_paths['gold_preflight_protocol']='V110-GOLD-PREFLIGHT-20261117.md'
+    if gold_rule.exists():source_paths['gold_rule']=str(gold_rule.relative_to(TEAM))
+    if gold_source.exists():source_paths['gold_window_source']=str(gold_source.relative_to(TEAM))
+    if gold_review.exists():source_paths['gold_accepted']=str(gold_review.relative_to(TEAM))
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检'}[args.focus],
                     text=activity_text,
