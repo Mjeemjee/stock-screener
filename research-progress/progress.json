@@ -1,0 +1,680 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-11-17T01:14:22.568402+08:00",
+  "market_data_through": "2026-11-16",
+  "activity": {
+    "status": "checking",
+    "active_at_snapshot": true,
+    "focus": "03195 · 1万港币账户",
+    "text": "固定后续段与连续账户检验",
+    "snapshot_only": true,
+    "fresh_for_minutes": 15
+  },
+  "stages": [
+    {
+      "name": "规则固定",
+      "status": "done"
+    },
+    {
+      "name": "原价与事件",
+      "status": "done"
+    },
+    {
+      "name": "现金与成本",
+      "status": "done"
+    },
+    {
+      "name": "开发检验",
+      "status": "done"
+    },
+    {
+      "name": "后续历史段",
+      "status": "active"
+    },
+    {
+      "name": "真实日期纸面",
+      "status": "pending"
+    }
+  ],
+  "cards": [
+    {
+      "id": "sp500-03195",
+      "name": "03195 · 小资金月度趋势",
+      "status": "candidate",
+      "status_label": "开发通过，后段待验收",
+      "capital_hkd": 10000,
+      "period": "2025-02-01 — 2025-12-31",
+      "basis": "已独立复算的开发期结果，含开放持仓估值",
+      "results": [
+        {
+          "cost": "base",
+          "net_hkd": 235.59,
+          "cagr_pct": null,
+          "risk_pct": 4.369845448065213,
+          "closed_net_hkd": -342.93,
+          "open_contribution_hkd": 578.52,
+          "open_quantity": 400
+        },
+        {
+          "cost": "pressure",
+          "net_hkd": 172.59,
+          "cagr_pct": null,
+          "risk_pct": 4.798015068558749,
+          "closed_net_hkd": -384.93,
+          "open_contribution_hkd": 557.52,
+          "open_quantity": 400
+        }
+      ],
+      "conclusion": "两成本开发净正，统计样本仍有限。",
+      "next": "按预先协议核后续历史段。"
+    },
+    {
+      "id": "nasdaq-monthly",
+      "name": "03086 · 每月趋势复核",
+      "status": "paper",
+      "status_label": "保留纸面验证",
+      "capital_hkd": 30000,
+      "period": "2020-01-02 — 2026-11-13",
+      "basis": "历史收盘标记，含开放持仓",
+      "results": [
+        {
+          "cost": "base",
+          "net_hkd": 11644.34,
+          "cagr_pct": 4.8942324412906135,
+          "risk_pct": 12.49025137086156
+        },
+        {
+          "cost": "pressure",
+          "net_hkd": 10711.13,
+          "cagr_pct": 4.548447397189115,
+          "risk_pct": 12.927626113550916
+        }
+      ],
+      "conclusion": "历史正收益；降低回撤的取舍有依据，稳定超额收益尚未建立。只有5笔已闭合、1笔开放。",
+      "next": "按冻结规则接续真实日期的纸面记录。"
+    },
+    {
+      "id": "dividend-03110",
+      "name": "03110 · 高股息月度趋势",
+      "status": "closed",
+      "status_label": "固定版本已关闭",
+      "capital_hkd": 30000,
+      "period": "2021-01-01 — 2023-12-29",
+      "basis": "各4笔已闭合，期末全现金",
+      "results": [
+        {
+          "cost": "base",
+          "net_hkd": -1685.18,
+          "cagr_pct": null,
+          "risk_pct": 13.237725291441937
+        },
+        {
+          "cost": "pressure",
+          "net_hkd": -1666.85,
+          "cagr_pct": null,
+          "risk_pct": 13.29483335722701
+        }
+      ],
+      "conclusion": "两档成本均亏损。价格变化加毛分派也为负，关闭这版并保留结果。",
+      "next": "未打开2024年后数据补救。"
+    }
+  ],
+  "registry": [
+    {
+      "id": "team-6",
+      "version": "V98",
+      "name": "V98更长持有、每月趋势复核",
+      "category": "recent",
+      "conclusion": "18案全核、六原账户全对象一致。B/C/连续六主案总标记及扣假设退出摩擦估值均改善，12新案均OPEN；连续5闭合+1开放、最长762天、最大观察权重53.66%。原坏H/L/历史选择限制保留，非新留出或稳定收入。",
+      "source_date": "2026-11-17",
+      "source": "工作台记录同步"
+    },
+    {
+      "id": "team-7",
+      "version": "V100",
+      "name": "V100两版都持续月初入场",
+      "category": "recent",
+      "conclusion": "12案/六旧全对象复现；128交付/257+5冻结、88闭合记录/13520日/664月初全核。六组同标记及假设清算仍月度较高；三月末期新增仓位不能遗漏，全部OPEN分列。",
+      "source_date": "2026-11-17",
+      "source": "工作台记录同步"
+    },
+    {
+      "id": "team-8",
+      "version": "V99",
+      "name": "V99独立原审及修复后复核",
+      "category": "recent",
+      "conclusion": "4项反例均已证成并修复后PASS：commit时标、共同漏日、结构字段、历史事件键。修后69交付/6当前snapshot核对；不称第三方时钟/实际填单证书。",
+      "source_date": "2026-11-17",
+      "source": "工作台记录同步"
+    },
+    {
+      "id": "team-9",
+      "version": "V99",
+      "name": "V99纯函数现金引擎",
+      "category": "recent",
+      "conclusion": "pure-v2四API，仅标准库；19边界/2独立字面分币路径、21交付/12冻结/7标准库指纹经root验收，源时钟/journal由root接入。旧目录冻结。",
+      "source_date": "2026-11-17",
+      "source": "工作台记录同步"
+    },
+    {
+      "id": "team-10",
+      "version": "V105",
+      "name": "V105/V106来源、独立验收与进度网页",
+      "category": "recent",
+      "conclusion": "03195港元/100份及零事件条件已核；后续632会话原价就绪。复核开发454日账/22月初，无重跑策略。根会话独占汇总和网页导出。",
+      "source_date": "2026-11-17",
+      "source": "工作台记录同步"
+    },
+    {
+      "id": "team-11",
+      "version": "V106C",
+      "name": "V106C后续段及条件连续账户",
+      "category": "recent",
+      "conclusion": "2026年215新会话；先固定1万两成本后段，门槛通过才开六资金连续案及两被动参考，最多10案；尚无root验收收益。",
+      "source_date": "2026-11-17",
+      "source": "工作台记录同步"
+    },
+    {
+      "id": "team-12",
+      "version": "V106",
+      "name": "V106的03195一万月度趋势开发",
+      "category": "recent",
+      "conclusion": "2025-02—12标记+235.59/+172.59，已闭合−342.93/−384.93、开放+578.52/+557.52；各400份开放，报价DD4.37/4.80%。72交付/51外部/83冻结及独立全账通过，非稳定收入。",
+      "source_date": "2026-11-17",
+      "source": "工作台记录同步"
+    },
+    {
+      "id": "team-13",
+      "version": "V105",
+      "name": "V105港元执行/美元现金组件复用",
+      "category": "recent",
+      "conclusion": "8组件/10证据/5条件缺口；旧USD费/FX非真实券商事实。零事件窗口未触发USD分支，6新边界/30交付/190冻结核过；新PnL/网络/私有0。",
+      "source_date": "2026-11-17",
+      "source": "工作台记录同步"
+    },
+    {
+      "id": "team-14",
+      "version": "V102",
+      "name": "V102现代03110月度趋势、无到期强制退出",
+      "category": "recent",
+      "conclusion": "完整开发两成本净−1685.18/−1666.85，各4闭合/期末全现金，报价风险13.24/13.29%。66交付/973+8+6冻结及独立全账通过；经济性关闭，不开2024后。",
+      "source_date": "2026-11-17",
+      "source": "工作台记录同步"
+    },
+    {
+      "id": "team-15",
+      "version": "V103",
+      "name": "V103月度03086的简单基准及残余诊断",
+      "category": "recent",
+      "conclusion": "71交付/396+8+11+13冻结及10140收益字段核过。基础被动+24201.91/DD19.55%，月度+11644.34/DD12.49%；alpha t0.429/滚动正36.35%，压力主零暴露不可估；无新增独立alpha。",
+      "source_date": "2026-11-17",
+      "source": "工作台记录同步"
+    },
+    {
+      "id": "team-16",
+      "version": "V101",
+      "name": "V101股息费用模块及18个既有账户只读审计",
+      "category": "recent",
+      "conclusion": "140条gross仅6—18元、逐笔原费等于条件最大；386状态/14边界过，29/927/7哈希及root140条整数核算通过。不能全域称全登记最高或推断整路径收益。",
+      "source_date": "2026-11-17",
+      "source": "工作台记录同步"
+    },
+    {
+      "id": "team-17",
+      "version": "V97D",
+      "name": "V97D小资金/漏单/全连续诊断",
+      "category": "recent",
+      "conclusion": "52账户全核；34次单漏净正但最弱仅+52.65；1万C零交易/2万C三轮。3万连续+4401.51/+2727.31，报价风险11.816/12.026%，近七年17轮/利润集中。",
+      "source_date": "2026-11-17",
+      "source": "工作台记录同步"
+    },
+    {
+      "id": "team-18",
+      "version": "V97C",
+      "name": "V97C固定2024—2026-11-13后续",
+      "category": "recent",
+      "conclusion": "原两成本净+1116.32/+684.31各8轮，包络报价DD4.826/5.690%。root54交付/130输入及141/6/8冻结、独立35月/706日/所有现金通过。11坏H/L保持，实际风险未知；最大正轮70.23/106.68%净利、6/24后NAV−297.96/−648.97，不能称稳定。",
+      "source_date": "2026-11-17",
+      "source": "工作台记录同步"
+    },
+    {
+      "id": "team-19",
+      "version": "V97B",
+      "name": "V97B同V97候选的源修复后开发",
+      "category": "recent",
+      "conclusion": "基础/压力各9轮净+2882.76/+1640.56，报价风险11.816/12.026%，款项结清。root45交付/89输入和97/6/9冻结核过、另合并2019lot原件；仅条件开发线索。最大交易占净利97.47/165.05%，市场暴露/选择偏差保留，未证明稳定收入。",
+      "source_date": "2026-11-17",
+      "source": "工作台记录同步"
+    },
+    {
+      "id": "team-20",
+      "version": "V97",
+      "name": "V97历史200份整手起点取证",
+      "category": "recent",
+      "conclusion": "HKSCC2019-03-07原PDF第1页HKD03086/200份；1查询/1GET即停，19交付/15绑定及双解析/视觉核对通过。支持有界连续性，非穷尽无遗漏认证；策略/PnL0。",
+      "source_date": "2026-11-17",
+      "source": "工作台记录同步"
+    },
+    {
+      "id": "team-21",
+      "version": "V97",
+      "name": "V97来源准备原交付",
+      "category": "recent",
+      "conclusion": "原两成本必要钟各9影子闭环；当时真实支付/lot未认证，2请求含失效PDF404后完整PnL/null关闭。root47交付/64输入核验，旧档保持；后在独立修复得到10官方动作/六paydays，并进入同候选V97B。",
+      "source_date": "2026-11-17",
+      "source": "工作台记录同步"
+    },
+    {
+      "id": "team-22",
+      "version": "V96",
+      "name": "V96旧窗03086必要执行UNKNOWN",
+      "category": "recent",
+      "conclusion": "两成本均2017-09-01必须退出1000份时Futu/native量0；完整PnL/风险/正式账本null，非经济否决。root7240字段核对、39交付/41冻结条目通过；历史200份/最早付款仅早停有利假设，未补股息文库，owner新HTTP0。",
+      "source_date": "2026-11-17",
+      "source": "工作台记录同步"
+    },
+    {
+      "id": "team-23",
+      "version": "V93C",
+      "name": "V93C阶段1：固定2018—2023双币后续检验",
+      "category": "recent",
+      "conclusion": "REJECT_STAGE1：L/H方向相同，基础16轮净值区间−2104.30—−2103.50、压力15轮−2405.71—−2404.91；风险代理16.97/14.67%但净正失败。各USD8未换汇，独立四账/59交付/26输入核验通过，2024后不开。",
+      "source_date": "2026-11-17",
+      "source": "工作台记录同步"
+    },
+    {
+      "id": "team-24",
+      "version": "V93C",
+      "name": "V93C阶段0 USD/FX协议和源准备",
+      "category": "recent",
+      "conclusion": "未取后段ETF价格/PnL；owner6公开请求+root另冻2。HKMA历史样本7.817真实可取、latest仅10/31、API月更/历史发布时点未知。具体港元收费准备与USD到账示例核对通过，全部反事实假设/源限制保留。",
+      "source_date": "2026-11-17",
+      "source": "工作台记录同步"
+    },
+    {
+      "id": "team-25",
+      "version": "V93B",
+      "name": "V93B SENSEX单次40%风险校准",
+      "category": "recent",
+      "conclusion": "原50%完整复现后只做40%：基础16回合+902.69/14.56%，压力13回合+1328.07/16.53%，期末均结清。8成本原价净+422.69—1809.89；混合报价差异压力+398.70—1785.90。完整独立源认证未达成、6缺日保留；原开发只属事后线索；现C1后续失败，不能再当待采用候选。",
+      "source_date": "2026-11-17",
+      "source": "工作台记录同步"
+    },
+    {
+      "id": "team-26",
+      "version": "V95",
+      "name": "V95普通恒指趋势决定03115／每日−1x07300方向",
+      "category": "recent",
+      "conclusion": "主16轮净−6672.34、报价风险28.887%，毛价也亏；压力2019-07-02必要量0，完整收益null，不把前缀亏损当全期。8检查、49输入/交付及独立21逐笔/1598日/79目标/10换向通过，后段/基准未开，新取数0。",
+      "source_date": "2026-11-17",
+      "source": "工作台记录同步"
+    },
+    {
+      "id": "team-27",
+      "version": "V94",
+      "name": "V94每日−1x恒指07300自身月度趋势，仅研究",
+      "category": "recent",
+      "conclusion": "2018—2022基础11回合+1669.17，压力8回合-2971.94；风险18.38/18.30%，压力经济失败，原规则关闭。1431原价会话/5边界/独立19情景交易及2466日账通过，历史整手连续性有界假设披露；2023后未开，订单0。不是所有反向研究均无效的结论。",
+      "source_date": "2026-11-17",
+      "source": "工作台记录同步"
+    },
+    {
+      "id": "team-28",
+      "version": "V93",
+      "name": "V93印度SENSEX普通ETF02836固定月度趋势、最长三月",
+      "category": "recent",
+      "conclusion": "2010—2017基础16回合+864.44/报价风险18.71%，压力13回合+1909.91/21.10%，未过20%。压力更多漏单改变路径，不是同组交易多扣费；最佳三笔贡献远超全期净额，不能当稳定收入。全部结清，8边界/独立分币通过，原后段未开。",
+      "source_date": "2026-11-17",
+      "source": "工作台记录同步"
+    },
+    {
+      "id": "team-29",
+      "version": "V91",
+      "name": "V91高股息03110及月度趋势，最长三月",
+      "category": "recent",
+      "conclusion": "首个2014-06-03买入意向缺可靠正成交代理；root Futu一天交叉量0、高低与native有差，不能证明实际没有成交或认证成交。必要数据UNKNOWN、完整收益/回撤null；8边界/独立算术通过，后段封存。",
+      "source_date": "2026-11-17",
+      "source": "工作台记录同步"
+    },
+    {
+      "id": "team-30",
+      "version": "V92",
+      "name": "V92印度Nifty普通ETF03015固定趋势",
+      "category": "recent",
+      "conclusion": "当前一手约10052/10067可容纳；开发2092行有1113零量，首笔2010-08-03到期退出缺成交代理，历史整手/连续性亦未充分核。完整收益/回撤null；19输入/58交付核验，未开后段、未重取行情。",
+      "source_date": "2026-11-17",
+      "source": "工作台记录同步"
+    },
+    {
+      "id": "team-31",
+      "version": "V89",
+      "name": "V89季度公开HSI池的六个月隔月价格动量，最长三月",
+      "category": "recent",
+      "conclusion": "30月两成本均无入场；即允许任意整数股，最低预估往返成本1.042%/1.419%仍超原1%闸。不是盈利回测，也不证明所有股票动量无效。197输入/215交付与独立核算通过，后段未打开。",
+      "source_date": "2026-11-17",
+      "source": "工作台记录同步"
+    },
+    {
+      "id": "team-32",
+      "version": "V90",
+      "name": "V90事后ETF容量/1%费用门槛诊断",
+      "category": "recent",
+      "conclusion": "原V86逐笔复现；取消两门槛主案基础14回合-1256.87、压力13回合-5542.83；8格全负。11检查、27主案情景交易及2466日独立现金重放通过；不是仅门槛过严。",
+      "source_date": "2026-11-17",
+      "source": "工作台记录同步"
+    },
+    {
+      "id": "team-33",
+      "version": "V88",
+      "name": "V88港元债券02819容量预检",
+      "category": "recent",
+      "conclusion": "0.2%旧成交额容量门槛失败；该限制不等于无法买一手。root补同帧显示深度及Part B/0.05价位核验：一手显示往返成本约104.51，缺服务器时戳仍非成交。未跑多年策略回测。",
+      "source_date": "2026-11-17",
+      "source": "工作台记录同步"
+    },
+    {
+      "id": "team-34",
+      "version": "V87",
+      "name": "V87港币现金收益基准",
+      "category": "recent",
+      "conclusion": "16/18公开请求、14核对完成；仅条件基准。03053净年化2%/价差5bp假设，3万持3月+80.04/+50.04，持1月均负；不是实际收益或alpha。同期认证iNAV/合资格实际现金宝费率仍缺。",
+      "source_date": "2026-11-17",
+      "source": "工作台记录同步"
+    },
+    {
+      "id": "team-35",
+      "version": "V85",
+      "name": "V85/V85B月度趋势",
+      "category": "recent",
+      "conclusion": "原02823开发风险/费用失败；02800预定复核开发18回合压力+6555.58/DD9.25%，但另冻后续2019—2023标准8回合-346.11、压力6回合-1300.02，故关闭，未打开2024后策略结果。",
+      "source_date": "2026-11-17",
+      "source": "工作台记录同步"
+    },
+    {
+      "id": "team-36",
+      "version": "V86",
+      "name": "V86跨资产按月慢动量/新仓波动预算",
+      "category": "recent",
+      "conclusion": "2018—2022基础7回合-790.93、压力3回合-1078.42，毛收益也负，停止扩展；6边界检查及10条所选情景交易/2466日独立现金核算通过。高低价跨源风险证据仍UNKNOWN。",
+      "source_date": "2026-11-17",
+      "source": "工作台记录同步"
+    },
+    {
+      "id": "team-37",
+      "version": "V79",
+      "name": "V79现金打新冻结前向观察",
+      "category": "recent",
+      "conclusion": "11/14凌晨7次公开刷新未确认新机会；01821仍介绍上市/申购待核。官方目录404使覆盖有限，不称全市场无IPO；不填旧7只温度、原T0与311源未改，新增决策/订单0，无等待进程。",
+      "source_date": "2026-11-17",
+      "source": "工作台记录同步"
+    },
+    {
+      "id": "team-38",
+      "version": "V82",
+      "name": "V82旧成本约束股票突破",
+      "category": "recent",
+      "conclusion": "新闭合小米模型+418.99/严重+371.00；重置账本两笔合计仍亏，四路径尚有未平仓。只待11/18、11/19两笔原退出尾部，不加入后续信号；不能混成完整正收益。",
+      "source_date": "2026-11-17",
+      "source": "工作台记录同步"
+    },
+    {
+      "id": "team-39",
+      "version": "V84",
+      "name": "V84降低换手的ETF突破持有结构",
+      "category": "recent",
+      "conclusion": "六日缺口已用全区间同源数据解决。52回合普通+2212.60、原压力-1311.25，开发门槛失败。root费用2×2及五日/持有/02800复核已补，原失败不变。",
+      "source_date": "2026-11-17",
+      "source": "工作台记录同步"
+    },
+    {
+      "id": "team-40",
+      "version": "V83",
+      "name": "V83南向恢复事件",
+      "category": "recent",
+      "conclusion": "21开发日期中02800有15次条件成交：独立预算标准净合计+178.95、压力-546.04，不能当账户收益；03033毛收益负。未进完整账户或打开后段检验。",
+      "source_date": "2026-11-17",
+      "source": "工作台记录同步"
+    },
+    {
+      "id": "team-41",
+      "version": "V81",
+      "name": "V81上午急跌后的ETF午后修复",
+      "category": "recent",
+      "conclusion": "开发期失败：03033普通成本125笔净亏7685.54，毛亏691.60；复核02800也失败，停止调参。",
+      "source_date": "2026-11-17",
+      "source": "工作台记录同步"
+    },
+    {
+      "id": "archive-positive-profit-preannouncement-drift",
+      "version": "早期归档",
+      "name": "首次可比正利润预告后的五日漂移",
+      "category": "archive",
+      "conclusion": "新浪27个资金/持仓/费用组合均净亏；Yahoo27组因半日市资料不足，完整收益未知。没有可采用盈利认证。",
+      "source_date": "2026-11-03",
+      "source": "旧快照，结论日期保留"
+    },
+    {
+      "id": "archive-hsi-announced-inclusion-pressure",
+      "version": "早期归档",
+      "name": "恒指公布纳入后至生效前",
+      "category": "archive",
+      "conclusion": "1万至3万六组条件模型均负，每组仅1至6笔往返；当前固定规则不进入交易验证。",
+      "source_date": "2026-11-03",
+      "source": "旧快照，结论日期保留"
+    },
+    {
+      "id": "archive-adr-overnight-hk-morning-continuation",
+      "version": "早期归档",
+      "name": "ADR隔夜强势与港股早盘延续",
+      "category": "archive",
+      "conclusion": "分钟模型6组均亏；3万基准−10545.68、严格−16679.85港币。停止继续调参。",
+      "source_date": "2026-11-03",
+      "source": "旧快照，结论日期保留"
+    },
+    {
+      "id": "archive-warm-market-cash-ipo",
+      "version": "早期归档",
+      "name": "暖市一手现金打新",
+      "category": "archive",
+      "conclusion": "V54开盘代理中位+556港币，但低位压力和删前三赢家后转负。V57收市代理中位−327、只有45.5%路径盈利，整体劣于开盘代理。V56的02384被冻结规则跳过，前向交易0笔。当前没有可认定有效或可稳定产生副业收入的版本。",
+      "source_date": "2026-11-03",
+      "source": "旧快照，结论日期保留"
+    },
+    {
+      "id": "archive-etf-shock-reversal-family",
+      "version": "早期归档",
+      "name": "ETF急跌反转与恒指执行",
+      "category": "archive",
+      "conclusion": "严格成本与风险未同时通过；03115仅4轮。",
+      "source_date": "2026-11-03",
+      "source": "旧快照，结论日期保留"
+    },
+    {
+      "id": "archive-intraday-opening-breakout",
+      "version": "早期归档",
+      "name": "上午开盘区间突破",
+      "category": "archive",
+      "conclusion": "免平台费后仍亏，毛优势不足。",
+      "source_date": "2026-11-03",
+      "source": "旧快照，结论日期保留"
+    },
+    {
+      "id": "archive-trend-pullback-and-clv-repair",
+      "version": "早期归档",
+      "name": "上涨趋势回调与收盘修复",
+      "category": "archive",
+      "conclusion": "CLV未证明能识别有利买盘回归。",
+      "source_date": "2026-11-03",
+      "source": "旧快照，结论日期保留"
+    },
+    {
+      "id": "archive-etf-daily-breakout",
+      "version": "早期归档",
+      "name": "ETF日线突破延续",
+      "category": "archive",
+      "conclusion": "近期+85.12被压力成本和单笔赢家影响。",
+      "source_date": "2026-11-03",
+      "source": "旧快照，结论日期保留"
+    },
+    {
+      "id": "archive-turn-of-month",
+      "version": "早期归档",
+      "name": "月初ETF日历效应",
+      "category": "archive",
+      "conclusion": "长期和近期净收益都不支持采用。",
+      "source_date": "2026-11-03",
+      "source": "旧快照，结论日期保留"
+    },
+    {
+      "id": "archive-positive-publication-response",
+      "version": "早期归档",
+      "name": "财务披露后正向反应延续",
+      "category": "archive",
+      "conclusion": "旧阳性未复现；时戳版5笔不足以确认优势。",
+      "source_date": "2026-11-03",
+      "source": "旧快照，结论日期保留"
+    },
+    {
+      "id": "archive-scheduled-earnings-window",
+      "version": "早期归档",
+      "name": "提前公告的业绩会议窗口",
+      "category": "archive",
+      "conclusion": "观察到43.17%收盘回撤，无需等尾仓来决定。",
+      "source_date": "2026-11-03",
+      "source": "旧快照，结论日期保留"
+    },
+    {
+      "id": "archive-fundamental-cashflow-confirmation",
+      "version": "早期归档",
+      "name": "现金流确认的业绩增长",
+      "category": "archive",
+      "conclusion": "字段覆盖增加，但当前30候选最多安排19笔单仓交易，尚未达到至少30笔门槛。",
+      "source_date": "2026-11-03",
+      "source": "旧快照，结论日期保留"
+    },
+    {
+      "id": "archive-negative-earnings-reversal",
+      "version": "早期归档",
+      "name": "业绩后大跌五日反转",
+      "category": "archive",
+      "conclusion": "毛利润不足以覆盖显式费与滑点，风险超限。",
+      "source_date": "2026-11-03",
+      "source": "旧快照，结论日期保留"
+    },
+    {
+      "id": "archive-market-relative-shock",
+      "version": "早期归档",
+      "name": "个股相对市场急跌反转",
+      "category": "archive",
+      "conclusion": "25%仓位没有保证20%账户回撤。",
+      "source_date": "2026-11-03",
+      "source": "旧快照，结论日期保留"
+    },
+    {
+      "id": "archive-cost-gated-breakout",
+      "version": "早期归档",
+      "name": "成本约束个股突破",
+      "category": "archive",
+      "conclusion": "少数赢家、整手与权益再投资放大漏单影响。",
+      "source_date": "2026-11-03",
+      "source": "旧快照，结论日期保留"
+    },
+    {
+      "id": "archive-investable-relative-rank",
+      "version": "早期归档",
+      "name": "可投资相对强弱排名",
+      "category": "archive",
+      "conclusion": "毛损益已亏，失败不只来自手续费。",
+      "source_date": "2026-11-03",
+      "source": "旧快照，结论日期保留"
+    },
+    {
+      "id": "archive-cross-asset-etf-cash",
+      "version": "早期归档",
+      "name": "恒指、黄金ETF与现金轮动",
+      "category": "archive",
+      "conclusion": "跨资产与绝对趋势仍未抵消执行成本。",
+      "source_date": "2026-11-03",
+      "source": "旧快照，结论日期保留"
+    },
+    {
+      "id": "archive-post-listing-price-patterns",
+      "version": "早期归档",
+      "name": "新股上市后强势与破发修复",
+      "category": "archive",
+      "conclusion": "少数正邻域对最好几笔依赖明显。",
+      "source_date": "2026-11-03",
+      "source": "旧快照，结论日期保留"
+    },
+    {
+      "id": "archive-cash-exdate-price-repair",
+      "version": "早期归档",
+      "name": "现金除净后的短期价格回补",
+      "category": "archive",
+      "conclusion": "两来源24组已知可计算子集净均值均负，未知和未成交保留；没有可采用盈利认证。",
+      "source_date": "2026-11-03",
+      "source": "旧快照，结论日期保留"
+    }
+  ],
+  "paper": {
+    "checked_at": "2026-11-17T01:14:22.834828+08:00",
+    "activation_utc": "2026-11-16T13:37:03.450249+00:00",
+    "first_forward_session": "2026-11-17",
+    "account_count": 4,
+    "closed_rounds": 0,
+    "open_quantity": 0,
+    "modeled_change_hkd": 0.0,
+    "orders_sent": 0,
+    "primary_account": "monthly-only-base",
+    "accounts": [
+      {
+        "id": "monthly-only-base",
+        "nav_hkd": 30000.0,
+        "change_hkd": 0.0,
+        "closed_rounds": 0,
+        "quantity": 0
+      },
+      {
+        "id": "monthly-only-pressure",
+        "nav_hkd": 30000.0,
+        "change_hkd": 0.0,
+        "closed_rounds": 0,
+        "quantity": 0
+      },
+      {
+        "id": "three-month-base",
+        "nav_hkd": 30000.0,
+        "change_hkd": 0.0,
+        "closed_rounds": 0,
+        "quantity": 0
+      },
+      {
+        "id": "three-month-pressure",
+        "nav_hkd": 30000.0,
+        "change_hkd": 0.0,
+        "closed_rounds": 0,
+        "quantity": 0
+      }
+    ],
+    "note": "四组独立纸面假设，每组初始3万港币。历史收益不计入前向账本。"
+  },
+  "research_note": "不同资金、期间与规则的结果不能相加。模型回撤不是未来亏损上限；历史正额不证明稳定副业收入。",
+  "baseline": {
+    "monthly_base_net_hkd": 11644.34,
+    "passive_base_net_hkd": 24201.91,
+    "monthly_base_risk_pct": 12.49025137086156,
+    "passive_base_risk_pct": 19.548568745437528,
+    "independent_alpha_confirmed": false,
+    "pressure_passive_note": "压力参考首次未买到后保持现金，主市场暴露无法估计。"
+  },
+  "factor_archive": {
+    "count": 538,
+    "source_date": "2026-11-03",
+    "note": "旧因子目录快照；本轮没有生成新的IC或采用结论。"
+  },
+  "source_hashes": {
+    "nasdaq": "bdb900a98001538774d5ef16b95131ce24f52649020990f6194fb39ca330e3a3",
+    "dividend": "567a54284d0e3795c8f03bc72be4332685daeb2d142e2e8707e1020622f5b647",
+    "sp500_source": "de510ca2bf034107855c3b89ca19ffc9be6c635844a940420e1a1117f27cb7af"
+  }
+}

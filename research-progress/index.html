@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="港股小资金账户研究的阶段、已验收结果、历史曲线与真实日期纸面记录。">
+  <title>账户研究进展 · 港股量化</title>
+  <link rel="stylesheet" href="progress.css">
+  <script type="module" src="progress.mjs"></script>
+</head>
+<body>
+  <header class="masthead"><a class="brand" href="../">港股量化 <span>/ 账户研究</span></a><nav aria-label="页面导航"><a href="../#/validation">验证说明</a><a href="../#/lab/research">因子研究</a><a href="#records">研究记录</a></nav></header>
+  <main>
+    <section class="heading"><div><p class="eyebrow">研究进展与证据</p><h1>港股账户研究</h1><p class="lede">看清当前做到哪一步，也保留没有通过的结果。</p></div><div class="sync"><button id="refresh" type="button">刷新快照 <span aria-hidden="true">↻</span></button><p id="updated">正在读取同步时间</p></div></section>
+    <div id="notice" role="status" aria-live="polite" class="notice">正在读取研究快照…</div>
+    <section id="activity" class="focus" hidden aria-labelledby="focus-title"><div class="focus-top"><p class="eyebrow">本轮焦点</p><span id="activity-tag" class="badge"></span></div><h2 id="focus-title"></h2><p id="activity-text"></p><ol id="stages" class="stages" aria-label="本轮验证阶段"></ol><p class="caption">阶段来自最近一次同步。快照超过15分钟后停止活动动画；刷新不会启动回测或交易。</p></section>
+    <section id="results-section" hidden aria-labelledby="results-title"><div class="section-heading"><h2 id="results-title">已验收与待验收</h2><span class="caption">基础 / 压力成本分别列示</span></div><div id="cards" class="cards"></div><p id="research-note" class="caption"></p></section>
+    <section id="evidence-section" class="evidence" hidden aria-labelledby="evidence-title"><div class="section-heading"><h2 id="evidence-title">历史与前向分别看</h2><div role="group" aria-label="证据视图" class="segmented"><button id="history-tab" type="button" aria-pressed="true">历史账户曲线</button><button id="paper-tab" type="button" aria-pressed="false">纸面记录</button></div></div>
+      <div id="history-view"><p id="baseline-note" class="chart-note"></p><a href="assets/nav-risk.png" target="_blank" rel="noopener" aria-label="打开历史净值与回撤大图"><img src="assets/nav-risk.png" alt="03086同资金同成本的月度复核、三月退出与被动参考历史净值及收盘回撤。压力被动参考首试未中，保持现金。" loading="lazy"></a><p class="caption">曲线属于已见历史。压力灰线为首次未买到后的现金，不能当作已投资市场的零收益；终点持仓按收盘标记。</p></div>
+      <div id="paper-view" hidden><p id="paper-note" class="chart-note"></p><div class="table-wrap"><table><caption class="sr-only">四组独立纸面假设账户</caption><thead><tr><th scope="col">假设账户</th><th scope="col">当前标记权益</th><th scope="col">前向增减</th><th scope="col">持有份数</th><th scope="col">已闭合</th></tr></thead><tbody id="paper-rows"></tbody></table></div><p class="caption">这些假设账户的收益不相加为同一实投账户。系统不连接私人持仓，也不自动下单。</p></div>
+    </section>
+    <section id="records" class="records" hidden aria-labelledby="records-title"><div class="section-heading"><h2 id="records-title">研究记录</h2><a href="progress.json" download="account-research-progress.json">下载本次快照 ↓</a></div><div class="filters"><label>查找记录<input id="search" type="search" placeholder="标的、版本或结论" autocomplete="off"></label><label>资料范围<select id="scope"><option value="recent">近期研究</option><option value="all">全部记录</option><option value="archive">早期归档</option></select></label><p id="record-count" role="status"></p></div><div id="record-list" class="record-list"></div><p class="caption">记录包含开发、来源核对和参考检验；同一策略的多个版本不增加独立样本。早期归档保留原结论日期。</p></section>
+    <footer><p id="factor-note"></p><p>本页是研究快照。历史正收益不保证未来盈利；报价回撤只是一种风险估计。</p><a href="../">返回选股网站</a></footer>
+  </main>
+</body>
+</html>
