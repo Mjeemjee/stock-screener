@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-14T18:55:43.747002+00:00",
+  "generated_at": "2026-11-16T23:05:54.563059+00:00",
   "definition_hash": "ffac6ed3d6ab96da346e18a8b2e6da7fab8f376a907807291b2b5a3ad63b2fc9",
   "policy": {
     "version": "liq-momentum-forward-v2",
@@ -25,8 +25,8 @@
       "market": "HK",
       "quality": {
         "market": "HK",
-        "session": 20261113,
-        "valid": 183,
+        "session": 20261116,
+        "valid": 190,
         "total": 218,
         "status": "ready"
       },
@@ -142,8 +142,9 @@
               },
               {
                 "code": "HK.00826",
-                "status": "missing_entry",
-                "return_pct": null
+                "status": "pending",
+                "return_pct": null,
+                "entry_price": 2.53
               },
               {
                 "code": "HK.00966",
@@ -184,7 +185,7 @@
                 "code": "HK.00316",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 149.1
+                "entry_price": 151.1
               },
               {
                 "code": "HK.02142",
@@ -537,8 +538,9 @@
               },
               {
                 "code": "HK.00826",
-                "status": "missing_entry",
-                "return_pct": null
+                "status": "pending",
+                "return_pct": null,
+                "entry_price": 2.53
               },
               {
                 "code": "HK.06055",
@@ -845,8 +847,9 @@
             },
             {
               "code": "HK.00826",
-              "status": "missing_entry",
-              "return_pct": null
+              "status": "pending",
+              "return_pct": null,
+              "entry_price": 2.53
             },
             {
               "code": "HK.00966",
@@ -887,7 +890,7 @@
               "code": "HK.00316",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 149.1
+              "entry_price": 151.1
             },
             {
               "code": "HK.02142",
@@ -994,8 +997,8 @@
       "market": "US",
       "quality": {
         "market": "US",
-        "session": 20261113,
-        "valid": 231,
+        "session": 20261116,
+        "valid": 222,
         "total": 259,
         "status": "ready"
       },
@@ -1047,7 +1050,7 @@
                 "code": "US.FLEX",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 89.925
+                "entry_price": 89.93
               },
               {
                 "code": "US.HUT",
@@ -1510,7 +1513,7 @@
                 "code": "US.FLEX",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 89.925
+                "entry_price": 89.93
               },
               {
                 "code": "US.FCX",
@@ -1577,7 +1580,7 @@
                 "code": "US.FLEX",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 89.925
+                "entry_price": 89.93
               },
               {
                 "code": "US.ICE",
@@ -1844,7 +1847,7 @@
               "code": "US.FLEX",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 89.925
+              "entry_price": 89.93
             },
             {
               "code": "US.HUT",
@@ -2121,7 +2124,7 @@
               "code": "US.FLEX",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 89.925
+              "entry_price": 89.93
             },
             {
               "code": "US.HUT",
@@ -2584,7 +2587,7 @@
               "code": "US.FLEX",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 89.925
+              "entry_price": 89.93
             },
             {
               "code": "US.FCX",
@@ -2651,7 +2654,7 @@
               "code": "US.FLEX",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 89.925
+              "entry_price": 89.93
             },
             {
               "code": "US.ICE",
@@ -2918,7 +2921,7 @@
             "code": "US.FLEX",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 89.925
+            "entry_price": 89.93
           },
           {
             "code": "US.HUT",
@@ -3256,8 +3259,9 @@
             },
             {
               "code": "HK.00826",
-              "status": "missing_entry",
-              "return_pct": null
+              "status": "pending",
+              "return_pct": null,
+              "entry_price": 2.53
             },
             {
               "code": "HK.00966",
@@ -3298,7 +3302,7 @@
               "code": "HK.00316",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 149.1
+              "entry_price": 151.1
             },
             {
               "code": "HK.02142",
@@ -3651,8 +3655,9 @@
             },
             {
               "code": "HK.00826",
-              "status": "missing_entry",
-              "return_pct": null
+              "status": "pending",
+              "return_pct": null,
+              "entry_price": 2.53
             },
             {
               "code": "HK.06055",
@@ -3959,8 +3964,9 @@
           },
           {
             "code": "HK.00826",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 2.53
           },
           {
             "code": "HK.00966",
@@ -4001,7 +4007,7 @@
             "code": "HK.00316",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 149.1
+            "entry_price": 151.1
           },
           {
             "code": "HK.02142",
