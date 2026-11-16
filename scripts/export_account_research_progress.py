@@ -82,6 +82,8 @@ def main():
     activity_active=args.activity in ['preparing','checking'] and latest['status'] in ['pending','candidate']
     activity_text={'preparing':'准备固定开发检验','checking':'账户计算与独立复算','waiting':'等待下一项真实证据','done':'本轮检验已验收'}[args.activity]
     if args.phase=='later' and args.activity in ['preparing','checking']:activity_text='固定后续段与连续账户检验'
+    source_paths={'nasdaq':'v103-review/FINAL-REVIEW-v1.json','dividend':'v102-review/FINAL-REVIEW-v1.json','sp500_source':'v106-sp500-development-source/SOURCE-QUALIFICATION-v1.json'}
+    if accepted.exists():source_paths['sp500_accepted']=str(accepted.relative_to(TEAM))
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus='03195 · 1万港币账户',
                     text=activity_text,
@@ -100,10 +102,11 @@ def main():
                     pressure_passive_note='压力参考首次未买到后保持现金，主市场暴露无法估计。'),
       factor_archive=dict(count=len(archive['factors']) if archive else 0,source_date='2026-11-03',
                           note='旧因子目录快照；本轮没有生成新的IC或采用结论。'),
-      source_hashes={k:digest(TEAM/v) for k,v in {'nasdaq':'v103-review/FINAL-REVIEW-v1.json','dividend':'v102-review/FINAL-REVIEW-v1.json','sp500_source':'v106-sp500-development-source/SOURCE-QUALIFICATION-v1.json'}.items()})
+      source_hashes={k:digest(TEAM/v) for k,v in source_paths.items()})
     OUT.mkdir(exist_ok=True,parents=True);(OUT/'assets').mkdir(exist_ok=True)
     with (OUT/'progress.json').open('w',encoding='utf-8',newline='\n') as f:json.dump(payload,f,ensure_ascii=False,indent=2,allow_nan=False);f.write('\n')
     shutil.copyfile(ROOT/'reports/hk-nasdaq-baseline-attribution-owner-20261116-v103/baseline-nav-close-drawdown-v1.png',OUT/'assets/nav-risk.png')
+    if later_review.exists():shutil.copyfile(ROOT/'reports/hk-sp500-later-validation-owner-20261117-v106c/C-ONLY-NAV-DRAWDOWN-v2.png',OUT/'assets/sp500-later-risk.png')
     print(json.dumps(dict(updated_at=now,records=len(registry),latest_status=latest['status'],paper_closed_rounds=payload['paper']['closed_rounds'],orders_sent=0),ensure_ascii=False))
 
 if __name__=='__main__':main()
