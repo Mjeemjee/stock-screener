@@ -125,6 +125,15 @@ def main():
     if (TEAM/'V110-GOLD-PREFLIGHT-20261117.md').exists():cards.insert(0,gold)
     elif args.focus=='gold':raise ValueError('黄金事前预检派单不存在')
     ipo_review=TEAM/'ipo-review-20261117/FINAL-REVIEW-v1.json'
+    ipo_observation_path=TEAM/'ipo-current-observation-20261117/CURRENT-PROXY-OBSERVATION-v1.json'
+    ipo_observation=None
+    if ipo_observation_path.exists():
+        observed=read(ipo_observation_path)
+        assert observed['observation_type']=='BOUNDED_CURRENT_PROXY_DESCRIPTION_NOT_FORWARD_DECISION' and not observed['future_decision_registered']
+        ipo_observation=dict(observed_at_hkt=observed['observed_at_hkt'],count=observed['count'],median_pct=observed['median_pct'],
+            up_count=observed['up_count'],broken_count=observed['broken_count'],flat_count=observed['flat_count'],
+            one_member_max_up_count=observed['one_member_sensitivity']['maximum_up_count'],
+            observed_proxy_only=True,not_an_account_win_rate=True,paper_decision_registered=False)
     ipo=dict(status='pending')
     if args.focus=='ipo':
         assert ipo_review.exists() and read(ipo_review)['decision']=='ACCEPT_NEW_OFFER_CONFIRMED_ADMISSION_PENDING'
@@ -159,6 +168,7 @@ def main():
     if current_later is not None and current_later.exists():stage_status=['done','done','done','done','done','pending' if current['status']=='candidate' else 'not_opened']
     if current['status']=='unknown':stage_status=['done','done','done','unknown','not_opened','not_opened']
     if args.focus=='ipo':stage_status=['done','active','active','pending','not_opened','not_opened']
+    if args.focus=='ipo' and ipo_observation:stage_status=['done','unknown','done','pending','not_opened','not_opened']
     if args.activity not in ['preparing','checking']:stage_status=['pending' if s=='active' else s for s in stage_status]
     activity_active=args.activity in ['preparing','checking'] and current['status'] in ['pending','candidate']
     activity_text={'preparing':'准备固定开发检验','checking':'固定检验执行与独立核算','waiting':'等待下一项真实证据','done':'本轮检验已验收'}[args.activity]
@@ -168,6 +178,7 @@ def main():
     if args.focus=='gold' and args.activity in ['preparing','checking']:activity_text='黄金ETF来源、整手与小资金费用预检'
     if args.phase=='implementation' and args.activity in ['preparing','checking']:activity_text='高价ETF执行、现金与独立核算代码准备'
     if args.focus=='ipo' and args.activity in ['preparing','checking']:activity_text='09941现金路径核对，与新时点完整首日源补证并行；准入及温度仍待核'
+    if args.focus=='ipo' and ipo_observation:activity_text='当前已核样本未达原热市条件；现金路径与11月19日08:30资料固化待核'
     source_paths={'nasdaq':'v103-review/FINAL-REVIEW-v1.json','dividend':'v102-review/FINAL-REVIEW-v1.json','sp500_source':'v106-sp500-development-source/SOURCE-QUALIFICATION-v1.json'}
     if accepted.exists():source_paths['sp500_accepted']=str(accepted.relative_to(TEAM))
     if small_accepted.exists():source_paths['small_nasdaq_accepted']=str(small_accepted.relative_to(TEAM))
@@ -179,13 +190,14 @@ def main():
     if gold_source.exists():source_paths['gold_window_source']=str(gold_source.relative_to(TEAM))
     if gold_review.exists():source_paths['gold_accepted']=str(gold_review.relative_to(TEAM))
     if ipo_review.exists():source_paths['ipo_primary_accepted']=str(ipo_review.relative_to(TEAM))
+    if ipo_observation_path.exists():source_paths['ipo_current_observation']=str(ipo_observation_path.relative_to(TEAM))
     if factor_notes.exists():source_paths['signal_and_rule_notes']=str(factor_notes.relative_to(TEAM))
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对'}[args.focus],
                     text=activity_text,
                     snapshot_only=True,fresh_for_minutes=15),
       stages=[dict(name=n,status=s) for n,s in zip(['原前向协议','发售资格与截止','首日源补证','08:30资料固化','分配与资金回流','首日退出证据'] if args.focus=='ipo' else ['规则固定','原价与事件','现金与成本','开发检验','后续历史段','真实日期纸面'],stage_status)],
-      cards=cards,registry=registry,
+      cards=cards,registry=registry,ipo_observation=ipo_observation,
       paper=dict(checked_at=paper['checked_at_hkt'],activation_utc=paper['activation_utc'],first_forward_session=paper['first_forward_session'],
                  account_count=len(paper['summaries']),closed_rounds=paper['summaries']['monthly-only-base']['closed_rounds'],
                  open_quantity=paper['summaries']['monthly-only-base']['open_quantity'],

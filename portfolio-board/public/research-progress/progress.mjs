@@ -21,6 +21,12 @@ export function validateSnapshot(value) {
       if (['pending', 'unknown'].includes(card.status) && [row.net_hkd, row.risk_pct, row.cagr_pct, ...optional, row.open_quantity].some(v => v !== undefined && v !== null)) throw new Error('待验收或不可评估记录不能展示收益结论。')
     }
   }
+  if (value.ipo_observation) {
+    const o=value.ipo_observation
+    if (!Number.isSafeInteger(o.count) || o.count<=0 || ![o.up_count,o.broken_count,o.flat_count,o.one_member_max_up_count].every(n=>Number.isSafeInteger(n)&&n>=0&&n<=o.count) ||
+        o.up_count+o.broken_count+o.flat_count!==o.count || o.one_member_max_up_count<o.up_count || o.one_member_max_up_count>Math.min(o.count,o.up_count+1) || !Number.isFinite(o.median_pct) || o.median_pct < -100 ||
+        !Number.isFinite(Date.parse(o.observed_at_hkt)) || o.observed_proxy_only!==true || o.not_an_account_win_rate!==true || o.paper_decision_registered!==false) throw new Error('IPO样本观察口径不完整，暂不展示指标。')
+  }
   return value
 }
 
@@ -102,6 +108,14 @@ if (typeof document !== 'undefined') {
     find('updated').textContent = `最近同步 ${dateText(data.updated_at)} HKT`
     find('focus-title').textContent = data.activity.focus
     find('activity-text').textContent = data.activity.text
+    const observation=data.ipo_observation
+    find('ipo-observation').hidden=!observation
+    if (observation) {
+      find('ipo-median').textContent=`${observation.median_pct.toFixed(2)}%`
+      find('ipo-up').textContent=`${observation.up_count}/${observation.count}`
+      find('ipo-broken').textContent=`${observation.broken_count}/${observation.count}`
+      find('ipo-observation-note').textContent=`观测于 ${dateText(observation.observed_at_hkt)} HKT。当前资料内的10只，不是账户胜率或中签率。03275成员仍未证；增加这一项最多${observation.one_member_max_up_count}/10上涨，仍未满足严格多数。正式申购决定尚未登记。`
+    }
     find('stages').replaceChildren()
     const names = { done: '已完成', active: '同步时进行中', pending: '尚未开始', not_opened: '按规则未打开', unknown: '资料不足' }
     for (const stage of data.stages) {

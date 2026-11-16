@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-17T05:31:15.113052+08:00",
+  "updated_at": "2026-11-17T06:29:04.784284+08:00",
   "market_data_through": "2026-11-16",
   "activity": {
-    "status": "checking",
-    "active_at_snapshot": true,
+    "status": "waiting",
+    "active_at_snapshot": false,
     "focus": "IPO · 09941前向资料核对",
-    "text": "09941现金路径核对，与新时点完整首日源补证并行；准入及温度仍待核",
+    "text": "当前已核样本未达原热市条件；现金路径与11月19日08:30资料固化待核",
     "snapshot_only": true,
     "fresh_for_minutes": 15
   },
@@ -17,11 +17,11 @@
     },
     {
       "name": "发售资格与截止",
-      "status": "active"
+      "status": "unknown"
     },
     {
       "name": "首日源补证",
-      "status": "active"
+      "status": "done"
     },
     {
       "name": "08:30资料固化",
@@ -829,8 +829,20 @@
       "source": "旧快照，结论日期保留"
     }
   ],
+  "ipo_observation": {
+    "observed_at_hkt": "2026-11-17T06:24:18.434186+08:00",
+    "count": 10,
+    "median_pct": -0.39501987141319567,
+    "up_count": 4,
+    "broken_count": 6,
+    "flat_count": 0,
+    "one_member_max_up_count": 5,
+    "observed_proxy_only": true,
+    "not_an_account_win_rate": true,
+    "paper_decision_registered": false
+  },
   "paper": {
-    "checked_at": "2026-11-17T05:31:15.384127+08:00",
+    "checked_at": "2026-11-17T06:29:06.036208+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -899,6 +911,7 @@
     "gold_window_source": "b1e960f732af016560b912d02751935a9cbbc22b898d4e4454af519cfe9a0156",
     "gold_accepted": "4983eea09f1a4054b066eed2410eef0e979313d274b02ad6a9551a36371a7c41",
     "ipo_primary_accepted": "ca6f4d5bda2e83c0e564833d3f1b683983ccfef0a872f334ee0c73a2e812bba5",
+    "ipo_current_observation": "a25a6c69fb2d80128c374df8cf986310a1d68b097df0bbbde9bf843f2879da4c",
     "signal_and_rule_notes": "bf4e92fdb1ea915e404a4cea2b64e03530c62e3603ccc76a8eabee75cea42bf9"
   }
 }
