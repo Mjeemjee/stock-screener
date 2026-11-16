@@ -108,7 +108,7 @@ if (typeof document !== 'undefined') {
     find('updated').textContent = `最近同步 ${dateText(data.updated_at)} HKT`
     find('focus-title').textContent = data.activity.focus
     find('activity-text').textContent = data.activity.text
-    const observation=data.ipo_observation
+    const observation=data.activity.focus.startsWith('IPO') ? data.ipo_observation : null
     find('ipo-observation').hidden=!observation
     if (observation) {
       find('ipo-median').textContent=`${observation.median_pct.toFixed(2)}%`
