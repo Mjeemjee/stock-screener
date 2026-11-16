@@ -39,7 +39,7 @@ def accepted_card(card,accepted,later=None,study_only=False):
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--activity',choices=['preparing','checking','waiting','done'],required=True)
     parser.add_argument('--phase',choices=['source','implementation','development','later'],default='development')
-    parser.add_argument('--focus',choices=['sp500','small-nasdaq','hsi-hold','gold'],default='sp500')
+    parser.add_argument('--focus',choices=['sp500','small-nasdaq','hsi-hold','gold','ipo'],default='sp500')
     args=parser.parse_args();now=datetime.now(timezone(timedelta(hours=8))).isoformat()
     nasdaq=read(TEAM/'v103-review/DESCRIPTIVE-ACCOUNTS-v1.json')
     negative=read(TEAM/'v102-review/FINAL-REVIEW-v1.json')
@@ -124,7 +124,11 @@ def main():
         gold=accepted_card(gold,gold_review,study_only=True)
     if (TEAM/'V110-GOLD-PREFLIGHT-20261117.md').exists():cards.insert(0,gold)
     elif args.focus=='gold':raise ValueError('黄金事前预检派单不存在')
-    current,current_later={'sp500':(latest,later_review),'small-nasdaq':(small,small_later),'hsi-hold':(hsi,None),'gold':(gold,None)}[args.focus]
+    ipo_review=TEAM/'ipo-review-20261117/FINAL-REVIEW-v1.json'
+    ipo=dict(status='pending')
+    if args.focus=='ipo':
+        assert ipo_review.exists() and read(ipo_review)['decision']=='ACCEPT_NEW_OFFER_CONFIRMED_ADMISSION_PENDING'
+    current,current_later={'sp500':(latest,later_review),'small-nasdaq':(small,small_later),'hsi-hold':(hsi,None),'gold':(gold,None),'ipo':(ipo,None)}[args.focus]
     registry=[]
     for i,line in enumerate((TEAM/'README.md').read_text(encoding='utf-8').splitlines()):
         if not line.startswith('| `/root'):continue
@@ -133,6 +137,13 @@ def main():
         version=re.search(r'V\d+[A-Z]?',cells[1])
         registry.append(dict(id=f'team-{i}',version=version.group() if version else '研究汇总',name=cells[1],
               category='recent',conclusion=cells[2],source_date=now[:10],source='工作台记录同步'))
+    factor_notes=TEAM/'factor-validity/FACTOR-AND-RULE-CONCLUSIONS-v2.json'
+    if factor_notes.exists():
+        notes=read(factor_notes)
+        assert notes['new_factor_IC_computations']==0
+        for note in notes['items']:
+            registry.append(dict(id='signal-note-'+note['id'],version='信号与规则综述',name=note['name'],category='recent',
+                conclusion=note['conclusion'],source_date=now[:10],source='已验账户证据综述；本轮无新增IC'))
     archived=ROOT/'sites/hk-quant-research-hub/dist/data/catalog.json'
     archive=read(archived) if archived.exists() else None
     if archive:
@@ -147,6 +158,7 @@ def main():
     if args.phase=='later' and current['status']=='candidate':stage_status=['done','done','done','done','active','pending']
     if current_later is not None and current_later.exists():stage_status=['done','done','done','done','done','pending' if current['status']=='candidate' else 'not_opened']
     if current['status']=='unknown':stage_status=['done','done','done','unknown','not_opened','not_opened']
+    if args.focus=='ipo':stage_status=['done','active','active','pending','not_opened','not_opened']
     if args.activity not in ['preparing','checking']:stage_status=['pending' if s=='active' else s for s in stage_status]
     activity_active=args.activity in ['preparing','checking'] and current['status'] in ['pending','candidate']
     activity_text={'preparing':'准备固定开发检验','checking':'固定检验执行与独立核算','waiting':'等待下一项真实证据','done':'本轮检验已验收'}[args.activity]
@@ -155,6 +167,7 @@ def main():
     if args.phase=='source' and args.activity in ['preparing','checking']:activity_text='发行人现金事件复核与开发源准备'
     if args.focus=='gold' and args.activity in ['preparing','checking']:activity_text='黄金ETF来源、整手与小资金费用预检'
     if args.phase=='implementation' and args.activity in ['preparing','checking']:activity_text='高价ETF执行、现金与独立核算代码准备'
+    if args.focus=='ipo' and args.activity in ['preparing','checking']:activity_text='09941现金路径核对，与新时点完整首日源补证并行；准入及温度仍待核'
     source_paths={'nasdaq':'v103-review/FINAL-REVIEW-v1.json','dividend':'v102-review/FINAL-REVIEW-v1.json','sp500_source':'v106-sp500-development-source/SOURCE-QUALIFICATION-v1.json'}
     if accepted.exists():source_paths['sp500_accepted']=str(accepted.relative_to(TEAM))
     if small_accepted.exists():source_paths['small_nasdaq_accepted']=str(small_accepted.relative_to(TEAM))
@@ -165,11 +178,13 @@ def main():
     if gold_rule.exists():source_paths['gold_rule']=str(gold_rule.relative_to(TEAM))
     if gold_source.exists():source_paths['gold_window_source']=str(gold_source.relative_to(TEAM))
     if gold_review.exists():source_paths['gold_accepted']=str(gold_review.relative_to(TEAM))
+    if ipo_review.exists():source_paths['ipo_primary_accepted']=str(ipo_review.relative_to(TEAM))
+    if factor_notes.exists():source_paths['signal_and_rule_notes']=str(factor_notes.relative_to(TEAM))
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
-      activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检'}[args.focus],
+      activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对'}[args.focus],
                     text=activity_text,
                     snapshot_only=True,fresh_for_minutes=15),
-      stages=[dict(name=n,status=s) for n,s in zip(['规则固定','原价与事件','现金与成本','开发检验','后续历史段','真实日期纸面'],stage_status)],
+      stages=[dict(name=n,status=s) for n,s in zip(['原前向协议','发售资格与截止','首日源补证','08:30资料固化','分配与资金回流','首日退出证据'] if args.focus=='ipo' else ['规则固定','原价与事件','现金与成本','开发检验','后续历史段','真实日期纸面'],stage_status)],
       cards=cards,registry=registry,
       paper=dict(checked_at=paper['checked_at_hkt'],activation_utc=paper['activation_utc'],first_forward_session=paper['first_forward_session'],
                  account_count=len(paper['summaries']),closed_rounds=paper['summaries']['monthly-only-base']['closed_rounds'],
@@ -188,6 +203,7 @@ def main():
     with (OUT/'progress.json').open('w',encoding='utf-8',newline='\n') as f:json.dump(payload,f,ensure_ascii=False,indent=2,allow_nan=False);f.write('\n')
     shutil.copyfile(ROOT/'reports/hk-nasdaq-baseline-attribution-owner-20261116-v103/baseline-nav-close-drawdown-v1.png',OUT/'assets/nav-risk.png')
     if later_review.exists():shutil.copyfile(ROOT/'reports/hk-sp500-later-validation-owner-20261117-v106c/C-ONLY-NAV-DRAWDOWN-v2.png',OUT/'assets/sp500-later-risk.png')
+    if gold_review.exists():shutil.copyfile(TEAM/'v111-review/C-ONLY-NAV-RISK-v1.png',OUT/'assets/gold-later-risk.png')
     print(json.dumps(dict(updated_at=now,records=len(registry),focus=args.focus,latest_status=current['status'],paper_closed_rounds=payload['paper']['closed_rounds'],orders_sent=0),ensure_ascii=False))
 
 if __name__=='__main__':main()
