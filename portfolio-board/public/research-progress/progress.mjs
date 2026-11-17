@@ -43,7 +43,11 @@ if (typeof document !== 'undefined') {
     if (!Number.isFinite(date.getTime())) return '时间未知'
     return new Intl.DateTimeFormat('zh-HK', { timeZone: 'Asia/Hong_Kong', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(date)
   }
-  let snapshot = null, failed = false, inflight = false
+  let snapshot = null, failed = false, inflight = false, selectedEvidenceView = null
+  function selectEvidenceView(key) {
+    selectedEvidenceView = key
+    for (const tab of ['history', 'paper']) { find(`${tab}-view`).hidden = tab !== key; find(`${tab}-tab`).setAttribute('aria-pressed', String(tab === key)) }
+  }
   function updateFreshness() {
     if (!snapshot) return
     const state = freshness(snapshot.updated_at, snapshot.activity.fresh_for_minutes)
@@ -123,6 +127,7 @@ if (typeof document !== 'undefined') {
       item.append(element('small', names[stage.status] ?? stage.status)); find('stages').append(item)
     }
     renderCards(data); renderPaper(data); renderRecords()
+    if (selectedEvidenceView === null) selectEvidenceView(data.default_evidence_view === 'paper' ? 'paper' : 'history')
     find('research-note').textContent = data.research_note
     find('baseline-note').textContent = `同为3万初始资金，基础成本月度版历史标记 ${money(data.baseline.monthly_base_net_hkd)} 港元，报价回撤约 ${data.baseline.monthly_base_risk_pct.toFixed(2)}%；被动参考 ${money(data.baseline.passive_base_net_hkd)} 港元、约 ${data.baseline.passive_base_risk_pct.toFixed(2)}%。未证明稳定独立超额收益。`
     find('factor-note').textContent = `早期因子目录有 ${data.factor_archive.count} 条记录，快照日期 ${data.factor_archive.source_date}。${data.factor_archive.note}`
@@ -145,9 +150,7 @@ if (typeof document !== 'undefined') {
   find('refresh').addEventListener('click', refresh)
   find('search').addEventListener('input', renderRecords)
   find('scope').addEventListener('change', renderRecords)
-  for (const key of ['history', 'paper']) find(`${key}-tab`).addEventListener('click', () => {
-    for (const tab of ['history', 'paper']) { find(`${tab}-view`).hidden = tab !== key; find(`${tab}-tab`).setAttribute('aria-pressed', String(tab === key)) }
-  })
+  for (const key of ['history', 'paper']) find(`${key}-tab`).addEventListener('click', () => selectEvidenceView(key))
   setInterval(updateFreshness, 10000)
   setInterval(() => { if (document.visibilityState === 'visible') refresh() }, 60000)
   refresh()

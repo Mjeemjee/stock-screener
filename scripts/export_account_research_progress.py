@@ -21,7 +21,7 @@ def conditional_diagnostic_card(review_path,identifier,name,basis):
               conclusion='规则及来源已固定；验收前不展示模型收益。',next='核完整现金账和源限制，保持既有参数。')
     if not review_path.exists():return card
     result=read(review_path)
-    assert result['decision'] in ['ACCEPT_CONDITIONAL_CASH_BENCHMARK_ONLY','ACCEPT_PRICE_ONLY_DIAGNOSTIC_ONLY']
+    assert result['decision'] in ['ACCEPT_CONDITIONAL_CASH_BENCHMARK_ONLY','ACCEPT_PRICE_ONLY_DIAGNOSTIC_ONLY','ACCEPT_HYBRID_2025_CASH_DIAGNOSTIC_ONLY']
     assert result['independent_cash_review_passed'] is True
     assert result['actual_personal_income_certified'] is False
     supplied=result['site_card']
@@ -55,7 +55,7 @@ def accepted_card(card,accepted,later=None,study_only=False):
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--activity',choices=['preparing','checking','waiting','done'],required=True)
     parser.add_argument('--phase',choices=['source','implementation','development','later'],default='development')
-    parser.add_argument('--focus',choices=['sp500','small-nasdaq','hsi-hold','gold','ipo','validation','cash','us-vti'],default='sp500')
+    parser.add_argument('--focus',choices=['sp500','small-nasdaq','hsi-hold','gold','ipo','validation','cash','us-vti','paper'],default='sp500')
     args=parser.parse_args();now=datetime.now(timezone(timedelta(hours=8))).isoformat()
     nasdaq=read(TEAM/'v103-review/DESCRIPTIVE-ACCOUNTS-v1.json')
     negative=read(TEAM/'v102-review/FINAL-REVIEW-v1.json')
@@ -163,12 +163,16 @@ def main():
     us_vti=conditional_diagnostic_card(us_vti_review,'us-vti','VTI · 美股月度趋势诊断','不计入分派现金、固定汇兑情景；不是完整总回报')
     if (TEAM/'V120-CASH-HISTORICAL-BENCHMARK-20261117.md').exists():cards=[cash,*cards]
     if (TEAM/'V123-US-VTI-PRICE-DIAGNOSTIC-20261117.md').exists():cards=[us_vti,*cards]
+    cash_bridge_review=TEAM/'v126-review/FINAL-REVIEW-v1.json'
+    if cash_bridge_review.exists():
+        cards=[conditional_diagnostic_card(cash_bridge_review,'us-vti-cash-2025','VTI · 2025现金路径桥接','混合来源与假设税费'),*cards]
+    if args.focus=='paper':cards=sorted(cards,key=lambda c:c['id']!='nasdaq-monthly')
     if args.focus=='ipo':
         assert ipo_review.exists() and read(ipo_review)['decision']=='ACCEPT_NEW_OFFER_CONFIRMED_ADMISSION_PENDING'
     if args.focus=='validation':
         assert income_review.exists() and dependence_review.exists()
         assert read(dependence_review)['independent_controls_exact']==4
-    current,current_later={'sp500':(latest,later_review),'small-nasdaq':(small,small_later),'hsi-hold':(hsi,None),'gold':(gold,None),'ipo':(ipo,None),'validation':(dict(status='pending'),None),'cash':(cash,None),'us-vti':(us_vti,None)}[args.focus]
+    current,current_later={'sp500':(latest,later_review),'small-nasdaq':(small,small_later),'hsi-hold':(hsi,None),'gold':(gold,None),'ipo':(ipo,None),'validation':(dict(status='pending'),None),'cash':(cash,None),'us-vti':(us_vti,None),'paper':(dict(status='paper'),None)}[args.focus]
     registry=[]
     for i,line in enumerate((TEAM/'README.md').read_text(encoding='utf-8').splitlines()):
         if not line.startswith('| `/root'):continue
@@ -177,8 +181,7 @@ def main():
         version=re.search(r'V\d+[A-Z]?',cells[1])
         registry.append(dict(id=f'team-{i}',version=version.group() if version else '研究汇总',name=cells[1],
               category='recent',conclusion=cells[2],source_date=now[:10],source='工作台记录同步'))
-    factor_notes=TEAM/'factor-validity/FACTOR-AND-RULE-CONCLUSIONS-v4.json'
-    if not factor_notes.exists():factor_notes=TEAM/'factor-validity/FACTOR-AND-RULE-CONCLUSIONS-v3.json'
+    factor_notes=next((TEAM/f'factor-validity/FACTOR-AND-RULE-CONCLUSIONS-v{version}.json' for version in [5,4,3] if (TEAM/f'factor-validity/FACTOR-AND-RULE-CONCLUSIONS-v{version}.json').exists()),TEAM/'factor-validity/FACTOR-AND-RULE-CONCLUSIONS-v3.json')
     if factor_notes.exists():
         notes=read(factor_notes)
         assert notes['new_factor_IC_computations']==0
@@ -204,6 +207,11 @@ def main():
     if args.focus=='validation':stage_status=['done','done','done','done','done','pending']
     if args.focus=='cash' and cash_review.exists():stage_status=['done','done','done','done','done','pending']
     if args.focus=='us-vti' and us_vti_review.exists():stage_status=['done','done','done','done','done','unknown']
+    if args.focus=='paper':
+        observed=paper['verified_data_through']>=paper['first_forward_session']
+        next_intent=observed and any(v['eligible'] and v['date']>paper['verified_data_through'] for v in paper['recorded_intents'])
+        monthly_review_observed=paper['verified_data_through'][:7]>paper['first_forward_session'][:7]
+        stage_status=['done','done','done','done' if observed else 'pending','done' if next_intent else 'pending','done' if monthly_review_observed else 'pending']
     if args.activity not in ['preparing','checking']:stage_status=['pending' if s=='active' else s for s in stage_status]
     activity_active=args.activity in ['preparing','checking'] and current['status'] in ['pending','candidate']
     activity_text={'preparing':'准备固定开发检验','checking':'固定检验执行与独立核算','waiting':'等待下一项真实证据','done':'本轮检验已验收'}[args.activity]
@@ -219,6 +227,9 @@ def main():
     if args.focus=='us-vti':activity_text='本轮36个价格诊断账户已验收。分派未计入现金、汇兑是固定情景；下一步补完整现金与独立原价，不改已有参数。' if us_vti_review.exists() else '普通美股ETF月度趋势的固定价格诊断正在准备，真实现金路径仍待核。'
     ipo_terms=TEAM/'ipo-public-cash-terms-20261117/PUBLIC-TERMS-v1.json'
     if args.focus=='ipo' and ipo_terms.exists():activity_text='普通现金申购手续费公开核为0；专用截止仍有时间口径差异。保留11月19日08:30研究时点，当日决定尚未登记。'
+    if args.focus=='paper':
+        primary=paper['summaries']['monthly-only-base']
+        activity_text=f"用户已选择历史检验通过后转固定候选纸面跟踪。03086四臂规则及真实T0保持；主臂持仓{primary['open_quantity']}份、已闭合{primary['closed_rounds']}轮。接续依赖电脑和OpenD在线，尚未安装后台定时服务。"
     source_paths={'nasdaq':'v103-review/FINAL-REVIEW-v1.json','dividend':'v102-review/FINAL-REVIEW-v1.json','sp500_source':'v106-sp500-development-source/SOURCE-QUALIFICATION-v1.json'}
     if accepted.exists():source_paths['sp500_accepted']=str(accepted.relative_to(TEAM))
     if small_accepted.exists():source_paths['small_nasdaq_accepted']=str(small_accepted.relative_to(TEAM))
@@ -238,15 +249,18 @@ def main():
     if cash_review.exists():source_paths['cash_historical_benchmark']=str(cash_review.relative_to(TEAM))
     if us_vti_review.exists():source_paths['US_VTI_price_diagnostic']=str(us_vti_review.relative_to(TEAM))
     if ipo_terms.exists():source_paths['IPO_public_cash_terms']=str(ipo_terms.relative_to(TEAM))
+    if cash_bridge_review.exists():source_paths['US_VTI_2025_cash_bridge']=str(cash_bridge_review.relative_to(TEAM))
+    if (TEAM/'paper-transition-20261117/USER-CRITERION-v1.json').exists():source_paths['user_paper_transition']='paper-transition-20261117/USER-CRITERION-v1.json'
     stage_names=(['已有规则','收益分布','配售依赖','现金对照','独立核账','新前向观察'] if args.focus=='validation' else ['原前向协议','发售资格与截止','首日源补证','08:30资料固化','分配与资金回流','首日退出证据'] if args.focus=='ipo' else ['规则固定','原价与事件','现金与成本','开发检验','后续历史段','真实日期纸面'])
     if args.focus=='cash':stage_names=['规则固定','历史来源','现金与费用','2024检验','2025与独立核账','实际成交观察']
     if args.focus=='us-vti':stage_names=['规则固定','长历史来源','价格诊断','后续历史段','独立核账','完整现金补证']
+    if args.focus=='paper':stage_names=['历史检验','规则冻结','纸面起点','新会话观察','意向接续','月初复核']
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
-      activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断'}[args.focus],
+      activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪'}[args.focus],
                     text=activity_text,
                     snapshot_only=True,fresh_for_minutes=15),
       stages=[dict(name=n,status=s) for n,s in zip(stage_names,stage_status)],
-      cards=cards,registry=registry,ipo_observation=ipo_observation,
+      cards=cards,registry=registry,ipo_observation=ipo_observation,default_evidence_view='paper' if args.focus=='paper' else 'history',
       paper=dict(checked_at=paper['checked_at_hkt'],activation_utc=paper['activation_utc'],first_forward_session=paper['first_forward_session'],
                  account_count=len(paper['summaries']),closed_rounds=paper['summaries']['monthly-only-base']['closed_rounds'],
                  open_quantity=paper['summaries']['monthly-only-base']['open_quantity'],
