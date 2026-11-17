@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-18T01:39:34.277590+08:00",
+  "updated_at": "2026-11-18T02:53:32.561769+08:00",
   "market_data_through": "2026-11-17",
   "activity": {
     "status": "checking",
     "active_at_snapshot": true,
     "focus": "港美持续研究 · 总目标运行中",
-    "text": "总目标运行中，稳定盈利尚未证实；历史候选交付只是里程碑。v151单代理残差趋势双期限训练筛退，独立复算及root验收已完成。已验收记录累计7个信号、14个预定期限。正式稳定性统计方法尚未冻结。60／20／20组合A/B/C条件历史保留；C与A/B重叠，不能相加。v153未解除VTI历史来源条件。当前推进组合前向实施准备：年度再平衡与一次持有并列，尚未新增组合钱包或T0。",
+    "text": "总目标运行中，稳定盈利尚未证实。已验收7个信号、14个期限；当前并行研究低下行波动候选，尚不计入已验收数。60／20／20组合公开源、八情景资金核算及日志程序已联合验收；数据仅到11月16日，未激活新组合T0、意向或成交。下一步在香港11月18日05:30后核Nov17新源，再登记真实起点；代码测试不是盈利证据。正式稳定性统计方法尚未冻结；旧历史金额与原03086／SGOV起点保持。",
     "snapshot_only": true,
     "fresh_for_minutes": 15
   },
@@ -22,9 +22,9 @@
       "detail": "条件历史已复核"
     },
     {
-      "name": "组合前向方案设计",
-      "status": "active",
-      "detail": "尚未激活新组合纸面"
+      "name": "组合前向程序已验收",
+      "status": "done",
+      "detail": "等待实际新进展"
     },
     {
       "name": "研究交付核验",
@@ -997,6 +997,16 @@
       "conclusion": "12笔目标未获新增的完整官方身份／日期／金额证明：2021年4笔付款日来源待核，2022—2023年8笔日历打印CUSIP与VTI身份冲突。计划付款日不是实际付款或券商到账，旧账户金额及条件结论不变；新日期官方事件可独立留证。",
       "source_date": "2026-11-18",
       "source": "官方原页与root源审计；不是新增因子、交易或收益"
+    },
+    {
+      "id": "diversified-forward-v160",
+      "version": "V157–V162 · 程序验收",
+      "name": "60／20／20组合前向程序 · 尚未激活",
+      "category": "recent",
+      "record_type": "implementation_milestone",
+      "conclusion": "60／20／20组合公开源、八情景资金核算及日志程序已联合验收；数据仅到11月16日，未激活新组合T0、意向或成交。下一步在香港11月18日05:30后核Nov17新源，再登记真实起点；代码测试不是盈利证据。旧VTI历史来源条件、个人税费未知与正式统计方法待冻结均保留。",
+      "source_date": "2026-11-18",
+      "source": "公开源、资金接口和日志联合审查；不是新因子、交易或净收益"
     },
     {
       "id": "v131-gld-fixed",
@@ -8535,10 +8545,10 @@
     "milestone_label": "历史候选交付完成（里程碑）",
     "evidence_label": "稳定盈利与持续性尚未证实",
     "task": "T-012",
-    "team_updated_at": "2026-11-18T01:36:34.994092+08:00",
+    "team_updated_at": "2026-11-18T02:53:31.277277+08:00",
     "active_work": {
       "account": false,
-      "registration": true,
+      "registration": false,
       "review": true
     },
     "source_status": "LIMITED_GROSS_RIGHTS_DIAGNOSTIC_DATA_ONLY",
@@ -8546,12 +8556,17 @@
     "owners": [
       {
         "name": "主会话核验与发布",
-        "task": "残差趋势固定训练结果及来源/前向准备正在交付核验；已有条件历史候选保留，稳定盈利未证。",
+        "task": "组合公开源、八情景资金核算与日志程序已完成联合验收，正在同步证据；程序通过不等于盈利成立。",
         "status": "active"
       },
       {
-        "name": "组合前向准备",
-        "task": "60／20／20组合前向方案已整理，年度再平衡和一次持有并列；来源适配和增量钱包尚待实现及核验，未激活新钱包、意向或T0。",
+        "name": "组合前向程序",
+        "task": "60／20／20组合公开源、八情景资金核算及日志程序已联合验收；数据仅到11月16日，未激活新组合T0、意向或成交。下一步在香港11月18日05:30后核Nov17新源，再登记真实起点；代码测试不是盈利证据。",
+        "status": "snapshot"
+      },
+      {
+        "name": "下一机制研究",
+        "task": "低下行波动：旧库已有输入但未单独验证；正对原定126会话版本做首次固定训练评价，不声称新机制。尚无已验收新结果，不增加信号或盈利计数。",
         "status": "active"
       },
       {
@@ -13024,7 +13039,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-16",
-    "checked_at": "2026-11-18T01:39:35.123078+08:00",
+    "checked_at": "2026-11-18T02:53:33.439522+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -13075,7 +13090,7 @@
     "note": "SGOV四个独立条件纸面：2万／3万各基础及压力。保持独立T0，不倒填历史。尚未观察新会话，没有证券成交。起点建模美元钱包即计双向换汇估值成本，0证券成交也可呈负增减；这不是实际亏损。固定USD/HKD 7.8；基础／压力的每个方向换汇成本25／50bp，预扣税30%及每次分派1／2美元服务费储备均为情景；发行人付款日不等于券商到账日。"
   },
   "paper": {
-    "checked_at": "2026-11-18T01:39:34.708888+08:00",
+    "checked_at": "2026-11-18T02:53:33.008370+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -13154,9 +13169,9 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "39b46f0179663ae79397d02cf222476b7ef204a5cb57dcb6c6d696ab50a84d90",
+    "mining_goal": "c50e1e04420d292f879da920d62f3ecd2ad3e02b5e5ce54db431f9d67c310361",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
-    "mining_team": "579849ec39006b738b3de625538eb1c050c7f92a14911be7a8e5e89b0dca068f",
+    "mining_team": "7984fe00709773d1238fb0b6246d58d11fb35c4e085e5d5812d144d3dcd882b4",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
     "fip_original": "9c598341d1b0e59753bc0134509908b4698209cfff0b95c22f973f655b868296",
     "fip_calendar_correction": "33d2d80372b6c433688dbbcabcc49f2a458989a633ed783c0c2fa42d6f824695",
@@ -13185,6 +13200,9 @@
     "v151_protocol": "7b02607afaff33058b1f052fc02d218590c96371f02c8f66de01030223c62097",
     "v151_root_verify": "89d6856a8dbce00e76a84f5aea34e0072120bd1232c7b31a3014eea0baa478a6",
     "v153_root_source_review": "d25a9034eedc8908b6a98e4516ef0bde0c230e9a3220a6737f4b305ee246fc49",
+    "v160_forward_root_review": "f68739804ecda57d3937c155bb841cb7a3e54334b196eb63f95ec67dbbb12c78",
+    "v160_package_freeze": "258790418eec4bfe7269e3aea05ac91f51c128e457fe18f51ea25ebeb528e5e2",
+    "v160_root_acceptance": "b81880d1dbcbbf66a8e8c6f6c3a75f40096d9bed9ae89affde3b69f49c521c43",
     "v148_root_review": "93acdfaaf6622e1ad1d0a72a71c14aeb3adb3ed6b5a59885c935fe3666c2828d",
     "v148_classification": "a98f8032c71c96f4e9841378b13154ad8ae7c12658c771a93014178e3d33fa09",
     "v148_source_findings": "111be9d649230a601bddae3ee8c103c67a0a0dac9a91dda6c554d618b0868039",

@@ -400,6 +400,16 @@ def sgov_paper_status():
                      '起点建模美元钱包即计双向换汇估值成本，0证券成交也可呈负增减；这不是实际亏损。'+assumptions)
 
 
+def accepted_diversified_forward():
+    path=MINING/'acceptance/DIVERSIFIED-FORWARD-v157-v160-ROOT-REVIEW-v1.json'
+    if not path.exists():return None
+    result=read(path)
+    assert result['decision']=='ACCEPT_CONDITIONAL_FORWARD_IMPLEMENTATION_NOT_PROFITABILITY'
+    assert result['stable_profitability_proven'] is False and result['new_paper_t0_created'] is False
+    assert result['independent_source_integration_passed'] is True
+    return result
+
+
 def current_mining_work(new_paper,activity,milestone_delivered,accepted_a=False,accepted_b=False,accepted_c=False):
     team=read(MINING/'TEAM.json')
     source_folder=ROOT/'reports/us-action-panel-owner-20261117-v137'
@@ -421,10 +431,13 @@ def current_mining_work(new_paper,activity,milestone_delivered,accepted_a=False,
     def owner_active(path_fragment):
         return any(o['owner']!='/root' and o['status']=='ACTIVE' and any(path_fragment in p for p in o['write_paths']) for o in team['owners'])
     account_active=owner_active('us-diversified-carry-owner-20261117-v144/')
-    registration_active=(owner_active('us-diversified-paper-preflight-owner-20261118-v154/') or
-                         owner_active('us-diversified-preflight-audit-owner-20261118-v156/'))
+    registration_active=(owner_active('us-diversified-forward-source-owner-20261118-v157/') or
+                         owner_active('us-diversified-forward-engine-owner-20261118-v158/') or
+                         owner_active('us-diversified-forward-integration-audit-owner-20261118-v162/'))
     root_active=any(o['owner']=='/root' and o['status']=='ACTIVE' for o in team['owners'])
     observed_activity=activity in ['preparing','checking']
+    forward=accepted_diversified_forward()
+    factor_active=owner_active('us-downside-risk-validation-owner-20261118-v164/')
     return dict(goal_status='ACTIVE',research_batch_status='active',stable_profitability_proven=False,
         candidate_milestone_status='delivered' if milestone_delivered else 'pending',
         goal_label='总目标运行中',milestone_label='历史候选交付完成（里程碑）' if milestone_delivered else '历史候选交付待验收',
@@ -433,8 +446,9 @@ def current_mining_work(new_paper,activity,milestone_delivered,accepted_a=False,
         active_work=dict(account=account_active and observed_activity and not accepted_c,
                          registration=registration_active and observed_activity,review=root_active and observed_activity),
         source_status=raw_status,scope='港美个股及普通非杠杆ETF；持续研究与原03086／SGOV纸面并行。',
-        owners=[dict(name='主会话核验与发布',task='残差趋势固定训练结果及来源/前向准备正在交付核验；已有条件历史候选保留，稳定盈利未证。' if accepted_c else '核C连续账户、同钱包不重置及A前缀；A/B各自新本金不能相加。' if accepted_b else 'A段主3万压力账户已独立核验；接续核B资料与协议，候选交付不关闭总目标。' if accepted_a else '组合A段的独立账户及资料限制核验；尚无已验收组合收益，候选交付不关闭总目标。',status='active' if root_active and observed_activity else 'snapshot'),
-                dict(name='组合前向准备',task='60／20／20组合前向方案已整理，年度再平衡和一次持有并列；来源适配和增量钱包尚待实现及核验，未激活新钱包、意向或T0。',status='active' if registration_active and observed_activity else 'snapshot'),
+        owners=[dict(name='主会话核验与发布',task='组合公开源、八情景资金核算与日志程序已完成联合验收，正在同步证据；程序通过不等于盈利成立。' if forward else '组合真实公开源与资金核算程序正在独立联合验收；已有条件历史候选保留，稳定盈利未证。' if accepted_c else '组合历史账户及资料限制核验；候选交付不关闭总目标。',status='active' if root_active and observed_activity else 'snapshot'),
+                dict(name='组合前向程序',task=forward['site_summary'] if forward else '60／20／20组合源适配、增量资金核算和协调器已实现，正在独立联合核验；未激活新钱包、意向或T0。',status='active' if registration_active and observed_activity else 'snapshot'),
+                dict(name='下一机制研究',task='低下行波动：旧库已有输入但未单独验证；正对原定126会话版本做首次固定训练评价，不声称新机制。尚无已验收新结果，不增加信号或盈利计数。',status='active' if factor_active and observed_activity else 'snapshot'),
                 dict(name='组合账户研究',task='A/B/C条件历史核算已交付。没有新增组合纸面T0；后续机制研究与原纸面继续，不能把C当独立盲测或稳定证明。' if accepted_c else 'A/B条件结果已验收；同规则C 2021—2025连续账户研究中，结果待根验收，不预填。' if accepted_b else 'v144的A 2021—2023条件结果已验收；下一步准备冻结B 2024—2025，B/C尚未计算。' if accepted_a else 'v144固定60% SGOV／20% VTI／20% GLD，条件源核对后实现A 2021—2023模型。',status='active' if account_active and observed_activity and not accepted_c else 'snapshot'),
                 dict(name='已验收因子',task='v141日内强度、v145低MAX、v147毛现金股息率及v151单代理残差趋势均未通过固定训练筛选；不是全球机制失败。',status='snapshot'),
                 dict(name='两套固定纸面',task='03086与SGOV保留原T0。当前没有新增到期观察，按真实新时点接续。',status='snapshot')],
@@ -654,6 +668,11 @@ def main():
         registry.append(dict(id='vti-source-v153',version='V153 · 来源核验',name='VTI历史付款日核验 · 来源条件保留',category='recent',record_type='source_review',
             conclusion='12笔目标未获新增的完整官方身份／日期／金额证明：2021年4笔付款日来源待核，2022—2023年8笔日历打印CUSIP与VTI身份冲突。计划付款日不是实际付款或券商到账，旧账户金额及条件结论不变；新日期官方事件可独立留证。',
             source_date='2026-11-18',source='官方原页与root源审计；不是新增因子、交易或收益'))
+    forward_review=accepted_diversified_forward()
+    if forward_review:
+        registry.append(dict(id='diversified-forward-v160',version='V157–V162 · 程序验收',name='60／20／20组合前向程序 · 尚未激活',category='recent',record_type='implementation_milestone',
+            conclusion=forward_review['site_summary']+'旧VTI历史来源条件、个人税费未知与正式统计方法待冻结均保留。',source_date=forward_review['accepted_at_hkt'][:10],
+            source='公开源、资金接口和日志联合审查；不是新因子、交易或净收益'))
     if gld_path.exists():registry.append(dict(id='v131-gld-fixed',version='V131',name='GLD固定月末趋势 · A段淘汰',category='recent',
         conclusion='3万主压力−224.15港币，条件价格诊断。1万／2万压力也负，B/C未打开；passive40盈利不能替代主策略门槛。',source_date='2026-11-17',source='固定原规则及12账户封存结果'))
     if sgov:registry.append(dict(id='sgov-carry-acceptance',version='V133 / V135',name='SGOV条件历史与独立核账',category='recent',
@@ -711,6 +730,8 @@ def main():
         activity_text=f"用户已选择历史检验通过后转固定候选纸面跟踪。03086四臂规则及真实T0保持；主臂持仓{primary['open_quantity']}份、已闭合{primary['closed_rounds']}轮。接续依赖电脑和OpenD在线，尚未安装后台定时服务。"
     if args.focus=='mining':
         activity_text=f"总目标运行中，稳定盈利尚未证实；历史候选交付只是里程碑。v151单代理残差趋势双期限训练筛退，独立复算及root验收已完成。已验收记录累计{factor_research['unique_new_signals']}个信号、{factor_research['planned_horizon_trials']}个预定期限。正式稳定性统计方法尚未冻结。"+('60／20／20组合A/B/C条件历史保留；C与A/B重叠，不能相加。v153未解除VTI历史来源条件。当前推进组合前向实施准备：年度再平衡与一次持有并列，尚未新增组合钱包或T0。' if accepted_c else '既有组合研究及原纸面按各自真实证据接续，不以新来源说明改变旧金额。')
+        forward=accepted_diversified_forward()
+        if forward:activity_text=f"总目标运行中，稳定盈利尚未证实。已验收{factor_research['unique_new_signals']}个信号、{factor_research['planned_horizon_trials']}个期限；当前并行研究低下行波动候选，尚不计入已验收数。"+forward['site_summary']+'正式稳定性统计方法尚未冻结；旧历史金额与原03086／SGOV起点保持。'
     source_paths={'nasdaq':'v103-review/FINAL-REVIEW-v1.json','dividend':'v102-review/FINAL-REVIEW-v1.json','sp500_source':'v106-sp500-development-source/SOURCE-QUALIFICATION-v1.json'}
     if accepted.exists():source_paths['sp500_accepted']=str(accepted.relative_to(TEAM))
     if small_accepted.exists():source_paths['small_nasdaq_accepted']=str(small_accepted.relative_to(TEAM))
@@ -737,7 +758,9 @@ def main():
     if args.focus=='us-vti':stage_names=['规则固定','长历史来源','价格诊断','后续历史段','独立核账','完整现金补证']
     if args.focus=='paper':stage_names=['历史检验','规则冻结','纸面起点','新会话观察','意向接续','月初复核']
     if args.focus=='mining':stage_names=['历史候选里程碑','A/B/C条件历史' if accepted_c else 'A/B条件验收' if accepted_b else 'A段条件验收' if accepted_a else '组合条件资料','组合前向实现准备' if accepted_c else 'C连续账户研究' if accepted_b else 'B段冻结准备' if accepted_a else 'A段账户实现','研究交付核验' if accepted_c else 'C独立核验' if accepted_b else '后续独立核验' if accepted_a else '独立账户核验','持续前向样本','稳定盈利证据']
-    if args.focus=='mining' and current_work['active_work']['registration']:stage_names[2]='组合前向方案设计'
+    if args.focus=='mining' and current_work['active_work']['registration']:stage_names[2]='组合前向程序核验'
+    if args.focus=='mining' and accepted_diversified_forward():
+        stage_names[2]='组合前向程序已验收';stage_status[2]='done'
     stage_details=[None]*6
     if args.focus=='mining':stage_details=['历史阶段已交付','条件历史已复核' if accepted_c else '各自起账条件通过' if accepted_b else 'A段条件通过' if accepted_a else '有条件采用',
         '尚未激活新组合纸面' if current_work['active_work']['registration'] else '同步时进行中' if stage_status[2]=='active' else '等待实际新进展','同步时进行中' if stage_status[3]=='active' else '等待实际新进展','描述性月报已接受；待新样本','统计方法尚未冻结']
@@ -765,6 +788,10 @@ def main():
         extra_sources['v151_protocol']=ROOT/'reports/us-next-factor-preparation-owner-20261118-v151/NEXT-PROTOCOL-v1.json'
         extra_sources['v151_root_verify']=MINING/'acceptance/RESIDUAL-v151-ROOT-VERIFY-v1.json'
     if vti_source_review.exists():extra_sources['v153_root_source_review']=vti_source_review
+    if accepted_diversified_forward():
+        extra_sources['v160_forward_root_review']=MINING/'acceptance/DIVERSIFIED-FORWARD-v157-v160-ROOT-REVIEW-v1.json'
+        extra_sources['v160_package_freeze']=ROOT/'reports/us-diversified-forward-coordinator-20261118-v160/PACKAGE-FREEZE-v1.json'
+        extra_sources['v160_root_acceptance']=ROOT/'reports/us-diversified-forward-coordinator-20261118-v160/ROOT-ACCEPTANCE-v1.json'
     extra_sources['v148_root_review']=MINING/'acceptance/SGOV-QII-v148-ROOT-REVIEW-v1.json'
     extra_sources['v148_classification']=ROOT/'reports/us-cash-tax-fee-source-owner-20261118-v148/SGOV-QII-QUALIFICATION-v2.json'
     extra_sources['v148_source_findings']=ROOT/'reports/us-cash-tax-fee-source-owner-20261118-v148/SOURCE-FINDINGS-v1.md'
