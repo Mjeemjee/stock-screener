@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-18T06:24:12.150064+08:00",
+  "updated_at": "2026-11-18T06:59:31.599995+08:00",
   "market_data_through": "2026-11-17",
   "activity": {
     "status": "checking",
     "active_at_snapshot": true,
     "focus": "港美持续研究 · 总目标运行中",
-    "text": "总目标运行中，稳定盈利尚未证实；历史候选交付仍只是里程碑。当前已验收10个信号、20个预定期限。Amihud双期限固定排序筛选已独立复核并由root接受，结果与限制见因子区。03196已补上市类KFS与一次公开报价：一手1份；即使港币买卖，分派仍仅付美元且频率由管理人决定。仅补齐部分来源，未算成本后收益或证明可成交。03086、原SGOV和60／20／20组合保持各自原T0、原金额和观察；本轮没有新增到期纸面观察。当前节点仅表示核验与网页同步，正式统计推断未启用。",
+    "text": "总目标运行中，稳定盈利尚未证实；历史候选交付仍只是里程碑。当前已验收10个信号、20个预定期限。Amihud双期限固定排序筛选已独立复核并由root接受，结果与限制见因子区。03196已补上市类KFS与一次公开报价：一手1份；即使港币买卖，分派仍仅付美元且频率由管理人决定。仅补齐部分来源，未算成本后收益或证明可成交。03196的2024年246个会话中，21天有成交记录、225天零成交；预选1月2日买入与12月31日卖出均零量。固定日程执行预筛未通过，不继续计算假定成交后的利润。下一机制转向TIP通胀挂钩国债，先做固定窗口的发行人现金与行情源核对，尚无该候选收益结果。03086、原SGOV和60／20／20组合保持各自原T0、原金额和观察；本轮没有新增到期纸面观察。当前节点仅表示核验与网页同步，正式统计推断未启用。",
     "snapshot_only": true,
     "fresh_for_minutes": 15
   },
@@ -8292,6 +8292,16 @@
       "conclusion": "03196已补上市类KFS与一次公开报价：一手1份；即使港币买卖，分派仍仅付美元且频率由管理人决定。仅补齐部分来源，未算成本后收益或证明可成交。 KFS的0.27%持续收费比率依据2025全年费用；网页0.55%估算分开保留。基金费用已反映NAV，不相加或重扣；没有新增净收益核算。 2025全年分派仍未知，当前KFS不是全年现金证明或个人税费认证；后续招募书未完整核阅。休市快照最新价时间为11月17日09:01，成交量0、卖一仅1份且无独立盘口时间，不能证明此刻可成交或3份深度。当前0.05报价档距不是5.55买卖差，也不认证全史价位。大中华银行／企业信用与USD风险保留。",
       "source_date": "2026-11-18",
       "source": "root接受的发行人KFS与单次公开快照；不是新因子、经济试验、成交或盈利"
+    },
+    {
+      "id": "hk-usd-activity-v190-v191",
+      "version": "V190–V191 · 固定日期执行预筛",
+      "name": "03196 · 2024成交记录与零量买卖日",
+      "category": "recent",
+      "record_type": "source_qualification_addendum",
+      "conclusion": "03196的2024年246个会话中，21天有成交记录、225天零成交；预选1月2日买入与12月31日卖出均零量。固定日程执行预筛未通过，不继续计算假定成交后的利润。 这是富途单一来源的原始日线及独立复核结果，不能证明开盘深度，也不等于该基金在所有日期均不可交易。不换日期补救；2024普通零分派年报依据仅限该年，2025现金仍未知。没有新增账户收益、因子试验或纸面起点。",
+      "source_date": "2026-11-18",
+      "source": "公开原始日K、独立复核及root验收；0收益试验，不顺延买卖日"
     }
   ],
   "ipo_observation": {
@@ -8789,7 +8799,7 @@
     "milestone_label": "历史候选交付完成（里程碑）",
     "evidence_label": "稳定盈利与持续性尚未证实",
     "task": "T-012",
-    "team_updated_at": "2026-11-18T06:11:23.780100+08:00",
+    "team_updated_at": "2026-11-18T06:59:03.426533+08:00",
     "active_work": {
       "account": false,
       "registration": false,
@@ -8852,6 +8862,16 @@
         "name": "03196来源补证",
         "status": "snapshot",
         "task": "03196已补上市类KFS与一次公开报价：一手1份；即使港币买卖，分派仍仅付美元且频率由管理人决定。仅补齐部分来源，未算成本后收益或证明可成交。 2025全年分派仍未知，当前KFS不是全年现金证明或个人税费认证；后续招募书未完整核阅。休市快照最新价时间为11月17日09:01，成交量0、卖一仅1份且无独立盘口时间，不能证明此刻可成交或3份深度。当前0.05报价档距不是5.55买卖差，也不认证全史价位。大中华银行／企业信用与USD风险保留。"
+      },
+      {
+        "name": "03196执行预筛",
+        "status": "snapshot",
+        "task": "03196的2024年246个会话中，21天有成交记录、225天零成交；预选1月2日买入与12月31日卖出均零量。固定日程执行预筛未通过，不继续计算假定成交后的利润。"
+      },
+      {
+        "name": "下一机制：TIP",
+        "status": "active",
+        "task": "正在分别核对发行人分派与公开历史行情。固定2015—2019窗口，研究通胀挂钩国债及实际利率风险；尚未计算收益或新增纸面起点，不增加因子试验数。"
       },
       {
         "name": "主会话核验与发布",
@@ -9237,6 +9257,32 @@
       "new_horizon_trials": 0,
       "new_account_return_trials": 0,
       "new_paper_t0": false
+    },
+    "hk_usd_activity": {
+      "status": "accepted_fixed_date_execution_prescreen_not_passed",
+      "ticker": "HK.03196",
+      "year": 2024,
+      "accepted_at_utc": "2026-11-17T22:58:01.499335+00:00",
+      "request_sessions": 265,
+      "year_sessions": 246,
+      "positive_volume_sessions": 21,
+      "zero_volume_sessions": 225,
+      "longest_zero_run_sessions": 26,
+      "fixed_entry_date": "2024-01-02",
+      "fixed_exit_date": "2024-12-31",
+      "fixed_entry_volume": 0,
+      "fixed_exit_volume": 0,
+      "summary": "03196的2024年246个会话中，21天有成交记录、225天零成交；预选1月2日买入与12月31日卖出均零量。固定日程执行预筛未通过，不继续计算假定成交后的利润。",
+      "limitation": "这是富途单一来源的原始日线及独立复核结果，不能证明开盘深度，也不等于该基金在所有日期均不可交易。不换日期补救；2024普通零分派年报依据仅限该年，2025现金仍未知。没有新增账户收益、因子试验或纸面起点。",
+      "net_profit_hkd": null,
+      "new_account_return_trials": 0,
+      "new_factor_trials": 0,
+      "new_horizon_trials": 0,
+      "new_paper_t0": false,
+      "opening_depth_certified": false,
+      "whole_fund_invalid": false,
+      "distribution_2025_certified": false,
+      "existing_model_amounts_changed": false
     }
   },
   "portfolio_research": {
@@ -13629,7 +13675,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-18T06:24:13.037145+08:00",
+    "checked_at": "2026-11-18T06:59:32.549250+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -13823,7 +13869,7 @@
     "root_receipt_sha256": "be0e49eb8fa5eec62fadf374632ebddf3d0c3196fa9642d80431a1ed755ad67a"
   },
   "paper": {
-    "checked_at": "2026-11-18T06:24:12.494307+08:00",
+    "checked_at": "2026-11-18T06:59:31.982654+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -13902,9 +13948,9 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "8af9d3702571ed4bc1f22978220727aab15b7b750804cf34813e2caab394a8bf",
+    "mining_goal": "ce5a4420f3d526cd59e021bda7a7f6516862fa09694a1eea06366a3cc9f67eed",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
-    "mining_team": "4d06bdb51e2c0ee5986f51de4aa5389d89ea646457786c1537d263dcd9df826e",
+    "mining_team": "b31bac51bdbd051b91579dbf82511d5e858593aa5f79e8af254e649f3102b9a8",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
     "fip_original": "9c598341d1b0e59753bc0134509908b4698209cfff0b95c22f973f655b868296",
     "fip_calendar_correction": "33d2d80372b6c433688dbbcabcc49f2a458989a633ed783c0c2fa42d6f824695",
@@ -13942,6 +13988,8 @@
     "v177_root_review": "666c4498dcc6133eac24cfac5f9c96a3920cfba1d0ba29e09f114024f8abafdb",
     "v186_root_review": "1b985fb0adae2788ef2f3aafe398a65b2d8ed600597717ffe8c193fbc8c8e0ba",
     "v183_v184_root_review": "129f5929adddb44e409c804dd5bba05e3980c4bce9735d9356e95c85a177994b",
+    "v190_v191_root_review": "2242a0d016d23504616429f6ec1400da26c4b3e5c382ae4ad3677403a1718e68",
+    "v192_tip_preparation": "65bdd8bcad786b68cc9181aed8e9450e62d45df092b83408d90d55c56d262ec8",
     "v148_root_review": "93acdfaaf6622e1ad1d0a72a71c14aeb3adb3ed6b5a59885c935fe3666c2828d",
     "v148_classification": "a98f8032c71c96f4e9841378b13154ad8ae7c12658c771a93014178e3d33fa09",
     "v148_source_findings": "111be9d649230a601bddae3ee8c103c67a0a0dac9a91dda6c554d618b0868039",

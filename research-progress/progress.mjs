@@ -91,6 +91,13 @@ export function validateSnapshot(value) {
         wrapper.existing_model_amounts_changed !== false || wrapper.new_paper_t0 !== false ||
         [wrapper.new_factor_trials, wrapper.new_horizon_trials, wrapper.new_account_return_trials].some(n => n !== 0) ||
         !/^https:\/\/www\.bosera\.com\.hk\/api\/infobase\/downloadattfile\.do\?attachmentId=[A-Za-z0-9]+$/.test(wrapper.source_url))) throw new Error('03196当前来源补证不能升级为全年分派、成交或盈利证明。')
+    const activity = value.evidence_updates.hk_usd_activity
+    if (activity && (activity.status !== 'accepted_fixed_date_execution_prescreen_not_passed' || activity.ticker !== 'HK.03196' ||
+        activity.year !== 2024 || activity.year_sessions !== 246 || activity.positive_volume_sessions !== 21 || activity.zero_volume_sessions !== 225 ||
+        activity.fixed_entry_volume !== 0 || activity.fixed_exit_volume !== 0 || activity.net_profit_hkd !== null ||
+        activity.fixed_entry_date !== '2024-01-02' || activity.fixed_exit_date !== '2024-12-31' ||
+        [activity.new_factor_trials,activity.new_horizon_trials,activity.new_account_return_trials].some(n => n !== 0) ||
+        [activity.new_paper_t0,activity.opening_depth_certified,activity.whole_fund_invalid,activity.distribution_2025_certified,activity.existing_model_amounts_changed].some(v => v !== false))) throw new Error('03196执行预筛不能变成成交、利润或全基金无效的结论。')
   }
   if (value.portfolio_research) {
     const p = value.portfolio_research
@@ -275,6 +282,16 @@ if (typeof document !== 'undefined') {
       find('hk-usd-cash-note').textContent = wrapper.note
       find('hk-usd-cash-limits').textContent = wrapper.limitation
       find('hk-usd-cash-source').href = wrapper.source_url
+    }
+    const activity = updates.hk_usd_activity
+    find('hk-usd-activity-update').hidden = !activity
+    if (activity) {
+      find('hk-usd-activity-summary').textContent = activity.summary
+      const label = `全年246个会话：有成交记录21天（深色），零成交记录225天（浅色）。这是日线成交记录，不是开盘可成交深度。`
+      find('hk-usd-activity-meter').setAttribute('aria-label',label)
+      find('hk-usd-activity-positive').style.width = `${activity.positive_volume_sessions/activity.year_sessions*100}%`
+      find('hk-usd-activity-count').textContent = label
+      find('hk-usd-activity-limits').textContent = activity.limitation
     }
   }
   function renderPortfolio(data) {
