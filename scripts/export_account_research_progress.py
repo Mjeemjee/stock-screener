@@ -9,10 +9,165 @@ import argparse, hashlib, json, math, re, shutil, subprocess, sys
 
 ROOT=Path(__file__).resolve().parents[1]
 TEAM=ROOT/'reports/hk-strategy-team-20261112'
+MINING=ROOT/'reports/factor-mining-resume-20261117'
+SGOV_PACKET=ROOT/'reports/us-sgov-paper-owner-20261117-v140'
 OUT=ROOT/'portfolio-board/public/research-progress'
 def read(path):return json.loads(path.read_text(encoding='utf-8-sig'))
 def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 def clean(text):return re.sub(r'\[([^\]]+)\]\([^)]+\)',r'\1',text).replace('`','').replace('**','').strip()
+
+def new_factor_research():
+    """Project the three frozen signal reports; never run factor computation."""
+    original=read(MINING/'RESULT-v1.json')
+    corrected=read(MINING/'calendar-correction-v2/RESULT.json')
+    liquidity=read(ROOT/'reports/hk-liquidity-factor-owner-20261117-v130/RESULT-v1.json')
+    anchor=read(ROOT/'reports/us-anchor-factor-owner-20261117-v132/RESULT-v1.json')
+    assert corrected['correction_only'] and corrected['h20_rerun'] is False
+    assert liquidity['unique_new_signals']==anchor['unique_new_signals']==1
+    assert liquidity['maximum_horizon_trials']==anchor['maximum_horizon_trials']==2
+    assert anchor['source_integrity']=='FAILED_EXISTING_US_HISTORY_NOT_SPLIT_CONSISTENT'
+    assert all(not r['decision']['pass'] for r in liquidity['results']+anchor['results'])
+
+    def fip_row(row,label):
+        return dict(horizon=row['horizon'],split=label,period=f"{row['start']} — {row['end']}",
+                    rank_ic=row['ic']['mean'],hac_t=row['ic']['t'],p_value=row['ic']['p_two_sided'],
+                    p_label='双侧p',top_excess_bp=row['group_means']['top_excess']*10000)
+    fip=[fip_row(r,{'train':'训练','validation':'验证'}[r['split']]) for r in original['metrics']
+         if r['name']=='sign_persistence_126_skip21' and r['split'] in ['train','validation'] and
+         (r['horizon']==5 or r['horizon']==20 and r['split']=='validation')]
+    later=next(r for r in corrected['metrics'] if r['name']=='sign_persistence_126_skip21')
+    fip.insert(2,fip_row(later,'已见后段 · 日历修正'))
+
+    def trained_rows(result):
+        rows=[]
+        for r in result['results']:
+            ic=r['metrics']['inference']['rank_ic']
+            rows.append(dict(horizon=r['horizon'],split='训练',period=' — '.join(r['bounds']),
+                             rank_ic=ic['mean'],hac_t=ic['t'],
+                             p_value=r['decision']['p_bonferroni_this_batch_only'],p_label='两期限批内p',
+                             top_excess_bp=r['metrics']['means']['top_excess']*10000))
+        return rows
+
+    return dict(unique_new_signals=3,planned_horizon_trials=6,new_net_account_candidates=0,
+        scope='港股和美股个股、普通非杠杆ETF；1万／2万／3万港币分别核验。',
+        note='本批3个新信号、6个预定期限。日历修正不增加因子或独立试验；对照指标不计为新信号。IC是排序相关系数，不是收益率。',
+        limitations='各批次股票池、可评价集合和期间不同，不能直接横比IC来断言增量优势。已见历史不是新盲测；批内p校正不覆盖整个研究过程的选择偏差。',
+        items=[
+            dict(id='sign_persistence_126_skip21',name='港股 · 平滑动量',status='clue',status_label='统计线索，净账户未知',
+                horizons=[5,20],formula=read(MINING/'PROTOCOL-v1.json')['formula'],
+                diagnostics=fip,account_net_hkd=None,account_max_drawdown_pct=None,
+                conclusion='5日已见后段RankIC 0.03354，但最高组相对该因子自身可评价池的毛差只有+0.047bp；2025年IC仅0.00357。20日已在验证段失败，未重新打开。',
+                limitation='两停市日已修正；不是556股共同基准。组均值未计整手、费用或分派现金，不能解释为个人净利。',
+                next='保留统计线索，暂不优先扩展账户；不调方向或期限救结果。'),
+            dict(id=liquidity['candidate'],name='港股 · 异常放量价格压力反转',status='rejected',status_label='两期限训练淘汰',
+                horizons=[5,20],formula='−mean(r × max(log(V / 前20日均量), 0), 最近5会话)',
+                diagnostics=trained_rows(liquidity),account_net_hkd=None,account_max_drawdown_pct=None,
+                conclusion='5日RankIC 0.01358，两期限批内p 0.05050，未过预定门槛；20日也失败。两个期限均在训练停止，未打开验证或后段。',
+                limitation='最高组毛差不等于可执行账户利润；换手、整手和最低费用尚未完成账户验证。',
+                next='关闭此固定公式，继续不同机制；不改阈值补救接近边界的p值。'),
+            dict(id=anchor['candidate'],name='美股 · 252会话收盘高点锚定',status='source_blocked',status_label='源阻断，训练诊断未通过',
+                horizons=[20,60],formula='close[T] / max(close[T−251:T]) − 1',
+                diagnostics=trained_rows(anchor),account_net_hkd=None,account_max_drawdown_pct=None,
+                conclusion='20／60日RankIC 0.01863／0.03772，但HAC t仅0.698／0.979。旧SinaUS缓存保留拆股阶跃，这些仅是存储价格诊断，不能当可靠经济收益。',
+                limitation='700只现存池不是历史成分；账户净利润、回撤与本金适配未知。验证与后段未打开。',
+                next='先核显式拆股及毛现金字段的小样本源资格，保留本版和旧结果。')])
+
+
+def sgov_history():
+    path=MINING/'sgov-review/FINAL-REVIEW-v1.json'
+    if not path.exists():return None
+    result=read(path)
+    assert result['decision']=='ACCEPT_CONDITIONAL_CASH_CARRY_FOR_PAPER_20K_30K'
+    assert result['independent_cash_review_passed'] and not result['actual_personal_income_certified']
+    assert result['independent_alpha_certified'] is False
+    assert result['approved_capital_scenarios_hkd']==[20000,30000]
+    assert result['excluded_capital_scenarios_hkd']==[10000]
+    for relative,sha in result['source_pins'].items():
+        assert digest(ROOT/relative)==sha, 'SGOV accepted input changed: '+relative
+    cases=result['cases']
+    assert len(cases)==18 and all(c['strategy']=='monthly_paid_yield' for c in cases)
+    supplied=result['site_card']
+    assert supplied['id']=='us-sgov-carry' and supplied['capital_hkd']==30000
+    return dict(card=supplied,approved_capital_hkd=[20000,30000],excluded_capital_hkd=[10000],
+        actual_personal_income_certified=False,independent_alpha_certified=False,
+        cases=[dict(stage=c['stage'],capital_hkd=c['capital_hkd'],cost=c['cost'],start=c['start'],end=c['end'],
+                    final_cash_date=c['final_cash_date'],net_hkd=float(c['net_hkd']),
+                    risk_pct=float(c['max_quoted_nav_drawdown_pct'])) for c in cases],
+        missed_entry_scenarios=result['missed_entry_sensitivity']['cases'],
+        rule='每月末以前12个完整上市月内、当时已支付的发行人毛分派×0.70／月末原价判断，严格高于1%才于下个实际会话开盘持有；新仓连同买费不超过前交易净值90%及已结算现金，整股取整，持续持有不重调仓。',
+        note='A 2021—2023、B 2024—2025各自起账；C 2021—2025与两段重叠，不可相加。A尾款2024-01-04、B/C尾款2026-01-06。18主策略情景不是18次独立试验。',
+        limitations='固定7.8及双向汇兑成本、30%预扣税、每次分派1／2美元服务费储备均是条件情景；发行人付款日不等于券商到账日。单源报价及实际成交未认证。',
+        comparison='B段与90%预算简单持有相同；收益来自短债现金carry，未建立独立择时alpha或稳定月收入。漏单敏感性18案中，2万／3万的A/B仍正，不能视为18次独立验证。')
+
+
+def sgov_paper_status():
+    """Call the zero-network status command only after root acceptance exists."""
+    packet=SGOV_PACKET
+    pending=dict(activated=False,status='awaiting_acceptance',activation_utc=None,first_session=None,
+                 accounts=[],orders_sent=0,packet_version='v140',note='SGOV新增固定纸面正在修复时钟边界并独立验收；原包封存不激活。当前没有真实起点，不展示前向收益。')
+    if not (packet/'ROOT-ACCEPTANCE-v1.json').exists():return pending
+    run=subprocess.run([sys.executable,'-B','-X','utf8',str(packet/'paper.py'),'status'],cwd=ROOT,
+                       capture_output=True,text=True,encoding='utf-8',timeout=20)
+    result=json.loads(run.stdout)
+    assert result['actual_orders']==0 and result['network_calls']==0 and result['files_written']==0
+    if result['status']!='ACTIVE_PAPER':
+        pending['status']='review_required' if result['status'].startswith('UNKNOWN') else 'not_activated'
+        pending['note']='SGOV固定纸面状态待复核；不展示前向收益。' if pending['status']=='review_required' else 'SGOV纸面程序已验收，尚未创建真实起点；不展示前向收益。'
+        return pending
+    assert run.returncode==0
+    policy=read(packet/'POLICY-v1.json');arms={a['id']:a for a in policy['arms']}
+    assert {a['capital_hkd'] for a in arms.values()}=={20000,30000} and len(arms)==4
+    accounts=[]
+    for key,s in result['summaries'].items():
+        arm=arms[key]
+        assert s['actual_orders']==0 and not s['actual_broker_fill'] and not s['stable_income_proven']
+        accounts.append(dict(id=key,capital_hkd=arm['capital_hkd'],cost=arm['cost'],status=s['status'],
+            nav_hkd=float(s['scenario_nav_hkd']) if s['scenario_nav_hkd'] is not None else None,
+            change_hkd=float(s['scenario_net_hkd']) if s['scenario_net_hkd'] is not None else None,
+            quantity=s['shares'],observations=s['observations'],last_observation=s['last_observation']))
+    assert len(accounts)==4 and set(arms)==set(result['summaries'])
+    assumptions=(f"固定USD/HKD {policy['fixed_usdhkd']}；基础／压力的每个方向换汇成本"
+                 f"{policy['base']['fx_bps_each_way']}／{policy['pressure']['fx_bps_each_way']}bp，"
+                 f"预扣税{float(policy['withholding_scenario'])*100:g}%及每次分派"
+                 f"{policy['base']['distribution_service_reserve_usd']}／{policy['pressure']['distribution_service_reserve_usd']}美元服务费储备均为情景；发行人付款日不等于券商到账日。")
+    return dict(activated=True,status='active_paper',packet_version='v140',activation_utc=result['activation_utc'],
+                first_session=result['first_session'],source_quote_through=result['source_quote_through'],
+                checked_at=datetime.now(timezone(timedelta(hours=8))).isoformat(),accounts=accounts,orders_sent=0,
+                note='SGOV四个独立条件纸面：2万／3万各基础及压力。保持独立T0，不倒填历史。'+
+                     ('尚未观察新会话，没有证券成交。' if not any(a['observations'] for a in accounts) else '')+
+                     '起点建模美元钱包即计双向换汇估值成本，0证券成交也可呈负增减；这不是实际亏损。'+assumptions)
+
+
+def current_mining_work(new_paper,activity):
+    team=read(MINING/'TEAM.json')
+    source_folder=ROOT/'reports/us-action-panel-owner-20261117-v137'
+    # The v1 compatibility failure stays archived; prefer a later bounded receipt.
+    receipts=sorted(source_folder.glob('CAPTURE-RECEIPT-v*.json'),key=lambda p:int(re.search(r'-v(\d+)',p.name).group(1)))
+    source='预定40股的显式拆股／毛现金诊断源正在核验，尚未认证为合格因子面板。'
+    raw_status=None
+    if receipts:
+        capture=read(receipts[-1]);raw_status=capture.get('status')
+        if str(raw_status).startswith('STOP'):
+            source='请求兼容性修复／源资格待核；最近采集未扩展40股，未计算新因子表现。'
+    qualification=source_folder/'QUALIFICATION-v1.json'
+    if qualification.exists():
+        qualified=read(qualification);raw_status=qualified['status']
+        if raw_status=='LIMITED_GROSS_RIGHTS_DIAGNOSTIC_DATA_ONLY':
+            assert qualified['historical_alpha_IC_or_return_labels_calculated'] is False
+            assert qualified['old_700_files_qualified'] is False and qualified['old_v132_gate_unlocked'] is False
+            source=f"固定{qualified['nominal_names']}股、{qualified['calendar_sessions']:,}会话的显式拆股／毛现金权利诊断源已构造，日截面{qualified['source_qualified_count_min']}—{qualified['source_qualified_count_max']}只。尚未算新IC或净账户；旧700股未因此获认证。"
+    active={o['owner']:o['status']=='ACTIVE' for o in team['owners']}
+    sgov_task='独立起点已建立，按真实新会话接续。' if new_paper['activated'] else (
+        '新包修复时钟边界后核因果、输入和现金；原包封存，待主会话验收与激活。')
+    delivered=activity=='done'
+    return dict(research_batch_status='delivered' if delivered else 'active',task='T-012',team_updated_at=team['updated_hkt'],
+        source_status=raw_status,scope='港美个股及普通非杠杆ETF；持续研究与03086原四臂纸面并行。',
+        owners=[dict(name='主会话',task='本轮研究验收与交付；后续按真实新证据接续。' if delivered else '研究优先级、独立验收和最终发布',status='snapshot' if delivered else 'active'),
+                dict(name='SGOV纸面',task=sgov_task,status='active' if not delivered and (active.get('/root/us_tbill_income_owner') or active.get('/root/sgov_paper_auditor')) else 'snapshot'),
+                dict(name='美股行动源',task=source,status='active' if not delivered and active.get('/root/us_split_source_owner') else 'snapshot'),
+                dict(name='研究看板',task='本轮内容已同步，后续按实际新证据更新快照。' if delivered else '同步历史、新因子结论和当前分工；发布由主会话完成。',status='snapshot')],
+        note='本轮研究批次已交付。后续纸面需要真实新交易会话及实际运行，不代表后台持续计算。' if delivered else '工作状态只表示同步时的分工，不代表后台持续计算。等待纸面新数据时，仍推进独立机制研究。')
+
 
 def conditional_diagnostic_card(review_path,identifier,name,basis):
     card=dict(id=identifier,name=name,status='pending',status_label='固定诊断待独立验收',capital_hkd=30000,
@@ -55,7 +210,7 @@ def accepted_card(card,accepted,later=None,study_only=False):
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--activity',choices=['preparing','checking','waiting','done'],required=True)
     parser.add_argument('--phase',choices=['source','implementation','development','later'],default='development')
-    parser.add_argument('--focus',choices=['sp500','small-nasdaq','hsi-hold','gold','ipo','validation','cash','us-vti','paper'],default='sp500')
+    parser.add_argument('--focus',choices=['sp500','small-nasdaq','hsi-hold','gold','ipo','validation','cash','us-vti','paper','mining'],default='sp500')
     args=parser.parse_args();now=datetime.now(timezone(timedelta(hours=8))).isoformat()
     nasdaq=read(TEAM/'v103-review/DESCRIPTIVE-ACCOUNTS-v1.json')
     negative=read(TEAM/'v102-review/FINAL-REVIEW-v1.json')
@@ -66,6 +221,10 @@ def main():
                              cwd=ROOT,capture_output=True,text=True,encoding='utf-8',check=True,timeout=20)
     paper= json.loads(paper_run.stdout)
     assert paper['actual_orders']==0
+    factor_research=new_factor_research();sgov=sgov_history();new_paper=sgov_paper_status()
+    current_work=current_mining_work(new_paper,args.activity)
+    if args.focus=='mining' and args.activity=='done':
+        assert sgov and new_paper['activated'], 'Cannot deliver mining batch before accepted SGOV paper T0 exists'
     monthly=[v for v in nasdaq['metrics'] if v['role']=='monthly']
     cards=[dict(id='nasdaq-monthly',name='03086 · 每月趋势复核',status='paper',status_label='保留纸面验证',capital_hkd=30000,
                 period='2020-01-02 — 2026-11-13',basis='历史收盘标记，含开放持仓',
@@ -166,13 +325,29 @@ def main():
     cash_bridge_review=TEAM/'v126-review/FINAL-REVIEW-v1.json'
     if cash_bridge_review.exists():
         cards=[conditional_diagnostic_card(cash_bridge_review,'us-vti-cash-2025','VTI · 2025现金路径桥接','混合来源与假设税费'),*cards]
+    gld_path=ROOT/'reports/us-gold-candidate-owner-20261117-v131/RESULTS-v1.json'
+    if gld_path.exists():
+        gld=read(gld_path)
+        assert gld['status']=='REJECT_FIXED_V131_A_COST_PRESSURE_PRICE_DIAGNOSTIC'
+        assert gld['B_status']==gld['C_status']=='NOT_OPENED_A_FAILED'
+        pairs=[r for r in gld['pairs'] if r['capital_hkd']==30000]
+        cards=[dict(id='us-gld-monthly',name='GLD · 固定月末趋势',status='closed',status_label='A段压力淘汰',capital_hkd=30000,
+                    period='2015-01-01 — 2019-12-31',basis='条件价格诊断；固定7.8、整股、双向换汇及逐项费用；分派源未完整认证',
+                    results=[dict(cost=r['cost'],net_hkd=float(r['trend_net_hkd']),cagr_pct=None,risk_pct=float(r['trend_high_low_DD_pct'])) for r in pairs],
+                    conclusion='主3万压力净亏224.15港币；1万／2万压力也亏。B/C未打开。简单持有对照盈利不代表本策略通过。',
+                    next='保留固定负结果，不调窗口、不以被动持有替换主策略或新增纸面候选。'),*cards]
+    if sgov:
+        sgov_card=dict(sgov['card'])
+        if new_paper['activated']:
+            sgov_card.update(status_label='条件历史通过，纸面已启',next='独立真实日期纸面已建立；新结果见纸面视图，历史净额不导入前向账本。')
+        cards=[sgov_card,*cards]
     if args.focus=='paper':cards=sorted(cards,key=lambda c:c['id']!='nasdaq-monthly')
     if args.focus=='ipo':
         assert ipo_review.exists() and read(ipo_review)['decision']=='ACCEPT_NEW_OFFER_CONFIRMED_ADMISSION_PENDING'
     if args.focus=='validation':
         assert income_review.exists() and dependence_review.exists()
         assert read(dependence_review)['independent_controls_exact']==4
-    current,current_later={'sp500':(latest,later_review),'small-nasdaq':(small,small_later),'hsi-hold':(hsi,None),'gold':(gold,None),'ipo':(ipo,None),'validation':(dict(status='pending'),None),'cash':(cash,None),'us-vti':(us_vti,None),'paper':(dict(status='paper'),None)}[args.focus]
+    current,current_later={'sp500':(latest,later_review),'small-nasdaq':(small,small_later),'hsi-hold':(hsi,None),'gold':(gold,None),'ipo':(ipo,None),'validation':(dict(status='pending'),None),'cash':(cash,None),'us-vti':(us_vti,None),'paper':(dict(status='paper'),None),'mining':(dict(status='pending'),None)}[args.focus]
     registry=[]
     for i,line in enumerate((TEAM/'README.md').read_text(encoding='utf-8').splitlines()):
         if not line.startswith('| `/root'):continue
@@ -187,7 +362,14 @@ def main():
         assert notes['new_factor_IC_computations']==0
         for note in notes['items']:
             registry.append(dict(id='signal-note-'+note['id'],version='信号与规则综述',name=note['name'],category='recent',
-                conclusion=note['conclusion'],source_date=now[:10],source='已验账户证据综述；本轮无新增IC'))
+                conclusion=note['conclusion'],source_date=now[:10],source='此前已验账户证据综述；与本批新因子分列'))
+    for factor in factor_research['items']:
+        registry.append(dict(id='new-factor-'+factor['id'],version='本批新因子',name=factor['name'],category='recent',
+            conclusion=factor['conclusion']+' '+factor['limitation']+' '+factor['next'],source_date='2026-11-17',source='固定信号诊断；不是可执行净账户'))
+    if gld_path.exists():registry.append(dict(id='v131-gld-fixed',version='V131',name='GLD固定月末趋势 · A段淘汰',category='recent',
+        conclusion='3万主压力−224.15港币，条件价格诊断。1万／2万压力也负，B/C未打开；passive40盈利不能替代主策略门槛。',source_date='2026-11-17',source='固定原规则及12账户封存结果'))
+    if sgov:registry.append(dict(id='sgov-carry-acceptance',version='V133 / V135',name='SGOV条件历史与独立核账',category='recent',
+        conclusion=sgov['card']['conclusion']+' '+sgov['limitations']+' '+sgov['comparison'],source_date='2026-11-17',source='主会话正式条件历史验收；纸面另立起点'))
     archived=ROOT/'sites/hk-quant-research-hub/dist/data/catalog.json'
     archive=read(archived) if archived.exists() else None
     if archive:
@@ -195,6 +377,12 @@ def main():
             registry.append(dict(id='archive-'+r['id'],version='早期归档',name=r['name'],category='archive',
                  conclusion=clean(str(r.get('short_conclusion') or r.get('conclusion') or r['summary']))[:800],
                  source_date='2026-11-03',source='旧快照，结论日期保留'))
+        for r in archive['factors']:
+            registry.append(dict(id='old-factor-'+r['id'],version='旧因子 · '+r['status_label'],name=r['name'],category='factor-archive',
+                conclusion=clean(str(r.get('conclusion') or r.get('short_conclusion') or r['summary'])),
+                definition=r.get('definition'),diagnostic=' · '.join(filter(None,[r.get('stat_display'),r.get('stat_note')])),
+                period=r.get('period'),source_date='2026-11-03',source='旧因子目录快照；没有用本轮结果改写原结论',
+                qualification='旧US缓存已发现拆股阶跃；本条未获本轮源资格认证。旧指标仅保留为存储价格诊断。' if r.get('market')=='US' else '旧快照，本轮未重新核验本条的源、统计或可执行账户。'))
     stage_status=['done','done','done','active','pending','pending']
     if current['status']!='pending':stage_status=['done','done','done','done','pending' if current['status']=='candidate' else 'not_opened','pending' if current['status']=='candidate' else 'not_opened']
     if args.phase=='source':stage_status=['done','active','pending','pending','pending','pending']
@@ -212,6 +400,8 @@ def main():
         next_intent=observed and any(v['eligible'] and v['date']>paper['verified_data_through'] for v in paper['recorded_intents'])
         monthly_review_observed=paper['verified_data_through'][:7]>paper['first_forward_session'][:7]
         stage_status=['done','done','done','done' if observed else 'pending','done' if next_intent else 'pending','done' if monthly_review_observed else 'pending']
+    if args.focus=='mining':stage_status=['done','done','done' if current_work['source_status']=='LIMITED_GROSS_RIGHTS_DIAGNOSTIC_DATA_ONLY' else 'active','done' if sgov else 'pending','done' if new_paper['activated'] else 'active','active']
+    if args.focus=='mining' and args.activity=='done':stage_status=['done']*6
     if args.activity not in ['preparing','checking']:stage_status=['pending' if s=='active' else s for s in stage_status]
     activity_active=args.activity in ['preparing','checking'] and current['status'] in ['pending','candidate']
     activity_text={'preparing':'准备固定开发检验','checking':'固定检验执行与独立核算','waiting':'等待下一项真实证据','done':'本轮检验已验收'}[args.activity]
@@ -230,6 +420,9 @@ def main():
     if args.focus=='paper':
         primary=paper['summaries']['monthly-only-base']
         activity_text=f"用户已选择历史检验通过后转固定候选纸面跟踪。03086四臂规则及真实T0保持；主臂持仓{primary['open_quantity']}份、已闭合{primary['closed_rounds']}轮。接续依赖电脑和OpenD在线，尚未安装后台定时服务。"
+    if args.focus=='mining':
+        activity_text=('本轮新增候选研究已交付；03086与SGOV按真实新时点接续，港美个股／普通ETF范围保留；稳定副业收入未证。'
+                       if args.activity=='done' else '持续推进T-012：挖掘港美个股／普通ETF，与03086原四臂纸面并行。本批3个新信号、6个预定期限；SGOV的2万／3万条件历史通过，新增纸面'+('已独立激活。' if new_paper['activated'] else '仍待验收及真实起点。')+'稳定副业收入尚未建立。')
     source_paths={'nasdaq':'v103-review/FINAL-REVIEW-v1.json','dividend':'v102-review/FINAL-REVIEW-v1.json','sp500_source':'v106-sp500-development-source/SOURCE-QUALIFICATION-v1.json'}
     if accepted.exists():source_paths['sp500_accepted']=str(accepted.relative_to(TEAM))
     if small_accepted.exists():source_paths['small_nasdaq_accepted']=str(small_accepted.relative_to(TEAM))
@@ -255,25 +448,49 @@ def main():
     if args.focus=='cash':stage_names=['规则固定','历史来源','现金与费用','2024检验','2025与独立核账','实际成交观察']
     if args.focus=='us-vti':stage_names=['规则固定','长历史来源','价格诊断','后续历史段','独立核账','完整现金补证']
     if args.focus=='paper':stage_names=['历史检验','规则冻结','纸面起点','新会话观察','意向接续','月初复核']
+    if args.focus=='mining':stage_names=['研究范围','固定信号筛选','个股诊断源','SGOV历史核账','新增纸面准备','持续挖掘与同步']
+    if args.focus=='mining' and args.activity=='done':stage_names=['研究范围','固定信号筛选','个股诊断源','SGOV历史核账','纸面真实起点','本批研究交付']
+    extra_sources={
+        'mining_goal':MINING/'GOAL.md','mining_scope':MINING/'GOAL-SCOPE-ADDENDUM-v1.json','mining_team':MINING/'TEAM.json',
+        'fip_protocol':MINING/'PROTOCOL-v1.json','fip_original':MINING/'RESULT-v1.json','fip_calendar_correction':MINING/'calendar-correction-v2/RESULT.json',
+        'fip_corrected_findings':MINING/'calendar-correction-v2/FINDINGS.md',
+        'liquidity_factor':ROOT/'reports/hk-liquidity-factor-owner-20261117-v130/RESULT-v1.json',
+        'us_anchor_factor':ROOT/'reports/us-anchor-factor-owner-20261117-v132/RESULT-v1.json',
+        'old_factor_catalog_review':ROOT/'reports/us-anchor-factor-owner-20261117-v132/OLD-CATALOG-REVIEW-v1.json'}
+    if archive:extra_sources['old_catalog']=archived
+    if gld_path.exists():extra_sources['us_gld_fixed']=gld_path
+    if sgov:
+        extra_sources.update(sgov_history_review=MINING/'sgov-review/FINAL-REVIEW-v1.json',
+                             sgov_missed_entry=MINING/'sgov-sensitivity-v1/RESULT.json',
+                             sgov_history_chart=MINING/'sgov-review/SGOV-history-v1.png')
+    source_folder=ROOT/'reports/us-action-panel-owner-20261117-v137'
+    for p in source_folder.glob('CAPTURE-RECEIPT-v*.json'):extra_sources['source_'+p.stem]=p
+    if (source_folder/'QUALIFICATION-v1.json').exists():extra_sources['us_action_panel_qualification']=source_folder/'QUALIFICATION-v1.json'
+    if (SGOV_PACKET/'ROOT-ACCEPTANCE-v1.json').exists():
+        extra_sources['sgov_paper_root_acceptance']=SGOV_PACKET/'ROOT-ACCEPTANCE-v1.json'
+        extra_sources['sgov_paper_policy']=SGOV_PACKET/'POLICY-v1.json'
+    if (MINING/'sgov-review/PAPER-ACTIVATION-ACCEPTANCE-v1.json').exists():
+        extra_sources['sgov_real_paper_activation']=MINING/'sgov-review/PAPER-ACTIVATION-ACCEPTANCE-v1.json'
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
-      activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪'}[args.focus],
+      activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美因子挖掘 · 与固定纸面并行'}[args.focus],
                     text=activity_text,
                     snapshot_only=True,fresh_for_minutes=15),
       stages=[dict(name=n,status=s) for n,s in zip(stage_names,stage_status)],
-      cards=cards,registry=registry,ipo_observation=ipo_observation,default_evidence_view='paper' if args.focus=='paper' else 'history',
+      cards=cards,registry=registry,ipo_observation=ipo_observation,default_evidence_view='paper' if args.focus=='paper' or args.focus=='mining' and args.activity=='done' else 'history',
+      factor_research=factor_research,current_work=current_work,sgov_history={k:v for k,v in sgov.items() if k!='card'} if sgov else None,sgov_paper=new_paper,
       paper=dict(checked_at=paper['checked_at_hkt'],activation_utc=paper['activation_utc'],first_forward_session=paper['first_forward_session'],
                  account_count=len(paper['summaries']),closed_rounds=paper['summaries']['monthly-only-base']['closed_rounds'],
                  open_quantity=paper['summaries']['monthly-only-base']['open_quantity'],
                  modeled_change_hkd=paper['summaries']['monthly-only-base']['total_marked_change_hkd'],orders_sent=0,
                  primary_account='monthly-only-base',accounts=[dict(id=k,nav_hkd=v['marked_nav_hkd'],change_hkd=v['total_marked_change_hkd'],closed_rounds=v['closed_rounds'],quantity=v['open_quantity']) for k,v in paper['summaries'].items()],
                  note='四组独立纸面假设，每组初始3万港币。历史收益不计入前向账本。'),
-      research_note='不同资金、期间与规则的结果不能相加。模型回撤不是未来亏损上限；历史正额不证明稳定副业收入。',
+      research_note='不同资金、期间与规则的结果不能相加。新因子IC、历史净账户与真实日期纸面分别列示。模型回撤不是未来亏损上限；历史正额不证明稳定副业收入。',
       baseline=dict(monthly_base_net_hkd=11644.34,passive_base_net_hkd=24201.91,monthly_base_risk_pct=12.49025137086156,
                     passive_base_risk_pct=19.548568745437528,independent_alpha_confirmed=False,
                     pressure_passive_note='压力参考首次未买到后保持现金，主市场暴露无法估计。'),
       factor_archive=dict(count=len(archive['factors']) if archive else 0,source_date='2026-11-03',
-                          note='旧因子目录快照；本轮没有生成新的IC或采用结论。'),
-      source_hashes={k:digest(TEAM/v) for k,v in source_paths.items()})
+                          note='其中500条为30种基础表达式的模板组合，不是538个有效因子。旧US缓存发现拆股阶跃，相关旧条目未获本轮资格认证；原IC和原结论保留。与本批3个新信号分开计数。'),
+      source_hashes={**{k:digest(TEAM/v) for k,v in source_paths.items()},**{k:digest(v) for k,v in extra_sources.items()}})
     OUT.mkdir(exist_ok=True,parents=True);(OUT/'assets').mkdir(exist_ok=True)
     with (OUT/'progress.json').open('w',encoding='utf-8',newline='\n') as f:json.dump(payload,f,ensure_ascii=False,indent=2,allow_nan=False);f.write('\n')
     shutil.copyfile(ROOT/'reports/hk-nasdaq-baseline-attribution-owner-20261116-v103/baseline-nav-close-drawdown-v1.png',OUT/'assets/nav-risk.png')
@@ -283,6 +500,8 @@ def main():
     if dependence_review.exists():shutil.copyfile(ROOT/'reports/hk-ipo-allotment-dependence-owner-20261117-v114/ALLOTMENT-DEPENDENCE-v1.png',OUT/'assets/ipo-dependence.png')
     if cash_review.exists():shutil.copyfile(TEAM/'v120-review/CASH-COST-AND-CAPITAL-v1.png',OUT/'assets/cash-cost-capital.png')
     if us_vti_review.exists():shutil.copyfile(TEAM/'v123-review/VTI-PRICE-NAV-RISK-v1.png',OUT/'assets/vti-price-risk.png')
-    print(json.dumps(dict(updated_at=now,records=len(registry),focus=args.focus,latest_status=current['status'],paper_closed_rounds=payload['paper']['closed_rounds'],orders_sent=0),ensure_ascii=False))
+    if sgov:shutil.copyfile(MINING/'sgov-review/SGOV-history-v1.png',OUT/'assets/sgov-history.png')
+    print(json.dumps(dict(updated_at=now,records=len(registry),focus=args.focus,latest_status=current_work['research_batch_status'] if args.focus=='mining' else current['status'],new_signals=factor_research['unique_new_signals'],
+                         sgov_paper_activated=new_paper['activated'],paper_closed_rounds=payload['paper']['closed_rounds'],orders_sent=0),ensure_ascii=False))
 
 if __name__=='__main__':main()
