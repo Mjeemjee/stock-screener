@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-18T02:53:32.561769+08:00",
+  "updated_at": "2026-11-18T03:14:27.323403+08:00",
   "market_data_through": "2026-11-17",
   "activity": {
     "status": "checking",
     "active_at_snapshot": true,
     "focus": "港美持续研究 · 总目标运行中",
-    "text": "总目标运行中，稳定盈利尚未证实。已验收7个信号、14个期限；当前并行研究低下行波动候选，尚不计入已验收数。60／20／20组合公开源、八情景资金核算及日志程序已联合验收；数据仅到11月16日，未激活新组合T0、意向或成交。下一步在香港11月18日05:30后核Nov17新源，再登记真实起点；代码测试不是盈利证据。正式稳定性统计方法尚未冻结；旧历史金额与原03086／SGOV起点保持。",
+    "text": "总目标运行中，稳定盈利尚未证实。已验收8个信号、16个期限；低下行波动首次固定训练已独立复算，两期限均未通过收益排序筛选，不代表低风险配置没有价值。60／20／20组合公开源、八情景资金核算及日志程序已联合验收；数据仅到11月16日，未激活新组合T0、意向或成交。下一步在香港11月18日05:30后核Nov17新源，再登记真实起点；代码测试不是盈利证据。正式稳定性统计方法尚未冻结；原纸面及历史金额保持。",
     "snapshot_only": true,
     "fresh_for_minutes": 15
   },
@@ -965,6 +965,15 @@
       "name": "美股 · 单代理残差趋势",
       "category": "recent",
       "conclusion": "20／60日RankIC +0.02325／−0.00186，HAC t仅1.089／−0.067；前组相对同池毛权益差 +24.65／+54.16bp。两个期限均未通过冻结训练闸，毛差不是可执行净利润。 当前40只大型股便利池，先252会话估计、再60会话形成，需313个连续合格状态。代理为其余股票等权毛收益，不是标准三因子或广义市场中性；与60日价格动量平均秩相关约0.8311。未打开2020+，净账户与本金适配未知。 独立复算重现本次拒绝。F01为极端溢出输入下的非有限值处理缺陷；实际训练无此输入，不改变本次排名、分组与结论，通用复用前仍须修正。 固定失败保留；不翻方向、改窗口或挑年份补救，账户净利与本金适配仍未知。",
+      "source_date": "2026-11-18",
+      "source": "固定信号诊断；不是可执行净账户"
+    },
+    {
+      "id": "new-factor-us_low_downside_semivariance_126",
+      "version": "本批新因子",
+      "name": "美股 · 126会话低下行波动",
+      "category": "recent",
+      "conclusion": "20／60日RankIC −0.06397／−0.10663，HAC t −1.910／−1.747；前组相对同池毛权益差 −23.76／−58.58bp。两个固定期限均未通过预定收益排序筛选；不能据此否定低风险配置的价值。 旧库已有下行风险输入但未单独验证，本次复用已知机制做首次固定筛选，不声称新发明。仅40只当前存续便利样本，日截面39—40只；未打开2020+，毛权益和30／60bp算术扣减不是税费、整数股、分派到账或资金账户。独立先盲算后对照，56,280信号单元及两期限逐日结果一致，0分组变化；累计选因子偏差仍保留。 保留原方向、窗口和失败结果；不反向补救。后续机制研究与原纸面继续，净账户和本金适配仍未知。",
       "source_date": "2026-11-18",
       "source": "固定信号诊断；不是可执行净账户"
     },
@@ -8208,7 +8217,7 @@
   "factor_research": {
     "new_net_account_candidates": 0,
     "scope": "港股和美股个股、普通非杠杆ETF；1万／2万／3万港币分别核验。",
-    "note": "已验收筛选记录：7个信号、14个预定期限。日历修正、对照和模板不增加信号数；IC是排序相关系数，不是收益率。",
+    "note": "已验收筛选记录：8个信号、16个预定期限。日历修正、对照和模板不增加信号数；IC是排序相关系数，不是收益率。",
     "limitations": "各批次股票池、可评价集合和期间不同，不能直接横比IC来断言增量优势。已见历史不是新盲测；批内p校正不覆盖整个研究过程的选择偏差。",
     "items": [
       {
@@ -8531,10 +8540,57 @@
           ],
           "fixed_training_rejection_affected": false
         }
+      },
+      {
+        "id": "us_low_downside_semivariance_126",
+        "name": "美股 · 126会话低下行波动",
+        "status": "rejected",
+        "status_label": "首次独立筛选 · 两期限未通过",
+        "horizons": [
+          20,
+          60
+        ],
+        "formula": "-mean(min(r_s,0)^2 for s=T-125..T)",
+        "diagnostics": [
+          {
+            "horizon": 20,
+            "split": "固定训练 · 毛权益诊断",
+            "period": "2014-06-01 — 2019-12-31",
+            "rank_ic": -0.06397272463536266,
+            "hac_t": -1.909582095160395,
+            "p_value": 0.1123740845463612,
+            "p_label": "两期限批内p",
+            "top_excess_bp": -23.76231547483209,
+            "measure": "gross_rights"
+          },
+          {
+            "horizon": 60,
+            "split": "固定训练 · 毛权益诊断",
+            "period": "2014-06-01 — 2019-12-31",
+            "rank_ic": -0.10662686273143042,
+            "hac_t": -1.746911859275561,
+            "p_value": 0.16130525673354243,
+            "p_label": "两期限批内p",
+            "top_excess_bp": -58.580256577803944,
+            "measure": "gross_rights"
+          }
+        ],
+        "account_net_hkd": null,
+        "account_max_drawdown_pct": null,
+        "source_date": "2026-11-18",
+        "conclusion": "20／60日RankIC −0.06397／−0.10663，HAC t −1.910／−1.747；前组相对同池毛权益差 −23.76／−58.58bp。两个固定期限均未通过预定收益排序筛选；不能据此否定低风险配置的价值。",
+        "limitation": "旧库已有下行风险输入但未单独验证，本次复用已知机制做首次固定筛选，不声称新发明。仅40只当前存续便利样本，日截面39—40只；未打开2020+，毛权益和30／60bp算术扣减不是税费、整数股、分派到账或资金账户。独立先盲算后对照，56,280信号单元及两期限逐日结果一致，0分组变化；累计选因子偏差仍保留。",
+        "next": "保留原方向、窗口和失败结果；不反向补救。后续机制研究与原纸面继续，净账户和本金适配仍未知。",
+        "independent_review": {
+          "actual_cells_compared": 56280,
+          "top_change_days": 0,
+          "five_group_change_days": 0,
+          "blind_computation_before_author_statistics": true
+        }
       }
     ],
-    "unique_new_signals": 7,
-    "planned_horizon_trials": 14
+    "unique_new_signals": 8,
+    "planned_horizon_trials": 16
   },
   "current_work": {
     "goal_status": "ACTIVE",
@@ -8545,7 +8601,7 @@
     "milestone_label": "历史候选交付完成（里程碑）",
     "evidence_label": "稳定盈利与持续性尚未证实",
     "task": "T-012",
-    "team_updated_at": "2026-11-18T02:53:31.277277+08:00",
+    "team_updated_at": "2026-11-18T03:14:26.075616+08:00",
     "active_work": {
       "account": false,
       "registration": false,
@@ -8565,9 +8621,9 @@
         "status": "snapshot"
       },
       {
-        "name": "下一机制研究",
-        "task": "低下行波动：旧库已有输入但未单独验证；正对原定126会话版本做首次固定训练评价，不声称新机制。尚无已验收新结果，不增加信号或盈利计数。",
-        "status": "active"
+        "name": "下行波动筛选",
+        "task": "20／60日RankIC −0.06397／−0.10663，HAC t −1.910／−1.747；前组相对同池毛权益差 −23.76／−58.58bp。两个固定期限均未通过预定收益排序筛选；不能据此否定低风险配置的价值。",
+        "status": "snapshot"
       },
       {
         "name": "组合账户研究",
@@ -13039,7 +13095,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-16",
-    "checked_at": "2026-11-18T02:53:33.439522+08:00",
+    "checked_at": "2026-11-18T03:14:28.118296+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -13090,7 +13146,7 @@
     "note": "SGOV四个独立条件纸面：2万／3万各基础及压力。保持独立T0，不倒填历史。尚未观察新会话，没有证券成交。起点建模美元钱包即计双向换汇估值成本，0证券成交也可呈负增减；这不是实际亏损。固定USD/HKD 7.8；基础／压力的每个方向换汇成本25／50bp，预扣税30%及每次分派1／2美元服务费储备均为情景；发行人付款日不等于券商到账日。"
   },
   "paper": {
-    "checked_at": "2026-11-18T02:53:33.008370+08:00",
+    "checked_at": "2026-11-18T03:14:27.752083+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -13143,7 +13199,7 @@
   "factor_archive": {
     "count": 538,
     "source_date": "2026-11-03",
-    "note": "其中500条为30种基础表达式的模板组合，不是538个有效因子。旧US缓存发现拆股阶跃，相关旧条目未获本轮资格认证；原IC和原结论保留。与已验收的7个信号分开计数。"
+    "note": "其中500条为30种基础表达式的模板组合，不是538个有效因子。旧US缓存发现拆股阶跃，相关旧条目未获本轮资格认证；原IC和原结论保留。与已验收的8个信号分开计数。"
   },
   "source_hashes": {
     "nasdaq": "bdb900a98001538774d5ef16b95131ce24f52649020990f6194fb39ca330e3a3",
@@ -13169,9 +13225,9 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "c50e1e04420d292f879da920d62f3ecd2ad3e02b5e5ce54db431f9d67c310361",
+    "mining_goal": "0db97b3c1c3e9e26ef3c6d2da2edafb3c839b989447b6718077a69a372636d96",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
-    "mining_team": "7984fe00709773d1238fb0b6246d58d11fb35c4e085e5d5812d144d3dcd882b4",
+    "mining_team": "2ecd2901d8fdf4a0645489f16591aa9ee513c2b28ea0c4dfafbba8af991bd57f",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
     "fip_original": "9c598341d1b0e59753bc0134509908b4698209cfff0b95c22f973f655b868296",
     "fip_calendar_correction": "33d2d80372b6c433688dbbcabcc49f2a458989a633ed783c0c2fa42d6f824695",
@@ -13203,6 +13259,9 @@
     "v160_forward_root_review": "f68739804ecda57d3937c155bb841cb7a3e54334b196eb63f95ec67dbbb12c78",
     "v160_package_freeze": "258790418eec4bfe7269e3aea05ac91f51c128e457fe18f51ea25ebeb528e5e2",
     "v160_root_acceptance": "b81880d1dbcbbf66a8e8c6f6c3a75f40096d9bed9ae89affde3b69f49c521c43",
+    "v164_root_review": "a9ed868866779ae2ffff7a92ad30288b6781c5c85f15815b1a3a7ab92d7ba624",
+    "v164_result": "d8c28680cb5988d43fb716dfd142d0dd00d882d593f513f21e77777dc614291f",
+    "v164_protocol": "1160b761019073180a924480d46d3db34cf405dde8ef2626a93fbd2b4d1c8aa4",
     "v148_root_review": "93acdfaaf6622e1ad1d0a72a71c14aeb3adb3ed6b5a59885c935fe3666c2828d",
     "v148_classification": "a98f8032c71c96f4e9841378b13154ad8ae7c12658c771a93014178e3d33fa09",
     "v148_source_findings": "111be9d649230a601bddae3ee8c103c67a0a0dac9a91dda6c554d618b0868039",
