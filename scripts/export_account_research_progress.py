@@ -17,10 +17,11 @@ def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 def clean(text):return re.sub(r'\[([^\]]+)\]\([^)]+\)',r'\1',text).replace('`','').replace('**','').strip()
 
 def accepted_us_factor_reports():
-    """Read two root-reviewed fixed rejections; never rerun research."""
+    """Read root-reviewed fixed rejections; never rerun research."""
     accepted=[]
     specs=[('us-intraday-persistence-owner-20261117-v141','US-INTRADAY-v141-ROOT-REVIEW-v1.json'),
-           ('us-max-lottery-owner-20261117-v145','MAX-v145-ROOT-REVIEW-v1.json')]
+           ('us-max-lottery-owner-20261117-v145','MAX-v145-ROOT-REVIEW-v1.json'),
+           ('us-dividend-yield-owner-20261118-v147','DIVIDEND-YIELD-v147-ROOT-REVIEW-v1.json')]
     for folder,review_name in specs:
         base=ROOT/'reports'/folder;result=read(base/'RESULT-v1.json');protocol=read(base/'PROTOCOL-v1.json')
         review=read(MINING/'acceptance'/review_name)
@@ -72,9 +73,9 @@ def new_factor_research():
                              top_excess_bp=r['metrics']['means']['top_excess']*10000))
         return rows
 
-    report=dict(unique_new_signals=3,planned_horizon_trials=6,new_net_account_candidates=0,
+    report=dict(new_net_account_candidates=0,
         scope='港股和美股个股、普通非杠杆ETF；1万／2万／3万港币分别核验。',
-        note='本批3个新信号、6个预定期限。日历修正不增加因子或独立试验；对照指标不计为新信号。IC是排序相关系数，不是收益率。',
+        note='信号与预定期限按已验收来源去重计数；日历修正、来源核验和评价协议不增加因子试验。',
         limitations='各批次股票池、可评价集合和期间不同，不能直接横比IC来断言增量优势。已见历史不是新盲测；批内p校正不覆盖整个研究过程的选择偏差。',
         items=[
             dict(id='sign_persistence_126_skip21',name='港股 · 平滑动量',status='clue',status_label='统计线索，净账户未知',
@@ -95,27 +96,88 @@ def new_factor_research():
                 conclusion='20／60日RankIC 0.01863／0.03772，但HAC t仅0.698／0.979。旧SinaUS缓存保留拆股阶跃，这些仅是存储价格诊断，不能当可靠经济收益。',
                 limitation='700只现存池不是历史成分；账户净利润、回撤与本金适配未知。验证与后段未打开。',
                 next='先核显式拆股及毛现金字段的小样本源资格，保留本版和旧结果。')])
+    metadata={
+        'us_intraday_log_strength_20':dict(name='美股 · 20会话日内强度延续',
+            conclusion='20／60日RankIC 0.01149／0.02819，HAC t仅0.626／1.585。前组相对同池毛权益差为正，但两个固定期限均未过训练门槛。'),
+        'us_negative_max_gross_close_return_20':dict(name='美股 · 低MAX极端收益回避',
+            conclusion='20／60日RankIC −0.05701／−0.06330；低MAX前组相对同池毛权益差 −55.47／−105.64bp。h20双侧p过线是反方向关联，不支持冻结的低MAX优先方向。'),
+        'us_trailing_gross_cash_yield_252':dict(name='美股 · 252会话毛现金股息率',
+            conclusion='20／60日RankIC −0.075076／−0.123738；高股息率前组相对同池毛权益差 −33.38／−107.97bp。双侧显著为反方向，不支持冻结的高者优先方向；净账户未知。')}
     for result,protocol in accepted_us_factor_reports():
-        is_max=result['candidate']=='us_negative_max_gross_close_return_20'
+        meta=metadata[result['candidate']]
         diagnostics=[]
         for h in protocol['horizons']:
             row=result['training'][str(h)];ic=row['inference']['rank_ic']
             diagnostics.append(dict(horizon=h,split='固定训练 · 毛权益诊断',period=' — '.join(protocol['training']),
                 rank_ic=ic['mean'],hac_t=ic['t'],p_value=row['decision']['p_bonferroni_two_horizons_only'],
                 p_label='两期限批内p',top_excess_bp=row['means']['top_excess']*10000,measure='gross_rights'))
-        report['items'].append(dict(id=result['candidate'],name='美股 · 低MAX极端收益回避' if is_max else '美股 · 20会话日内强度延续',
+        item=dict(id=result['candidate'],name=meta['name'],
             status='rejected',status_label='固定方向双期限筛退',horizons=protocol['horizons'],formula=protocol['formula'],
             diagnostics=diagnostics,account_net_hkd=None,account_max_drawdown_pct=None,
-            conclusion=('20／60日RankIC −0.05701／−0.06330；低MAX前组相对同池毛权益差 −55.47／−105.64bp。h20双侧p过线是反方向关联，不支持冻结的低MAX优先方向。'
-                        if is_max else '20／60日RankIC 0.01149／0.02819，HAC t仅0.626／1.585。前组相对同池毛权益差为正，但两个固定期限均未过训练门槛。'),
+            conclusion=meta['conclusion'],
             limitation='只限40只当前大型股便利样本，日截面39—40只；毛除息权益不是可用现金或净账户。没有打开2020+，不代表全球机制失效。',
-            next='固定失败保留；不翻方向、改窗口或挑年份补救，账户净利与本金适配仍未知。'))
+            next='固定失败保留；不翻方向、改窗口或挑年份补救，账户净利与本金适配仍未知。')
+        if result['candidate']=='us_trailing_gross_cash_yield_252':
+            audit=read(MINING/'acceptance/DIVIDEND-YIELD-v147-ROOT-REVIEW-v1.json')['precision_audit']
+            assert audit['same_top_and_five_group_membership'] and audit['published_frozen_scores_not_rewritten']
+            item.update(source_date=protocol['created_hkt'][:10],precision_audit=audit)
+            item['limitation']+=f" 精确比率复核发现{audit['exact_ratio_tie_pairs']}对同值被浮点分数轻微拆开；平均IC最大差约{audit['largest_mean_IC_difference']:.2g}，前组及五组成员不变。保留冻结原分数与首个失败核验回执。毛现金指除息应收权利，不是已到账现金。"
+        report['items'].append(item)
     ids=[r['id'] for r in report['items']]
     assert len(ids)==len(set(ids)), 'A signal cannot be counted twice'
     report['unique_new_signals']=len(ids)
     report['planned_horizon_trials']=sum(len(set(r['horizons'])) for r in report['items'])
     report['note']=f"已验收筛选记录：{report['unique_new_signals']}个信号、{report['planned_horizon_trials']}个预定期限。日历修正、对照和模板不增加信号数；IC是排序相关系数，不是收益率。"
     return report
+
+
+def accepted_evidence_updates():
+    """Project source classification and evaluation acceptance, not new trials."""
+    qii_review_path=MINING/'acceptance/SGOV-QII-v148-ROOT-REVIEW-v1.json'
+    qii=read(qii_review_path)
+    qii_source=ROOT/'reports/us-cash-tax-fee-source-owner-20261118-v148/SGOV-QII-QUALIFICATION-v2.json'
+    qualification=read(qii_source)
+    assert qii['decision']=='ACCEPT_ISSUER_CLASSIFICATION_ONLY_NOT_PERSONAL_TAX_FEE_OR_CASH'
+    assert qii['classification_is_personal_tax_rate'] is False
+    assert qii['actual_broker_withholding_refunds_fees_known'] is False
+    assert qii['existing_30pct_tax_and_1_2USD_reserve_scenarios_changed'] is False
+    assert qii['paper_rules_or_T0_changed'] is False and qii['stable_profitability_proven'] is False
+    assert qii['pins'][qii_source.relative_to(ROOT).as_posix()]==digest(qii_source)
+    years=sorted(qualification['annual'],key=lambda r:r['year'])
+    findings=(qii_source.parent/'SOURCE-FINDINGS-v1.md').read_text(encoding='utf-8-sig')
+    source_urls={int(m[1]):m[2] for line in findings.splitlines()
+                 if (m:=re.match(r'\|(\d{4})\|.*?\]\((https://[^)]+)\)',line))}
+    assert all(re.match(r'^https://www\.(blackrock|ishares)\.com/.+\.pdf$',source_urls[r['year']]) for r in years)
+    assert sum(r['events_in_old_input'] for r in years)==qii['source_events']
+    assert all(r['weighted_QII_percent']==qii['constant_one_share_amount_weighted_QII_percent'][str(r['year'])] for r in years)
+    forward_path=MINING/'acceptance/FORWARD-EVALUATION-v149-ROOT-ACCEPTANCE-v1.json'
+    forward=read(forward_path)
+    completion=read(MINING/'acceptance/FORWARD-EVALUATION-v149-ROOT-COMPLETION-v1.json')
+    assert forward['status']=='ACCEPTED' and forward['claim_level']=='DESCRIPTIVE_ONLY'
+    assert forward['formal_statistical_stability_method_frozen'] is False
+    assert forward['original_rules_ledger_T0_capital_unchanged'] and forward['all_existing_arms_reported']==8
+    assert forward['automatic_goal_completion'] is False and forward['stable_profitability_proven'] is False
+    assert completion['acceptance_sha256']==digest(forward_path) and completion['new_paper_T0'] is False
+    assert completion['actual_freeze_utc']==forward['actual_freeze_utc']
+    for path,expected in forward['pins'].items():assert digest(ROOT/path)==expected
+    accepted_hkt=datetime.fromisoformat(forward['actual_freeze_utc']).astimezone(timezone(timedelta(hours=8)))
+    return dict(
+        sgov_qii=dict(status='accepted_issuer_classification_only',source_events=qii['source_events'],
+            ticker=qii['ticker'],cusip=qii['cusip'],
+            annual=[dict(year=r['year'],weighted_qii_percent=r['weighted_QII_percent'],source_url=source_urls[r['year']]) for r in years],
+            classification_is_personal_tax_rate=False,actual_broker_withholding_refunds_fees_known=False,
+            existing_model_amounts_changed=False,
+            note='按每股分派金额加权的发行人QII分类比例，不是用户个人税率、免税资格或实际到账比例。点击年份查看已核发行人原表PDF。',
+            limitation='实际预扣、退税时点与服务费用仍未知；原30%税及1／2美元事件储备情景、历史金额与两套纸面规则均未改变。不能因未单列收费认定费用为0，也不将退款当可用现金。'),
+        forward_evaluation=dict(status='accepted_descriptive_only',actual_freeze_utc=forward['actual_freeze_utc'],
+            accepted_at_hkt=accepted_hkt.strftime('%Y-%m-%d %H:%M:%S'),
+            durable_completion_utc=completion['completed_utc'],claim_level=forward['claim_level'],
+            formal_statistical_stability_method_frozen=False,existing_arms_reported=forward['all_existing_arms_reported'],
+            original_t0s={k:v['original_t0_utc'] for k,v in forward['then_current_heads'].items()},
+            primary_reporting_arms=forward['primary_reporting_arms'],new_paper_t0=False,
+            stable_profitability_proven=False,automatic_goal_completion=False,
+            note='原T0八臂全路径与本金保留；按各市场当地月末固定报告，启动月不足整月。已知现金观察和FX前缀不冒充更早预登记，跨接受时点的会话或月份另标过渡。',
+            limitation='这是描述性评价协议的接受时点，不是新纸面T0，也不新增观察或证券交易。正式稳定性统计方法尚未冻结；不得以等待月份、交易笔数、某次正结果或协议接受自动证明稳定盈利。'))
 
 
 def current_portfolio_research():
@@ -331,6 +393,7 @@ def current_mining_work(new_paper,activity,milestone_delivered,accepted_a=False,
     def owner_active(path_fragment):
         return any(o['status']=='ACTIVE' and any(path_fragment in p for p in o['write_paths']) for o in team['owners'])
     account_active=owner_active('us-diversified-carry-owner-20261117-v144/')
+    registration_active=owner_active('us-next-factor-preparation-owner-20261118-v151/')
     root_active=any(o['owner']=='/root' and o['status']=='ACTIVE' for o in team['owners'])
     observed_activity=activity in ['preparing','checking']
     return dict(goal_status='ACTIVE',research_batch_status='active',stable_profitability_proven=False,
@@ -338,11 +401,13 @@ def current_mining_work(new_paper,activity,milestone_delivered,accepted_a=False,
         goal_label='总目标运行中',milestone_label='历史候选交付完成（里程碑）' if milestone_delivered else '历史候选交付待验收',
         evidence_label='稳定盈利与持续性尚未证实',
         task='T-012',team_updated_at=team['updated_hkt'],
-        active_work=dict(account=account_active and observed_activity and not accepted_c,review=root_active and observed_activity),
+        active_work=dict(account=account_active and observed_activity and not accepted_c,
+                         registration=registration_active and observed_activity,review=root_active and observed_activity),
         source_status=raw_status,scope='港美个股及普通非杠杆ETF；持续研究与03086原四臂纸面并行。',
-        owners=[dict(name='主会话核验',task='C连续账、同钱包及A前缀已复核；整理本轮证据并继续安排持续研究，稳定盈利未证。' if accepted_c else '核C连续账户、同钱包不重置及A前缀；A/B各自新本金不能相加。' if accepted_b else 'A段主3万压力账户已独立核验；接续核B资料与协议，候选交付不关闭总目标。' if accepted_a else '组合A段的独立账户及资料限制核验；尚无已验收组合收益，候选交付不关闭总目标。',status='active' if root_active and observed_activity else 'snapshot'),
+        owners=[dict(name='主会话核验与发布',task='新股息因子筛退、QII来源分类与描述性月报协议已验收；当前整理网页同步及发布，稳定盈利未证。' if accepted_c else '核C连续账户、同钱包不重置及A前缀；A/B各自新本金不能相加。' if accepted_b else 'A段主3万压力账户已独立核验；接续核B资料与协议，候选交付不关闭总目标。' if accepted_a else '组合A段的独立账户及资料限制核验；尚无已验收组合收益，候选交付不关闭总目标。',status='active' if root_active and observed_activity else 'snapshot'),
+                dict(name='下一机制预登记',task='v151只做机制去重及可运行预登记，尚未看新结果；不增加已计算因子或期限数。',status='active' if registration_active and observed_activity else 'snapshot'),
                 dict(name='组合账户研究',task='A/B/C条件历史核算已交付。没有新增组合纸面T0；后续机制研究与原纸面继续，不能把C当独立盲测或稳定证明。' if accepted_c else 'A/B条件结果已验收；同规则C 2021—2025连续账户研究中，结果待根验收，不预填。' if accepted_b else 'v144的A 2021—2023条件结果已验收；下一步准备冻结B 2024—2025，B/C尚未计算。' if accepted_a else 'v144固定60% SGOV／20% VTI／20% GLD，条件源核对后实现A 2021—2023模型。',status='active' if account_active and observed_activity and not accepted_c else 'snapshot'),
-                dict(name='已验收因子',task='v141日内强度与v145低MAX的固定方向、20/60日均筛退；不是全球机制失败，不再标为忙碌。',status='snapshot'),
+                dict(name='已验收因子',task='v141日内强度、v145低MAX及v147毛现金股息率的固定方向、20/60日均筛退；不是全球机制失败，不再标为忙碌。',status='snapshot'),
                 dict(name='两套固定纸面',task='03086与SGOV保留原T0。当前没有新增到期观察，按真实新时点接续。',status='snapshot')],
         note='历史候选交付是一项已完成里程碑，不代表总目标完成。工作分工只反映同步时观察，超过15分钟停动画；没有后台持续计算承诺。')
 
@@ -400,6 +465,7 @@ def main():
     paper= json.loads(paper_run.stdout)
     assert paper['actual_orders']==0
     factor_research=new_factor_research();sgov=sgov_history();new_paper=sgov_paper_status();portfolio=current_portfolio_research()
+    evidence_updates=accepted_evidence_updates()
     accepted_a=portfolio['status'].startswith('accepted_conditional_')
     accepted_b=portfolio.get('B_accepted',False);accepted_c=portfolio.get('C_accepted',False)
     current_work=current_mining_work(new_paper,args.activity,bool(sgov and new_paper['activated']),accepted_a,accepted_b,accepted_c)
@@ -543,7 +609,14 @@ def main():
                 conclusion=note['conclusion'],source_date=now[:10],source='此前已验账户证据综述；与本批新因子分列'))
     for factor in factor_research['items']:
         registry.append(dict(id='new-factor-'+factor['id'],version='本批新因子',name=factor['name'],category='recent',
-            conclusion=factor['conclusion']+' '+factor['limitation']+' '+factor['next'],source_date='2026-11-17',source='固定信号诊断；不是可执行净账户'))
+            conclusion=factor['conclusion']+' '+factor['limitation']+' '+factor['next'],source_date=factor.get('source_date','2026-11-17'),source='固定信号诊断；不是可执行净账户'))
+    qii=evidence_updates['sgov_qii'];evaluation=evidence_updates['forward_evaluation']
+    registry.append(dict(id='sgov-qii-source-v148',version='V148 · 来源核验',name='SGOV官方QII分类 · 非个人税率',category='recent',record_type='source_review',
+        conclusion=f"{qii['source_events']}笔官方分类；"+'；'.join(f"{r['year']} {float(r['weighted_qii_percent']):.4f}%" for r in qii['annual'])+'。'+qii['note']+' '+qii['limitation'],
+        source_date=evaluation['accepted_at_hkt'][:10],source='发行人分类及root独立来源核验；不是新因子或经济试验'))
+    registry.append(dict(id='forward-evaluation-v149',version='V149 · 评价协议',name='原T0八臂 · 描述性月报协议已接受',category='recent',record_type='evaluation_protocol',
+        conclusion=f"{evaluation['accepted_at_hkt']} HKT接受。"+evaluation['note']+' '+evaluation['limitation'],source_date=evaluation['accepted_at_hkt'][:10],
+        source='root真实UTC接受回执；不是新纸面T0或新策略试验'))
     if gld_path.exists():registry.append(dict(id='v131-gld-fixed',version='V131',name='GLD固定月末趋势 · A段淘汰',category='recent',
         conclusion='3万主压力−224.15港币，条件价格诊断。1万／2万压力也负，B/C未打开；passive40盈利不能替代主策略门槛。',source_date='2026-11-17',source='固定原规则及12账户封存结果'))
     if sgov:registry.append(dict(id='sgov-carry-acceptance',version='V133 / V135',name='SGOV条件历史与独立核账',category='recent',
@@ -579,7 +652,7 @@ def main():
         monthly_review_observed=paper['verified_data_through'][:7]>paper['first_forward_session'][:7]
         stage_status=['done','done','done','done' if observed else 'pending','done' if next_intent else 'pending','done' if monthly_review_observed else 'pending']
     if args.focus=='mining':stage_status=['done' if current_work['candidate_milestone_status']=='delivered' else 'pending','done',
-        'active' if current_work['active_work']['account'] else 'pending','active' if current_work['active_work']['review'] else 'pending','pending','pending']
+        'active' if current_work['active_work']['account'] or current_work['active_work']['registration'] else 'pending','active' if current_work['active_work']['review'] else 'pending','pending','pending']
     if args.activity not in ['preparing','checking']:stage_status=['pending' if s=='active' else s for s in stage_status]
     activity_active=args.activity in ['preparing','checking'] and current['status'] in ['pending','candidate']
     if args.focus=='mining':activity_active=args.activity in ['preparing','checking'] and any(s=='active' for s in stage_status)
@@ -600,7 +673,7 @@ def main():
         primary=paper['summaries']['monthly-only-base']
         activity_text=f"用户已选择历史检验通过后转固定候选纸面跟踪。03086四臂规则及真实T0保持；主臂持仓{primary['open_quantity']}份、已闭合{primary['closed_rounds']}轮。接续依赖电脑和OpenD在线，尚未安装后台定时服务。"
     if args.focus=='mining':
-        activity_text=f"总目标运行中，稳定盈利尚未证实；历史候选交付只是里程碑。v141日内强度与v145低MAX均固定方向筛退，累计{factor_research['unique_new_signals']}个信号、{factor_research['planned_horizon_trials']}个预定期限。"+('60／20／20组合A/B/C条件历史已验收；C沿2021同一钱包连续核算，主3万压力五年累计+9,111.40港币。C与A/B重叠，不能相加，不是三次独立盲测；没有新增组合纸面T0，持续研究继续。' if accepted_c else '60／20／20组合A/B条件历史已验收，各自新3万本金的压力净额+885.28／+6,896.33，不能相加。当前研究并核验C连续账户，结果待核，没有新增组合纸面T0。' if accepted_b else '60／20／20组合A段条件门槛通过，主3万压力累计+885.28港币，下一步冻结B继续研究；B/C尚未计算，没有新增组合纸面T0。' if accepted_a else '当前推进60／20／20条件性组合的A段实现与独立核验，尚无已验收组合收益。')
+        activity_text=f"总目标运行中，稳定盈利尚未证实；历史候选交付只是里程碑。v141日内强度、v145低MAX及v147毛现金股息率均固定方向筛退，累计{factor_research['unique_new_signals']}个信号、{factor_research['planned_horizon_trials']}个预定期限。QII仅核来源分类，描述性月报已接受，正式稳定性统计方法尚未冻结。"+('60／20／20组合A/B/C条件历史保留；C与A/B重叠，不能相加，不是三次独立盲测，没有新增组合纸面T0。当前root验收与发布，v151只做下一机制预登记，未看新结果。' if accepted_c else '既有组合研究及原纸面按各自真实证据接续，不以新来源说明改变旧金额。')
     source_paths={'nasdaq':'v103-review/FINAL-REVIEW-v1.json','dividend':'v102-review/FINAL-REVIEW-v1.json','sp500_source':'v106-sp500-development-source/SOURCE-QUALIFICATION-v1.json'}
     if accepted.exists():source_paths['sp500_accepted']=str(accepted.relative_to(TEAM))
     if small_accepted.exists():source_paths['small_nasdaq_accepted']=str(small_accepted.relative_to(TEAM))
@@ -627,9 +700,10 @@ def main():
     if args.focus=='us-vti':stage_names=['规则固定','长历史来源','价格诊断','后续历史段','独立核账','完整现金补证']
     if args.focus=='paper':stage_names=['历史检验','规则冻结','纸面起点','新会话观察','意向接续','月初复核']
     if args.focus=='mining':stage_names=['历史候选里程碑','A/B/C条件历史' if accepted_c else 'A/B条件验收' if accepted_b else 'A段条件验收' if accepted_a else '组合条件资料','下一研究待冻结' if accepted_c else 'C连续账户研究' if accepted_b else 'B段冻结准备' if accepted_a else 'A段账户实现','研究交付核验' if accepted_c else 'C独立核验' if accepted_b else '后续独立核验' if accepted_a else '独立账户核验','持续前向样本','稳定盈利证据']
+    if args.focus=='mining' and current_work['active_work']['registration']:stage_names[2]='下一机制预登记'
     stage_details=[None]*6
     if args.focus=='mining':stage_details=['历史阶段已交付','条件历史已复核' if accepted_c else '各自起账条件通过' if accepted_b else 'A段条件通过' if accepted_a else '有条件采用',
-        '同步时进行中' if stage_status[2]=='active' else '等待实际新进展','同步时进行中' if stage_status[3]=='active' else '等待实际新进展','待真实新样本','证据未建立']
+        '未看新结果' if current_work['active_work']['registration'] else '同步时进行中' if stage_status[2]=='active' else '等待实际新进展','同步时进行中' if stage_status[3]=='active' else '等待实际新进展','描述性月报已接受；待新样本','统计方法尚未冻结']
     extra_sources={
         'mining_goal':MINING/'GOAL.md','mining_scope':MINING/'GOAL-SCOPE-ADDENDUM-v1.json','mining_team':MINING/'TEAM.json',
         'fip_protocol':MINING/'PROTOCOL-v1.json','fip_original':MINING/'RESULT-v1.json','fip_calendar_correction':MINING/'calendar-correction-v2/RESULT.json',
@@ -640,11 +714,18 @@ def main():
     for name,file in [('continuous_goal','GOAL-CONTINUOUS-v2.md'),('restored_goal_receipt','GOAL-RESTORED-RECEIPT-v2.json')]:
         if (MINING/file).exists():extra_sources[name]=MINING/file
     for version,folder,review_file in [('v141','us-intraday-persistence-owner-20261117-v141','US-INTRADAY-v141-ROOT-REVIEW-v1.json'),
-                                      ('v145','us-max-lottery-owner-20261117-v145','MAX-v145-ROOT-REVIEW-v1.json')]:
+                                      ('v145','us-max-lottery-owner-20261117-v145','MAX-v145-ROOT-REVIEW-v1.json'),
+                                      ('v147','us-dividend-yield-owner-20261118-v147','DIVIDEND-YIELD-v147-ROOT-REVIEW-v1.json')]:
         for file in ['RESULT-v1.json','PROTOCOL-v1.json','FINDINGS.md']:
             extra_sources[version+'_'+file]=ROOT/'reports'/folder/file
         extra_sources[version+'_root_review']=MINING/'acceptance'/review_file
     extra_sources['v145_root_verify']=MINING/'acceptance/MAX-v145-ROOT-VERIFY-v1.json'
+    extra_sources['v147_root_verify']=MINING/'acceptance/DIVIDEND-YIELD-v147-ROOT-VERIFY-v1.json'
+    extra_sources['v148_root_review']=MINING/'acceptance/SGOV-QII-v148-ROOT-REVIEW-v1.json'
+    extra_sources['v148_classification']=ROOT/'reports/us-cash-tax-fee-source-owner-20261118-v148/SGOV-QII-QUALIFICATION-v2.json'
+    extra_sources['v148_source_findings']=ROOT/'reports/us-cash-tax-fee-source-owner-20261118-v148/SOURCE-FINDINGS-v1.md'
+    extra_sources['v149_root_acceptance']=MINING/'acceptance/FORWARD-EVALUATION-v149-ROOT-ACCEPTANCE-v1.json'
+    extra_sources['v149_root_completion']=MINING/'acceptance/FORWARD-EVALUATION-v149-ROOT-COMPLETION-v1.json'
     extra_sources['v144_protocol']=ROOT/'reports/us-diversified-carry-owner-20261117-v144/PROTOCOL-v1.json'
     extra_sources['v144_conditional_use']=MINING/'portfolio-source-v144/CONDITIONAL-USE-v1.md'
     portfolio_review=MINING/'acceptance/DIVERSIFIED-v144-A-ROOT-REVIEW-v2.json'
@@ -682,7 +763,7 @@ def main():
                     snapshot_only=True,fresh_for_minutes=15),
       stages=[dict(name=n,status=s,detail=d) for n,s,d in zip(stage_names,stage_status,stage_details)],
       cards=cards,registry=registry,ipo_observation=ipo_observation,default_evidence_view='paper' if args.focus in ['paper','mining'] else 'history',
-      factor_research=factor_research,current_work=current_work,portfolio_research=portfolio,sgov_history={k:v for k,v in sgov.items() if k!='card'} if sgov else None,sgov_paper=new_paper,
+      factor_research=factor_research,current_work=current_work,evidence_updates=evidence_updates,portfolio_research=portfolio,sgov_history={k:v for k,v in sgov.items() if k!='card'} if sgov else None,sgov_paper=new_paper,
       paper=dict(checked_at=paper['checked_at_hkt'],activation_utc=paper['activation_utc'],first_forward_session=paper['first_forward_session'],
                  account_count=len(paper['summaries']),closed_rounds=paper['summaries']['monthly-only-base']['closed_rounds'],
                  open_quantity=paper['summaries']['monthly-only-base']['open_quantity'],
