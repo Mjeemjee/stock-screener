@@ -1,30 +1,30 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-17T07:27:30.185311+08:00",
+  "updated_at": "2026-11-17T11:02:17.960139+08:00",
   "market_data_through": "2026-11-16",
   "activity": {
-    "status": "waiting",
+    "status": "done",
     "active_at_snapshot": false,
-    "focus": "已有正额候选 · 收益稳定性",
-    "text": "两项稳定性检验已验收；历史正额尚未成为稳定副业收入。下一轮核现金ETF历史扣费，原纸面待真实新日线。",
+    "focus": "VTI · 美股普通ETF价格诊断",
+    "text": "本轮36个价格诊断账户已验收。分派未计入现金、汇兑是固定情景；下一步补完整现金与独立原价，不改已有参数。",
     "snapshot_only": true,
     "fresh_for_minutes": 15
   },
   "stages": [
     {
-      "name": "已有规则",
+      "name": "规则固定",
       "status": "done"
     },
     {
-      "name": "收益分布",
+      "name": "长历史来源",
       "status": "done"
     },
     {
-      "name": "配售依赖",
+      "name": "价格诊断",
       "status": "done"
     },
     {
-      "name": "现金对照",
+      "name": "后续历史段",
       "status": "done"
     },
     {
@@ -32,11 +32,61 @@
       "status": "done"
     },
     {
-      "name": "新前向观察",
-      "status": "pending"
+      "name": "完整现金补证",
+      "status": "unknown"
     }
   ],
   "cards": [
+    {
+      "id": "us-vti",
+      "name": "VTI · 美股月度趋势诊断",
+      "status": "review",
+      "status_label": "价格诊断正额，现金路径待核",
+      "capital_hkd": 30000,
+      "period": "2020-01-02 — 2025-12-31",
+      "basis": "不计分派现金、固定7.8和汇兑/费用情景；月初SMA200，新仓预算40%，不是完整总回报",
+      "results": [
+        {
+          "cost": "base",
+          "net_hkd": 8154.87,
+          "cagr_pct": null,
+          "risk_pct": 8.106243218557267
+        },
+        {
+          "cost": "pressure",
+          "net_hkd": 7722.57,
+          "cagr_pct": null,
+          "risk_pct": 8.389808063144153
+        }
+      ],
+      "conclusion": "六年后续价格诊断净额8154.87／7722.57港币；同初始40%投入的被动持有更高。连续11年趋势仅10轮、40负月，不能当稳定收入。",
+      "next": "补分派/payday及独立原价，再另冻现金版本；保留当前价格诊断，不改参数追收益。"
+    },
+    {
+      "id": "cash-03152",
+      "name": "03152 · 低换手现金基准",
+      "status": "review",
+      "status_label": "条件现金基准，非新alpha",
+      "capital_hkd": 30000,
+      "period": "2025-01-02 — 2025-12-31",
+      "basis": "季度进出、全本金；零分派及整手/价位连续为条件，费用与价差为固定情景",
+      "results": [
+        {
+          "cost": "base",
+          "net_hkd": 517.81,
+          "cagr_pct": null,
+          "risk_pct": 0.2982203741083053
+        },
+        {
+          "cost": "pressure",
+          "net_hkd": 338.43,
+          "cagr_pct": null,
+          "risk_pct": 0.45167666653911165
+        }
+      ],
+      "conclusion": "3万2025季度净额517.81／338.43港币，全年一次747.78／702.93；1万季度压力亏64.47。仅两年八季度，不是稳定副业收入。",
+      "next": "作为闲置现金的条件比较；实际路径仍需核双边价、现金事件和个人费用。"
+    },
     {
       "id": "gold-feasibility",
       "name": "02840 · 单份整手月度趋势",
@@ -649,6 +699,33 @@
       "source": "工作台记录同步"
     },
     {
+      "id": "team-58",
+      "version": "V120",
+      "name": "V120现金ETF真实历史条件基准",
+      "category": "recent",
+      "conclusion": "30案/8916日/132边/66闭合全账误差0分。3万季度压力2024+758.63、2025+338.43；1万2025季度压力-64.47。零分派/lot/tick条件及仅两年证据保留，不称新alpha。",
+      "source_date": "2026-11-17",
+      "source": "工作台记录同步"
+    },
+    {
+      "id": "team-59",
+      "version": "V123",
+      "name": "V123普通美股VTI月度SMA200价格诊断",
+      "category": "recent",
+      "conclusion": "36案/66492日/288边独立Fraction全路径通过。3万压力后续2020—25趋势+7722.57，被动40%+11710.01；18相关配对全部低于被动，趋势风险较低。零计入分派/固定FX/单源限制保留。",
+      "source_date": "2026-11-17",
+      "source": "工作台记录同步"
+    },
+    {
+      "id": "team-60",
+      "version": "V121",
+      "name": "V121/V124 VTI发行人与现金源恢复",
+      "category": "recent",
+      "conclusion": "当前股票指数ETF及季度频率原件已证，TAF冲突保留；44现金事件仅4个2025公布payable日期得正文支持，完整金额/日期正文认证0。Nasdaq403停，无现金版PnL。",
+      "source_date": "2026-11-17",
+      "source": "工作台记录同步"
+    },
+    {
       "id": "signal-note-monthly-trend",
       "version": "信号与规则综述",
       "name": "十个月月末趋势信号",
@@ -699,6 +776,24 @@
       "name": "整手、费用和成交资料约束",
       "category": "recent",
       "conclusion": "这些决定能否实现模型收益，本身不是预测因子。03034必要卖出资料不足，完整量保持未知；02840每手1份仅从2025-06-30起，官方高价档适配要先过边界。不能把缺数据写成0收益或借当前整手回填旧历史。",
+      "source_date": "2026-11-17",
+      "source": "已验账户证据综述；本轮无新增IC"
+    },
+    {
+      "id": "signal-note-cash-low-turnover",
+      "version": "信号与规则综述",
+      "name": "现金收益与低换手规则",
+      "category": "recent",
+      "conclusion": "03152固定2024/25条件原价扣费后，3万季度压力分别+758.63/+338.43；2025全年一次+702.93，1万季度压力-64.47。减少换手有帮助，只有两年/八季度，零分派及lot/tick连续仍是假设，不是新alpha或稳定月收入。",
+      "source_date": "2026-11-17",
+      "source": "已验账户证据综述；本轮无新增IC"
+    },
+    {
+      "id": "signal-note-us-vti-monthly-sma200",
+      "version": "信号与规则综述",
+      "name": "美股VTI月度200日均线趋势",
+      "category": "recent",
+      "conclusion": "36条件账户及66,492日现金已独立复核。3万压力2020—25趋势价格净额+7722.57，同初始40%被动+11710.01；18相关配对全部低于被动。连续11年趋势报价DD8.56%，只有10轮、40负月。未计分派、固定FX及单源价格，不能认证完整总回报或稳定收入。",
       "source_date": "2026-11-17",
       "source": "已验账户证据综述；本轮无新增IC"
     },
@@ -887,7 +982,7 @@
     "paper_decision_registered": false
   },
   "paper": {
-    "checked_at": "2026-11-17T07:27:30.491919+08:00",
+    "checked_at": "2026-11-17T11:02:18.411683+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -957,9 +1052,12 @@
     "gold_accepted": "4983eea09f1a4054b066eed2410eef0e979313d274b02ad6a9551a36371a7c41",
     "ipo_primary_accepted": "ca6f4d5bda2e83c0e564833d3f1b683983ccfef0a872f334ee0c73a2e812bba5",
     "ipo_current_observation": "a25a6c69fb2d80128c374df8cf986310a1d68b097df0bbbde9bf843f2879da4c",
-    "signal_and_rule_notes": "2a23536bff0c220fc02ca4259fb12ab8c35af20dc05764f8a4352d9297989655",
+    "signal_and_rule_notes": "093ff7c1109f99b48c02f51fb226ddae2e8c5504bc69fc56a5e05bd6868228a1",
     "nasdaq_income_distribution": "bdff90168a9fd8184873a1be7b0074afa698039bc2ef4e25e1c796889b5b8e8d",
     "ipo_allotment_dependence": "395d3d0c5ae49c3593d66e56d2d030a02442a8e7681d1097a45370a4cffab1f0",
-    "cash_issuer_nav": "9fd94a69fdb1d6e0ca803654d6d218d3ae957e61bd25054eac2a6a4624e178cf"
+    "cash_issuer_nav": "9fd94a69fdb1d6e0ca803654d6d218d3ae957e61bd25054eac2a6a4624e178cf",
+    "cash_historical_benchmark": "8404376ee12a691aca54beaba4b8edd4caf0d96f8ed204d4e683b03b0a4a436f",
+    "US_VTI_price_diagnostic": "13b02388c3f42eb98bddcd89a307af5a010d30f9c7c024933c1ef1cda0753255",
+    "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0"
   }
 }
