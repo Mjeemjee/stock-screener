@@ -606,6 +606,41 @@ def project_hk_usd_cash_source(evidence,current_work,registry):
     return review
 
 
+def project_hk_usd_activity(evidence,current_work,registry):
+    review=accepted_continuation_review('HK-USD-ACTIVITY-v190-v191-ROOT-REVIEW-v1.json',
+        'ACCEPT_SOURCE_FACTS_FIXED_DATE_EXECUTION_PRESCREEN_NOT_PASSED')
+    if not review:return None
+    assert review['candidate']=='HK.03196' and review['new_account_return_trials']==0
+    assert review['new_factor_trials']==review['new_horizon_trials']==0 and review['new_T0'] is False
+    facts=review['activity']
+    assert facts['year_sessions']==246 and facts['positive_volume_sessions']==21 and facts['zero_volume_sessions']==225
+    assert facts['fixed_entry_volume']==facts['fixed_exit_volume']==0
+    evidence['hk_usd_activity']=dict(status='accepted_fixed_date_execution_prescreen_not_passed',
+        ticker='HK.03196',year=2024,accepted_at_utc=review['actual_acceptance_utc'],
+        **facts,summary=review['site_summary'],limitation=review['site_limitation'],
+        net_profit_hkd=None,new_account_return_trials=0,new_factor_trials=0,new_horizon_trials=0,
+        new_paper_t0=False,opening_depth_certified=False,whole_fund_invalid=False,
+        distribution_2025_certified=False,existing_model_amounts_changed=False)
+    current_work['owners'].append(dict(name='03196执行预筛',status='snapshot',task=review['site_summary']))
+    registry.append(dict(id='hk-usd-activity-v190-v191',version='V190–V191 · 固定日期执行预筛',
+        name='03196 · 2024成交记录与零量买卖日',category='recent',record_type='source_qualification_addendum',
+        conclusion=review['site_summary']+' '+review['site_limitation'],source_date='2026-11-18',
+        source='公开原始日K、独立复核及root验收；0收益试验，不顺延买卖日'))
+    return review
+
+
+def project_tip_source_work(current_work):
+    review=accepted_continuation_review('TIP-PREP-v192-ROOT-REVIEW-v1.json',
+        'ACCEPT_STRUCTURE_PREPARATION_SELECT_TIP_SOURCE_ONLY')
+    if not review:return None
+    team=read(MINING/'TEAM.json')
+    active=any(o['status']=='ACTIVE' and any('us-tip-' in p for p in o['write_paths']) for o in team['owners'])
+    current_work['owners'].append(dict(name='下一机制：TIP',status='active' if active else 'snapshot',
+        task=('正在分别核对发行人分派与公开历史行情。' if active else '来源核查已交回，等待主会话接受并冻结账户协议。')+
+             '固定2015—2019窗口，研究通胀挂钩国债及实际利率风险；尚未计算收益或新增纸面起点，不增加因子试验数。'))
+    return review
+
+
 def project_actual_diversified_continuation(paper,evidence,current_work,registry):
     if not paper['activated']:return None
     latest='60／20／20组合已按root接受的实际接续建立原起点；年度再平衡／一次持有与2万／3万、基础／压力共8个相关情景，系统实际订单0。'
@@ -1045,6 +1080,8 @@ def main():
             current_work['owners'].append(dict(name='下一机制预检',status='active' if wrapper_active else 'snapshot',
                 task=('正在核查' if wrapper_active else '已交回')+'03196美元货币ETF港币柜台的官方身份、整手与费用可行性；这一步尚未计算历史收益，不增加有效因子或盈利策略数。'))
     wrapper_source=project_hk_usd_cash_source(evidence_updates,current_work,registry)
+    wrapper_activity=project_hk_usd_activity(evidence_updates,current_work,registry)
+    tip_source_work=project_tip_source_work(current_work) if args.focus=='mining' else None
     amihud=accepted_amihud_review()
     if args.focus=='mining':
         team=read(MINING/'TEAM.json')
@@ -1058,6 +1095,8 @@ def main():
         activity_text=f"总目标运行中，稳定盈利尚未证实；历史候选交付仍只是里程碑。当前已验收{factor_research['unique_new_signals']}个信号、{factor_research['planned_horizon_trials']}个预定期限。"
         activity_text+=('Amihud双期限固定排序筛选已独立复核并由root接受，结果与限制见因子区。' if amihud else 'Amihud固定筛选正在独立核验，验收前不展示结果或增加计数。')
         if wrapper_source:activity_text+=wrapper_source['site_summary']
+        if wrapper_activity:activity_text+=wrapper_activity['site_summary']
+        if tip_source_work:activity_text+='下一机制转向TIP通胀挂钩国债，先做固定窗口的发行人现金与行情源核对，尚无该候选收益结果。'
         activity_text+='03086、原SGOV和60／20／20组合保持各自原T0、原金额和观察；本轮没有新增到期纸面观察。当前节点仅表示核验与网页同步，正式统计推断未启用。'
     source_paths={'nasdaq':'v103-review/FINAL-REVIEW-v1.json','dividend':'v102-review/FINAL-REVIEW-v1.json','sp500_source':'v106-sp500-development-source/SOURCE-QUALIFICATION-v1.json'}
     if accepted.exists():source_paths['sp500_accepted']=str(accepted.relative_to(TEAM))
@@ -1130,6 +1169,8 @@ def main():
     if accepted_intermediate_review():extra_sources['v177_root_review']=MINING/'acceptance/INTERMEDIATE-v177-ROOT-REVIEW-v1.json'
     if amihud:extra_sources['v186_root_review']=MINING/'acceptance/AMIHUD-v186-ROOT-REVIEW-v1.json'
     if wrapper_source:extra_sources['v183_v184_root_review']=MINING/'acceptance/HK-USD-CASH-v183-v184-ROOT-REVIEW-v1.json'
+    if wrapper_activity:extra_sources['v190_v191_root_review']=MINING/'acceptance/HK-USD-ACTIVITY-v190-v191-ROOT-REVIEW-v1.json'
+    if tip_source_work:extra_sources['v192_tip_preparation']=MINING/'acceptance/TIP-PREP-v192-ROOT-REVIEW-v1.json'
     extra_sources['v148_root_review']=MINING/'acceptance/SGOV-QII-v148-ROOT-REVIEW-v1.json'
     extra_sources['v148_classification']=ROOT/'reports/us-cash-tax-fee-source-owner-20261118-v148/SGOV-QII-QUALIFICATION-v2.json'
     extra_sources['v148_source_findings']=ROOT/'reports/us-cash-tax-fee-source-owner-20261118-v148/SOURCE-FINDINGS-v1.md'
