@@ -138,7 +138,7 @@ def sgov_paper_status():
                      '起点建模美元钱包即计双向换汇估值成本，0证券成交也可呈负增减；这不是实际亏损。'+assumptions)
 
 
-def current_mining_work(new_paper,activity):
+def current_mining_work(new_paper,activity,milestone_delivered):
     team=read(MINING/'TEAM.json')
     source_folder=ROOT/'reports/us-action-panel-owner-20261117-v137'
     # The v1 compatibility failure stays archived; prefer a later bounded receipt.
@@ -156,17 +156,23 @@ def current_mining_work(new_paper,activity):
             assert qualified['historical_alpha_IC_or_return_labels_calculated'] is False
             assert qualified['old_700_files_qualified'] is False and qualified['old_v132_gate_unlocked'] is False
             source=f"固定{qualified['nominal_names']}股、{qualified['calendar_sessions']:,}会话的显式拆股／毛现金权利诊断源已构造，日截面{qualified['source_qualified_count_min']}—{qualified['source_qualified_count_max']}只。尚未算新IC或净账户；旧700股未因此获认证。"
-    active={o['owner']:o['status']=='ACTIVE' for o in team['owners']}
-    sgov_task='独立起点已建立，按真实新会话接续。' if new_paper['activated'] else (
-        '新包修复时钟边界后核因果、输入和现金；原包封存，待主会话验收与激活。')
-    delivered=activity=='done'
-    return dict(research_batch_status='delivered' if delivered else 'active',task='T-012',team_updated_at=team['updated_hkt'],
+    def owner_active(path_fragment):
+        return any(o['status']=='ACTIVE' and any(path_fragment in p for p in o['write_paths']) for o in team['owners'])
+    factor_active=owner_active('us-intraday-persistence-owner-20261117-v141/')
+    evidence_active=owner_active('forward-evidence-plan-owner-20261117-v142/')
+    observed_activity=activity in ['preparing','checking']
+    return dict(goal_status='ACTIVE',research_batch_status='active',stable_profitability_proven=False,
+        candidate_milestone_status='delivered' if milestone_delivered else 'pending',
+        goal_label='总目标运行中',milestone_label='历史候选交付完成（里程碑）' if milestone_delivered else '历史候选交付待验收',
+        evidence_label='稳定盈利与持续性尚未证实',
+        task='T-012',team_updated_at=team['updated_hkt'],
+        active_work=dict(factor=factor_active and observed_activity,evidence=evidence_active and observed_activity),
         source_status=raw_status,scope='港美个股及普通非杠杆ETF；持续研究与03086原四臂纸面并行。',
-        owners=[dict(name='主会话',task='本轮研究验收与交付；后续按真实新证据接续。' if delivered else '研究优先级、独立验收和最终发布',status='snapshot' if delivered else 'active'),
-                dict(name='SGOV纸面',task=sgov_task,status='active' if not delivered and (active.get('/root/us_tbill_income_owner') or active.get('/root/sgov_paper_auditor')) else 'snapshot'),
-                dict(name='美股行动源',task=source,status='active' if not delivered and active.get('/root/us_split_source_owner') else 'snapshot'),
-                dict(name='研究看板',task='本轮内容已同步，后续按实际新证据更新快照。' if delivered else '同步历史、新因子结论和当前分工；发布由主会话完成。',status='snapshot')],
-        note='本轮研究批次已交付。后续纸面需要真实新交易会话及实际运行，不代表后台持续计算。' if delivered else '工作状态只表示同步时的分工，不代表后台持续计算。等待纸面新数据时，仍推进独立机制研究。')
+        owners=[dict(name='主会话',task='持续研究优先级、独立验收与稳定盈利证据评估；候选交付不关闭总目标。',status='snapshot'),
+                dict(name='新因子筛选',task='v141美股新机制研究，等待实算及主会话验收；当前不增加IC或有效因子数。',status='active' if factor_active and observed_activity else 'snapshot'),
+                dict(name='前向证据计划',task='v142规划前向盈利与稳定性证据；不重置已有纸面起点。',status='active' if evidence_active and observed_activity else 'snapshot'),
+                dict(name='两套固定纸面',task='03086与SGOV保留原T0。当前没有新增到期观察，按真实新时点接续。',status='snapshot')],
+        note='历史候选交付是一项已完成里程碑，不代表总目标完成。工作分工只反映同步时观察，超过15分钟停动画；没有后台持续计算承诺。')
 
 
 def conditional_diagnostic_card(review_path,identifier,name,basis):
@@ -222,9 +228,7 @@ def main():
     paper= json.loads(paper_run.stdout)
     assert paper['actual_orders']==0
     factor_research=new_factor_research();sgov=sgov_history();new_paper=sgov_paper_status()
-    current_work=current_mining_work(new_paper,args.activity)
-    if args.focus=='mining' and args.activity=='done':
-        assert sgov and new_paper['activated'], 'Cannot deliver mining batch before accepted SGOV paper T0 exists'
+    current_work=current_mining_work(new_paper,args.activity,bool(sgov and new_paper['activated']))
     monthly=[v for v in nasdaq['metrics'] if v['role']=='monthly']
     cards=[dict(id='nasdaq-monthly',name='03086 · 每月趋势复核',status='paper',status_label='保留纸面验证',capital_hkd=30000,
                 period='2020-01-02 — 2026-11-13',basis='历史收盘标记，含开放持仓',
@@ -400,10 +404,11 @@ def main():
         next_intent=observed and any(v['eligible'] and v['date']>paper['verified_data_through'] for v in paper['recorded_intents'])
         monthly_review_observed=paper['verified_data_through'][:7]>paper['first_forward_session'][:7]
         stage_status=['done','done','done','done' if observed else 'pending','done' if next_intent else 'pending','done' if monthly_review_observed else 'pending']
-    if args.focus=='mining':stage_status=['done','done','done' if current_work['source_status']=='LIMITED_GROSS_RIGHTS_DIAGNOSTIC_DATA_ONLY' else 'active','done' if sgov else 'pending','done' if new_paper['activated'] else 'active','active']
-    if args.focus=='mining' and args.activity=='done':stage_status=['done']*6
+    if args.focus=='mining':stage_status=['done' if current_work['candidate_milestone_status']=='delivered' else 'pending','done' if new_paper['activated'] and paper['activated'] else 'pending',
+        'active' if current_work['active_work']['factor'] else 'pending','active' if current_work['active_work']['evidence'] else 'pending','pending','pending']
     if args.activity not in ['preparing','checking']:stage_status=['pending' if s=='active' else s for s in stage_status]
     activity_active=args.activity in ['preparing','checking'] and current['status'] in ['pending','candidate']
+    if args.focus=='mining':activity_active=args.activity in ['preparing','checking'] and any(s=='active' for s in stage_status)
     activity_text={'preparing':'准备固定开发检验','checking':'固定检验执行与独立核算','waiting':'等待下一项真实证据','done':'本轮检验已验收'}[args.activity]
     if args.focus=='hsi-hold' and args.activity in ['preparing','checking']:activity_text='已见历史的固定四案单变体诊断'
     if args.phase=='later' and args.activity in ['preparing','checking']:activity_text='固定后续段与连续账户检验'
@@ -421,8 +426,7 @@ def main():
         primary=paper['summaries']['monthly-only-base']
         activity_text=f"用户已选择历史检验通过后转固定候选纸面跟踪。03086四臂规则及真实T0保持；主臂持仓{primary['open_quantity']}份、已闭合{primary['closed_rounds']}轮。接续依赖电脑和OpenD在线，尚未安装后台定时服务。"
     if args.focus=='mining':
-        activity_text=('本轮新增候选研究已交付；03086与SGOV按真实新时点接续，港美个股／普通ETF范围保留；稳定副业收入未证。'
-                       if args.activity=='done' else '持续推进T-012：挖掘港美个股／普通ETF，与03086原四臂纸面并行。本批3个新信号、6个预定期限；SGOV的2万／3万条件历史通过，新增纸面'+('已独立激活。' if new_paper['activated'] else '仍待验收及真实起点。')+'稳定副业收入尚未建立。')
+        activity_text='总目标运行中：继续港美个股／普通ETF研究，稳定盈利尚未证实。历史候选交付已完成，只是里程碑。v141新因子与v142前向证据计划继续推进；当前仍展示已验收的3个信号、6个期限，未加入新IC。'
     source_paths={'nasdaq':'v103-review/FINAL-REVIEW-v1.json','dividend':'v102-review/FINAL-REVIEW-v1.json','sp500_source':'v106-sp500-development-source/SOURCE-QUALIFICATION-v1.json'}
     if accepted.exists():source_paths['sp500_accepted']=str(accepted.relative_to(TEAM))
     if small_accepted.exists():source_paths['small_nasdaq_accepted']=str(small_accepted.relative_to(TEAM))
@@ -448,8 +452,10 @@ def main():
     if args.focus=='cash':stage_names=['规则固定','历史来源','现金与费用','2024检验','2025与独立核账','实际成交观察']
     if args.focus=='us-vti':stage_names=['规则固定','长历史来源','价格诊断','后续历史段','独立核账','完整现金补证']
     if args.focus=='paper':stage_names=['历史检验','规则冻结','纸面起点','新会话观察','意向接续','月初复核']
-    if args.focus=='mining':stage_names=['研究范围','固定信号筛选','个股诊断源','SGOV历史核账','新增纸面准备','持续挖掘与同步']
-    if args.focus=='mining' and args.activity=='done':stage_names=['研究范围','固定信号筛选','个股诊断源','SGOV历史核账','纸面真实起点','本批研究交付']
+    if args.focus=='mining':stage_names=['历史候选里程碑','两套纸面原T0','新因子研究','前向证据计划','持续前向样本','稳定盈利证据']
+    stage_details=[None]*6
+    if args.focus=='mining':stage_details=['历史阶段已交付','原起点保留',
+        '同步时进行中' if stage_status[2]=='active' else '等待实际新进展','同步时进行中' if stage_status[3]=='active' else '等待实际新进展','待真实新样本','证据未建立']
     extra_sources={
         'mining_goal':MINING/'GOAL.md','mining_scope':MINING/'GOAL-SCOPE-ADDENDUM-v1.json','mining_team':MINING/'TEAM.json',
         'fip_protocol':MINING/'PROTOCOL-v1.json','fip_original':MINING/'RESULT-v1.json','fip_calendar_correction':MINING/'calendar-correction-v2/RESULT.json',
@@ -457,6 +463,8 @@ def main():
         'liquidity_factor':ROOT/'reports/hk-liquidity-factor-owner-20261117-v130/RESULT-v1.json',
         'us_anchor_factor':ROOT/'reports/us-anchor-factor-owner-20261117-v132/RESULT-v1.json',
         'old_factor_catalog_review':ROOT/'reports/us-anchor-factor-owner-20261117-v132/OLD-CATALOG-REVIEW-v1.json'}
+    for name,file in [('continuous_goal','GOAL-CONTINUOUS-v2.md'),('restored_goal_receipt','GOAL-RESTORED-RECEIPT-v2.json')]:
+        if (MINING/file).exists():extra_sources[name]=MINING/file
     if archive:extra_sources['old_catalog']=archived
     if gld_path.exists():extra_sources['us_gld_fixed']=gld_path
     if sgov:
@@ -472,11 +480,11 @@ def main():
     if (MINING/'sgov-review/PAPER-ACTIVATION-ACCEPTANCE-v1.json').exists():
         extra_sources['sgov_real_paper_activation']=MINING/'sgov-review/PAPER-ACTIVATION-ACCEPTANCE-v1.json'
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
-      activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美因子挖掘 · 与固定纸面并行'}[args.focus],
+      activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
                     snapshot_only=True,fresh_for_minutes=15),
-      stages=[dict(name=n,status=s) for n,s in zip(stage_names,stage_status)],
-      cards=cards,registry=registry,ipo_observation=ipo_observation,default_evidence_view='paper' if args.focus=='paper' or args.focus=='mining' and args.activity=='done' else 'history',
+      stages=[dict(name=n,status=s,detail=d) for n,s,d in zip(stage_names,stage_status,stage_details)],
+      cards=cards,registry=registry,ipo_observation=ipo_observation,default_evidence_view='paper' if args.focus in ['paper','mining'] else 'history',
       factor_research=factor_research,current_work=current_work,sgov_history={k:v for k,v in sgov.items() if k!='card'} if sgov else None,sgov_paper=new_paper,
       paper=dict(checked_at=paper['checked_at_hkt'],activation_utc=paper['activation_utc'],first_forward_session=paper['first_forward_session'],
                  account_count=len(paper['summaries']),closed_rounds=paper['summaries']['monthly-only-base']['closed_rounds'],

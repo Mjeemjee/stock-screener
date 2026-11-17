@@ -11,6 +11,11 @@ export function validateSnapshot(value) {
     throw new Error('研究快照格式不完整，请稍后刷新。')
   }
   if (['done', 'waiting'].includes(value.activity.status) && value.activity.active_at_snapshot) throw new Error('已交付或等待阶段不能显示进行中动画。')
+  if (value.current_work?.goal_status === 'ACTIVE') {
+    if (value.current_work.stable_profitability_proven !== false || !['delivered', 'pending'].includes(value.current_work.candidate_milestone_status)) throw new Error('持续研究目标与候选里程碑必须分列。')
+    if (value.stages.every(s => s.status === 'done')) throw new Error('总目标运行中，不能把全部证据阶段显示为完成。')
+    if (value.activity.active_at_snapshot && !value.stages.some(s => s.status === 'active')) throw new Error('活动动画必须对应同步时的实际工作节点。')
+  }
   for (const card of value.cards) {
     if (typeof card.name !== 'string' || !Number.isFinite(card.capital_hkd) || card.capital_hkd <= 0 || !Array.isArray(card.results) || card.results.length !== 2) throw new Error('账户口径缺失，暂不展示收益。')
     if (new Set(card.results.map(r => r.cost)).size !== 2) throw new Error('两档成本需要分别列示。')
@@ -102,6 +107,11 @@ if (typeof document !== 'undefined') {
     find('activity-tag').textContent = active ? '同步时进行中' : state === 'fresh' ? '阶段快照' : '上次同步阶段'
   }
   function renderWork(data) {
+    const work = data.current_work
+    find('goal-summary').hidden = !work?.goal_status
+    find('goal-status').textContent = work?.goal_label ?? ''
+    find('goal-milestone').textContent = work?.milestone_label ?? ''
+    find('goal-evidence').textContent = work?.evidence_label ?? ''
     find('work-owners').replaceChildren()
     for (const owner of data.current_work?.owners ?? []) {
       const item = element('li')
@@ -233,7 +243,7 @@ if (typeof document !== 'undefined') {
     const names = { done: '已完成', active: '同步时进行中', pending: '尚未开始', not_opened: '按规则未打开', unknown: '资料不足' }
     for (const stage of data.stages) {
       const item = element('li', stage.name, `stage ${stage.status}`)
-      item.append(element('small', names[stage.status] ?? stage.status)); find('stages').append(item)
+      item.append(element('small', stage.detail ?? names[stage.status] ?? stage.status)); find('stages').append(item)
     }
     renderWork(data); renderFactors(data); renderSgovHistory(data); renderCards(data); renderPaper(data); renderRecords()
     if (selectedEvidenceView === null) selectEvidenceView(data.default_evidence_view === 'paper' ? 'paper' : 'history')
