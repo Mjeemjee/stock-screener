@@ -47,6 +47,18 @@ export function validateSnapshot(value) {
       }
     }
   }
+  if (value.evidence_updates) {
+    const q = value.evidence_updates.sgov_qii, f = value.evidence_updates.forward_evaluation
+    if (q?.status !== 'accepted_issuer_classification_only' || !Number.isSafeInteger(q.source_events) || q.source_events <= 0 ||
+        !Array.isArray(q.annual) || !q.annual.length || new Set(q.annual.map(r => r.year)).size !== q.annual.length ||
+        q.annual.some(r => !Number.isSafeInteger(r.year) || !Number.isFinite(Number(r.weighted_qii_percent)) || Number(r.weighted_qii_percent) < 0 || Number(r.weighted_qii_percent) > 100 ||
+          !/^https:\/\/www\.(blackrock|ishares)\.com\/.+\.pdf$/.test(r.source_url)) ||
+        q.classification_is_personal_tax_rate !== false || q.actual_broker_withholding_refunds_fees_known !== false || q.existing_model_amounts_changed !== false) throw new Error('QII仅为发行人分类，不能改称个人税率或改写旧模型金额。')
+    if (f?.status !== 'accepted_descriptive_only' || f.claim_level !== 'DESCRIPTIVE_ONLY' || !Number.isFinite(Date.parse(f.actual_freeze_utc)) ||
+        !Number.isFinite(Date.parse(f.durable_completion_utc)) || f.formal_statistical_stability_method_frozen !== false || f.existing_arms_reported !== 8 ||
+        f.new_paper_t0 !== false || f.stable_profitability_proven !== false || f.automatic_goal_completion !== false ||
+        f.original_t0s?.hk03086 !== value.paper.activation_utc || f.original_t0s?.us_sgov !== value.sgov_paper?.activation_utc) throw new Error('描述性月报接受与原纸面T0、正式稳定性统计必须分别显示。')
+  }
   if (value.portfolio_research) {
     const p = value.portfolio_research
     if (p.status === 'implementation_pending_review') {
@@ -187,6 +199,26 @@ if (typeof document !== 'undefined') {
       find('factor-list').append(article)
     }
   }
+  function renderEvidenceUpdates(data) {
+    const updates = data.evidence_updates
+    find('evidence-updates').hidden = !updates
+    if (!updates) return
+    const q = updates.sgov_qii, f = updates.forward_evaluation
+    find('qii-summary').textContent = `${q.ticker} · ${q.source_events}笔发行人QII分类已核。`
+    find('qii-years').replaceChildren()
+    for (const [i, r] of q.annual.entries()) {
+      if (i) find('qii-years').append(document.createTextNode('；'))
+      const link = element('a', `${r.year}：${Number(r.weighted_qii_percent) === 100 ? '100' : Number(r.weighted_qii_percent).toFixed(4)}%`)
+      link.href = r.source_url; link.target = '_blank'; link.rel = 'noopener'; link.title = `${r.year}年发行人QII原表PDF`
+      find('qii-years').append(link)
+    }
+    find('qii-years').append(document.createTextNode('。'))
+    find('qii-note').textContent = q.note
+    find('qii-limits').textContent = q.limitation
+    find('forward-accepted').textContent = `描述性协议接受：${f.accepted_at_hkt} HKT；保留两套原T0和${f.existing_arms_reported}臂。`
+    find('forward-note').textContent = f.note
+    find('forward-limits').textContent = f.limitation
+  }
   function renderPortfolio(data) {
     const research = data.portfolio_research
     find('portfolio-progress').hidden = !research
@@ -320,7 +352,7 @@ if (typeof document !== 'undefined') {
       const item = element('li', stage.name, `stage ${stage.status}`)
       item.append(element('small', stage.detail ?? names[stage.status] ?? stage.status)); find('stages').append(item)
     }
-    renderWork(data); renderPortfolio(data); renderFactors(data); renderSgovHistory(data); renderCards(data); renderPaper(data); renderRecords()
+    renderWork(data); renderPortfolio(data); renderFactors(data); renderEvidenceUpdates(data); renderSgovHistory(data); renderCards(data); renderPaper(data); renderRecords()
     if (selectedEvidenceView === null) selectEvidenceView(data.default_evidence_view === 'paper' ? 'paper' : 'history')
     find('research-note').textContent = data.research_note
     find('baseline-note').textContent = `同为3万初始资金，基础成本月度版历史标记 ${money(data.baseline.monthly_base_net_hkd)} 港元，报价回撤约 ${data.baseline.monthly_base_risk_pct.toFixed(2)}%；被动参考 ${money(data.baseline.passive_base_net_hkd)} 港元、约 ${data.baseline.passive_base_risk_pct.toFixed(2)}%。未证明稳定独立超额收益。`
