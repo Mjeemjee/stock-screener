@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-18T00:53:39.719836+08:00",
+  "updated_at": "2026-11-18T01:39:34.277590+08:00",
   "market_data_through": "2026-11-17",
   "activity": {
     "status": "checking",
     "active_at_snapshot": true,
     "focus": "港美持续研究 · 总目标运行中",
-    "text": "总目标运行中，稳定盈利尚未证实；历史候选交付只是里程碑。v141日内强度、v145低MAX及v147毛现金股息率均固定方向筛退，累计6个信号、12个预定期限。QII仅核来源分类，描述性月报已接受，正式稳定性统计方法尚未冻结。60／20／20组合A/B/C条件历史保留；C与A/B重叠，不能相加，不是三次独立盲测，没有新增组合纸面T0。当前root验收与发布，v151只做下一机制预登记，未看新结果。",
+    "text": "总目标运行中，稳定盈利尚未证实；历史候选交付只是里程碑。v151单代理残差趋势双期限训练筛退，独立复算及root验收已完成。已验收记录累计7个信号、14个预定期限。正式稳定性统计方法尚未冻结。60／20／20组合A/B/C条件历史保留；C与A/B重叠，不能相加。v153未解除VTI历史来源条件。当前推进组合前向实施准备：年度再平衡与一次持有并列，尚未新增组合钱包或T0。",
     "snapshot_only": true,
     "fresh_for_minutes": 15
   },
@@ -22,9 +22,9 @@
       "detail": "条件历史已复核"
     },
     {
-      "name": "下一机制预登记",
+      "name": "组合前向方案设计",
       "status": "active",
-      "detail": "未看新结果"
+      "detail": "尚未激活新组合纸面"
     },
     {
       "name": "研究交付核验",
@@ -960,6 +960,15 @@
       "source": "固定信号诊断；不是可执行净账户"
     },
     {
+      "id": "new-factor-us_single_proxy_predictive_residual_momentum_252_60",
+      "version": "本批新因子",
+      "name": "美股 · 单代理残差趋势",
+      "category": "recent",
+      "conclusion": "20／60日RankIC +0.02325／−0.00186，HAC t仅1.089／−0.067；前组相对同池毛权益差 +24.65／+54.16bp。两个期限均未通过冻结训练闸，毛差不是可执行净利润。 当前40只大型股便利池，先252会话估计、再60会话形成，需313个连续合格状态。代理为其余股票等权毛收益，不是标准三因子或广义市场中性；与60日价格动量平均秩相关约0.8311。未打开2020+，净账户与本金适配未知。 独立复算重现本次拒绝。F01为极端溢出输入下的非有限值处理缺陷；实际训练无此输入，不改变本次排名、分组与结论，通用复用前仍须修正。 固定失败保留；不翻方向、改窗口或挑年份补救，账户净利与本金适配仍未知。",
+      "source_date": "2026-11-18",
+      "source": "固定信号诊断；不是可执行净账户"
+    },
+    {
       "id": "sgov-qii-source-v148",
       "version": "V148 · 来源核验",
       "name": "SGOV官方QII分类 · 非个人税率",
@@ -978,6 +987,16 @@
       "conclusion": "2026-11-18 00:38:53 HKT接受。原T0八臂全路径与本金保留；按各市场当地月末固定报告，启动月不足整月。已知现金观察和FX前缀不冒充更早预登记，跨接受时点的会话或月份另标过渡。 这是描述性评价协议的接受时点，不是新纸面T0，也不新增观察或证券交易。正式稳定性统计方法尚未冻结；不得以等待月份、交易笔数、某次正结果或协议接受自动证明稳定盈利。",
       "source_date": "2026-11-18",
       "source": "root真实UTC接受回执；不是新纸面T0或新策略试验"
+    },
+    {
+      "id": "vti-source-v153",
+      "version": "V153 · 来源核验",
+      "name": "VTI历史付款日核验 · 来源条件保留",
+      "category": "recent",
+      "record_type": "source_review",
+      "conclusion": "12笔目标未获新增的完整官方身份／日期／金额证明：2021年4笔付款日来源待核，2022—2023年8笔日历打印CUSIP与VTI身份冲突。计划付款日不是实际付款或券商到账，旧账户金额及条件结论不变；新日期官方事件可独立留证。",
+      "source_date": "2026-11-18",
+      "source": "官方原页与root源审计；不是新增因子、交易或收益"
     },
     {
       "id": "v131-gld-fixed",
@@ -8179,7 +8198,7 @@
   "factor_research": {
     "new_net_account_candidates": 0,
     "scope": "港股和美股个股、普通非杠杆ETF；1万／2万／3万港币分别核验。",
-    "note": "已验收筛选记录：6个信号、12个预定期限。日历修正、对照和模板不增加信号数；IC是排序相关系数，不是收益率。",
+    "note": "已验收筛选记录：7个信号、14个预定期限。日历修正、对照和模板不增加信号数；IC是排序相关系数，不是收益率。",
     "limitations": "各批次股票池、可评价集合和期间不同，不能直接横比IC来断言增量优势。已见历史不是新盲测；批内p校正不覆盖整个研究过程的选择偏差。",
     "items": [
       {
@@ -8443,10 +8462,69 @@
           "first_failed_verifier_retained": true,
           "published_frozen_scores_not_rewritten": true
         }
+      },
+      {
+        "id": "us_single_proxy_predictive_residual_momentum_252_60",
+        "name": "美股 · 单代理残差趋势",
+        "status": "rejected",
+        "status_label": "固定方向双期限筛退",
+        "horizons": [
+          20,
+          60
+        ],
+        "formula": "raw_i,T=mean(e_i,s over s=T-59..T)/sample_std(e_i,s over same60); e_i,s=r_i,s-alpha_i,T-beta_i,T*m_-i,s",
+        "diagnostics": [
+          {
+            "horizon": 20,
+            "split": "固定训练 · 毛权益诊断",
+            "period": "2014-06-01 — 2019-12-31",
+            "rank_ic": 0.02325151841172756,
+            "hac_t": 1.0893360900384008,
+            "p_value": 0.5520114064857524,
+            "p_label": "两期限批内p",
+            "top_excess_bp": 24.65012344628763,
+            "measure": "gross_rights"
+          },
+          {
+            "horizon": 60,
+            "split": "固定训练 · 毛权益诊断",
+            "period": "2014-06-01 — 2019-12-31",
+            "rank_ic": -0.0018632228943815477,
+            "hac_t": -0.06722451862001654,
+            "p_value": 1,
+            "p_label": "两期限批内p",
+            "top_excess_bp": 54.15571300329562,
+            "measure": "gross_rights"
+          }
+        ],
+        "account_net_hkd": null,
+        "account_max_drawdown_pct": null,
+        "conclusion": "20／60日RankIC +0.02325／−0.00186，HAC t仅1.089／−0.067；前组相对同池毛权益差 +24.65／+54.16bp。两个期限均未通过冻结训练闸，毛差不是可执行净利润。",
+        "limitation": "当前40只大型股便利池，先252会话估计、再60会话形成，需313个连续合格状态。代理为其余股票等权毛收益，不是标准三因子或广义市场中性；与60日价格动量平均秩相关约0.8311。未打开2020+，净账户与本金适配未知。 独立复算重现本次拒绝。F01为极端溢出输入下的非有限值处理缺陷；实际训练无此输入，不改变本次排名、分组与结论，通用复用前仍须修正。",
+        "next": "固定失败保留；不翻方向、改窗口或挑年份补救，账户净利与本金适配仍未知。",
+        "source_date": "2026-11-18",
+        "independent_review": {
+          "real_training_reproduced": true,
+          "edge_findings": [
+            {
+              "id": "F01",
+              "name": "Nonfinite computed peer return contaminates nansum",
+              "production_finite_last": 0,
+              "reference_finite_last": 39,
+              "expected_valid_other_targets": 39,
+              "observed_contract_defect": true,
+              "mechanism": "np.nansum ignoresNaN but retainsInf; finite peer count excludesInf while peer sum does not. Source-valid finite positive extreme states produce oneInf return.",
+              "candidate_fixed_training_impact": "To be counted separately; no current economic rule or result is changed",
+              "actual_training_nonfinite_computed_returns": 0,
+              "fixed_training_rejection_affected": false
+            }
+          ],
+          "fixed_training_rejection_affected": false
+        }
       }
     ],
-    "unique_new_signals": 6,
-    "planned_horizon_trials": 12
+    "unique_new_signals": 7,
+    "planned_horizon_trials": 14
   },
   "current_work": {
     "goal_status": "ACTIVE",
@@ -8457,23 +8535,23 @@
     "milestone_label": "历史候选交付完成（里程碑）",
     "evidence_label": "稳定盈利与持续性尚未证实",
     "task": "T-012",
-    "team_updated_at": "2026-11-18T00:39:46.840005+08:00",
+    "team_updated_at": "2026-11-18T01:36:34.994092+08:00",
     "active_work": {
       "account": false,
       "registration": true,
       "review": true
     },
     "source_status": "LIMITED_GROSS_RIGHTS_DIAGNOSTIC_DATA_ONLY",
-    "scope": "港美个股及普通非杠杆ETF；持续研究与03086原四臂纸面并行。",
+    "scope": "港美个股及普通非杠杆ETF；持续研究与原03086／SGOV纸面并行。",
     "owners": [
       {
         "name": "主会话核验与发布",
-        "task": "新股息因子筛退、QII来源分类与描述性月报协议已验收；当前整理网页同步及发布，稳定盈利未证。",
+        "task": "残差趋势固定训练结果及来源/前向准备正在交付核验；已有条件历史候选保留，稳定盈利未证。",
         "status": "active"
       },
       {
-        "name": "下一机制预登记",
-        "task": "v151只做机制去重及可运行预登记，尚未看新结果；不增加已计算因子或期限数。",
+        "name": "组合前向准备",
+        "task": "60／20／20组合前向方案已整理，年度再平衡和一次持有并列；来源适配和增量钱包尚待实现及核验，未激活新钱包、意向或T0。",
         "status": "active"
       },
       {
@@ -8483,7 +8561,7 @@
       },
       {
         "name": "已验收因子",
-        "task": "v141日内强度、v145低MAX及v147毛现金股息率的固定方向、20/60日均筛退；不是全球机制失败，不再标为忙碌。",
+        "task": "v141日内强度、v145低MAX、v147毛现金股息率及v151单代理残差趋势均未通过固定训练筛选；不是全球机制失败。",
         "status": "snapshot"
       },
       {
@@ -12946,7 +13024,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-16",
-    "checked_at": "2026-11-18T00:53:40.489888+08:00",
+    "checked_at": "2026-11-18T01:39:35.123078+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -12997,7 +13075,7 @@
     "note": "SGOV四个独立条件纸面：2万／3万各基础及压力。保持独立T0，不倒填历史。尚未观察新会话，没有证券成交。起点建模美元钱包即计双向换汇估值成本，0证券成交也可呈负增减；这不是实际亏损。固定USD/HKD 7.8；基础／压力的每个方向换汇成本25／50bp，预扣税30%及每次分派1／2美元服务费储备均为情景；发行人付款日不等于券商到账日。"
   },
   "paper": {
-    "checked_at": "2026-11-18T00:53:40.107311+08:00",
+    "checked_at": "2026-11-18T01:39:34.708888+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -13050,7 +13128,7 @@
   "factor_archive": {
     "count": 538,
     "source_date": "2026-11-03",
-    "note": "其中500条为30种基础表达式的模板组合，不是538个有效因子。旧US缓存发现拆股阶跃，相关旧条目未获本轮资格认证；原IC和原结论保留。与已验收的6个信号分开计数。"
+    "note": "其中500条为30种基础表达式的模板组合，不是538个有效因子。旧US缓存发现拆股阶跃，相关旧条目未获本轮资格认证；原IC和原结论保留。与已验收的7个信号分开计数。"
   },
   "source_hashes": {
     "nasdaq": "bdb900a98001538774d5ef16b95131ce24f52649020990f6194fb39ca330e3a3",
@@ -13076,9 +13154,9 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "d468bfad923de8f2ace57c49401af6089b754e58ac7a8af49f6820a59d47cf97",
+    "mining_goal": "39b46f0179663ae79397d02cf222476b7ef204a5cb57dcb6c6d696ab50a84d90",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
-    "mining_team": "3323ca96213971660e51fb8501caff81d221a1974a395882b3bbbeda2dc8516b",
+    "mining_team": "579849ec39006b738b3de625538eb1c050c7f92a14911be7a8e5e89b0dca068f",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
     "fip_original": "9c598341d1b0e59753bc0134509908b4698209cfff0b95c22f973f655b868296",
     "fip_calendar_correction": "33d2d80372b6c433688dbbcabcc49f2a458989a633ed783c0c2fa42d6f824695",
@@ -13102,6 +13180,11 @@
     "v147_root_review": "c83ced6f695b09de2ed6a96080245fe8478008bf721fd38335d229b51c057c0f",
     "v145_root_verify": "bbca9fbb0d21b182edda8a5e158e9faf49fe7ce86025153517e70f9b536eca68",
     "v147_root_verify": "f573f35f817afd6f74a0ea7192157f82ac94f1ad2ce70fa91f4ed61b956751ec",
+    "v151_root_review": "455a4aba11abcbff9292b20c3e974329169230a4f322868008315e10b2fc9174",
+    "v151_result": "d946cda36c59311c2c762662dfa0b769a8c2fdc1b15f61df640bd85abd65e7ad",
+    "v151_protocol": "7b02607afaff33058b1f052fc02d218590c96371f02c8f66de01030223c62097",
+    "v151_root_verify": "89d6856a8dbce00e76a84f5aea34e0072120bd1232c7b31a3014eea0baa478a6",
+    "v153_root_source_review": "d25a9034eedc8908b6a98e4516ef0bde0c230e9a3220a6737f4b305ee246fc49",
     "v148_root_review": "93acdfaaf6622e1ad1d0a72a71c14aeb3adb3ed6b5a59885c935fe3666c2828d",
     "v148_classification": "a98f8032c71c96f4e9841378b13154ad8ae7c12658c771a93014178e3d33fa09",
     "v148_source_findings": "111be9d649230a601bddae3ee8c103c67a0a0dac9a91dda6c554d618b0868039",
