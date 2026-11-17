@@ -1,39 +1,45 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-17T19:33:14.247766+08:00",
+  "updated_at": "2026-11-17T21:11:54.512783+08:00",
   "market_data_through": "2026-11-17",
   "activity": {
-    "status": "done",
-    "active_at_snapshot": false,
-    "focus": "港美因子挖掘 · 与固定纸面并行",
-    "text": "本轮新增候选研究已交付；03086与SGOV按真实新时点接续，港美个股／普通ETF范围保留；稳定副业收入未证。",
+    "status": "checking",
+    "active_at_snapshot": true,
+    "focus": "港美持续研究 · 总目标运行中",
+    "text": "总目标运行中：继续港美个股／普通ETF研究，稳定盈利尚未证实。历史候选交付已完成，只是里程碑。v141新因子与v142前向证据计划继续推进；当前仍展示已验收的3个信号、6个期限，未加入新IC。",
     "snapshot_only": true,
     "fresh_for_minutes": 15
   },
   "stages": [
     {
-      "name": "研究范围",
-      "status": "done"
+      "name": "历史候选里程碑",
+      "status": "done",
+      "detail": "历史阶段已交付"
     },
     {
-      "name": "固定信号筛选",
-      "status": "done"
+      "name": "两套纸面原T0",
+      "status": "done",
+      "detail": "原起点保留"
     },
     {
-      "name": "个股诊断源",
-      "status": "done"
+      "name": "新因子研究",
+      "status": "active",
+      "detail": "同步时进行中"
     },
     {
-      "name": "SGOV历史核账",
-      "status": "done"
+      "name": "前向证据计划",
+      "status": "active",
+      "detail": "同步时进行中"
     },
     {
-      "name": "纸面真实起点",
-      "status": "done"
+      "name": "持续前向样本",
+      "status": "pending",
+      "detail": "待真实新样本"
     },
     {
-      "name": "本批研究交付",
-      "status": "done"
+      "name": "稳定盈利证据",
+      "status": "pending",
+      "detail": "证据未建立"
     }
   ],
   "cards": [
@@ -8268,34 +8274,44 @@
     ]
   },
   "current_work": {
-    "research_batch_status": "delivered",
+    "goal_status": "ACTIVE",
+    "research_batch_status": "active",
+    "stable_profitability_proven": false,
+    "candidate_milestone_status": "delivered",
+    "goal_label": "总目标运行中",
+    "milestone_label": "历史候选交付完成（里程碑）",
+    "evidence_label": "稳定盈利与持续性尚未证实",
     "task": "T-012",
-    "team_updated_at": "2026-11-17T19:32:18.588670+08:00",
+    "team_updated_at": "2026-11-17T21:04:00.307667+08:00",
+    "active_work": {
+      "factor": true,
+      "evidence": true
+    },
     "source_status": "LIMITED_GROSS_RIGHTS_DIAGNOSTIC_DATA_ONLY",
     "scope": "港美个股及普通非杠杆ETF；持续研究与03086原四臂纸面并行。",
     "owners": [
       {
         "name": "主会话",
-        "task": "本轮研究验收与交付；后续按真实新证据接续。",
+        "task": "持续研究优先级、独立验收与稳定盈利证据评估；候选交付不关闭总目标。",
         "status": "snapshot"
       },
       {
-        "name": "SGOV纸面",
-        "task": "独立起点已建立，按真实新会话接续。",
-        "status": "snapshot"
+        "name": "新因子筛选",
+        "task": "v141美股新机制研究，等待实算及主会话验收；当前不增加IC或有效因子数。",
+        "status": "active"
       },
       {
-        "name": "美股行动源",
-        "task": "固定40股、1,762会话的显式拆股／毛现金权利诊断源已构造，日截面39—40只。尚未算新IC或净账户；旧700股未因此获认证。",
-        "status": "snapshot"
+        "name": "前向证据计划",
+        "task": "v142规划前向盈利与稳定性证据；不重置已有纸面起点。",
+        "status": "active"
       },
       {
-        "name": "研究看板",
-        "task": "本轮内容已同步，后续按实际新证据更新快照。",
+        "name": "两套固定纸面",
+        "task": "03086与SGOV保留原T0。当前没有新增到期观察，按真实新时点接续。",
         "status": "snapshot"
       }
     ],
-    "note": "本轮研究批次已交付。后续纸面需要真实新交易会话及实际运行，不代表后台持续计算。"
+    "note": "历史候选交付是一项已完成里程碑，不代表总目标完成。工作分工只反映同步时观察，超过15分钟停动画；没有后台持续计算承诺。"
   },
   "sgov_history": {
     "approved_capital_hkd": [
@@ -8502,7 +8518,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-16",
-    "checked_at": "2026-11-17T19:33:16.564532+08:00",
+    "checked_at": "2026-11-17T21:11:55.494069+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -8553,7 +8569,7 @@
     "note": "SGOV四个独立条件纸面：2万／3万各基础及压力。保持独立T0，不倒填历史。尚未观察新会话，没有证券成交。起点建模美元钱包即计双向换汇估值成本，0证券成交也可呈负增减；这不是实际亏损。固定USD/HKD 7.8；基础／压力的每个方向换汇成本25／50bp，预扣税30%及每次分派1／2美元服务费储备均为情景；发行人付款日不等于券商到账日。"
   },
   "paper": {
-    "checked_at": "2026-11-17T19:33:15.472148+08:00",
+    "checked_at": "2026-11-17T21:11:54.972935+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -8632,9 +8648,9 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "abf05c56423f13905ae777987b6d6b3abaa8dfd02c96ba06a13c945d8fb89350",
+    "mining_goal": "0eb3a33435ba98531e46db923d807c94c3a879d4d88befc61156fb136f882206",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
-    "mining_team": "e22af6841867008cda1bfedd851b6ba3d66c3d06be10b99730a7dc4211bb9554",
+    "mining_team": "721eca6c0761e1f22be34da4dc981886abbc7b98621e8e3b47624d6115a6e4ba",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
     "fip_original": "9c598341d1b0e59753bc0134509908b4698209cfff0b95c22f973f655b868296",
     "fip_calendar_correction": "33d2d80372b6c433688dbbcabcc49f2a458989a633ed783c0c2fa42d6f824695",
@@ -8642,6 +8658,8 @@
     "liquidity_factor": "e5dbad4659809e0b0d5576793970139e8e37ddd7d90ac5d8396bf713ca87b561",
     "us_anchor_factor": "159fa257905260d0bf2048e726bde3f90cbec2ce678d46305ab48d449905774a",
     "old_factor_catalog_review": "03a1e012cb63b8872578c04f8107bcbb3f221dc1e4f8f0d7a9ed4ec4c99a870f",
+    "continuous_goal": "54540eb3e3c9d837cd41b37dae0cbe45a318306b87ab5f6951d184589af7ddff",
+    "restored_goal_receipt": "533e3f1709605a5d2dfe70bfb16d724ed5abffe52cf806b5422933305ee72c16",
     "old_catalog": "dc087e3cddb40e376e12ca5334144268df03ed79bc598a3691f42665352c967c",
     "us_gld_fixed": "8bd0a9f64f150a947825ae94e190001ad97f846ef48b5d1a7cdb9cd002ee827e",
     "sgov_history_review": "e7aacb1b94f6d3a1b3262ac11fa021bca23a0653694b5de2294b1afb5ba02711",
