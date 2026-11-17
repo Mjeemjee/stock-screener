@@ -84,6 +84,13 @@ export function validateSnapshot(value) {
         !Number.isFinite(Date.parse(f.durable_completion_utc)) || f.formal_statistical_stability_method_frozen !== false || f.existing_arms_reported !== 8 ||
         f.new_paper_t0 !== false || f.stable_profitability_proven !== false || f.automatic_goal_completion !== false ||
         f.original_t0s?.hk03086 !== value.paper.activation_utc || f.original_t0s?.us_sgov !== value.sgov_paper?.activation_utc) throw new Error('描述性月报接受与原纸面T0、正式稳定性统计必须分别显示。')
+    const wrapper = value.evidence_updates.hk_usd_cash_wrapper
+    if (wrapper && (wrapper.status !== 'accepted_dated_kfs_current_metadata_only' || wrapper.ticker !== 'HK.03196' ||
+        wrapper.distribution_currency !== 'USD' || wrapper.regular_distribution_guaranteed !== false ||
+        wrapper.distribution_2025_certified !== false || wrapper.executable_depth_certified !== false ||
+        wrapper.existing_model_amounts_changed !== false || wrapper.new_paper_t0 !== false ||
+        [wrapper.new_factor_trials, wrapper.new_horizon_trials, wrapper.new_account_return_trials].some(n => n !== 0) ||
+        !/^https:\/\/www\.bosera\.com\.hk\/api\/infobase\/downloadattfile\.do\?attachmentId=[A-Za-z0-9]+$/.test(wrapper.source_url))) throw new Error('03196当前来源补证不能升级为全年分派、成交或盈利证明。')
   }
   if (value.portfolio_research) {
     const p = value.portfolio_research
@@ -260,6 +267,14 @@ if (typeof document !== 'undefined') {
       find('hk-cash-summary').textContent = cash.summary
       find('hk-cash-limits').textContent = cash.limitation
       find('hk-cash-accepted').textContent = `局部来源接受：${dateText(cash.accepted_at_utc)} HKT；原收益、空值和试验计数不变。`
+    }
+    const wrapper = updates.hk_usd_cash_wrapper
+    find('hk-usd-cash-update').hidden = !wrapper
+    if (wrapper) {
+      find('hk-usd-cash-summary').textContent = wrapper.summary
+      find('hk-usd-cash-note').textContent = wrapper.note
+      find('hk-usd-cash-limits').textContent = wrapper.limitation
+      find('hk-usd-cash-source').href = wrapper.source_url
     }
   }
   function renderPortfolio(data) {

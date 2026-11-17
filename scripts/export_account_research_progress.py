@@ -160,6 +160,8 @@ def new_factor_research():
         report['items'].append(factor)
     intermediate=accepted_intermediate_review()
     if intermediate:report['items'].append(intermediate['site_factor'])
+    amihud=accepted_amihud_review()
+    if amihud:report['items'].append(amihud['site_factor'])
     ids=[r['id'] for r in report['items']]
     assert len(ids)==len(set(ids)), 'A signal cannot be counted twice'
     report['unique_new_signals']=len(ids)
@@ -439,7 +441,12 @@ def accepted_continuation_review(filename, decision):
     review=read(path)
     assert review['decision']==decision and review['goal_status']=='ACTIVE'
     assert review['stable_profitability_proven'] is False
-    for relative,expected in review['pins'].items():assert digest(ROOT/relative)==expected,relative
+    assert not review.get('TEST_ONLY') and isinstance(review.get('pins'),dict) and review['pins']
+    for relative,expected in review['pins'].items():
+        source=(ROOT/relative).resolve()
+        assert source.is_relative_to(ROOT.resolve()) and source.is_file(),relative
+        assert isinstance(expected,str) and re.fullmatch('[0-9a-f]{64}',expected),relative
+        assert digest(source)==expected,relative
     return review
 
 
@@ -450,6 +457,21 @@ def accepted_intermediate_review():
     if not review:return None
     assert review['actual_unique_signal_trials']==1 and review['actual_horizon_trials']==2
     factor=review['site_factor']
+    assert factor['status']=='rejected' and factor['horizons']==[20,60]
+    assert factor['account_net_hkd'] is None and factor['account_max_drawdown_pct'] is None
+    assert len(factor['diagnostics'])==2 and {d['horizon'] for d in factor['diagnostics']}=={20,60}
+    return review
+
+
+def accepted_amihud_review():
+    """Only the root-reviewed projection can add this signal; never parse author RESULT."""
+    review=accepted_continuation_review('AMIHUD-v186-ROOT-REVIEW-v1.json',
+        'ACCEPT_FIXED_TRAINING_REJECTION_NOT_GLOBAL_MECHANISM_FAILURE')
+    if not review:return None
+    assert not review.get('TEST_ONLY') and review['independent_reproduction_passed'] is True
+    assert review['actual_unique_signal_trials']==1 and review['actual_horizon_trials']==2
+    factor=review['site_factor']
+    assert not factor.get('TEST_ONLY') and factor['id']=='us_amihud_gross_illiquidity_252'
     assert factor['status']=='rejected' and factor['horizons']==[20,60]
     assert factor['account_net_hkd'] is None and factor['account_max_drawdown_pct'] is None
     assert len(factor['diagnostics'])==2 and {d['horizon'] for d in factor['diagnostics']}=={20,60}
@@ -556,6 +578,32 @@ def project_hk_cash_addendum(evidence,current_work,registry):
     registry.append(dict(id='hk-cash-source-v176',version='V176 · 2024局部来源补强',name='03152 · 2024零普通分派年报依据',
         category='recent',record_type='source_qualification_addendum',conclusion=summary+' '+limits,
         source_date='2026-11-18',source='root接受与逐页目视核对；不新增回测、纸面T0或盈利策略'))
+
+
+def project_hk_usd_cash_source(evidence,current_work,registry):
+    review=accepted_continuation_review('HK-USD-CASH-v183-v184-ROOT-REVIEW-v1.json',
+        'ACCEPT_DATED_KFS_AND_CURRENT_METADATA_ONLY_NOT_PROFITABILITY')
+    if not review:return None
+    assert review['candidate']=='HK.03196' and not review.get('TEST_ONLY')
+    assert review['new_factor_trials']==review['new_horizon_trials']==review['new_account_return_trials']==0
+    assert review['new_T0'] is False and review['actual_orders']==0 and review['old_results_modified'] is False
+    assert review['resolved']['distribution_currency']=='USD only'
+    receipt=read(ROOT/'reports/hk-usd-cash-wrapper-terms-owner-20261118-v183/G01-RECEIPT.json')
+    assert receipt['url'].startswith('https://www.bosera.com.hk/api/infobase/downloadattfile.do?attachmentId=')
+    limits='2025全年分派仍未知，当前KFS不是全年现金证明或个人税费认证；后续招募书未完整核阅。休市快照最新价时间为11月17日09:01，成交量0、卖一仅1份且无独立盘口时间，不能证明此刻可成交或3份深度。当前0.05报价档距不是5.55买卖差，也不认证全史价位。大中华银行／企业信用与USD风险保留。'
+    fee_note='KFS的0.27%持续收费比率依据2025全年费用；网页0.55%估算分开保留。基金费用已反映NAV，不相加或重扣；没有新增净收益核算。'
+    evidence['hk_usd_cash_wrapper']=dict(status='accepted_dated_kfs_current_metadata_only',ticker='HK.03196',
+        accepted_at_utc=review['actual_acceptance_utc'],summary=review['site_summary'],
+        source_document_date='April 2026',source_url=receipt['url'],note=fee_note,limitation=limits,
+        distribution_currency='USD',regular_distribution_guaranteed=False,distribution_2025_certified=False,
+        executable_depth_certified=False,existing_model_amounts_changed=False,
+        new_factor_trials=0,new_horizon_trials=0,new_account_return_trials=0,new_paper_t0=False)
+    current_work['owners'].append(dict(name='03196来源补证',status='snapshot',task=review['site_summary']+' '+limits))
+    registry.append(dict(id='hk-usd-cash-source-v183-v184',version='V183–V184 · 当前条款与元数据',
+        name='03196 · 上市类KFS与当前报价来源',category='recent',record_type='source_qualification_addendum',
+        conclusion=review['site_summary']+' '+fee_note+' '+limits,source_date='2026-11-18',
+        source='root接受的发行人KFS与单次公开快照；不是新因子、经济试验、成交或盈利'))
+    return review
 
 
 def project_actual_diversified_continuation(paper,evidence,current_work,registry):
@@ -996,6 +1044,21 @@ def main():
             wrapper_active=any(o['status']=='ACTIVE' for o in wrapper_owners)
             current_work['owners'].append(dict(name='下一机制预检',status='active' if wrapper_active else 'snapshot',
                 task=('正在核查' if wrapper_active else '已交回')+'03196美元货币ETF港币柜台的官方身份、整手与费用可行性；这一步尚未计算历史收益，不增加有效因子或盈利策略数。'))
+    wrapper_source=project_hk_usd_cash_source(evidence_updates,current_work,registry)
+    amihud=accepted_amihud_review()
+    if args.focus=='mining':
+        team=read(MINING/'TEAM.json')
+        checking=args.activity in ['preparing','checking']
+        root_running=checking and any(o['owner']=='/root' and o['status']=='ACTIVE' for o in team['owners'])
+        audit_running=checking and any(o['status']=='ACTIVE' and any('v187/' in p for p in o['write_paths']) for o in team['owners'])
+        current_work['owners'].append(dict(name='主会话核验与发布',status='active' if root_running else 'snapshot',
+            task='核验并同步最新因子及来源证据；本轮没有新增到期纸面观察、利润或订单。'))
+        current_work['owners'].append(dict(name='Amihud固定筛选',status='snapshot' if amihud or not audit_running else 'active',
+            task=amihud['site_factor']['conclusion'] if amihud else 'Amihud固定训练已首跑，独立审计与root验收尚未完成；不展示作者指标，也不增加已验收信号或期限。'))
+        activity_text=f"总目标运行中，稳定盈利尚未证实；历史候选交付仍只是里程碑。当前已验收{factor_research['unique_new_signals']}个信号、{factor_research['planned_horizon_trials']}个预定期限。"
+        activity_text+=('Amihud双期限固定排序筛选已独立复核并由root接受，结果与限制见因子区。' if amihud else 'Amihud固定筛选正在独立核验，验收前不展示结果或增加计数。')
+        if wrapper_source:activity_text+=wrapper_source['site_summary']
+        activity_text+='03086、原SGOV和60／20／20组合保持各自原T0、原金额和观察；本轮没有新增到期纸面观察。当前节点仅表示核验与网页同步，正式统计推断未启用。'
     source_paths={'nasdaq':'v103-review/FINAL-REVIEW-v1.json','dividend':'v102-review/FINAL-REVIEW-v1.json','sp500_source':'v106-sp500-development-source/SOURCE-QUALIFICATION-v1.json'}
     if accepted.exists():source_paths['sp500_accepted']=str(accepted.relative_to(TEAM))
     if small_accepted.exists():source_paths['small_nasdaq_accepted']=str(small_accepted.relative_to(TEAM))
@@ -1065,6 +1128,8 @@ def main():
         extra_sources['v164_result']=ROOT/'reports/us-downside-risk-validation-owner-20261118-v164/RESULT-v1.json'
         extra_sources['v164_protocol']=ROOT/'reports/us-downside-risk-validation-owner-20261118-v164/PROTOCOL-v1.json'
     if accepted_intermediate_review():extra_sources['v177_root_review']=MINING/'acceptance/INTERMEDIATE-v177-ROOT-REVIEW-v1.json'
+    if amihud:extra_sources['v186_root_review']=MINING/'acceptance/AMIHUD-v186-ROOT-REVIEW-v1.json'
+    if wrapper_source:extra_sources['v183_v184_root_review']=MINING/'acceptance/HK-USD-CASH-v183-v184-ROOT-REVIEW-v1.json'
     extra_sources['v148_root_review']=MINING/'acceptance/SGOV-QII-v148-ROOT-REVIEW-v1.json'
     extra_sources['v148_classification']=ROOT/'reports/us-cash-tax-fee-source-owner-20261118-v148/SGOV-QII-QUALIFICATION-v2.json'
     extra_sources['v148_source_findings']=ROOT/'reports/us-cash-tax-fee-source-owner-20261118-v148/SOURCE-FINDINGS-v1.md'
