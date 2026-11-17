@@ -11,6 +11,7 @@ ROOT=Path(__file__).resolve().parents[1]
 TEAM=ROOT/'reports/hk-strategy-team-20261112'
 MINING=ROOT/'reports/factor-mining-resume-20261117'
 SGOV_PACKET=ROOT/'reports/us-sgov-paper-owner-20261117-v140'
+DIVERSIFIED_RECEIPT=MINING/'paper-continuation-20261118-v179/ROOT-CONTINUATION-v1.json'
 OUT=ROOT/'portfolio-board/public/research-progress'
 def read(path):return json.loads(path.read_text(encoding='utf-8-sig'))
 def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -157,6 +158,8 @@ def new_factor_research():
         assert factor['id']=='us_low_downside_semivariance_126' and factor['horizons']==[20,60]
         assert factor['status']=='rejected' and factor['account_net_hkd'] is None
         report['items'].append(factor)
+    intermediate=accepted_intermediate_review()
+    if intermediate:report['items'].append(intermediate['site_factor'])
     ids=[r['id'] for r in report['items']]
     assert len(ids)==len(set(ids)), 'A signal cannot be counted twice'
     report['unique_new_signals']=len(ids)
@@ -440,6 +443,145 @@ def accepted_continuation_review(filename, decision):
     return review
 
 
+def accepted_intermediate_review():
+    """No author RESULT fallback: a new signal exists here only after root acceptance."""
+    review=accepted_continuation_review('INTERMEDIATE-v177-ROOT-REVIEW-v1.json',
+        'ACCEPT_FIXED_TRAINING_REJECTION_NOT_GLOBAL_MECHANISM_FAILURE')
+    if not review:return None
+    assert review['actual_unique_signal_trials']==1 and review['actual_horizon_trials']==2
+    factor=review['site_factor']
+    assert factor['status']=='rejected' and factor['horizons']==[20,60]
+    assert factor['account_net_hkd'] is None and factor['account_max_drawdown_pct'] is None
+    assert len(factor['diagnostics'])==2 and {d['horizon'] for d in factor['diagnostics']}=={20,60}
+    return review
+
+
+def diversified_paper_status():
+    """Project only the root-accepted actual journal; never initialize an account."""
+    arms=[dict(id=f'HKD{capital}_{cost}_{policy}',capital_hkd=capital,cost=cost,policy=policy,
+               nav_hkd=None,net_hkd=None,settled_cash_usd=None,
+               shares={ticker:None for ticker in ['US.SGOV','US.VTI','US.GLD']},status='NOT_ACTIVATED')
+          for capital in [20000,30000] for cost in ['base','pressure'] for policy in ['annual','once']]
+    if not DIVERSIFIED_RECEIPT.exists():
+        return dict(activated=False,status='NOT_ACTIVATED',status_label='尚未激活 · 无新T0',
+            activation_utc=None,first_session=None,last_observation=None,observations=None,
+            security_trades=None,actual_orders=0,source_through=None,
+            intent=dict(date=None,timely=None,completed_utc=None),arms=arms,
+            note='仅预留8个相关情景。尚无root接受的实际接续回执，未创建新钱包、起点、观察或净值；年度再平衡与一次持有并列。')
+    review=read(DIVERSIFIED_RECEIPT)
+    if review.get('TEST_ONLY') or review.get('decision')!='ACCEPT_ACTUAL_PAPER_CONTINUATION_NOT_PROFITABILITY' or \
+       review.get('goal_status')!='ACTIVE' or review.get('stable_profitability_proven') is not False:
+        raise ValueError('Actual diversified continuation receipt is not accepted; no empty-account fallback.')
+    accepted=datetime.fromisoformat(review['actual_acceptance_utc'].replace('Z','+00:00'))
+    if accepted.utcoffset() is None:raise ValueError('Continuation acceptance must have an explicit timezone.')
+    pins=review.get('pins')
+    if not isinstance(pins,dict) or not pins:raise ValueError('Actual continuation has no pinned journal inputs.')
+    for relative,expected in pins.items():
+        path=ROOT/relative
+        if Path(relative).is_absolute() or not path.resolve().is_relative_to(ROOT.resolve()) or \
+           not isinstance(expected,str) or not re.fullmatch('[0-9a-f]{64}',expected) or digest(path)!=expected:
+            raise ValueError(f'Actual continuation pin mismatch: {relative}')
+    paper=review['site_diversified_paper']
+    validate_diversified_projection(paper)
+    if paper.get('TEST_ONLY') or paper['activated'] is not True:
+        raise ValueError('An actual continuation receipt must project an activated, non-test account.')
+    return {**paper,'root_acceptance_utc':review['actual_acceptance_utc'],
+            'root_receipt':DIVERSIFIED_RECEIPT.relative_to(ROOT).as_posix(),
+            'root_receipt_sha256':digest(DIVERSIFIED_RECEIPT)}
+
+
+def validate_diversified_projection(paper):
+    """Validate published facts and exact strings; do not calculate financial amounts."""
+    def date(value,required=False):
+        if value is None and not required:return
+        if not isinstance(value,str):raise ValueError('Invalid diversified paper date.')
+        datetime.fromisoformat(value.replace('Z','+00:00'))
+    def amount(value):
+        return value is None or isinstance(value,str) and re.fullmatch(r'-?(?:0|[1-9]\d*)\.\d{2}',value) is not None
+    if not isinstance(paper,dict) or type(paper.get('activated')) is not bool or paper.get('actual_orders')!=0:
+        raise ValueError('Invalid diversified activation/order status.')
+    if not all(isinstance(paper.get(k),str) and paper[k] for k in ['status','status_label','note']):
+        raise ValueError('Diversified status and explanation are required.')
+    expected={(f'HKD{capital}_{cost}_{policy}',capital,cost,policy)
+              for capital in [20000,30000] for cost in ['base','pressure'] for policy in ['annual','once']}
+    arms=paper.get('arms')
+    if not isinstance(arms,list) or len(arms)!=8 or \
+       {(a.get('id'),a.get('capital_hkd'),a.get('cost'),a.get('policy')) for a in arms}!=expected:
+        raise ValueError('Diversified paper must keep the eight registered related scenarios.')
+    intent=paper.get('intent')
+    if not isinstance(intent,dict) or not all(k in intent for k in ['date','timely','completed_utc']):
+        raise ValueError('Missing diversified intent facts.')
+    for arm in arms:
+        if not all(amount(arm.get(k)) for k in ['nav_hkd','net_hkd','settled_cash_usd']):
+            raise ValueError('Diversified amounts must be exact two-decimal strings or null.')
+        shares=arm.get('shares')
+        if not isinstance(shares,dict) or set(shares)!= {'US.SGOV','US.VTI','US.GLD'} or \
+           not all(q is None or type(q) is int and 0<=q<=9007199254740991 for q in shares.values()):
+            raise ValueError('Diversified share quantities must be explicit integers or null.')
+        if paper['activated']:
+            if arm.get('status') not in ['ACTIVE','MISSED','UNKNOWN']:
+                raise ValueError('Invalid actual diversified arm state.')
+            if arm['status']=='UNKNOWN' and any(arm.get(k) is not None for k in ['nav_hkd','net_hkd']):
+                raise ValueError('Unknown arms cannot project complete profit.')
+        elif arm.get('status')!='NOT_ACTIVATED' or any(arm.get(k) is not None for k in ['nav_hkd','net_hkd','settled_cash_usd']) or any(q is not None for q in shares.values()):
+            raise ValueError('Unactivated slots cannot contain financial observations.')
+    for key in ['activation_utc','first_session','last_observation','source_through']:
+        date(paper.get(key),paper['activated'] and key in ['activation_utc','first_session','source_through'])
+    for key in ['observations','security_trades']:
+        value=paper.get(key)
+        if paper['activated'] and not (type(value) is int and 0<=value<=9007199254740991):
+            raise ValueError('Invalid actual diversified observation/trade count.')
+    date(intent['date']);date(intent['completed_utc'])
+    if intent['timely'] is not None and type(intent['timely']) is not bool:raise ValueError('Invalid timely-intent fact.')
+    if not paper['activated'] and (any(paper.get(k) is not None for k in ['activation_utc','first_session','last_observation','source_through','observations','security_trades']) or any(v is not None for v in intent.values())):
+        raise ValueError('Unactivated paper must not invent an origin or observation.')
+    if paper['activated'] and paper['observations']>0 and paper.get('last_observation') is None:
+        raise ValueError('Observed diversified paper requires its actual observation date.')
+    return paper
+
+
+def project_hk_cash_addendum(evidence,current_work,registry):
+    review=accepted_continuation_review('HK-CASH-v176-ROOT-REVIEW-v1.json',
+        'ACCEPT_2024_NIL_ORDINARY_DISTRIBUTION_ADDENDUM_ONLY')
+    if not review:return
+    assert review['full_window_upgraded'] is False and review['old_nulls_modified'] is False
+    assert review['old_2024_2025_model_and_results_modified'] is False
+    summary='03152发行人年报明确支持所覆盖2024年港币ETF无普通股东分派，仅局部补强原2024现金基准的零普通分派条件。'
+    limits='2025普通分派完整性、全期整手与价位连续性、非普通行动和个人费用／成交／到账仍未获补齐；旧收益及旧空值不改。'
+    evidence['hk_cash_2024']=dict(status='accepted_2024_nil_ordinary_addendum_only',
+        accepted_at_utc=review['actual_acceptance_utc'],summary=summary,limitation=limits,
+        full_window_upgraded=False,existing_model_amounts_changed=False,new_strategy_trials=0)
+    for owner in current_work['owners']:
+        if owner['name']=='港币现金资料核查':owner.update(task=summary+' '+limits,status='snapshot')
+    registry.append(dict(id='hk-cash-source-v176',version='V176 · 2024局部来源补强',name='03152 · 2024零普通分派年报依据',
+        category='recent',record_type='source_qualification_addendum',conclusion=summary+' '+limits,
+        source_date='2026-11-18',source='root接受与逐页目视核对；不新增回测、纸面T0或盈利策略'))
+
+
+def project_actual_diversified_continuation(paper,evidence,current_work,registry):
+    if not paper['activated']:return None
+    latest='60／20／20组合已按root接受的实际接续建立原起点；年度再平衡／一次持有与2万／3万、基础／压力共8个相关情景，系统实际订单0。'
+    latest+=' 当前原T0、意向与观察以组合纸面区及该次回执为准；账面增减不是已提现收益，稳定盈利尚未证实。'
+    for owner in current_work['owners']:
+        if owner['name'] in ['组合前向程序','组合账户研究','两套固定纸面']:
+            owner.update(task=('03086与原SGOV保留各自原T0；'+latest if owner['name']=='两套固定纸面' else latest),status='snapshot')
+        elif owner['name']=='分层评价验收':
+            owner['task']=owner['task'].replace('尚未激活的组合8臂','已激活的组合8臂')
+        elif owner['name']=='退出成本核算':
+            owner['task']='只读退出成本适配已接受，原账面主列保留。组合实际接续单列原T0与账面值；尚无已验收的组合持仓退出估值／新月报，不据此宣称可兑现净利。'
+    f=evidence['forward_evaluation']
+    f['note']=f['note'].replace('尚未激活的组合8臂','已激活的组合8臂')
+    f['note']=f['note'].replace('当前验收的真实边界仍为原8臂零仓、组合8槽未启动',
+        '退出估值模块在其验收时的边界为原8臂零仓、组合8槽当时未启动')
+    f['note']+=' 退出适配实施验收所述“当时未激活”属于历史时点；最新组合状态见实际接续记录。'
+    f['layered_measurement'].update(planned_unactivated_arms=0,active_diversified_related_arms=8)
+    registry.append(dict(id='diversified-actual-paper-v179',version='V179 · 实际日期接续',
+        name='60／20／20组合 · 实际纸面已激活',category='recent',record_type='actual_paper_continuation',
+        conclusion=latest,source_date=paper['root_acceptance_utc'][:10],
+        source='root独占接受的实际journal与意向原件pins；历史程序验收的当时0T0记录保留'))
+    return '总目标运行中，稳定盈利尚未证实。'+latest+' 03152的2024零普通分派仅局部补强来源，正式统计推断未启用；不增加因子或独立策略计数。'
+
+
 def project_layered_evaluation_and_flot(evidence,current_work,cards,registry,activity):
     """Add qualified research milestones without changing old results or trial counts."""
     method=accepted_continuation_review('FORWARD-METHOD-v167-v170-ROOT-ACCEPTANCE-v1.json',
@@ -611,6 +753,7 @@ def main():
     paper= json.loads(paper_run.stdout)
     assert paper['actual_orders']==0
     factor_research=new_factor_research();sgov=sgov_history();new_paper=sgov_paper_status();portfolio=current_portfolio_research()
+    diversified=validate_diversified_projection(diversified_paper_status())
     evidence_updates=accepted_evidence_updates()
     accepted_a=portfolio['status'].startswith('accepted_conditional_')
     accepted_b=portfolio.get('B_accepted',False);accepted_c=portfolio.get('C_accepted',False)
@@ -838,6 +981,21 @@ def main():
         if forward and accepted_downside_review():activity_text=f"总目标运行中，稳定盈利尚未证实。已验收{factor_research['unique_new_signals']}个信号、{factor_research['planned_horizon_trials']}个期限；低下行波动首次固定训练已独立复算，两期限均未通过收益排序筛选，不代表低风险配置没有价值。"+forward['site_summary']+'正式稳定性统计方法尚未冻结；原纸面及历史金额保持。'
         continuation=project_layered_evaluation_and_flot(evidence_updates,current_work,cards,registry,args.activity)
         if continuation:activity_text=continuation
+    project_hk_cash_addendum(evidence_updates,current_work,registry)
+    if 'hk_cash_2024' in evidence_updates:
+        activity_text=activity_text.replace('港币现金基准资料核查继续。','港币现金基准2024零普通分派来源局部补强已接受；2025及全期单位条件保留。')
+    actual_continuation=project_actual_diversified_continuation(diversified,evidence_updates,current_work,registry)
+    if actual_continuation and args.focus=='mining':activity_text=actual_continuation
+    intermediate=accepted_intermediate_review()
+    if intermediate and args.focus=='mining':
+        current_work['owners'].append(dict(name='最新因子筛选',task=intermediate['site_factor']['conclusion'],status='snapshot'))
+        activity_text+=f" 最新中间期动量的20／60日固定筛选均未通过；累计{factor_research['unique_new_signals']}个已验收信号、{factor_research['planned_horizon_trials']}个期限，仍无稳定盈利证明。"
+    if args.focus=='mining':
+        wrapper_owners=[o for o in read(MINING/'TEAM.json')['owners'] if any('hk-usd-cash-wrapper-preflight-owner-20261118-v181/' in p for p in o['write_paths'])]
+        if wrapper_owners:
+            wrapper_active=any(o['status']=='ACTIVE' for o in wrapper_owners)
+            current_work['owners'].append(dict(name='下一机制预检',status='active' if wrapper_active else 'snapshot',
+                task=('正在核查' if wrapper_active else '已交回')+'03196美元货币ETF港币柜台的官方身份、整手与费用可行性；这一步尚未计算历史收益，不增加有效因子或盈利策略数。'))
     source_paths={'nasdaq':'v103-review/FINAL-REVIEW-v1.json','dividend':'v102-review/FINAL-REVIEW-v1.json','sp500_source':'v106-sp500-development-source/SOURCE-QUALIFICATION-v1.json'}
     if accepted.exists():source_paths['sp500_accepted']=str(accepted.relative_to(TEAM))
     if small_accepted.exists():source_paths['small_nasdaq_accepted']=str(small_accepted.relative_to(TEAM))
@@ -870,6 +1028,10 @@ def main():
     stage_details=[None]*6
     if args.focus=='mining':stage_details=['历史阶段已交付','条件历史已复核' if accepted_c else '各自起账条件通过' if accepted_b else 'A段条件通过' if accepted_a else '有条件采用',
         '尚未激活新组合纸面' if current_work['active_work']['registration'] else '同步时进行中' if stage_status[2]=='active' else '等待实际新进展','同步时进行中' if stage_status[3]=='active' else '等待实际新进展','描述性月报已接受；待新样本','统计方法尚未冻结']
+    if args.focus=='mining' and diversified['activated']:
+        stage_names[2]='组合实际纸面已激活';stage_details[2]='保留本次实际原T0'
+        stage_details[4]=f"组合已观察{diversified['observations']}会话；原两套起点不变"
+        stage_details[5]='正式推断未启用；盈利未证'
     extra_sources={
         'mining_goal':MINING/'GOAL.md','mining_scope':MINING/'GOAL-SCOPE-ADDENDUM-v1.json','mining_team':MINING/'TEAM.json',
         'fip_protocol':MINING/'PROTOCOL-v1.json','fip_original':MINING/'RESULT-v1.json','fip_calendar_correction':MINING/'calendar-correction-v2/RESULT.json',
@@ -902,6 +1064,7 @@ def main():
         extra_sources['v164_root_review']=MINING/'acceptance/DOWNSIDE-v164-ROOT-REVIEW-v1.json'
         extra_sources['v164_result']=ROOT/'reports/us-downside-risk-validation-owner-20261118-v164/RESULT-v1.json'
         extra_sources['v164_protocol']=ROOT/'reports/us-downside-risk-validation-owner-20261118-v164/PROTOCOL-v1.json'
+    if accepted_intermediate_review():extra_sources['v177_root_review']=MINING/'acceptance/INTERMEDIATE-v177-ROOT-REVIEW-v1.json'
     extra_sources['v148_root_review']=MINING/'acceptance/SGOV-QII-v148-ROOT-REVIEW-v1.json'
     extra_sources['v148_classification']=ROOT/'reports/us-cash-tax-fee-source-owner-20261118-v148/SGOV-QII-QUALIFICATION-v2.json'
     extra_sources['v148_source_findings']=ROOT/'reports/us-cash-tax-fee-source-owner-20261118-v148/SOURCE-FINDINGS-v1.md'
@@ -910,6 +1073,9 @@ def main():
     for key,filename in [('v170_layered_measurement','FORWARD-METHOD-v167-v170-ROOT-ACCEPTANCE-v1.json'),('v169_flot_preflight','FLOT-v169-ROOT-REVIEW-v1.json'),('v172_flot_source','FLOT-SOURCE-v172-ROOT-REVIEW-v1.json'),('v173_exit_measurement','FORWARD-EXIT-v171-v173-ROOT-REVIEW-v1.json'),('v175_flot_history','FLOT-ACCOUNT-v174-v175-ROOT-REVIEW-v1.json')]:
         path=MINING/'acceptance'/filename
         if path.exists():extra_sources[key]=path
+    cash_addendum=MINING/'acceptance/HK-CASH-v176-ROOT-REVIEW-v1.json'
+    if cash_addendum.exists():extra_sources['v176_hk_cash_source_addendum']=cash_addendum
+    if diversified['activated']:extra_sources['v179_actual_paper_continuation']=DIVERSIFIED_RECEIPT
     extra_sources['v144_protocol']=ROOT/'reports/us-diversified-carry-owner-20261117-v144/PROTOCOL-v1.json'
     extra_sources['v144_conditional_use']=MINING/'portfolio-source-v144/CONDITIONAL-USE-v1.md'
     portfolio_review=MINING/'acceptance/DIVERSIFIED-v144-A-ROOT-REVIEW-v2.json'
@@ -947,7 +1113,7 @@ def main():
                     snapshot_only=True,fresh_for_minutes=15),
       stages=[dict(name=n,status=s,detail=d) for n,s,d in zip(stage_names,stage_status,stage_details)],
       cards=cards,registry=registry,ipo_observation=ipo_observation,default_evidence_view='paper' if args.focus in ['paper','mining'] else 'history',
-      factor_research=factor_research,current_work=current_work,evidence_updates=evidence_updates,portfolio_research=portfolio,sgov_history={k:v for k,v in sgov.items() if k!='card'} if sgov else None,sgov_paper=new_paper,
+      factor_research=factor_research,current_work=current_work,evidence_updates=evidence_updates,portfolio_research=portfolio,sgov_history={k:v for k,v in sgov.items() if k!='card'} if sgov else None,sgov_paper=new_paper,diversified_paper=diversified,
       paper=dict(checked_at=paper['checked_at_hkt'],activation_utc=paper['activation_utc'],first_forward_session=paper['first_forward_session'],
                  account_count=len(paper['summaries']),closed_rounds=paper['summaries']['monthly-only-base']['closed_rounds'],
                  open_quantity=paper['summaries']['monthly-only-base']['open_quantity'],
@@ -972,6 +1138,6 @@ def main():
     if us_vti_review.exists():shutil.copyfile(TEAM/'v123-review/VTI-PRICE-NAV-RISK-v1.png',OUT/'assets/vti-price-risk.png')
     if sgov:shutil.copyfile(MINING/'sgov-review/SGOV-history-v1.png',OUT/'assets/sgov-history.png')
     print(json.dumps(dict(updated_at=now,records=len(registry),focus=args.focus,latest_status=current_work['research_batch_status'] if args.focus=='mining' else current['status'],new_signals=factor_research['unique_new_signals'],
-                         sgov_paper_activated=new_paper['activated'],paper_closed_rounds=payload['paper']['closed_rounds'],orders_sent=0),ensure_ascii=False))
+                         sgov_paper_activated=new_paper['activated'],diversified_paper_activated=diversified['activated'],paper_closed_rounds=payload['paper']['closed_rounds'],orders_sent=0),ensure_ascii=False))
 
 if __name__=='__main__':main()

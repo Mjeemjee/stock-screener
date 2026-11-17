@@ -5,6 +5,32 @@ export const freshness = (updatedAt, minutes = 15, now = Date.now()) => {
   if (!Number.isFinite(stamp) || age < -60000) return 'unknown'
   return age <= minutes * 60000 ? 'fresh' : 'stale'
 }
+export const exactMoney = value => {
+  if (typeof value !== 'string' || !/^-?(?:0|[1-9]\d*)\.\d{2}$/.test(value)) return '—'
+  const [whole, fraction] = value.split('.')
+  return `${whole.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}.${fraction}`
+}
+export function validateDiversifiedPaper(p) {
+  const date = v => v === null || typeof v === 'string' && Number.isFinite(Date.parse(v))
+  const amount = v => v === null || typeof v === 'string' && /^-?(?:0|[1-9]\d*)\.\d{2}$/.test(v)
+  const count = v => Number.isSafeInteger(v) && v >= 0
+  const expected = new Set([20000, 30000].flatMap(c => ['base', 'pressure'].flatMap(k => ['annual', 'once'].map(r => `HKD${c}_${k}_${r}`))))
+  if (!p || typeof p.activated !== 'boolean' || p.actual_orders !== 0 || !['status', 'status_label', 'note'].every(k => typeof p[k] === 'string' && p[k]) ||
+      !Array.isArray(p.arms) || p.arms.length !== 8 || new Set(p.arms.map(a => a.id)).size !== 8 ||
+      !['activation_utc', 'first_session', 'last_observation', 'source_through'].every(k => date(p[k])) || !p.intent ||
+      !date(p.intent.date) || !date(p.intent.completed_utc) || ![null, true, false].includes(p.intent.timely)) throw new Error('组合纸面事实不完整，停止展示。')
+  for (const a of p.arms) {
+    if (!expected.has(a.id) || a.id !== `HKD${a.capital_hkd}_${a.cost}_${a.policy}` ||
+        !['nav_hkd', 'net_hkd', 'settled_cash_usd'].every(k => amount(a[k])) || !a.shares ||
+        Object.keys(a.shares).sort().join('|') !== 'US.GLD|US.SGOV|US.VTI' || !Object.values(a.shares).every(q => q === null || count(q))) throw new Error('组合必须保留8个相关情景与精确金额，不从净值反推持仓。')
+    if (p.activated ? !['ACTIVE', 'MISSED', 'UNKNOWN'].includes(a.status) || a.status === 'UNKNOWN' && [a.nav_hkd, a.net_hkd].some(v => v !== null)
+      : a.status !== 'NOT_ACTIVATED' || [a.nav_hkd, a.net_hkd, a.settled_cash_usd, ...Object.values(a.shares)].some(v => v !== null)) throw new Error('未激活或未知状态不能出现完整收益。')
+  }
+  if (p.activated) {
+    if (![p.observations, p.security_trades].every(count) || [p.activation_utc, p.first_session, p.source_through].some(v => v === null) || p.observations > 0 && p.last_observation === null) throw new Error('已激活组合必须有实际起点和接续事实。')
+  } else if ([p.activation_utc, p.first_session, p.last_observation, p.source_through, p.observations, p.security_trades, ...Object.values(p.intent)].some(v => v !== null)) throw new Error('未激活组合不能伪造T0、观察或交易数。')
+  return p
+}
 export function validateSnapshot(value) {
   if (!value || value.schema_version !== 1 || !Array.isArray(value.cards) || !Array.isArray(value.registry) ||
       !Array.isArray(value.stages) || value.stages.length !== 6 || !value.activity || !value.paper || !Array.isArray(value.paper.accounts)) {
@@ -122,6 +148,15 @@ export function validateSnapshot(value) {
       }
     }
   }
+  if (value.diversified_paper !== undefined) {
+    validateDiversifiedPaper(value.diversified_paper)
+    if (value.diversified_paper.TEST_ONLY && value.TEST_ONLY !== true) throw new Error('模拟组合必须显式标记TEST_ONLY。')
+  }
+  if (value.evidence_updates?.hk_cash_2024) {
+    const cash = value.evidence_updates.hk_cash_2024
+    if (cash.status !== 'accepted_2024_nil_ordinary_addendum_only' || cash.full_window_upgraded !== false ||
+        cash.existing_model_amounts_changed !== false || cash.new_strategy_trials !== 0) throw new Error('03152局部来源补强不能升级全期资格或收益。')
+  }
   return value
 }
 
@@ -218,6 +253,14 @@ if (typeof document !== 'undefined') {
     find('forward-accepted').textContent = `描述性协议接受：${f.accepted_at_hkt} HKT；保留两套原T0和${f.existing_arms_reported}臂。`
     find('forward-note').textContent = f.note
     find('forward-limits').textContent = f.limitation
+    find('forward-method-badge').textContent = f.layered_measurement ? '正式统计推断未启用' : '稳定性统计方法未冻结'
+    const cash = updates.hk_cash_2024
+    find('hk-cash-update').hidden = !cash
+    if (cash) {
+      find('hk-cash-summary').textContent = cash.summary
+      find('hk-cash-limits').textContent = cash.limitation
+      find('hk-cash-accepted').textContent = `局部来源接受：${dateText(cash.accepted_at_utc)} HKT；原收益、空值和试验计数不变。`
+    }
   }
   function renderPortfolio(data) {
     const research = data.portfolio_research
@@ -331,6 +374,35 @@ if (typeof document !== 'undefined') {
       for (const value of [`${account.capital_hkd.toLocaleString('zh-HK')} · ${account.cost === 'base' ? '基础' : '压力'}`,
         unknown ? '无法评估' : money(account.nav_hkd).replace(/^\+/, ''), unknown ? '无法评估' : money(account.change_hkd), account.quantity, account.observations]) row.append(element('td', value))
       find('sgov-paper-rows').append(row)
+    }
+    renderDiversifiedPaper(data)
+  }
+  function renderDiversifiedPaper(data) {
+    const p = data.diversified_paper
+    find('diversified-paper').hidden = !p
+    if (!p) return
+    const shown = v => v === null ? '—' : String(v)
+    const time = v => v === null ? '—' : `${dateText(v)} HKT`
+    find('diversified-paper-status').textContent = p.status_label
+    find('diversified-paper-status').className = `badge ${p.activated ? 'paper' : 'review'}`
+    find('diversified-paper-note').textContent = `${p.TEST_ONLY ? 'TEST_ONLY · 模拟渲染，非实际接续。 ' : ''}${p.note}`
+    find('diversified-paper-note').classList.toggle('test-only', p.TEST_ONLY === true)
+    find('diversified-origin').textContent = time(p.activation_utc)
+    find('diversified-source').textContent = p.activated ? `${p.first_session} / ${p.source_through}` : '— / —'
+    find('diversified-observation').textContent = p.activated ? `${p.observations}会话；最近 ${shown(p.last_observation)}` : '—'
+    const intentStatus = p.intent.timely === true ? '已及时固化' : p.intent.timely === false ? '未及时' : '尚无'
+    find('diversified-intent').textContent = p.activated ? `${shown(p.intent.date)} · ${intentStatus}；${time(p.intent.completed_utc)}` : '—'
+    find('diversified-orders').textContent = `实际订单 ${p.actual_orders}；纸面证券成交 ${shown(p.security_trades)}。`
+    find('diversified-paper-rows').replaceChildren()
+    for (const arm of p.arms) {
+      const row = element('tr'), unknown = arm.status === 'UNKNOWN'
+      const name = `${arm.capital_hkd.toLocaleString('zh-HK')} · ${arm.cost === 'base' ? '基础' : '压力'} · ${arm.policy === 'annual' ? '年度再平衡' : '一次持有'}`
+      const state = { ACTIVE: '接续中', MISSED: '已漏首单', UNKNOWN: '未知 · 旧前缀', NOT_ACTIVATED: '未激活' }[arm.status]
+      const values = [name, unknown ? '无法完整评估' : exactMoney(arm.nav_hkd), unknown ? '无法完整评估' : exactMoney(arm.net_hkd),
+        exactMoney(arm.settled_cash_usd), ...['US.SGOV', 'US.VTI', 'US.GLD'].map(t => shown(arm.shares[t])), state]
+      for (const [index, value] of values.entries()) row.append(element('td', value, index === 2 && arm.net_hkd?.startsWith('-') ? 'negative-amount' : undefined))
+      row.dataset.arm = arm.id
+      find('diversified-paper-rows').append(row)
     }
   }
   function render(data) {
