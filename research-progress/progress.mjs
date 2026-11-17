@@ -35,9 +35,9 @@ export function validateSnapshot(value) {
   }
   if (value.factor_research) {
     const f = value.factor_research
-    if (f.unique_new_signals !== 3 || f.planned_horizon_trials !== 6 || f.new_net_account_candidates !== 0 ||
-        !Array.isArray(f.items) || f.items.length !== 3 || new Set(f.items.map(i => i.id)).size !== 3 ||
-        f.items.reduce((n, i) => n + (i.horizons?.length ?? 0), 0) !== 6) throw new Error('新因子与预定期限计数不完整。')
+    if (!Number.isSafeInteger(f.unique_new_signals) || f.unique_new_signals <= 0 || !Number.isSafeInteger(f.planned_horizon_trials) || f.new_net_account_candidates !== 0 ||
+        !Array.isArray(f.items) || f.items.length !== f.unique_new_signals || new Set(f.items.map(i => i.id)).size !== f.unique_new_signals ||
+        f.items.reduce((n, i) => n + new Set(i.horizons ?? []).size, 0) !== f.planned_horizon_trials) throw new Error('新因子与预定期限计数不完整。')
     for (const item of f.items) {
       if (!['clue', 'rejected', 'source_blocked'].includes(item.status) || !Array.isArray(item.diagnostics) || !item.diagnostics.length ||
           item.account_net_hkd !== null || item.account_max_drawdown_pct !== null) throw new Error('新信号尚无已验净账户，不能展示账户收益。')
@@ -46,6 +46,44 @@ export function validateSnapshot(value) {
             Math.abs(d.rank_ic) > 1 || d.p_value < 0 || d.p_value > 1) throw new Error('因子诊断单位或期限无效。')
       }
     }
+  }
+  if (value.portfolio_research) {
+    const p = value.portfolio_research
+    if (p.status === 'implementation_pending_review') {
+      if ([p.net_hkd, p.risk_pct, p.chart].some(v => v !== null)) throw new Error('组合账户尚未验收，不能展示收益或曲线。')
+    } else if (['accepted_conditional_A_only', 'accepted_conditional_AB_C_pending', 'accepted_conditional_ABC'].includes(p.status)) {
+      if (![p.net_hkd, p.risk_pct].every(Number.isFinite) || p.chart !== 'assets/portfolio-A-v2.png' ||
+          p.actual_income_certified !== false || p.stable_profitability_proven !== false || p.new_paper_t0 !== null || p.B_C_computed !== (p.C_accepted === true) ||
+          !Array.isArray(p.cases) || p.cases.length !== 6 || new Set(p.cases.map(c => `${c.capital_hkd}-${c.cost}`)).size !== 6 ||
+          !Array.isArray(p.nav_series) || p.nav_series.length !== 756) throw new Error('A段条件账户、曲线或未完成边界不完整。')
+      for (const c of p.cases) if (![10000, 20000, 30000].includes(c.capital_hkd) || !['base', 'pressure'].includes(c.cost) ||
+          ![c.net_hkd, c.risk_pct].every(Number.isFinite) || c.months !== 36 || !Number.isSafeInteger(c.negative_months) || c.negative_months < 0 || c.negative_months > 36) throw new Error('A段本金/成本记录不完整。')
+      for (const [i, point] of p.nav_series.entries()) if (!Number.isFinite(Date.parse(point.date)) || !Number.isFinite(point.nav_hkd) || point.nav_hkd <= 0 ||
+          i > 0 && point.date <= p.nav_series[i - 1].date) throw new Error('A段历史净值点无效。')
+      if (['accepted_conditional_AB_C_pending', 'accepted_conditional_ABC'].includes(p.status)) {
+        const cAccepted = p.status === 'accepted_conditional_ABC'
+        if (p.B_accepted !== true || p.C_accepted !== cAccepted || !Array.isArray(p.B_cases) || p.B_cases.length !== 6 ||
+            new Set(p.B_cases.map(c => `${c.capital_hkd}-${c.cost}`)).size !== 6 || !Array.isArray(p.segment_rows) || p.segment_rows.length !== 3 ||
+            p.segment_rows.map(s => s.stage).join('') !== 'ABC') throw new Error('A/B独立账户与C待核状态不完整。')
+        for (const c of p.B_cases) if (![10000, 20000, 30000].includes(c.capital_hkd) || !['base', 'pressure'].includes(c.cost) ||
+            ![c.net_hkd, c.risk_pct].every(Number.isFinite) || c.months !== 24 || !Number.isSafeInteger(c.negative_months) || c.negative_months < 0 || c.negative_months > 24) throw new Error('B段本金/成本记录不完整。')
+        const c = p.segment_rows[2]
+        if (!cAccepted && (c.status !== 'awaiting_root_review' || [c.base_net_hkd, c.net_hkd, c.risk_pct, c.negative_months, c.months].some(v => v !== null))) throw new Error('C段待根验收，不能预填结果。')
+        if (cAccepted) {
+          if (!Array.isArray(p.C_cases) || p.C_cases.length !== 6 || new Set(p.C_cases.map(c => `${c.capital_hkd}-${c.cost}`)).size !== 6 ||
+              !Array.isArray(p.capital_cost_rows) || p.capital_cost_rows.length !== 18 || new Set(p.capital_cost_rows.map(c => `${c.stage}-${c.capital_hkd}-${c.cost}`)).size !== 18 || p.C_A_prefix_verified !== true) throw new Error('C连续账户与18行资本成本证据不完整。')
+          for (const item of p.C_cases) if (![10000, 20000, 30000].includes(item.capital_hkd) || !['base', 'pressure'].includes(item.cost) ||
+              ![item.net_hkd, item.risk_pct].every(Number.isFinite) || item.months !== 60 || !Number.isSafeInteger(item.negative_months) || item.negative_months < 0 || item.negative_months > 60) throw new Error('C段本金/成本记录不完整。')
+        }
+        for (const [i, segment] of p.segment_rows.entries()) {
+          if (i === 2 && !cAccepted) continue
+          const cases = [p.cases, p.B_cases, p.C_cases][i]
+          const base = cases.find(c => c.capital_hkd === 30000 && c.cost === 'base'), pressure = cases.find(c => c.capital_hkd === 30000 && c.cost === 'pressure')
+          if (segment.status !== 'accepted_conditional' || segment.capital_hkd !== 30000 || segment.base_net_hkd !== base.net_hkd || segment.net_hkd !== pressure.net_hkd ||
+              segment.risk_pct !== pressure.risk_pct || segment.negative_months !== pressure.negative_months || segment.months !== pressure.months) throw new Error('分段摘要必须匹配各自独立核算记录，不能相加或拼接。')
+        }
+      }
+    } else throw new Error('组合研究验收状态未知。')
   }
   if (value.sgov_history) {
     const h = value.sgov_history
@@ -137,6 +175,7 @@ if (typeof document !== 'undefined') {
       for (const row of factor.diagnostics) {
         const group = element('div', undefined, 'diagnostic'), period = element('div', undefined, 'diagnostic-period')
         period.append(element('strong', `${row.horizon}日 · ${row.split}`), element('span', row.period))
+        if (row.measure === 'gross_rights') period.append(element('span', `前组−同池 ${row.top_excess_bp > 0 ? '+' : ''}${row.top_excess_bp.toFixed(2)} bp/期（毛权益）`))
         const stats = element('dl')
         for (const [name, value] of [['RankIC', row.rank_ic.toFixed(5)], ['HAC t', row.hac_t.toFixed(3)], [row.p_label, row.p_value.toFixed(5)]]) {
           const item = element('div'); item.append(element('dt', name), element('dd', value)); stats.append(item)
@@ -146,6 +185,42 @@ if (typeof document !== 'undefined') {
       article.append(diagnostics, element('p', factor.limitation, 'caption'),
         element('p', '1万／2万／3万的可执行账户净利、账户回撤与资金适配：尚未验证。', 'caption'), element('p', factor.next, 'next'))
       find('factor-list').append(article)
+    }
+  }
+  function renderPortfolio(data) {
+    const research = data.portfolio_research
+    find('portfolio-progress').hidden = !research
+    if (!research) return
+    find('portfolio-title').textContent = research.name
+    find('portfolio-badge').textContent = research.status_label ?? 'A段待独立验收'
+    find('portfolio-summary').textContent = `${research.period}。${research.summary}`
+    find('portfolio-status').textContent = research.progress
+    find('portfolio-limits').textContent = research.limitations
+    find('portfolio-fee-boundary').textContent = research.fee_boundary ?? ''
+    find('portfolio-comparison').textContent = research.comparison ?? ''
+    find('portfolio-payment').textContent = research.payment_sensitivity ?? ''
+    find('portfolio-separation-note').textContent = research.separation_note ?? ''
+    find('portfolio-segment-table').hidden = !research.segment_rows
+    find('portfolio-segment-rows').replaceChildren()
+    for (const segment of research.segment_rows ?? []) {
+      const row = element('tr'), pending = segment.status === 'awaiting_root_review'
+      for (const value of [`${segment.stage} · ${segment.period}`, money(segment.base_net_hkd), money(segment.net_hkd),
+        pending ? '待核' : `${segment.risk_pct.toFixed(4)}%`, pending ? '待核' : `${segment.negative_months}/${segment.months}`]) row.append(element('td', value))
+      find('portfolio-segment-rows').append(row)
+    }
+    find('portfolio-curve-note').textContent = research.curve_note
+    find('portfolio-chart-link').hidden = !research.chart
+    if (research.chart) { find('portfolio-chart-link').href = research.chart; find('portfolio-chart').src = research.chart }
+    find('portfolio-table').hidden = !research.cases
+    find('portfolio-capital-details').hidden = !research.cases
+    find('portfolio-capital-label').textContent = `查看${research.C_cases ? 'A/B/C' : research.B_cases ? 'A/B' : 'A'}各本金的基础/压力情景`
+    find('portfolio-rows').replaceChildren()
+    const groups = research.cases ? [['A', research.cases], ...(research.B_cases ? [['B', research.B_cases]] : []), ...(research.C_cases ? [['C', research.C_cases]] : [])] : []
+    for (const [stage, cases] of groups) for (const capital of [10000, 20000, 30000]) {
+      const base = cases.find(c => c.capital_hkd === capital && c.cost === 'base')
+      const pressure = cases.find(c => c.capital_hkd === capital && c.cost === 'pressure'), row = element('tr')
+      for (const value of [stage, capital.toLocaleString('zh-HK'), money(base.net_hkd), money(pressure.net_hkd), `${pressure.risk_pct.toFixed(4)}%`, `${pressure.negative_months}/${pressure.months}`]) row.append(element('td', value))
+      find('portfolio-rows').append(row)
     }
   }
   function renderSgovHistory(data) {
@@ -245,7 +320,7 @@ if (typeof document !== 'undefined') {
       const item = element('li', stage.name, `stage ${stage.status}`)
       item.append(element('small', stage.detail ?? names[stage.status] ?? stage.status)); find('stages').append(item)
     }
-    renderWork(data); renderFactors(data); renderSgovHistory(data); renderCards(data); renderPaper(data); renderRecords()
+    renderWork(data); renderPortfolio(data); renderFactors(data); renderSgovHistory(data); renderCards(data); renderPaper(data); renderRecords()
     if (selectedEvidenceView === null) selectEvidenceView(data.default_evidence_view === 'paper' ? 'paper' : 'history')
     find('research-note').textContent = data.research_note
     find('baseline-note').textContent = `同为3万初始资金，基础成本月度版历史标记 ${money(data.baseline.monthly_base_net_hkd)} 港元，报价回撤约 ${data.baseline.monthly_base_risk_pct.toFixed(2)}%；被动参考 ${money(data.baseline.passive_base_net_hkd)} 港元、约 ${data.baseline.passive_base_risk_pct.toFixed(2)}%。未证明稳定独立超额收益。`
