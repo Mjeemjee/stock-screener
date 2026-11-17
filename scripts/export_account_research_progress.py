@@ -430,6 +430,88 @@ def accepted_diversified_forward():
     return result
 
 
+def accepted_continuation_review(filename, decision):
+    path=MINING/'acceptance'/filename
+    if not path.exists():return None
+    review=read(path)
+    assert review['decision']==decision and review['goal_status']=='ACTIVE'
+    assert review['stable_profitability_proven'] is False
+    for relative,expected in review['pins'].items():assert digest(ROOT/relative)==expected,relative
+    return review
+
+
+def project_layered_evaluation_and_flot(evidence,current_work,cards,registry,activity):
+    """Add qualified research milestones without changing old results or trial counts."""
+    method=accepted_continuation_review('FORWARD-METHOD-v167-v170-ROOT-ACCEPTANCE-v1.json',
+        'ACCEPT_LAYERED_MEASUREMENT_CONTRACT_ONLY_NOT_FORMAL_INFERENCE')
+    flot=accepted_continuation_review('FLOT-v169-ROOT-REVIEW-v1.json',
+        'ACCEPT_ECONOMIC_PREFLIGHT_GO_BOUNDED_SOURCE_QUALIFICATION_ONLY')
+    flot_source=accepted_continuation_review('FLOT-SOURCE-v172-ROOT-REVIEW-v1.json',
+        'ACCEPT_ISSUER_PRIMARY_CONDITIONAL_HISTORY_INPUTS_NOT_STRICT_BUNDLE_UPGRADE')
+    exit_review=accepted_continuation_review('FORWARD-EXIT-v171-v173-ROOT-REVIEW-v1.json',
+        'ACCEPT_PURE_EXIT_MEASUREMENT_ADAPTER_NOT_AUTOMATIC_REPORTING')
+    flot_history=accepted_continuation_review('FLOT-ACCOUNT-v174-v175-ROOT-REVIEW-v1.json',
+        'ACCEPT_CONDITIONAL_HISTORICAL_ACCOUNT_NOT_STABILITY')
+    if not method or not flot:return None
+    assert method['root_qualifications']['formal_inference_enabled'] is False
+    assert not method['new_paper_T0_created'] and method['new_financial_observations']==0
+    assert flot['new_factor_trials']==flot['historical_account_runs']==0
+    cost=read(ROOT/'reports/us-floating-credit-preflight-owner-20261118-v169/COST-ARITHMETIC-v1.json')
+    pressure={str(c['capital_hkd']):c['main_12_events_flat']['flat_arithmetic_surplus_hkd'] for c in cost['cases'] if c['cost']=='pressure'}
+    assert pressure==flot['current_cost_interpretation']['pressure_flat_one_year_example_hkd']
+    team=read(MINING/'TEAM.json')
+    def running(fragment):
+        return activity in ['preparing','checking'] and any(o['status']=='ACTIVE' and any(fragment in p for p in o['write_paths']) for o in team['owners'])
+    economic='分层经济评价合同已接受：保留原本金、原T0及换汇费用，原账面收益与扣必要退出成本后的估值分别列示；原8臂与尚未激活的组合8臂不当作16份独立样本。'
+    inference='正式统计推断仍未启用，所需假设尚无充分依据。没有规定等满几个月、凑够交易笔数或某次盈利即可成功；单个统计方案也不是永久验收门槛。'
+    exit_text='只读退出成本适配与独立核账正在进行；原账户和订单不改，尚未形成已验收的新月报或收益。'
+    flot_text='FLOT公开价格、公司行动与发行人分派正在做有限范围核对；目前尚无历史账户结果，不计为新因子试验或有效策略。'
+    if flot_source:
+        assert flot_source['original_v172_status']=='UNKNOWN' and not flot_source['old_bundle_code_tolerance_and_sources_modified']
+        flot_text=flot_source['site_summary']
+    if exit_review:exit_text=exit_review['site_summary']
+    if flot_history:flot_text=flot_history['site_summary']
+    f=evidence['forward_evaluation']
+    f['layered_measurement']=dict(status='accepted_readonly_adapter_monthly_integration_pending' if exit_review else 'accepted_contract_adapter_pending',accepted_at_utc=method['actual_acceptance_utc'],
+        active_original_arms=8,planned_unactivated_arms=8,formal_inference_enabled=False,
+        original_marked_primary_preserved=True,automatic_goal_completion=False,
+        exit_adapter_accepted_at_utc=exit_review['actual_acceptance_utc'] if exit_review else None,
+        real_held_exit_end_to_end_verified=False)
+    f['note']+=' '+economic+' '+exit_text
+    f['limitation']+=' '+inference
+    cards.insert(0,dict(id='us-flot-preflight',name='FLOT · 浮息信用与小资金成本预检',status='review',
+        status_label='仅继续来源核对',capital_hkd=30000,period='当前指标的费用示例；不是历史账户',
+        basis='90%整股预算、原30%税情景和每次USD1/2储备；保留交易、滑点与双向换汇成本。',
+        results=[dict(cost=c,net_hkd=None,cagr_pct=None,risk_pct=None) for c in ['base','pressure']],
+        conclusion='假设一年原价不变的压力费用示例：1万／2万／3万港币分别−110.40／+28.57／+178.49；价格下跌1%的同一示例三档均负。静态算术，不是回测、预测或实际到账。',
+        next='浮息信用增加信用和流动性风险，固定费用并未降低。仅批准2015—2019拟议开发窗的价格／行动来源核对，尚不授权收益试跑。'))
+    if flot_source:
+        cards[0]['status_label']='固定条件账户核算中'
+        cards[0]['next']=flot_text+' 原先30%税及USD1/2储备不变；源金额差异不以扩大容差消除。'
+    if flot_history:
+        assert flot_history['new_factor_trials']==flot_history['new_horizon_trials']==0
+        assert flot_history['old_strict_source_status']=='UNKNOWN' and not flot_history['strict_bundle_promoted']
+        assert not flot_history['new_paper_T0_created'] and not flot_history['later_period_authorized_here']
+        cards[0]=flot_history['site_card']
+        evidence['flot_history']=dict(status='conditional_history_only',accepted_at_utc=flot_history['actual_acceptance_utc'],
+            economic_cases=flot_history['economic_cases'],source_sensitivity=flot_history['source_sensitivity'],
+            single_strategy_related_scenarios=12,new_factor_trials=0,strict_source_status='UNKNOWN',
+            stable_profitability_proven=False,new_paper_T0_created=False)
+    cash_source_active=running('hk-money-market-source-gap-owner-20261118-v176/')
+    cash_source_text='正在核查已有03152港币现金基准的逐类分派与历史单位资料；先判断能否补齐来源条件，不重复回测或把现金利息叫新因子。' if cash_source_active else '03152港币现金基准的来源缺口专项已交回，结果待主会话审查；原条件历史结论不自动升级。'
+    added=[dict(name='分层评价验收',task=economic+' '+inference,status='snapshot'),
+           dict(name='退出成本核算',task=exit_text,status='active' if not exit_review and running('forward-liquidation-measurement-') else 'snapshot'),
+           dict(name='FLOT五年复核' if flot_history else 'FLOT条件账户' if flot_source else 'FLOT来源核对',task=flot_text,status='active' if not flot_history and (running('us-floating-credit-account-owner-20261118-v174/') or running('us-floating-credit-source-owner-20261118-v172/')) else 'snapshot'),
+           dict(name='港币现金资料核查',task=cash_source_text,status='active' if cash_source_active else 'snapshot')]
+    current_work['owners']=added+[o for o in current_work['owners'] if o['name']!='主会话核验与发布']
+    registry.extend([
+        dict(id='forward-method-v167-v170',version='V167–V173 · 评价与退出估值',name='持续经济证据分层 · 统计推断未启用',category='recent',record_type='evaluation_protocol',
+             conclusion=economic+' '+inference+' '+exit_text,source_date='2026-11-18',source='root实际接受与独立方法审查；不是新增盈利或新T0'),
+        dict(id='flot-history-v174-v175' if flot_history else 'flot-preflight-v169',version='V169–V175 · FLOT条件历史' if flot_history else 'V169 · 机制预检',name='FLOT浮息信用 · 固定费用空间有限',category='recent',record_type='conditional_economic_account' if flot_history else 'economic_preflight',
+             conclusion=cards[0]['conclusion']+' '+cards[0]['next'],source_date='2026-11-18',source='独立Fraction账户先于作者结果；15096日行金额一致，12情景属于1条规则，不是12个独立策略' if flot_history else '发行人原文及312项独立精确货币核对；不是历史账户或收益预测')])
+    return '总目标运行中，稳定盈利尚未证实。FLOT五年条件核算与退出估值独立审查已交付，FLOT暂不升级纸面；港币现金基准资料核查继续。正式统计推断未启用，原纸面起点不变，本轮不增加因子或盈利策略计数。' if flot_history and exit_review else '总目标运行中，稳定盈利尚未证实。分层评价与FLOT条件研究继续；原纸面起点不变，本轮不增加因子或盈利策略计数。'
+
+
 def current_mining_work(new_paper,activity,milestone_delivered,accepted_a=False,accepted_b=False,accepted_c=False):
     team=read(MINING/'TEAM.json')
     source_folder=ROOT/'reports/us-action-panel-owner-20261117-v137'
@@ -754,6 +836,8 @@ def main():
         forward=accepted_diversified_forward()
         if forward:activity_text=f"总目标运行中，稳定盈利尚未证实。已验收{factor_research['unique_new_signals']}个信号、{factor_research['planned_horizon_trials']}个期限；当前并行研究低下行波动候选，尚不计入已验收数。"+forward['site_summary']+'正式稳定性统计方法尚未冻结；旧历史金额与原03086／SGOV起点保持。'
         if forward and accepted_downside_review():activity_text=f"总目标运行中，稳定盈利尚未证实。已验收{factor_research['unique_new_signals']}个信号、{factor_research['planned_horizon_trials']}个期限；低下行波动首次固定训练已独立复算，两期限均未通过收益排序筛选，不代表低风险配置没有价值。"+forward['site_summary']+'正式稳定性统计方法尚未冻结；原纸面及历史金额保持。'
+        continuation=project_layered_evaluation_and_flot(evidence_updates,current_work,cards,registry,args.activity)
+        if continuation:activity_text=continuation
     source_paths={'nasdaq':'v103-review/FINAL-REVIEW-v1.json','dividend':'v102-review/FINAL-REVIEW-v1.json','sp500_source':'v106-sp500-development-source/SOURCE-QUALIFICATION-v1.json'}
     if accepted.exists():source_paths['sp500_accepted']=str(accepted.relative_to(TEAM))
     if small_accepted.exists():source_paths['small_nasdaq_accepted']=str(small_accepted.relative_to(TEAM))
@@ -823,6 +907,9 @@ def main():
     extra_sources['v148_source_findings']=ROOT/'reports/us-cash-tax-fee-source-owner-20261118-v148/SOURCE-FINDINGS-v1.md'
     extra_sources['v149_root_acceptance']=MINING/'acceptance/FORWARD-EVALUATION-v149-ROOT-ACCEPTANCE-v1.json'
     extra_sources['v149_root_completion']=MINING/'acceptance/FORWARD-EVALUATION-v149-ROOT-COMPLETION-v1.json'
+    for key,filename in [('v170_layered_measurement','FORWARD-METHOD-v167-v170-ROOT-ACCEPTANCE-v1.json'),('v169_flot_preflight','FLOT-v169-ROOT-REVIEW-v1.json'),('v172_flot_source','FLOT-SOURCE-v172-ROOT-REVIEW-v1.json'),('v173_exit_measurement','FORWARD-EXIT-v171-v173-ROOT-REVIEW-v1.json'),('v175_flot_history','FLOT-ACCOUNT-v174-v175-ROOT-REVIEW-v1.json')]:
+        path=MINING/'acceptance'/filename
+        if path.exists():extra_sources[key]=path
     extra_sources['v144_protocol']=ROOT/'reports/us-diversified-carry-owner-20261117-v144/PROTOCOL-v1.json'
     extra_sources['v144_conditional_use']=MINING/'portfolio-source-v144/CONDITIONAL-USE-v1.md'
     portfolio_review=MINING/'acceptance/DIVERSIFIED-v144-A-ROOT-REVIEW-v2.json'
