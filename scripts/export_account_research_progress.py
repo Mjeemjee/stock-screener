@@ -16,8 +16,32 @@ def read(path):return json.loads(path.read_text(encoding='utf-8-sig'))
 def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 def clean(text):return re.sub(r'\[([^\]]+)\]\([^)]+\)',r'\1',text).replace('`','').replace('**','').strip()
 
+def accepted_us_factor_reports():
+    """Read two root-reviewed fixed rejections; never rerun research."""
+    accepted=[]
+    specs=[('us-intraday-persistence-owner-20261117-v141','US-INTRADAY-v141-ROOT-REVIEW-v1.json'),
+           ('us-max-lottery-owner-20261117-v145','MAX-v145-ROOT-REVIEW-v1.json')]
+    for folder,review_name in specs:
+        base=ROOT/'reports'/folder;result=read(base/'RESULT-v1.json');protocol=read(base/'PROTOCOL-v1.json')
+        review=read(MINING/'acceptance'/review_name)
+        assert review['decision']=='ACCEPT_FIXED_TRAINING_REJECTION_NOT_GLOBAL_MECHANISM_FAILURE'
+        assert result['status']=='FIXED_HYPOTHESIS_NOT_SUPPORTED_BY_TRAINING_SCREEN'
+        assert not result['validation_or_test_opened'] and result['account_net_profit'] is None
+        assert result['trial_accounting']['unique_signals']==protocol['new_unique_signals']==1
+        assert result['trial_accounting']['fixed_horizons']==len(protocol['horizons'])==2
+        assert result['trial_accounting']['sign_or_window_rescues']==0
+        assert sorted(map(int,result['training']))==sorted(protocol['horizons'])
+        assert all(not r['decision']['pass_training_diagnostic'] for r in result['training'].values())
+        verification=review['root_executed_verify'] if isinstance(review['root_executed_verify'],dict) else read(MINING/'acceptance'/review['root_executed_verify'])['stdout']
+        assert verification['status'].startswith('PASS_READ_ONLY') and verification['files_written']==0
+        assert verification['result_sha256']==digest(base/'RESULT-v1.json')
+        assert verification['protocol_sha256']==digest(base/'PROTOCOL-v1.json')==result['protocol_sha256']
+        accepted.append((result,protocol))
+    return accepted
+
+
 def new_factor_research():
-    """Project the three frozen signal reports; never run factor computation."""
+    """Project frozen reports; signal counts exclude stages, controls and templates."""
     original=read(MINING/'RESULT-v1.json')
     corrected=read(MINING/'calendar-correction-v2/RESULT.json')
     liquidity=read(ROOT/'reports/hk-liquidity-factor-owner-20261117-v130/RESULT-v1.json')
@@ -48,7 +72,7 @@ def new_factor_research():
                              top_excess_bp=r['metrics']['means']['top_excess']*10000))
         return rows
 
-    return dict(unique_new_signals=3,planned_horizon_trials=6,new_net_account_candidates=0,
+    report=dict(unique_new_signals=3,planned_horizon_trials=6,new_net_account_candidates=0,
         scope='港股和美股个股、普通非杠杆ETF；1万／2万／3万港币分别核验。',
         note='本批3个新信号、6个预定期限。日历修正不增加因子或独立试验；对照指标不计为新信号。IC是排序相关系数，不是收益率。',
         limitations='各批次股票池、可评价集合和期间不同，不能直接横比IC来断言增量优势。已见历史不是新盲测；批内p校正不覆盖整个研究过程的选择偏差。',
@@ -71,6 +95,154 @@ def new_factor_research():
                 conclusion='20／60日RankIC 0.01863／0.03772，但HAC t仅0.698／0.979。旧SinaUS缓存保留拆股阶跃，这些仅是存储价格诊断，不能当可靠经济收益。',
                 limitation='700只现存池不是历史成分；账户净利润、回撤与本金适配未知。验证与后段未打开。',
                 next='先核显式拆股及毛现金字段的小样本源资格，保留本版和旧结果。')])
+    for result,protocol in accepted_us_factor_reports():
+        is_max=result['candidate']=='us_negative_max_gross_close_return_20'
+        diagnostics=[]
+        for h in protocol['horizons']:
+            row=result['training'][str(h)];ic=row['inference']['rank_ic']
+            diagnostics.append(dict(horizon=h,split='固定训练 · 毛权益诊断',period=' — '.join(protocol['training']),
+                rank_ic=ic['mean'],hac_t=ic['t'],p_value=row['decision']['p_bonferroni_two_horizons_only'],
+                p_label='两期限批内p',top_excess_bp=row['means']['top_excess']*10000,measure='gross_rights'))
+        report['items'].append(dict(id=result['candidate'],name='美股 · 低MAX极端收益回避' if is_max else '美股 · 20会话日内强度延续',
+            status='rejected',status_label='固定方向双期限筛退',horizons=protocol['horizons'],formula=protocol['formula'],
+            diagnostics=diagnostics,account_net_hkd=None,account_max_drawdown_pct=None,
+            conclusion=('20／60日RankIC −0.05701／−0.06330；低MAX前组相对同池毛权益差 −55.47／−105.64bp。h20双侧p过线是反方向关联，不支持冻结的低MAX优先方向。'
+                        if is_max else '20／60日RankIC 0.01149／0.02819，HAC t仅0.626／1.585。前组相对同池毛权益差为正，但两个固定期限均未过训练门槛。'),
+            limitation='只限40只当前大型股便利样本，日截面39—40只；毛除息权益不是可用现金或净账户。没有打开2020+，不代表全球机制失效。',
+            next='固定失败保留；不翻方向、改窗口或挑年份补救，账户净利与本金适配仍未知。'))
+    ids=[r['id'] for r in report['items']]
+    assert len(ids)==len(set(ids)), 'A signal cannot be counted twice'
+    report['unique_new_signals']=len(ids)
+    report['planned_horizon_trials']=sum(len(set(r['horizons'])) for r in report['items'])
+    report['note']=f"已验收筛选记录：{report['unique_new_signals']}个信号、{report['planned_horizon_trials']}个预定期限。日历修正、对照和模板不增加信号数；IC是排序相关系数，不是收益率。"
+    return report
+
+
+def current_portfolio_research():
+    protocol=read(ROOT/'reports/us-diversified-carry-owner-20261117-v144/PROTOCOL-v1.json')
+    assert protocol['weights']=={'US.SGOV':'0.60','US.VTI':'0.20','US.GLD':'0.20'}
+    assert protocol['windows']['A']==['2021-01-01','2023-12-31']
+    pending=dict(id='v144-diversified-carry',name='60% SGOV / 20% VTI / 20% GLD · 条件性账户研究',
+        status='implementation_pending_review',period='A · 2021-01-01 — 2023-12-31',net_hkd=None,risk_pct=None,chart=None,
+        summary='固定60／20／20权重、年初再平衡、整数股、同一美元钱包；本金1万／2万／3万分别核验。',
+        progress='资料已有条件采用；A段模型实现及独立核验中，目前没有已验收账户收益。B/C尚未打开。',
+        limitations='VTI 2021四笔支付日来自第三方；2022/2023发行人日历的CUSIP冲突保留。付款日、30%税、费用、固定7.8换汇及T+3卖款均为条件情景，不能称已通过、实际到账或稳定收入。',
+        curve_note='A段历史曲线待计算及主会话独立验收，当前不展示收益或曲线。')
+    review_path=MINING/'acceptance/DIVERSIFIED-v144-A-ROOT-REVIEW-v2.json'
+    if not review_path.exists():return pending
+    review=read(review_path)
+    assert review['decision']=='ACCEPT_CONDITIONAL_A_ACCOUNT_GATE_NOT_STABLE_PROFIT_PROOF'
+    assert not review['stable_profit_proven'] and not review['annual_rebalance_advantage_demonstrated']
+    assert not review['B_C_completed'] and review['actual_withdrawn_hkd']==0
+    for relative,sha in review['pins'].items():assert digest(ROOT/relative)==sha, 'Accepted A-v2 input changed: '+relative
+    folder=ROOT/'reports/us-diversified-carry-owner-20261117-v144/A-v2'
+    summaries=read(folder/'ALL-A-SUMMARIES-v2.json')['summaries']
+    primary=read(folder/'accounts/A_main_HKD30000_pressure/result.json')
+    rows=[]
+    for case in review['main_capital_results']:
+        source=next(r for r in summaries if r['group']=='main' and r['capital_hkd']==case['capital_hkd'] and r['cost']==case['cost'])
+        assert source['net_hkd']==case['net_hkd'] and source['max_observed_drawdown_pct']==case['max_observed_drawdown_pct']
+        assert source['monthly_negative_count']==case['monthly_negative_count']
+        rows.append(dict(capital_hkd=case['capital_hkd'],cost=case['cost'],net_hkd=float(case['net_hkd']),
+            risk_pct=float(case['max_observed_drawdown_pct']),negative_months=case['monthly_negative_count'],months=source['months']))
+    assert len(rows)==6 and len(primary['daily'])==756 and len(primary['trades'])==8
+    net=float(primary['summary']['net_hkd']);risk=float(primary['summary']['max_observed_drawdown_pct'])
+    assert net==float(review['primary_fraction_audit_executed_by_root']['net_hkd'])
+    nav=[dict(date=r['date'],nav_hkd=float(r['hkd_nav']),tail=r['tail']) for r in primary['daily']]
+    assert all(math.isfinite(p['nav_hkd']) and p['nav_hkd']>0 for p in nav)
+    assert all(float(r['identity_residual'])==0 for r in primary['daily'])
+    assert nav[-1]['nav_hkd']==float(primary['summary']['final_hkd'])
+    pending.update(status='accepted_conditional_A_only',status_label='A段条件门槛通过，B待冻结',net_hkd=net,risk_pct=risk,
+        chart='assets/portfolio-A-v2.png',cases=rows,capital_hkd=30000,cost='pressure',nav_series=nav,
+        actual_income_certified=False,stable_profitability_proven=False,new_paper_t0=None,B_C_computed=False,
+        progress='A段条件账户已验收，主3万压力累计+885.28港币，报价保守回撤约7.8337%，36个月中16个负月。1万在既定压力假设下亏损、未过A段门槛；实际适配仍待真实费用及前向证据。下一步冻结B（2024—2025）继续研究；B/C尚未计算，没有新增组合纸面T0。',
+        comparison='同配置不调仓的3万压力对照累计+940.46港币，比年再平衡高55.18；没有建立再平衡优势，不能称独立alpha或稳定收入。',
+        payment_sensitivity='2021年VTI四笔第三方付款日延后5个实际会话，六组配对的交易时刻、股数及终值不变，现金余额有20个会话短时不同；这不认证原支付日或实际到账。',
+        curve_note='3万港币初始本金，压力费用情景；756个已复核HKD收盘/结算记账点含2024-01-04尾款。保守回撤另含报价高低代理。固定7.8、每方向50bp换汇及单边10bp价格摩擦、双倍佣金平台、30%预扣与每次正分派2美元储备。曲线不是提款或实际收入，报价回撤不是未来亏损上限。')
+    pending['limitations']=pending['limitations'].replace('不能称已通过、实际到账或稳定收入。','仅A段条件门槛通过，未认证实际到账或稳定收入。')
+    pending['fee_boundary']='每次非零分红基础预留1美元、压力预留2美元，是研究假设，非已确认富途收费；官方未单列也不据此认定0费用。模型保持原假设，没有重算费用救结果。'
+    concentration=read(MINING/'acceptance/DIVERSIFIED-v144-A-CONCENTRATION-v1.json')
+    assert concentration['source_result']==(folder/'accounts/A_main_HKD30000_pressure/result.json').relative_to(ROOT).as_posix()
+    pending['annual_changes_hkd']={year:float(value) for year,value in concentration['annual_changes_hkd'].items()}
+    pending['comparison']+=' 净正依赖2023回升，仍有亏损年份：主3万压力2021 +128.59、2022 −1,237.26、2023 +1,993.95港币；剔除最好年后为−1,108.67港币，仅作归因诊断。'
+    pending['primary_chart_stage']='A'
+    pending['B_accepted']=False;pending['C_accepted']=False
+    b_review_path=MINING/'acceptance/DIVERSIFIED-v144-B-ROOT-REVIEW-v1.json'
+    if b_review_path.exists():
+        b_review=read(b_review_path)
+        assert b_review['decision']=='ACCEPT_CONDITIONAL_B_NOT_BLIND_OR_STABLE_PROFIT_PROOF'
+        assert b_review['A_pins_unchanged'] and b_review['all12_agent_independent_paths_pass']
+        assert not b_review['C_completed'] and not b_review['stable_profit_proven'] and b_review['actual_orders']==0
+        for relative,sha in b_review['pins'].items():assert digest(ROOT/relative)==sha, 'Accepted B input changed: '+relative
+        b_summaries=read(ROOT/'reports/us-diversified-carry-owner-20261117-v144/B-v1/ALL-B-SUMMARIES-v1.json')['summaries']
+        b_cases=[]
+        for case in b_review['main_results']:
+            source=next(r for r in b_summaries if r['group']=='main' and r['capital_hkd']==case['capital_hkd'] and r['cost']==case['cost'])
+            assert source['net_hkd']==case['net_hkd'] and source['max_observed_drawdown_pct']==case['max_observed_drawdown_pct']
+            assert source['monthly_negative_count']==case['monthly_negative_count']
+            b_cases.append(dict(capital_hkd=case['capital_hkd'],cost=case['cost'],net_hkd=float(case['net_hkd']),risk_pct=float(case['max_observed_drawdown_pct']),
+                negative_months=case['monthly_negative_count'],months=source['months']))
+        assert len(b_cases)==6
+        b_primary=next(r for r in b_cases if r['capital_hkd']==30000 and r['cost']=='pressure')
+        assert b_primary['net_hkd']==float(b_review['primary_fraction_audit_executed_by_root']['net_hkd'])
+        a_primary=next(r for r in rows if r['capital_hkd']==30000 and r['cost']=='pressure')
+        def segment(stage,period,cases,primary):
+            base=next(r for r in cases if r['capital_hkd']==30000 and r['cost']=='base')
+            return dict(stage=stage,period=period,status='accepted_conditional',capital_hkd=30000,base_net_hkd=base['net_hkd'],net_hkd=primary['net_hkd'],
+                risk_pct=primary['risk_pct'],negative_months=primary['negative_months'],months=primary['months'])
+        pending.update(status='accepted_conditional_AB_C_pending',status_label='A/B条件历史已验收，C待核',B_accepted=True,B_cases=b_cases,
+            period='A 2021—2023 / B 2024—2025；各自新本金',
+            segment_rows=[segment('A','2021—2023',rows,a_primary),segment('B','2024—2025',b_cases,b_primary),
+                dict(stage='C',period='2021—2025连续账户',status='awaiting_root_review',capital_hkd=30000,base_net_hkd=None,net_hkd=None,risk_pct=None,negative_months=None,months=None)],
+            progress='A与B的主3万压力条件历史结果分别+885.28／+6,896.33港币；B报价保守DD约3.1083%，24个月中3个负月。两段各自新本金，不能相加构造连续收益。1万A段在既定压力假设下亏损，B段正额不救回该失败。C连续账户正研究及根审查，结果待核，不预填。',
+            separation_note='A、B独立起账，不能相加或当作连续实绩；C必须沿同一钱包、同一起点单独连续核算。均为已见历史，非盲测、实际收入或稳定alpha；没有新增组合纸面T0。',
+            B_annual_changes_hkd={year:float(value) for year,value in b_review['annual_changes_hkd'].items()},
+            B_contribution_before_FX_usd={key:float(value) for key,value in b_review['net_asset_contributions_before_portfolio_FX_usd'].items()})
+        pending['comparison']='同配置不调仓的主3万压力对照：A +940.46港币（高55.18），B +7,277.86港币，均高于各段年再平衡；未建立再平衡收益优势。A净正依赖2023回升，2022仍亏损，剔除最好年余−1,108.67；B的组合换汇前净资产贡献中，GLD为604.68／927.06美元，约65.2%，不能称稳定alpha。'
+        pending['limitations']=pending['limitations'].replace('仅A段条件门槛通过，未认证实际到账或稳定收入。','A/B为已见条件历史，未认证实际到账或稳定收入。')
+        pending['curve_note']='以下只保留A段3万港币压力曲线。'+pending['curve_note']
+        c_review_path=MINING/'acceptance/DIVERSIFIED-v144-C-ROOT-REVIEW-v1.json'
+        if c_review_path.exists():
+            c_review=read(c_review_path)
+            assert c_review['decision']=='ACCEPT_CONDITIONAL_CONTINUOUS_C_NOT_STABLE_PROFIT_PROOF'
+            assert c_review['C_completed'] and c_review['all12_agent_independent_paths_pass'] and c_review['A_B_pins_unchanged']
+            assert not c_review['stable_profit_proven'] and c_review['actual_orders']==0
+            assert len(c_review['exact_A_prefix_rechecked_by_root'])==12
+            assert all(r['equal_prefix_counts']['daily']==752 for r in c_review['exact_A_prefix_rechecked_by_root'])
+            for relative,sha in c_review['pins'].items():assert digest(ROOT/relative)==sha, 'Accepted C input changed: '+relative
+            total=read(ROOT/'reports/us-diversified-carry-owner-20261117-v144/C-v1/ABC-TOTAL-v1.json')
+            assert len(total['all_cost_rows'])==18 and len(total['bands'])==9
+            assert total['fixed_weights']==protocol['weights'] and not total['engine_changed']
+            assert not total['new_paper_started'] and not total['stable_profit_proven'] and total['actual_orders']==0
+            assert all(total['A_B_seals'][s]['all_unchanged'] for s in ['A','B'])
+            c_cases=[]
+            for case in c_review['main_results']:
+                source=next(r for r in total['all_cost_rows'] if r['stage']=='C' and r['capital_hkd']==case['capital_hkd'] and r['cost']==case['cost'])
+                assert source['main_net_hkd']==case['net_hkd'] and source['main_quote_drawdown_pct']==case['max_observed_drawdown_pct']
+                assert source['main_negative_months']==case['monthly_negative_count']
+                c_cases.append(dict(capital_hkd=case['capital_hkd'],cost=case['cost'],net_hkd=float(case['net_hkd']),risk_pct=float(case['max_observed_drawdown_pct']),
+                    negative_months=case['monthly_negative_count'],months=source['months']))
+            assert len(c_cases)==6
+            for stage,cases in [('A',rows),('B',b_cases),('C',c_cases)]:
+                for case in cases:
+                    source=next(r for r in total['all_cost_rows'] if r['stage']==stage and r['capital_hkd']==case['capital_hkd'] and r['cost']==case['cost'])
+                    assert float(source['main_net_hkd'])==case['net_hkd'] and float(source['main_quote_drawdown_pct'])==case['risk_pct']
+                    assert source['main_negative_months']==case['negative_months'] and source['months']==case['months']
+            c_primary=next(r for r in c_cases if r['capital_hkd']==30000 and r['cost']=='pressure')
+            assert c_primary['net_hkd']==float(c_review['primary_fraction_audit_executed_by_root']['net_hkd'])
+            pending.update(status='accepted_conditional_ABC',status_label='A/B/C条件历史已验收，稳定未证',C_accepted=True,C_cases=c_cases,B_C_computed=True,
+                period='A 2021—2023 / B 2024—2025 / C 2021—2025连续账户',C_A_prefix_verified=True,
+                progress='C以2021同一初始钱包连续运行，主3万压力五年累计+9,111.40港币，报价保守DD约7.8337%，18/60个月亏损。C的1万／2万压力净额为+1,611.46／+4,798.33；A的1万在既定压力假设下仍亏331.27，不因后段或五年正额救回。没有新增组合纸面T0，稳定盈利尚未证实。',
+                separation_note='A/B各自新本金，C沿同一2021钱包连续核算并与A/B重叠，三行不能相加，不是三次独立盲测。A尾款至2024-01-04，B/C尾款至2026-01-06；均为条件历史，不是实际收入。',
+                C_annual_changes_hkd={year:float(value) for year,value in c_review['annual_changes_hkd'].items()},
+                C_contribution_before_FX_usd={key:float(value) for key,value in c_review['net_asset_contributions_before_portfolio_FX_usd'].items()},
+                capital_cost_rows=[dict(stage=r['stage'],capital_hkd=r['capital_hkd'],cost=r['cost'],net_hkd=float(r['main_net_hkd']),
+                    risk_pct=float(r['main_quote_drawdown_pct']),negative_months=r['main_negative_months'],months=r['months']) for r in total['all_cost_rows']])
+            pending['segment_rows'][2]=segment('C','2021—2025连续账户',c_cases,c_primary)
+            pending['comparison']='同配置不调仓的主3万压力对照：A +940.46、B +7,277.86港币，均高于各段年再平衡；C +10,328.63港币、报价保守DD约7.7428%，收益更高且报价回撤略低，年度再平衡未显示增益。A净正依赖2023回升，仍有亏损年份。组合换汇前净资产贡献中，B黄金约65.2%，C黄金约56.98%并受股票贡献，不能称稳定alpha。'
+            pending['payment_sensitivity']='既有A段敏感性：'+pending['payment_sensitivity']
+            pending['limitations']=pending['limitations'].replace('A/B为已见条件历史','A/B/C为重叠的已见条件历史')
+    return pending
 
 
 def sgov_history():
@@ -138,7 +310,7 @@ def sgov_paper_status():
                      '起点建模美元钱包即计双向换汇估值成本，0证券成交也可呈负增减；这不是实际亏损。'+assumptions)
 
 
-def current_mining_work(new_paper,activity,milestone_delivered):
+def current_mining_work(new_paper,activity,milestone_delivered,accepted_a=False,accepted_b=False,accepted_c=False):
     team=read(MINING/'TEAM.json')
     source_folder=ROOT/'reports/us-action-panel-owner-20261117-v137'
     # The v1 compatibility failure stays archived; prefer a later bounded receipt.
@@ -158,19 +330,19 @@ def current_mining_work(new_paper,activity,milestone_delivered):
             source=f"固定{qualified['nominal_names']}股、{qualified['calendar_sessions']:,}会话的显式拆股／毛现金权利诊断源已构造，日截面{qualified['source_qualified_count_min']}—{qualified['source_qualified_count_max']}只。尚未算新IC或净账户；旧700股未因此获认证。"
     def owner_active(path_fragment):
         return any(o['status']=='ACTIVE' and any(path_fragment in p for p in o['write_paths']) for o in team['owners'])
-    factor_active=owner_active('us-intraday-persistence-owner-20261117-v141/')
-    evidence_active=owner_active('forward-evidence-plan-owner-20261117-v142/')
+    account_active=owner_active('us-diversified-carry-owner-20261117-v144/')
+    root_active=any(o['owner']=='/root' and o['status']=='ACTIVE' for o in team['owners'])
     observed_activity=activity in ['preparing','checking']
     return dict(goal_status='ACTIVE',research_batch_status='active',stable_profitability_proven=False,
         candidate_milestone_status='delivered' if milestone_delivered else 'pending',
         goal_label='总目标运行中',milestone_label='历史候选交付完成（里程碑）' if milestone_delivered else '历史候选交付待验收',
         evidence_label='稳定盈利与持续性尚未证实',
         task='T-012',team_updated_at=team['updated_hkt'],
-        active_work=dict(factor=factor_active and observed_activity,evidence=evidence_active and observed_activity),
+        active_work=dict(account=account_active and observed_activity and not accepted_c,review=root_active and observed_activity),
         source_status=raw_status,scope='港美个股及普通非杠杆ETF；持续研究与03086原四臂纸面并行。',
-        owners=[dict(name='主会话',task='持续研究优先级、独立验收与稳定盈利证据评估；候选交付不关闭总目标。',status='snapshot'),
-                dict(name='新因子筛选',task='v141美股新机制研究，等待实算及主会话验收；当前不增加IC或有效因子数。',status='active' if factor_active and observed_activity else 'snapshot'),
-                dict(name='前向证据计划',task='v142规划前向盈利与稳定性证据；不重置已有纸面起点。',status='active' if evidence_active and observed_activity else 'snapshot'),
+        owners=[dict(name='主会话核验',task='C连续账、同钱包及A前缀已复核；整理本轮证据并继续安排持续研究，稳定盈利未证。' if accepted_c else '核C连续账户、同钱包不重置及A前缀；A/B各自新本金不能相加。' if accepted_b else 'A段主3万压力账户已独立核验；接续核B资料与协议，候选交付不关闭总目标。' if accepted_a else '组合A段的独立账户及资料限制核验；尚无已验收组合收益，候选交付不关闭总目标。',status='active' if root_active and observed_activity else 'snapshot'),
+                dict(name='组合账户研究',task='A/B/C条件历史核算已交付。没有新增组合纸面T0；后续机制研究与原纸面继续，不能把C当独立盲测或稳定证明。' if accepted_c else 'A/B条件结果已验收；同规则C 2021—2025连续账户研究中，结果待根验收，不预填。' if accepted_b else 'v144的A 2021—2023条件结果已验收；下一步准备冻结B 2024—2025，B/C尚未计算。' if accepted_a else 'v144固定60% SGOV／20% VTI／20% GLD，条件源核对后实现A 2021—2023模型。',status='active' if account_active and observed_activity and not accepted_c else 'snapshot'),
+                dict(name='已验收因子',task='v141日内强度与v145低MAX的固定方向、20/60日均筛退；不是全球机制失败，不再标为忙碌。',status='snapshot'),
                 dict(name='两套固定纸面',task='03086与SGOV保留原T0。当前没有新增到期观察，按真实新时点接续。',status='snapshot')],
         note='历史候选交付是一项已完成里程碑，不代表总目标完成。工作分工只反映同步时观察，超过15分钟停动画；没有后台持续计算承诺。')
 
@@ -227,8 +399,10 @@ def main():
                              cwd=ROOT,capture_output=True,text=True,encoding='utf-8',check=True,timeout=20)
     paper= json.loads(paper_run.stdout)
     assert paper['actual_orders']==0
-    factor_research=new_factor_research();sgov=sgov_history();new_paper=sgov_paper_status()
-    current_work=current_mining_work(new_paper,args.activity,bool(sgov and new_paper['activated']))
+    factor_research=new_factor_research();sgov=sgov_history();new_paper=sgov_paper_status();portfolio=current_portfolio_research()
+    accepted_a=portfolio['status'].startswith('accepted_conditional_')
+    accepted_b=portfolio.get('B_accepted',False);accepted_c=portfolio.get('C_accepted',False)
+    current_work=current_mining_work(new_paper,args.activity,bool(sgov and new_paper['activated']),accepted_a,accepted_b,accepted_c)
     monthly=[v for v in nasdaq['metrics'] if v['role']=='monthly']
     cards=[dict(id='nasdaq-monthly',name='03086 · 每月趋势复核',status='paper',status_label='保留纸面验证',capital_hkd=30000,
                 period='2020-01-02 — 2026-11-13',basis='历史收盘标记，含开放持仓',
@@ -404,8 +578,8 @@ def main():
         next_intent=observed and any(v['eligible'] and v['date']>paper['verified_data_through'] for v in paper['recorded_intents'])
         monthly_review_observed=paper['verified_data_through'][:7]>paper['first_forward_session'][:7]
         stage_status=['done','done','done','done' if observed else 'pending','done' if next_intent else 'pending','done' if monthly_review_observed else 'pending']
-    if args.focus=='mining':stage_status=['done' if current_work['candidate_milestone_status']=='delivered' else 'pending','done' if new_paper['activated'] and paper['activated'] else 'pending',
-        'active' if current_work['active_work']['factor'] else 'pending','active' if current_work['active_work']['evidence'] else 'pending','pending','pending']
+    if args.focus=='mining':stage_status=['done' if current_work['candidate_milestone_status']=='delivered' else 'pending','done',
+        'active' if current_work['active_work']['account'] else 'pending','active' if current_work['active_work']['review'] else 'pending','pending','pending']
     if args.activity not in ['preparing','checking']:stage_status=['pending' if s=='active' else s for s in stage_status]
     activity_active=args.activity in ['preparing','checking'] and current['status'] in ['pending','candidate']
     if args.focus=='mining':activity_active=args.activity in ['preparing','checking'] and any(s=='active' for s in stage_status)
@@ -426,7 +600,7 @@ def main():
         primary=paper['summaries']['monthly-only-base']
         activity_text=f"用户已选择历史检验通过后转固定候选纸面跟踪。03086四臂规则及真实T0保持；主臂持仓{primary['open_quantity']}份、已闭合{primary['closed_rounds']}轮。接续依赖电脑和OpenD在线，尚未安装后台定时服务。"
     if args.focus=='mining':
-        activity_text='总目标运行中：继续港美个股／普通ETF研究，稳定盈利尚未证实。历史候选交付已完成，只是里程碑。v141新因子与v142前向证据计划继续推进；当前仍展示已验收的3个信号、6个期限，未加入新IC。'
+        activity_text=f"总目标运行中，稳定盈利尚未证实；历史候选交付只是里程碑。v141日内强度与v145低MAX均固定方向筛退，累计{factor_research['unique_new_signals']}个信号、{factor_research['planned_horizon_trials']}个预定期限。"+('60／20／20组合A/B/C条件历史已验收；C沿2021同一钱包连续核算，主3万压力五年累计+9,111.40港币。C与A/B重叠，不能相加，不是三次独立盲测；没有新增组合纸面T0，持续研究继续。' if accepted_c else '60／20／20组合A/B条件历史已验收，各自新3万本金的压力净额+885.28／+6,896.33，不能相加。当前研究并核验C连续账户，结果待核，没有新增组合纸面T0。' if accepted_b else '60／20／20组合A段条件门槛通过，主3万压力累计+885.28港币，下一步冻结B继续研究；B/C尚未计算，没有新增组合纸面T0。' if accepted_a else '当前推进60／20／20条件性组合的A段实现与独立核验，尚无已验收组合收益。')
     source_paths={'nasdaq':'v103-review/FINAL-REVIEW-v1.json','dividend':'v102-review/FINAL-REVIEW-v1.json','sp500_source':'v106-sp500-development-source/SOURCE-QUALIFICATION-v1.json'}
     if accepted.exists():source_paths['sp500_accepted']=str(accepted.relative_to(TEAM))
     if small_accepted.exists():source_paths['small_nasdaq_accepted']=str(small_accepted.relative_to(TEAM))
@@ -452,9 +626,9 @@ def main():
     if args.focus=='cash':stage_names=['规则固定','历史来源','现金与费用','2024检验','2025与独立核账','实际成交观察']
     if args.focus=='us-vti':stage_names=['规则固定','长历史来源','价格诊断','后续历史段','独立核账','完整现金补证']
     if args.focus=='paper':stage_names=['历史检验','规则冻结','纸面起点','新会话观察','意向接续','月初复核']
-    if args.focus=='mining':stage_names=['历史候选里程碑','两套纸面原T0','新因子研究','前向证据计划','持续前向样本','稳定盈利证据']
+    if args.focus=='mining':stage_names=['历史候选里程碑','A/B/C条件历史' if accepted_c else 'A/B条件验收' if accepted_b else 'A段条件验收' if accepted_a else '组合条件资料','下一研究待冻结' if accepted_c else 'C连续账户研究' if accepted_b else 'B段冻结准备' if accepted_a else 'A段账户实现','研究交付核验' if accepted_c else 'C独立核验' if accepted_b else '后续独立核验' if accepted_a else '独立账户核验','持续前向样本','稳定盈利证据']
     stage_details=[None]*6
-    if args.focus=='mining':stage_details=['历史阶段已交付','原起点保留',
+    if args.focus=='mining':stage_details=['历史阶段已交付','条件历史已复核' if accepted_c else '各自起账条件通过' if accepted_b else 'A段条件通过' if accepted_a else '有条件采用',
         '同步时进行中' if stage_status[2]=='active' else '等待实际新进展','同步时进行中' if stage_status[3]=='active' else '等待实际新进展','待真实新样本','证据未建立']
     extra_sources={
         'mining_goal':MINING/'GOAL.md','mining_scope':MINING/'GOAL-SCOPE-ADDENDUM-v1.json','mining_team':MINING/'TEAM.json',
@@ -465,6 +639,29 @@ def main():
         'old_factor_catalog_review':ROOT/'reports/us-anchor-factor-owner-20261117-v132/OLD-CATALOG-REVIEW-v1.json'}
     for name,file in [('continuous_goal','GOAL-CONTINUOUS-v2.md'),('restored_goal_receipt','GOAL-RESTORED-RECEIPT-v2.json')]:
         if (MINING/file).exists():extra_sources[name]=MINING/file
+    for version,folder,review_file in [('v141','us-intraday-persistence-owner-20261117-v141','US-INTRADAY-v141-ROOT-REVIEW-v1.json'),
+                                      ('v145','us-max-lottery-owner-20261117-v145','MAX-v145-ROOT-REVIEW-v1.json')]:
+        for file in ['RESULT-v1.json','PROTOCOL-v1.json','FINDINGS.md']:
+            extra_sources[version+'_'+file]=ROOT/'reports'/folder/file
+        extra_sources[version+'_root_review']=MINING/'acceptance'/review_file
+    extra_sources['v145_root_verify']=MINING/'acceptance/MAX-v145-ROOT-VERIFY-v1.json'
+    extra_sources['v144_protocol']=ROOT/'reports/us-diversified-carry-owner-20261117-v144/PROTOCOL-v1.json'
+    extra_sources['v144_conditional_use']=MINING/'portfolio-source-v144/CONDITIONAL-USE-v1.md'
+    portfolio_review=MINING/'acceptance/DIVERSIFIED-v144-A-ROOT-REVIEW-v2.json'
+    if portfolio_review.exists():
+        extra_sources['v144_A_root_review_v2']=portfolio_review
+        extra_sources['v144_A_summaries_v2']=ROOT/'reports/us-diversified-carry-owner-20261117-v144/A-v2/ALL-A-SUMMARIES-v2.json'
+        extra_sources['v144_A_primary_result_v2']=ROOT/'reports/us-diversified-carry-owner-20261117-v144/A-v2/accounts/A_main_HKD30000_pressure/result.json'
+        extra_sources['v144_fee_scenario_clarification']=MINING/'acceptance/FEE-SCENARIO-CLARIFICATION-v1.md'
+        extra_sources['v144_A_concentration']=MINING/'acceptance/DIVERSIFIED-v144-A-CONCENTRATION-v1.json'
+    b_review_path=MINING/'acceptance/DIVERSIFIED-v144-B-ROOT-REVIEW-v1.json'
+    if b_review_path.exists():
+        extra_sources['v144_B_root_review']=b_review_path
+        extra_sources['v144_B_summaries']=ROOT/'reports/us-diversified-carry-owner-20261117-v144/B-v1/ALL-B-SUMMARIES-v1.json'
+    c_review_path=MINING/'acceptance/DIVERSIFIED-v144-C-ROOT-REVIEW-v1.json'
+    if c_review_path.exists():
+        extra_sources['v144_C_root_review']=c_review_path
+        extra_sources['v144_ABC_total']=ROOT/'reports/us-diversified-carry-owner-20261117-v144/C-v1/ABC-TOTAL-v1.json'
     if archive:extra_sources['old_catalog']=archived
     if gld_path.exists():extra_sources['us_gld_fixed']=gld_path
     if sgov:
@@ -485,7 +682,7 @@ def main():
                     snapshot_only=True,fresh_for_minutes=15),
       stages=[dict(name=n,status=s,detail=d) for n,s,d in zip(stage_names,stage_status,stage_details)],
       cards=cards,registry=registry,ipo_observation=ipo_observation,default_evidence_view='paper' if args.focus in ['paper','mining'] else 'history',
-      factor_research=factor_research,current_work=current_work,sgov_history={k:v for k,v in sgov.items() if k!='card'} if sgov else None,sgov_paper=new_paper,
+      factor_research=factor_research,current_work=current_work,portfolio_research=portfolio,sgov_history={k:v for k,v in sgov.items() if k!='card'} if sgov else None,sgov_paper=new_paper,
       paper=dict(checked_at=paper['checked_at_hkt'],activation_utc=paper['activation_utc'],first_forward_session=paper['first_forward_session'],
                  account_count=len(paper['summaries']),closed_rounds=paper['summaries']['monthly-only-base']['closed_rounds'],
                  open_quantity=paper['summaries']['monthly-only-base']['open_quantity'],
@@ -497,7 +694,7 @@ def main():
                     passive_base_risk_pct=19.548568745437528,independent_alpha_confirmed=False,
                     pressure_passive_note='压力参考首次未买到后保持现金，主市场暴露无法估计。'),
       factor_archive=dict(count=len(archive['factors']) if archive else 0,source_date='2026-11-03',
-                          note='其中500条为30种基础表达式的模板组合，不是538个有效因子。旧US缓存发现拆股阶跃，相关旧条目未获本轮资格认证；原IC和原结论保留。与本批3个新信号分开计数。'),
+                          note=f"其中500条为30种基础表达式的模板组合，不是538个有效因子。旧US缓存发现拆股阶跃，相关旧条目未获本轮资格认证；原IC和原结论保留。与已验收的{factor_research['unique_new_signals']}个信号分开计数。"),
       source_hashes={**{k:digest(TEAM/v) for k,v in source_paths.items()},**{k:digest(v) for k,v in extra_sources.items()}})
     OUT.mkdir(exist_ok=True,parents=True);(OUT/'assets').mkdir(exist_ok=True)
     with (OUT/'progress.json').open('w',encoding='utf-8',newline='\n') as f:json.dump(payload,f,ensure_ascii=False,indent=2,allow_nan=False);f.write('\n')
