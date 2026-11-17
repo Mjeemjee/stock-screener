@@ -151,6 +151,12 @@ def new_factor_research():
             item['independent_review']=dict(real_training_reproduced=True,edge_findings=review['edge_contract_findings'],fixed_training_rejection_affected=False)
             item['limitation']+=' 独立复算重现本次拒绝。F01为极端溢出输入下的非有限值处理缺陷；实际训练无此输入，不改变本次排名、分组与结论，通用复用前仍须修正。'
         report['items'].append(item)
+    downside=accepted_downside_review()
+    if downside:
+        factor=downside['site_factor']
+        assert factor['id']=='us_low_downside_semivariance_126' and factor['horizons']==[20,60]
+        assert factor['status']=='rejected' and factor['account_net_hkd'] is None
+        report['items'].append(factor)
     ids=[r['id'] for r in report['items']]
     assert len(ids)==len(set(ids)), 'A signal cannot be counted twice'
     report['unique_new_signals']=len(ids)
@@ -400,6 +406,20 @@ def sgov_paper_status():
                      '起点建模美元钱包即计双向换汇估值成本，0证券成交也可呈负增减；这不是实际亏损。'+assumptions)
 
 
+def accepted_downside_review():
+    path=MINING/'acceptance/DOWNSIDE-v164-ROOT-REVIEW-v1.json'
+    if not path.exists():return None
+    review=read(path)
+    assert review['decision']=='ACCEPT_FIXED_TRAINING_REJECTION_NOT_GLOBAL_MECHANISM_FAILURE'
+    assert review['independent_reproduction_passed'] and review['actual_signal_trials']==1 and review['actual_horizon_trials']==2
+    base=ROOT/'reports/us-downside-risk-validation-owner-20261118-v164'
+    assert review['result_sha256']==digest(base/'RESULT-v1.json') and review['protocol_sha256']==digest(base/'PROTOCOL-v1.json')
+    result=read(base/'RESULT-v1.json')
+    assert result['validation_or_test_opened'] is False and result['net_account_profit'] is None
+    assert all(not r['decision']['pass_training_diagnostic'] for r in result['training'].values())
+    return review
+
+
 def accepted_diversified_forward():
     path=MINING/'acceptance/DIVERSIFIED-FORWARD-v157-v160-ROOT-REVIEW-v1.json'
     if not path.exists():return None
@@ -438,6 +458,7 @@ def current_mining_work(new_paper,activity,milestone_delivered,accepted_a=False,
     observed_activity=activity in ['preparing','checking']
     forward=accepted_diversified_forward()
     factor_active=owner_active('us-downside-risk-validation-owner-20261118-v164/')
+    downside=accepted_downside_review()
     return dict(goal_status='ACTIVE',research_batch_status='active',stable_profitability_proven=False,
         candidate_milestone_status='delivered' if milestone_delivered else 'pending',
         goal_label='总目标运行中',milestone_label='历史候选交付完成（里程碑）' if milestone_delivered else '历史候选交付待验收',
@@ -448,7 +469,7 @@ def current_mining_work(new_paper,activity,milestone_delivered,accepted_a=False,
         source_status=raw_status,scope='港美个股及普通非杠杆ETF；持续研究与原03086／SGOV纸面并行。',
         owners=[dict(name='主会话核验与发布',task='组合公开源、八情景资金核算与日志程序已完成联合验收，正在同步证据；程序通过不等于盈利成立。' if forward else '组合真实公开源与资金核算程序正在独立联合验收；已有条件历史候选保留，稳定盈利未证。' if accepted_c else '组合历史账户及资料限制核验；候选交付不关闭总目标。',status='active' if root_active and observed_activity else 'snapshot'),
                 dict(name='组合前向程序',task=forward['site_summary'] if forward else '60／20／20组合源适配、增量资金核算和协调器已实现，正在独立联合核验；未激活新钱包、意向或T0。',status='active' if registration_active and observed_activity else 'snapshot'),
-                dict(name='下一机制研究',task='低下行波动：旧库已有输入但未单独验证；正对原定126会话版本做首次固定训练评价，不声称新机制。尚无已验收新结果，不增加信号或盈利计数。',status='active' if factor_active and observed_activity else 'snapshot'),
+                dict(name='下行波动筛选' if downside else '下一机制研究',task=downside['site_factor']['conclusion'] if downside else '低下行波动：旧库已有输入但未单独验证；正对原定126会话版本做首次固定训练评价，不声称新机制。尚无已验收新结果，不增加信号或盈利计数。',status='active' if factor_active and observed_activity and not downside else 'snapshot'),
                 dict(name='组合账户研究',task='A/B/C条件历史核算已交付。没有新增组合纸面T0；后续机制研究与原纸面继续，不能把C当独立盲测或稳定证明。' if accepted_c else 'A/B条件结果已验收；同规则C 2021—2025连续账户研究中，结果待根验收，不预填。' if accepted_b else 'v144的A 2021—2023条件结果已验收；下一步准备冻结B 2024—2025，B/C尚未计算。' if accepted_a else 'v144固定60% SGOV／20% VTI／20% GLD，条件源核对后实现A 2021—2023模型。',status='active' if account_active and observed_activity and not accepted_c else 'snapshot'),
                 dict(name='已验收因子',task='v141日内强度、v145低MAX、v147毛现金股息率及v151单代理残差趋势均未通过固定训练筛选；不是全球机制失败。',status='snapshot'),
                 dict(name='两套固定纸面',task='03086与SGOV保留原T0。当前没有新增到期观察，按真实新时点接续。',status='snapshot')],
@@ -732,6 +753,7 @@ def main():
         activity_text=f"总目标运行中，稳定盈利尚未证实；历史候选交付只是里程碑。v151单代理残差趋势双期限训练筛退，独立复算及root验收已完成。已验收记录累计{factor_research['unique_new_signals']}个信号、{factor_research['planned_horizon_trials']}个预定期限。正式稳定性统计方法尚未冻结。"+('60／20／20组合A/B/C条件历史保留；C与A/B重叠，不能相加。v153未解除VTI历史来源条件。当前推进组合前向实施准备：年度再平衡与一次持有并列，尚未新增组合钱包或T0。' if accepted_c else '既有组合研究及原纸面按各自真实证据接续，不以新来源说明改变旧金额。')
         forward=accepted_diversified_forward()
         if forward:activity_text=f"总目标运行中，稳定盈利尚未证实。已验收{factor_research['unique_new_signals']}个信号、{factor_research['planned_horizon_trials']}个期限；当前并行研究低下行波动候选，尚不计入已验收数。"+forward['site_summary']+'正式稳定性统计方法尚未冻结；旧历史金额与原03086／SGOV起点保持。'
+        if forward and accepted_downside_review():activity_text=f"总目标运行中，稳定盈利尚未证实。已验收{factor_research['unique_new_signals']}个信号、{factor_research['planned_horizon_trials']}个期限；低下行波动首次固定训练已独立复算，两期限均未通过收益排序筛选，不代表低风险配置没有价值。"+forward['site_summary']+'正式稳定性统计方法尚未冻结；原纸面及历史金额保持。'
     source_paths={'nasdaq':'v103-review/FINAL-REVIEW-v1.json','dividend':'v102-review/FINAL-REVIEW-v1.json','sp500_source':'v106-sp500-development-source/SOURCE-QUALIFICATION-v1.json'}
     if accepted.exists():source_paths['sp500_accepted']=str(accepted.relative_to(TEAM))
     if small_accepted.exists():source_paths['small_nasdaq_accepted']=str(small_accepted.relative_to(TEAM))
@@ -792,6 +814,10 @@ def main():
         extra_sources['v160_forward_root_review']=MINING/'acceptance/DIVERSIFIED-FORWARD-v157-v160-ROOT-REVIEW-v1.json'
         extra_sources['v160_package_freeze']=ROOT/'reports/us-diversified-forward-coordinator-20261118-v160/PACKAGE-FREEZE-v1.json'
         extra_sources['v160_root_acceptance']=ROOT/'reports/us-diversified-forward-coordinator-20261118-v160/ROOT-ACCEPTANCE-v1.json'
+    if accepted_downside_review():
+        extra_sources['v164_root_review']=MINING/'acceptance/DOWNSIDE-v164-ROOT-REVIEW-v1.json'
+        extra_sources['v164_result']=ROOT/'reports/us-downside-risk-validation-owner-20261118-v164/RESULT-v1.json'
+        extra_sources['v164_protocol']=ROOT/'reports/us-downside-risk-validation-owner-20261118-v164/PROTOCOL-v1.json'
     extra_sources['v148_root_review']=MINING/'acceptance/SGOV-QII-v148-ROOT-REVIEW-v1.json'
     extra_sources['v148_classification']=ROOT/'reports/us-cash-tax-fee-source-owner-20261118-v148/SGOV-QII-QUALIFICATION-v2.json'
     extra_sources['v148_source_findings']=ROOT/'reports/us-cash-tax-fee-source-owner-20261118-v148/SOURCE-FINDINGS-v1.md'
