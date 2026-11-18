@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-18T06:59:31.599995+08:00",
+  "updated_at": "2026-11-18T07:51:41.910442+08:00",
   "market_data_through": "2026-11-17",
   "activity": {
     "status": "checking",
     "active_at_snapshot": true,
     "focus": "港美持续研究 · 总目标运行中",
-    "text": "总目标运行中，稳定盈利尚未证实；历史候选交付仍只是里程碑。当前已验收10个信号、20个预定期限。Amihud双期限固定排序筛选已独立复核并由root接受，结果与限制见因子区。03196已补上市类KFS与一次公开报价：一手1份；即使港币买卖，分派仍仅付美元且频率由管理人决定。仅补齐部分来源，未算成本后收益或证明可成交。03196的2024年246个会话中，21天有成交记录、225天零成交；预选1月2日买入与12月31日卖出均零量。固定日程执行预筛未通过，不继续计算假定成交后的利润。下一机制转向TIP通胀挂钩国债，先做固定窗口的发行人现金与行情源核对，尚无该候选收益结果。03086、原SGOV和60／20／20组合保持各自原T0、原金额和观察；本轮没有新增到期纸面观察。当前节点仅表示核验与网页同步，正式统计推断未启用。",
+    "text": "总目标运行中，稳定盈利尚未证实；历史候选交付仍只是里程碑。当前已验收10个信号、20个预定期限。Amihud双期限固定排序筛选已独立复核并由root接受，结果与限制见因子区。03196已补上市类KFS与一次公开报价：一手1份；即使港币买卖，分派仍仅付美元且频率由管理人决定。仅补齐部分来源，未算成本后收益或证明可成交。03196的2024年246个会话中，21天有成交记录、225天零成交；预选1月2日买入与12月31日卖出均零量。固定日程执行预筛未通过，不继续计算假定成交后的利润。TIP固定2015—2019一次持有的A段条件历史已独立核对并由root接受；这是五年累计模型结果，B段仅准备、尚未经济检验，不是稳定盈利或新增IC因子。03086、原SGOV和60／20／20组合保持各自原T0、原金额和观察；本轮没有新增到期纸面观察。当前节点仅表示核验与网页同步，正式统计推断未启用。",
     "snapshot_only": true,
     "fresh_for_minutes": 15
   },
@@ -27,9 +27,9 @@
       "detail": "保留本次实际原T0"
     },
     {
-      "name": "研究交付核验",
+      "name": "TIP历史验收与后段准备",
       "status": "active",
-      "detail": "同步时进行中"
+      "detail": "A条件历史已接受；B尚未经济检验"
     },
     {
       "name": "持续前向样本",
@@ -43,6 +43,31 @@
     }
   ],
   "cards": [
+    {
+      "id": "us-tip-history-A",
+      "name": "TIP · 通胀挂钩国债一次持有",
+      "status": "review",
+      "status_label": "A段条件历史已接受；后段未检验",
+      "capital_hkd": 30000,
+      "period": "2015-01-02 — 2019-12-31 · 累计五年",
+      "basis": "原90%预算、整股、30%税情景／USD1或2正额储备及原费用FX；W另扣增量假设退出成本。",
+      "results": [
+        {
+          "cost": "base",
+          "net_hkd": 2052.54,
+          "risk_pct": 5.0179189248188285,
+          "cagr_pct": null
+        },
+        {
+          "cost": "pressure",
+          "net_hkd": 1552.11,
+          "risk_pct": 5.4186299793446535,
+          "cagr_pct": null
+        }
+      ],
+      "conclusion": "主3万压力累计模型净W+1,552.11港币、报价DD约5.42%；2亏损年、26负月。1万压力仅+93.18港币，累计分派净现金-8.10USD。不是稳定收入或已提现利润。",
+      "next": "保留A段原式与限制；B段仅准备，未经经济检验。不调费率、窗口或暴露救结果，不新增纸面T0或IC因子。"
+    },
     {
       "id": "us-flot-history",
       "name": "FLOT · 浮息信用的五年成本检验",
@@ -8302,6 +8327,26 @@
       "conclusion": "03196的2024年246个会话中，21天有成交记录、225天零成交；预选1月2日买入与12月31日卖出均零量。固定日程执行预筛未通过，不继续计算假定成交后的利润。 这是富途单一来源的原始日线及独立复核结果，不能证明开盘深度，也不等于该基金在所有日期均不可交易。不换日期补救；2024普通零分派年报依据仅限该年，2025现金仍未知。没有新增账户收益、因子试验或纸面起点。",
       "source_date": "2026-11-18",
       "source": "公开原始日K、独立复核及root验收；0收益试验，不顺延买卖日"
+    },
+    {
+      "id": "tip-source-v193-v195",
+      "version": "V193–V195 · TIP源资格",
+      "name": "TIP · 原价与发行人现金独立核对",
+      "category": "recent",
+      "record_type": "conditional_source_qualification",
+      "source_date": "2026-11-17",
+      "conclusion": "2014年12月至2019年原价／行动与发行人分派已独立核对；2015—2019有37正额／23明确零额日期。主窗正额严格比较均过原0.00001USD独占阈值，但只有6个字面完全相等，差异保留。当前归档、日历代理与真实到账限制仍在；源接受不证明盈利。",
+      "source": "root源接受及原件pins；不是新增因子、收益账户、实际成交或到账"
+    },
+    {
+      "id": "tip-history-v196-v197",
+      "version": "V196–V197 · TIP A段条件历史",
+      "name": "TIP · 固定2015—2019一次持有净账户",
+      "category": "recent",
+      "record_type": "conditional_economic_account",
+      "source_date": "2026-11-17",
+      "conclusion": "主3万压力累计模型净W+1,552.11港币、报价DD约5.42%；2亏损年、26负月。1万压力仅+93.18港币，累计分派净现金-8.10USD。不是稳定收入或已提现利润。 2019年度B变化+1,837.19；全期净W − 最佳年度B账面增量=-285.08港币，仅为算术诊断，不是另一次回测。保留A段原式与限制；B段仅准备，未经经济检验。不调费率、窗口或暴露救结果，不新增纸面T0或IC因子。",
+      "source": "root接受绑定的作者结果、1258日主账与独立审计；12相关情景不作独立策略样本"
     }
   ],
   "ipo_observation": {
@@ -8799,7 +8844,7 @@
     "milestone_label": "历史候选交付完成（里程碑）",
     "evidence_label": "稳定盈利与持续性尚未证实",
     "task": "T-012",
-    "team_updated_at": "2026-11-18T06:59:03.426533+08:00",
+    "team_updated_at": "2026-11-18T07:35:16.583630+08:00",
     "active_work": {
       "account": false,
       "registration": false,
@@ -8870,13 +8915,13 @@
       },
       {
         "name": "下一机制：TIP",
-        "status": "active",
-        "task": "正在分别核对发行人分派与公开历史行情。固定2015—2019窗口，研究通胀挂钩国债及实际利率风险；尚未计算收益或新增纸面起点，不增加因子试验数。"
+        "status": "snapshot",
+        "task": "TIP A段条件历史已独立核对并由root接受，主3万压力五年累计净W+1,552.11港币。B段仅来源接续准备，尚未经济检验；稳定盈利未证，0新T0。"
       },
       {
         "name": "主会话核验与发布",
         "status": "active",
-        "task": "核验并同步最新因子及来源证据；本轮没有新增到期纸面观察、利润或订单。"
+        "task": "核验并同步因子、来源及TIP条件历史接受；本轮没有新增到期纸面观察、纸面利润或订单。"
       },
       {
         "name": "Amihud固定筛选",
@@ -13470,6 +13515,175 @@
       }
     ]
   },
+  "tip_history": {
+    "status": "accepted_conditional_A",
+    "claim_level": "CONDITIONAL_HISTORICAL_MODEL",
+    "period": "2015—2019 · 累计五年",
+    "accepted_at_utc": "2026-11-17T23:51:22.803147+00:00",
+    "receipt_sha256": "ea8a1b37677421a497b2bb0e910540bbe076e35850344cb525d5b41d09a61f3b",
+    "primary_capital_hkd": 30000,
+    "primary_cost": "pressure",
+    "primary_net_W_hkd": "1552.11",
+    "primary_B_hkd": "31614.51",
+    "primary_W_hkd": "31552.11",
+    "primary_K_hkd": "62.40",
+    "cases": [
+      {
+        "capital_hkd": 10000,
+        "cost": "base",
+        "net_W_hkd": "471.46",
+        "net_B_hkd": "492.93",
+        "B_hkd": "10492.93",
+        "W_hkd": "10471.46",
+        "K_hkd": "21.47",
+        "risk_pct": 5.959674423317234,
+        "negative_months": 26,
+        "months": 60,
+        "negative_years": 2,
+        "years": 5,
+        "quantity": 10,
+        "net_distributions_usd": "28.90"
+      },
+      {
+        "capital_hkd": 10000,
+        "cost": "pressure",
+        "net_W_hkd": "93.18",
+        "net_B_hkd": "134.70",
+        "B_hkd": "10134.70",
+        "W_hkd": "10093.18",
+        "K_hkd": "41.52",
+        "risk_pct": 7.66769706939431,
+        "negative_months": 28,
+        "months": 60,
+        "negative_years": 2,
+        "years": 5,
+        "quantity": 10,
+        "net_distributions_usd": "-8.10"
+      },
+      {
+        "capital_hkd": 20000,
+        "cost": "base",
+        "net_W_hkd": "1262.00",
+        "net_B_hkd": "1289.23",
+        "B_hkd": "21289.23",
+        "W_hkd": "21262.00",
+        "K_hkd": "27.23",
+        "risk_pct": 5.124604533209583,
+        "negative_months": 26,
+        "months": 60,
+        "negative_years": 2,
+        "years": 5,
+        "quantity": 20,
+        "net_distributions_usd": "94.79"
+      },
+      {
+        "capital_hkd": 20000,
+        "cost": "pressure",
+        "net_W_hkd": "822.68",
+        "net_B_hkd": "874.60",
+        "B_hkd": "20874.60",
+        "W_hkd": "20822.68",
+        "K_hkd": "51.92",
+        "risk_pct": 5.9789412821011565,
+        "negative_months": 26,
+        "months": 60,
+        "negative_years": 2,
+        "years": 5,
+        "quantity": 20,
+        "net_distributions_usd": "57.79"
+      },
+      {
+        "capital_hkd": 30000,
+        "cost": "base",
+        "net_W_hkd": "2052.54",
+        "net_B_hkd": "2085.61",
+        "B_hkd": "32085.61",
+        "W_hkd": "32052.54",
+        "K_hkd": "33.07",
+        "risk_pct": 5.0179189248188285,
+        "negative_months": 26,
+        "months": 60,
+        "negative_years": 2,
+        "years": 5,
+        "quantity": 30,
+        "net_distributions_usd": "160.68"
+      },
+      {
+        "capital_hkd": 30000,
+        "cost": "pressure",
+        "net_W_hkd": "1552.11",
+        "net_B_hkd": "1614.51",
+        "B_hkd": "31614.51",
+        "W_hkd": "31552.11",
+        "K_hkd": "62.40",
+        "risk_pct": 5.4186299793446535,
+        "negative_months": 26,
+        "months": 60,
+        "negative_years": 2,
+        "years": 5,
+        "quantity": 30,
+        "net_distributions_usd": "123.68"
+      }
+    ],
+    "yearly_B_changes": [
+      {
+        "period": "2015",
+        "start_B_or_original_principal_hkd": "30000",
+        "end_B_hkd": "29079.53",
+        "B_change_hkd": "-920.47",
+        "loss": true,
+        "basis": "Continuing marked B; first period includes initial FX/trade cost, no hypothetical monthly sale"
+      },
+      {
+        "period": "2016",
+        "start_B_or_original_principal_hkd": "29079.53",
+        "end_B_hkd": "30086.83",
+        "B_change_hkd": "1007.30",
+        "loss": false,
+        "basis": "Continuing marked B; first period includes initial FX/trade cost, no hypothetical monthly sale"
+      },
+      {
+        "period": "2017",
+        "start_B_or_original_principal_hkd": "30086.83",
+        "end_B_hkd": "30528.82",
+        "B_change_hkd": "441.99",
+        "loss": false,
+        "basis": "Continuing marked B; first period includes initial FX/trade cost, no hypothetical monthly sale"
+      },
+      {
+        "period": "2018",
+        "start_B_or_original_principal_hkd": "30528.82",
+        "end_B_hkd": "29777.32",
+        "B_change_hkd": "-751.50",
+        "loss": true,
+        "basis": "Continuing marked B; first period includes initial FX/trade cost, no hypothetical monthly sale"
+      },
+      {
+        "period": "2019",
+        "start_B_or_original_principal_hkd": "29777.32",
+        "end_B_hkd": "31614.51",
+        "B_change_hkd": "1837.19",
+        "loss": false,
+        "basis": "Continuing marked B; first period includes initial FX/trade cost, no hypothetical monthly sale"
+      }
+    ],
+    "chart": "assets/tip-history-A-v1.png",
+    "nav_points": 1258,
+    "source_amount_scenarios": 2,
+    "related_scenarios": 12,
+    "actual_income_certified": false,
+    "stable_profitability_proven": false,
+    "new_paper_T0": false,
+    "new_factor_trials": 0,
+    "new_horizon_trials": 0,
+    "B_computed": false,
+    "B_status": "来源准备／源资格接续，尚未经济检验",
+    "concentration_without_best_year_W_hkd": "-285.08",
+    "concentration_formula": "全期净W − 最佳年度B账面增量",
+    "note": "固定一次买入持有、90%事前预算；表内是原本金上累计五年的模型净W，非年收益、已实现卖出或实际提现。保留初始FX、税费及增量退出储备。",
+    "limitations": "2015与2018为亏损年，主3万压力26／60负月。1万压力累计分派净现金-8.10USD；整体净W为正不等于稳定派息。2019贡献集中，全期净W − 最佳年度B账面增量仅为算术诊断，不是删除该年后的替代回测。单源报价／日历代理、当前发行人归档、真实成交及个人税费／到账未知，报价DD不是未来损失上限。",
+    "source_note": "两路金额情景在本批模型分币结果相同，不等于原字面金额全相等；零额Quote0为发行人明确零额的诊断惯例。TIP不是新增IC因子，B段尚未检验，三套纸面原T0不变。"
+  },
   "sgov_history": {
     "approved_capital_hkd": [
       20000,
@@ -13675,7 +13889,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-18T06:59:32.549250+08:00",
+    "checked_at": "2026-11-18T07:51:42.834582+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -13869,7 +14083,7 @@
     "root_receipt_sha256": "be0e49eb8fa5eec62fadf374632ebddf3d0c3196fa9642d80431a1ed755ad67a"
   },
   "paper": {
-    "checked_at": "2026-11-18T06:59:31.982654+08:00",
+    "checked_at": "2026-11-18T07:51:42.269987+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -13948,9 +14162,9 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "ce5a4420f3d526cd59e021bda7a7f6516862fa09694a1eea06366a3cc9f67eed",
+    "mining_goal": "d4f20be11bb4c8526ac9db1aa05adfe858637374c72bce20fcf5ca39ddf1b16c",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
-    "mining_team": "b31bac51bdbd051b91579dbf82511d5e858593aa5f79e8af254e649f3102b9a8",
+    "mining_team": "3c2c7b8edc2dfcd07ad9e7b2dfb4bb307a5336833720fd4d9f35f91f4c29bac0",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
     "fip_original": "9c598341d1b0e59753bc0134509908b4698209cfff0b95c22f973f655b868296",
     "fip_calendar_correction": "33d2d80372b6c433688dbbcabcc49f2a458989a633ed783c0c2fa42d6f824695",
@@ -13990,6 +14204,11 @@
     "v183_v184_root_review": "129f5929adddb44e409c804dd5bba05e3980c4bce9735d9356e95c85a177994b",
     "v190_v191_root_review": "2242a0d016d23504616429f6ec1400da26c4b3e5c382ae4ad3677403a1718e68",
     "v192_tip_preparation": "65bdd8bcad786b68cc9181aed8e9450e62d45df092b83408d90d55c56d262ec8",
+    "v193_v195_tip_source": "04205ec7793acc08775b741b6c5b00063a862152d9546bbd555db8d04db212c1",
+    "v196_v197_tip_account": "ea8a1b37677421a497b2bb0e910540bbe076e35850344cb525d5b41d09a61f3b",
+    "tip_accepted_result": "7e77de6b366b89794693152405e306056f43e2d48c1750fe996509f4133e5ddd",
+    "tip_accepted_primary_daily": "d01f26c03dbe3152660f9888abee141942c2fbb4376ec3e050487490dd39fff1",
+    "tip_B_preparation_protocol": "5af34f431ec6254b264015470b189ea20f969409382a03ecef24e509f78fb6be",
     "v148_root_review": "93acdfaaf6622e1ad1d0a72a71c14aeb3adb3ed6b5a59885c935fe3666c2828d",
     "v148_classification": "a98f8032c71c96f4e9841378b13154ad8ae7c12658c771a93014178e3d33fa09",
     "v148_source_findings": "111be9d649230a601bddae3ee8c103c67a0a0dac9a91dda6c554d618b0868039",
