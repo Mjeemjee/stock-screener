@@ -641,6 +641,123 @@ def project_tip_source_work(current_work):
     return review
 
 
+def tip_accepted_file(review,key):
+    ref=review[key];path=(ROOT/ref['path']).resolve()
+    assert path.is_relative_to(ROOT.resolve()) and path.is_file(),key
+    assert re.fullmatch('[0-9a-f]{64}',ref['sha256']) and digest(path)==ref['sha256'],key
+    if ref['path'] in review['pins']:assert review['pins'][ref['path']]==ref['sha256'],key
+    return path
+
+
+def project_tip_history(current_work,cards,registry,evidence):
+    """Only root-accepted originals supply money; missing acceptance never reads author results."""
+    source=accepted_continuation_review('TIP-SOURCE-v193-v195-ROOT-REVIEW-v1.json',
+        'ACCEPT_ISSUER_PRIMARY_CONDITIONAL_HISTORY_INPUTS_NOT_STRICT_BUNDLE_UPGRADE')
+    account=accepted_continuation_review('TIP-ACCOUNT-v196-v197-ROOT-REVIEW-v1.json',
+        'ACCEPT_FIXED_TIP_A_CONDITIONAL_HISTORY_NOT_STABILITY')
+    if source:
+        registry.append(dict(id='tip-source-v193-v195',version='V193–V195 · TIP源资格',name='TIP · 原价与发行人现金独立核对',
+            category='recent',record_type='conditional_source_qualification',source_date=source['actual_acceptance_utc'][:10],
+            conclusion='2014年12月至2019年原价／行动与发行人分派已独立核对；2015—2019有37正额／23明确零额日期。主窗正额严格比较均过原0.00001USD独占阈值，但只有6个字面完全相等，差异保留。当前归档、日历代理与真实到账限制仍在；源接受不证明盈利。',
+            source='root源接受及原件pins；不是新增因子、收益账户、实际成交或到账'))
+    if not account:
+        for owner in current_work['owners']:
+            if owner['name']=='下一机制：TIP':owner.update(status='snapshot',task='TIP固定A段源已接受；账户独立审计及root接受未完成，不展示作者收益或曲线。B仅来源准备，不是已检验后段。')
+        return dict(status='awaiting_root_account_acceptance',chart=None,cases=[],primary_net_W_hkd=None,
+            new_factor_trials=0,new_horizon_trials=0,new_paper_T0=False,B_computed=False),source,None
+    assert source is not None,'TIP money needs accepted source too'
+    result=read(tip_accepted_file(account,'result'));tip_accepted_file(account,'primary_daily')
+    assert result['symbol']=='US.TIP' and result['strategy_count']==1 and result['related_scenarios']==12
+    assert result['stable_profitability_proven'] is False and result['new_T0'] is False and result['goal_status']=='ACTIVE'
+    assert result['new_factor_trials']==0 and len(result['cases'])==12
+    from decimal import Decimal as D
+    expected={(s,c,k) for s in ['issuer','quote_diagnostic'] for c in [10000,20000,30000] for k in ['base','pressure']}
+    assert {(c['amount_source'],c['capital_hkd'],c['cost']) for c in result['cases']}==expected
+    cases=[]
+    def literal(value):
+        assert isinstance(value,str) and re.fullmatch(r'-?(?:0|[1-9]\d*)\.\d{2}',value)
+        return value
+    for c in result['cases']:
+        t=c['terminal'];capital=c['capital_hkd']
+        assert D(t['B_hkd'])-D(t['W_hkd'])==D(t['K_hkd'])
+        assert D(t['W_hkd'])-capital==D(c['net_W_hkd']) and D(t['B_hkd'])-capital==D(c['net_B_hkd'])
+        assert t['is_actual_exit'] is t['is_withdrawable_income'] is False
+        assert c['months']==60 and c['years']==5 and c['positive_entitled_gross_events']==c['positive_service_reserve_events']==37
+        assert D(c['risk']['conservative_quote_high_low_DD_pct']).is_finite()
+        if c['amount_source']=='issuer':
+            cases.append(dict(capital_hkd=capital,cost=c['cost'],net_W_hkd=literal(c['net_W_hkd']),net_B_hkd=literal(c['net_B_hkd']),
+                B_hkd=literal(t['B_hkd']),W_hkd=literal(t['W_hkd']),K_hkd=literal(t['K_hkd']),
+                risk_pct=float(c['risk']['conservative_quote_high_low_DD_pct']),negative_months=c['negative_months'],months=60,
+                negative_years=c['negative_years'],years=5,quantity=c['entry']['quantity'],
+                net_distributions_usd=literal(c['attribution']['cumulative_rights']['net_usd'])))
+    main=next(c for c in result['cases'] if c['amount_source']=='issuer' and c['capital_hkd']==30000 and c['cost']=='pressure')
+    yearly=main['periods']['yearly'];assert [y['period'] for y in yearly]==['2015','2016','2017','2018','2019']
+    for y in yearly:literal(y['B_change_hkd'])
+    cases.sort(key=lambda c:(c['capital_hkd'],c['cost']))
+    small=next(c for c in cases if c['capital_hkd']==10000 and c['cost']=='pressure')
+    concentration_formula='全期净W − 最佳年度B账面增量'
+    assert D(main['net_W_hkd'])-max(D(y['B_change_hkd']) for y in yearly)==D(main['concentration']['arithmetic_W_without_best_year_hkd'])
+    history=dict(status='accepted_conditional_A',claim_level='CONDITIONAL_HISTORICAL_MODEL',period='2015—2019 · 累计五年',
+        accepted_at_utc=account['actual_acceptance_utc'],receipt_sha256=digest(MINING/'acceptance/TIP-ACCOUNT-v196-v197-ROOT-REVIEW-v1.json'),
+        primary_capital_hkd=30000,primary_cost='pressure',primary_net_W_hkd=literal(main['net_W_hkd']),
+        primary_B_hkd=literal(main['terminal']['B_hkd']),primary_W_hkd=literal(main['terminal']['W_hkd']),
+        primary_K_hkd=literal(main['terminal']['K_hkd']),cases=cases,yearly_B_changes=yearly,
+        chart='assets/tip-history-A-v1.png',nav_points=1258,source_amount_scenarios=2,related_scenarios=12,
+        actual_income_certified=False,stable_profitability_proven=False,new_paper_T0=False,new_factor_trials=0,new_horizon_trials=0,
+        B_computed=False,B_status='来源准备／源资格接续，尚未经济检验',
+        concentration_without_best_year_W_hkd=literal(main['concentration']['arithmetic_W_without_best_year_hkd']),
+        concentration_formula=concentration_formula,
+        note='固定一次买入持有、90%事前预算；表内是原本金上累计五年的模型净W，非年收益、已实现卖出或实际提现。保留初始FX、税费及增量退出储备。',
+        limitations=f"2015与2018为亏损年，主3万压力{main['negative_months']}／60负月。1万压力累计分派净现金{small['net_distributions_usd']}USD；整体净W为正不等于稳定派息。2019贡献集中，{concentration_formula}仅为算术诊断，不是删除该年后的替代回测。单源报价／日历代理、当前发行人归档、真实成交及个人税费／到账未知，报价DD不是未来损失上限。",
+        source_note='两路金额情景在本批模型分币结果相同，不等于原字面金额全相等；零额Quote0为发行人明确零额的诊断惯例。TIP不是新增IC因子，B段尚未检验，三套纸面原T0不变。')
+    selected=lambda k:next(c for c in cases if c['capital_hkd']==30000 and c['cost']==k)
+    cards.insert(0,dict(id='us-tip-history-A',name='TIP · 通胀挂钩国债一次持有',status='review',status_label='A段条件历史已接受；后段未检验',
+        capital_hkd=30000,period='2015-01-02 — 2019-12-31 · 累计五年',basis='原90%预算、整股、30%税情景／USD1或2正额储备及原费用FX；W另扣增量假设退出成本。',
+        results=[dict(cost=k,net_hkd=float(selected(k)['net_W_hkd']),risk_pct=selected(k)['risk_pct'],cagr_pct=None) for k in ['base','pressure']],
+        conclusion=f"主3万压力累计模型净W{D(main['net_W_hkd']):+,.2f}港币、报价DD约{selected('pressure')['risk_pct']:.2f}%；{main['negative_years']}亏损年、{main['negative_months']}负月。1万压力仅{D(small['net_W_hkd']):+,.2f}港币，累计分派净现金{small['net_distributions_usd']}USD。不是稳定收入或已提现利润。",
+        next='保留A段原式与限制；B段仅准备，未经经济检验。不调费率、窗口或暴露救结果，不新增纸面T0或IC因子。'))
+    registry.append(dict(id='tip-history-v196-v197',version='V196–V197 · TIP A段条件历史',name='TIP · 固定2015—2019一次持有净账户',
+        category='recent',record_type='conditional_economic_account',source_date=account['actual_acceptance_utc'][:10],
+        conclusion=cards[0]['conclusion']+f" 2019年度B变化{D(yearly[-1]['B_change_hkd']):+,.2f}；{concentration_formula}={history['concentration_without_best_year_W_hkd']}港币，仅为算术诊断，不是另一次回测。"+cards[0]['next'],
+        source='root接受绑定的作者结果、1258日主账与独立审计；12相关情景不作独立策略样本'))
+    for owner in current_work['owners']:
+        if owner['name']=='下一机制：TIP':owner.update(status='snapshot',task=f"TIP A段条件历史已独立核对并由root接受，主3万压力五年累计净W{D(main['net_W_hkd']):+,.2f}港币。B段仅来源接续准备，尚未经济检验；稳定盈利未证，0新T0。")
+    return history,source,account
+
+
+def render_tip_history_chart(review):
+    """Plot accepted stored B/annual contributions only; never recompute a financial path."""
+    import csv
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+    import matplotlib.dates as mdates
+    result=read(tip_accepted_file(review,'result'))
+    main=next(c for c in result['cases'] if c['amount_source']=='issuer' and c['capital_hkd']==30000 and c['cost']=='pressure')
+    daily_path=tip_accepted_file(review,'primary_daily')
+    with daily_path.open(encoding='utf-8',newline='') as f:rows=list(csv.DictReader(f))
+    assert len(rows)==1258 and rows[0]['session']=='2015-01-02' and rows[-1]['session']=='2019-12-31'
+    dates=[datetime.strptime(r['session'],'%Y-%m-%d') for r in rows];values=[float(r['B_close_hkd']) for r in rows]
+    assert all(math.isfinite(v) for v in values)
+    yearly=main['periods']['yearly'];changes=[float(y['B_change_hkd']) for y in yearly]
+    with plt.rc_context({'font.family':'DejaVu Sans','font.size':10,'axes.spines.top':False,'axes.spines.right':False}):
+        fig,(ax,annual)=plt.subplots(2,1,figsize=(12.5,7.6),gridspec_kw={'height_ratios':[2,1]},layout='constrained')
+        fig.suptitle('TIP | 2015-2019 conditional history | HKD 30,000 pressure',fontsize=14)
+        ax.plot(dates,values,color='#176d75',linewidth=1.8,label='Stored close marked wealth B')
+        ax.axhline(30000,color='#9e6d28',linestyle='--',linewidth=1,label='Original HKD principal')
+        ax.set_ylabel('B wealth (HKD)');ax.legend(loc='upper left',frameon=False)
+        ax.xaxis.set_major_locator(mdates.YearLocator());ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'));ax.grid(alpha=.2)
+        annual.bar([y['period'] for y in yearly],changes,color=['#aa4e4b' if x<0 else '#176d75' for x in changes],width=.58)
+        annual.axhline(0,color='#647480',linewidth=.8);annual.set_ylabel('Annual change in B (HKD)')
+        for i,value in enumerate(changes):annual.annotate(f'{value:+,.2f}',(i,value),xytext=(0,-14 if value<0 else 5),textcoords='offset points',ha='center',fontsize=9)
+        annual.margins(y=.25);annual.grid(axis='y',alpha=.15)
+        fig.supxlabel('Five-year cumulative model evidence. B is marked wealth; W reserves exit cost. Neither is actual withdrawal.',fontsize=10)
+        path=OUT/'assets/tip-history-A-v1.png';path.parent.mkdir(parents=True,exist_ok=True)
+        fig.savefig(path,dpi=150,metadata={'Software':'Accepted stored TIP B and annual B view; no account recalculation'});plt.close(fig)
+    assert digest(daily_path)==review['primary_daily']['sha256']
+    return path
+
+
 def project_actual_diversified_continuation(paper,evidence,current_work,registry):
     if not paper['activated']:return None
     latest='60／20／20组合已按root接受的实际接续建立原起点；年度再平衡／一次持有与2万／3万、基础／压力共8个相关情景，系统实际订单0。'
@@ -1082,6 +1199,7 @@ def main():
     wrapper_source=project_hk_usd_cash_source(evidence_updates,current_work,registry)
     wrapper_activity=project_hk_usd_activity(evidence_updates,current_work,registry)
     tip_source_work=project_tip_source_work(current_work) if args.focus=='mining' else None
+    tip_history,tip_source_review,tip_account_review=project_tip_history(current_work,cards,registry,evidence_updates)
     amihud=accepted_amihud_review()
     if args.focus=='mining':
         team=read(MINING/'TEAM.json')
@@ -1089,14 +1207,15 @@ def main():
         root_running=checking and any(o['owner']=='/root' and o['status']=='ACTIVE' for o in team['owners'])
         audit_running=checking and any(o['status']=='ACTIVE' and any('v187/' in p for p in o['write_paths']) for o in team['owners'])
         current_work['owners'].append(dict(name='主会话核验与发布',status='active' if root_running else 'snapshot',
-            task='核验并同步最新因子及来源证据；本轮没有新增到期纸面观察、利润或订单。'))
+            task='核验并同步因子、来源及TIP条件历史接受；本轮没有新增到期纸面观察、纸面利润或订单。'))
         current_work['owners'].append(dict(name='Amihud固定筛选',status='snapshot' if amihud or not audit_running else 'active',
             task=amihud['site_factor']['conclusion'] if amihud else 'Amihud固定训练已首跑，独立审计与root验收尚未完成；不展示作者指标，也不增加已验收信号或期限。'))
         activity_text=f"总目标运行中，稳定盈利尚未证实；历史候选交付仍只是里程碑。当前已验收{factor_research['unique_new_signals']}个信号、{factor_research['planned_horizon_trials']}个预定期限。"
         activity_text+=('Amihud双期限固定排序筛选已独立复核并由root接受，结果与限制见因子区。' if amihud else 'Amihud固定筛选正在独立核验，验收前不展示结果或增加计数。')
         if wrapper_source:activity_text+=wrapper_source['site_summary']
         if wrapper_activity:activity_text+=wrapper_activity['site_summary']
-        if tip_source_work:activity_text+='下一机制转向TIP通胀挂钩国债，先做固定窗口的发行人现金与行情源核对，尚无该候选收益结果。'
+        if tip_account_review:activity_text+='TIP固定2015—2019一次持有的A段条件历史已独立核对并由root接受；这是五年累计模型结果，B段仅准备、尚未经济检验，不是稳定盈利或新增IC因子。'
+        elif tip_source_work:activity_text+='TIP通胀挂钩国债固定A段源已接受，账户结果等待root接受，不展示作者收益；B段仅准备、尚未经济检验。'
         activity_text+='03086、原SGOV和60／20／20组合保持各自原T0、原金额和观察；本轮没有新增到期纸面观察。当前节点仅表示核验与网页同步，正式统计推断未启用。'
     source_paths={'nasdaq':'v103-review/FINAL-REVIEW-v1.json','dividend':'v102-review/FINAL-REVIEW-v1.json','sp500_source':'v106-sp500-development-source/SOURCE-QUALIFICATION-v1.json'}
     if accepted.exists():source_paths['sp500_accepted']=str(accepted.relative_to(TEAM))
@@ -1134,6 +1253,8 @@ def main():
         stage_names[2]='组合实际纸面已激活';stage_details[2]='保留本次实际原T0'
         stage_details[4]=f"组合已观察{diversified['observations']}会话；原两套起点不变"
         stage_details[5]='正式推断未启用；盈利未证'
+    if args.focus=='mining' and tip_account_review:
+        stage_names[3]='TIP历史验收与后段准备';stage_details[3]='A条件历史已接受；B尚未经济检验'
     extra_sources={
         'mining_goal':MINING/'GOAL.md','mining_scope':MINING/'GOAL-SCOPE-ADDENDUM-v1.json','mining_team':MINING/'TEAM.json',
         'fip_protocol':MINING/'PROTOCOL-v1.json','fip_original':MINING/'RESULT-v1.json','fip_calendar_correction':MINING/'calendar-correction-v2/RESULT.json',
@@ -1171,6 +1292,11 @@ def main():
     if wrapper_source:extra_sources['v183_v184_root_review']=MINING/'acceptance/HK-USD-CASH-v183-v184-ROOT-REVIEW-v1.json'
     if wrapper_activity:extra_sources['v190_v191_root_review']=MINING/'acceptance/HK-USD-ACTIVITY-v190-v191-ROOT-REVIEW-v1.json'
     if tip_source_work:extra_sources['v192_tip_preparation']=MINING/'acceptance/TIP-PREP-v192-ROOT-REVIEW-v1.json'
+    if tip_source_review:extra_sources['v193_v195_tip_source']=MINING/'acceptance/TIP-SOURCE-v193-v195-ROOT-REVIEW-v1.json'
+    if tip_account_review:
+        extra_sources['v196_v197_tip_account']=MINING/'acceptance/TIP-ACCOUNT-v196-v197-ROOT-REVIEW-v1.json'
+        for key in ['result','primary_daily']:extra_sources['tip_accepted_'+key]=tip_accepted_file(tip_account_review,key)
+        extra_sources['tip_B_preparation_protocol']=MINING/'tip-continuation-protocol-v198/PROTOCOL-v1.json'
     extra_sources['v148_root_review']=MINING/'acceptance/SGOV-QII-v148-ROOT-REVIEW-v1.json'
     extra_sources['v148_classification']=ROOT/'reports/us-cash-tax-fee-source-owner-20261118-v148/SGOV-QII-QUALIFICATION-v2.json'
     extra_sources['v148_source_findings']=ROOT/'reports/us-cash-tax-fee-source-owner-20261118-v148/SOURCE-FINDINGS-v1.md'
@@ -1219,7 +1345,7 @@ def main():
                     snapshot_only=True,fresh_for_minutes=15),
       stages=[dict(name=n,status=s,detail=d) for n,s,d in zip(stage_names,stage_status,stage_details)],
       cards=cards,registry=registry,ipo_observation=ipo_observation,default_evidence_view='paper' if args.focus in ['paper','mining'] else 'history',
-      factor_research=factor_research,current_work=current_work,evidence_updates=evidence_updates,portfolio_research=portfolio,sgov_history={k:v for k,v in sgov.items() if k!='card'} if sgov else None,sgov_paper=new_paper,diversified_paper=diversified,
+      factor_research=factor_research,current_work=current_work,evidence_updates=evidence_updates,portfolio_research=portfolio,tip_history=tip_history,sgov_history={k:v for k,v in sgov.items() if k!='card'} if sgov else None,sgov_paper=new_paper,diversified_paper=diversified,
       paper=dict(checked_at=paper['checked_at_hkt'],activation_utc=paper['activation_utc'],first_forward_session=paper['first_forward_session'],
                  account_count=len(paper['summaries']),closed_rounds=paper['summaries']['monthly-only-base']['closed_rounds'],
                  open_quantity=paper['summaries']['monthly-only-base']['open_quantity'],
@@ -1234,6 +1360,7 @@ def main():
                           note=f"其中500条为30种基础表达式的模板组合，不是538个有效因子。旧US缓存发现拆股阶跃，相关旧条目未获本轮资格认证；原IC和原结论保留。与已验收的{factor_research['unique_new_signals']}个信号分开计数。"),
       source_hashes={**{k:digest(TEAM/v) for k,v in source_paths.items()},**{k:digest(v) for k,v in extra_sources.items()}})
     OUT.mkdir(exist_ok=True,parents=True);(OUT/'assets').mkdir(exist_ok=True)
+    if tip_account_review:render_tip_history_chart(tip_account_review)
     with (OUT/'progress.json').open('w',encoding='utf-8',newline='\n') as f:json.dump(payload,f,ensure_ascii=False,indent=2,allow_nan=False);f.write('\n')
     shutil.copyfile(ROOT/'reports/hk-nasdaq-baseline-attribution-owner-20261116-v103/baseline-nav-close-drawdown-v1.png',OUT/'assets/nav-risk.png')
     if later_review.exists():shutil.copyfile(ROOT/'reports/hk-sp500-later-validation-owner-20261117-v106c/C-ONLY-NAV-DRAWDOWN-v2.png',OUT/'assets/sp500-later-risk.png')

@@ -10,6 +10,50 @@ export const exactMoney = value => {
   const [whole, fraction] = value.split('.')
   return `${whole.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}.${fraction}`
 }
+export function validateTipHistory(h, cards) {
+  const card = cards.find(c => c.id === 'us-tip-history-A')
+  const fail = () => { throw new Error('TIP仅展示root已接受的五年条件历史，金额或证据边界无效。') }
+  if (h === undefined) { if (card) fail(); return h }
+  if (!h || h.new_factor_trials !== 0 || h.new_horizon_trials !== 0 || h.new_paper_T0 !== false || h.B_computed !== false) fail()
+  if (h.status === 'awaiting_root_account_acceptance') {
+    if (card || h.chart !== null || h.primary_net_W_hkd !== null || !Array.isArray(h.cases) || h.cases.length) fail()
+    return h
+  }
+  if (h.status !== 'accepted_conditional_A' || h.claim_level !== 'CONDITIONAL_HISTORICAL_MODEL' ||
+      h.actual_income_certified !== false || h.stable_profitability_proven !== false || h.nav_points !== 1258 ||
+      h.source_amount_scenarios !== 2 || h.related_scenarios !== 12 || h.chart !== 'assets/tip-history-A-v1.png' ||
+      !Number.isFinite(Date.parse(h.accepted_at_utc)) || !/^[0-9a-f]{64}$/.test(h.receipt_sha256) ||
+      !Array.isArray(h.cases) || h.cases.length !== 6 || new Set(h.cases.map(c => `${c.capital_hkd}-${c.cost}`)).size !== 6 ||
+      !Array.isArray(h.yearly_B_changes) || h.yearly_B_changes.map(y => y.period).join() !== '2015,2016,2017,2018,2019' ||
+      h.primary_capital_hkd !== 30000 || h.primary_cost !== 'pressure' || !card) fail()
+  const cents = v => {
+    if (typeof v !== 'string' || !/^-?(?:0|[1-9]\d*)\.\d{2}$/.test(v)) fail()
+    return BigInt(v.replace('.', ''))
+  }
+  for (const c of h.cases) {
+    if (![10000, 20000, 30000].includes(c.capital_hkd) || !['base', 'pressure'].includes(c.cost) ||
+        !Number.isFinite(c.risk_pct) || c.risk_pct < 0 || c.months !== 60 || c.years !== 5 ||
+        !Number.isSafeInteger(c.quantity) || c.quantity < 0 ||
+        !Number.isSafeInteger(c.negative_months) || c.negative_months < 0 || c.negative_months > 60 ||
+        !Number.isSafeInteger(c.negative_years) || c.negative_years < 0 || c.negative_years > 5) fail()
+    const capital = BigInt(c.capital_hkd) * 100n
+    if (cents(c.B_hkd) - cents(c.W_hkd) !== cents(c.K_hkd) || cents(c.W_hkd) - capital !== cents(c.net_W_hkd) ||
+        cents(c.B_hkd) - capital !== cents(c.net_B_hkd)) fail()
+    cents(c.net_distributions_usd)
+  }
+  const primary = h.cases.find(c => c.capital_hkd === 30000 && c.cost === 'pressure')
+  for (const [key, field] of [['primary_net_W_hkd', 'net_W_hkd'], ['primary_B_hkd', 'B_hkd'], ['primary_W_hkd', 'W_hkd'], ['primary_K_hkd', 'K_hkd']]) {
+    if (h[key] !== primary[field]) fail()
+  }
+  const best = h.yearly_B_changes.map(y => cents(y.B_change_hkd)).reduce((a, b) => a > b ? a : b)
+  if (cents(h.concentration_without_best_year_W_hkd) !== cents(primary.net_W_hkd) - best ||
+      h.concentration_formula !== '全期净W − 最佳年度B账面增量') fail()
+  for (const row of card.results) {
+    const c = h.cases.find(c => c.capital_hkd === 30000 && c.cost === row.cost)
+    if (!c || row.net_hkd !== Number(c.net_W_hkd) || row.risk_pct !== c.risk_pct || row.cagr_pct !== null) fail()
+  }
+  return h
+}
 export function validateDiversifiedPaper(p) {
   const date = v => v === null || typeof v === 'string' && Number.isFinite(Date.parse(v))
   const amount = v => v === null || typeof v === 'string' && /^-?(?:0|[1-9]\d*)\.\d{2}$/.test(v)
@@ -53,6 +97,7 @@ export function validateSnapshot(value) {
       if (['pending', 'unknown'].includes(card.status) && [row.net_hkd, row.risk_pct, row.cagr_pct, ...optional, row.open_quantity].some(v => v !== undefined && v !== null)) throw new Error('待验收或不可评估记录不能展示收益结论。')
     }
   }
+  validateTipHistory(value.tip_history, value.cards)
   if (value.ipo_observation) {
     const o=value.ipo_observation
     if (!Number.isSafeInteger(o.count) || o.count<=0 || ![o.up_count,o.broken_count,o.flat_count,o.one_member_max_up_count].every(n=>Number.isSafeInteger(n)&&n>=0&&n<=o.count) ||
@@ -345,6 +390,28 @@ if (typeof document !== 'undefined') {
       find('sgov-history-rows').append(row)
     }
   }
+  function renderTipHistory(data) {
+    const h = data.tip_history, accepted = h?.status === 'accepted_conditional_A'
+    find('tip-history').hidden = !accepted
+    if (!accepted) { find('tip-history-chart').removeAttribute('src'); return }
+    find('tip-history-note').textContent = h.note
+    find('tip-history-limits').textContent = h.limitations
+    find('tip-history-source').textContent = h.source_note
+    find('tip-history-concentration').textContent = `${h.concentration_formula} = ${exactMoney(h.concentration_without_best_year_W_hkd)} 港币。仅为固定算术诊断，不是删掉2019后的完整回测。${h.B_status}。`
+    find('tip-history-chart').src = h.chart
+    find('tip-history-link').href = h.chart
+    find('tip-history-rows').replaceChildren()
+    for (const capital of [10000, 20000, 30000]) {
+      const base = h.cases.find(c => c.capital_hkd === capital && c.cost === 'base')
+      const pressure = h.cases.find(c => c.capital_hkd === capital && c.cost === 'pressure')
+      const tr = element('tr')
+      for (const text of [new Intl.NumberFormat('zh-HK').format(capital), exactMoney(base.net_W_hkd), exactMoney(pressure.net_W_hkd),
+        `${pressure.risk_pct.toFixed(2)}%`, `${pressure.negative_years}／5`, `${pressure.negative_months}／60`, exactMoney(pressure.net_distributions_usd)]) {
+        tr.append(element('td', text))
+      }
+      find('tip-history-rows').append(tr)
+    }
+  }
   function renderCards(data) {
     find('cards').replaceChildren()
     for (const card of data.cards) {
@@ -456,7 +523,7 @@ if (typeof document !== 'undefined') {
       const item = element('li', stage.name, `stage ${stage.status}`)
       item.append(element('small', stage.detail ?? names[stage.status] ?? stage.status)); find('stages').append(item)
     }
-    renderWork(data); renderPortfolio(data); renderFactors(data); renderEvidenceUpdates(data); renderSgovHistory(data); renderCards(data); renderPaper(data); renderRecords()
+    renderWork(data); renderPortfolio(data); renderFactors(data); renderEvidenceUpdates(data); renderSgovHistory(data); renderTipHistory(data); renderCards(data); renderPaper(data); renderRecords()
     if (selectedEvidenceView === null) selectEvidenceView(data.default_evidence_view === 'paper' ? 'paper' : 'history')
     find('research-note').textContent = data.research_note
     find('baseline-note').textContent = `同为3万初始资金，基础成本月度版历史标记 ${money(data.baseline.monthly_base_net_hkd)} 港元，报价回撤约 ${data.baseline.monthly_base_risk_pct.toFixed(2)}%；被动参考 ${money(data.baseline.passive_base_net_hkd)} 港元、约 ${data.baseline.passive_base_risk_pct.toFixed(2)}%。未证明稳定独立超额收益。`
