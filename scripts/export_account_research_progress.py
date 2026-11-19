@@ -2400,6 +2400,23 @@ def main():
         if short_credit.exists():
             activity_text=activity_text.removeprefix(read(short_credit)['activity_site_summary']+' ')
         activity_text=credit['activity_site_summary']+' '+activity_text
+    credit_and_holiday=MINING/'acceptance/US-CREDIT-T0-HK-HOLIDAY-v459-v466-ROOT-v1.json'
+    if args.focus=='mining' and credit_and_holiday.exists():
+        h=read(credit_and_holiday)
+        assert h['actual_orders']==0
+        assert all(digest(ROOT/path)==expected for path,expected in h['pins'].items())
+        extra_sources['us_credit_t0_hk_holiday']=credit_and_holiday
+        current_work['owners']=[owner for owner in current_work['owners']
+                                if owner['name']!='VCSH／VGSH · 纸面开盘准备']
+        current_work['owners'][15:15]=[
+            dict(name='VCSH／VGSH · 真实日期纸面',status='snapshot',task=h['paper_site_summary']),
+            dict(name='SGOV · 既有纸面行情修订',status='snapshot',task=h['sgov_review_site_summary']),
+            dict(name='02823 · 港股复市折价筛查',status='snapshot',task=h['holiday_site_summary']),
+            dict(name='02822／02823 · 同指数价差',status='snapshot',task=h['a50_peer_site_summary']),
+            dict(name='美股 · 信贷环境来源覆盖',status='snapshot',task=h['credit_regime_site_summary'])]
+        if credit_forward.exists():
+            activity_text=activity_text.removeprefix(read(credit_forward)['activity_site_summary']+' ')
+        activity_text=h['activity_site_summary']+' '+activity_text
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
