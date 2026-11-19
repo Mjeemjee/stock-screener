@@ -2068,6 +2068,19 @@ def main():
                  task='2021–2023 年，各投入一半且不调仓。1 万／2 万／3 万档压力净变动 −1666.22／−4128.91／−6595.17 港币；最大收盘回撤 33.55%／40.07%／42.17%。两腿都买得起，但净收益和风险均未过门槛。'),
             dict(name='美股 SGOV／VTI／GLD · 调仓门槛',status='snapshot',
                  task='月度偏离 5 个百分点才调仓。1 万档 32 次触发却没有调仓；2 万／3 万档压力净额虽为正，均低于买入后持有的同成本对照。固定规则筛退，留存期未跑。')]
+    recovery_pilots=MINING/'acceptance/RECOVERY-PILOTS-v309-v312-ROOT-v1.json'
+    if args.focus=='mining' and recovery_pilots.exists():
+        q=read(recovery_pilots)
+        assert q['new_paper_accounts']==q['actual_orders']==0
+        assert all(digest(ROOT/path)==expected for path,expected in q['pins'].items())
+        extra_sources['hk_us_recovery_pilots']=recovery_pilots
+        current_work['owners'][15:15]=[
+            dict(name='港股 03033 · 月度修复',status='snapshot',
+                 task='2021–2023 年 3 次信号，压力情景仅 1 次完整持有，另有一次入场参考价超过限价。1 万／2 万／3 万档压力净变动 −332.42／−592.80／−855.83 港币，均低于现金。'),
+            dict(name='美股 VTI · 急跌后三日反弹',status='snapshot',
+                 task='2021–2023 年 6 次触发，剩 3 次非重叠机会，三次原始收益均为负，平均 −215.58 基点。三档压力净变动 −503.33／−898.71／−1246.04 港币。两条规则均筛退，留存期未运行。'),
+            dict(name='港股 02823 · 月末汇率来源',status='snapshot',
+                 task='原定 TMA 同时点定盘仍为 0／85 个合格月末。港交所免费结算文件仅 23／85 个月末取得 ZIP 文件头，且期货交收口径不同。8 个分派实付日均匹配金管局收盘换汇参考，可用于现金敏感度。')]
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
