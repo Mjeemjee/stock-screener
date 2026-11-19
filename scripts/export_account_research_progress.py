@@ -2264,6 +2264,7 @@ def main():
         bank_reit_activity=h['activity_site_summary']+' '
         activity_text=bank_reit_activity+activity_text
     hk_preopen=MINING/'acceptance/HK-PREOPEN-LOT-v396-v401-ROOT-v1.json'
+    hk_preopen_activity=''
     if args.focus=='mining' and hk_preopen.exists():
         h=read(hk_preopen)
         assert h['new_paper_accounts']==h['actual_orders']==0
@@ -2275,6 +2276,20 @@ def main():
             dict(name='港股金融 · 126 日下行风险',status='snapshot',task=h['factor_site_summary'])]
         if bank_reit_activity:
             activity_text=activity_text.removeprefix(bank_reit_activity)
+        hk_preopen_activity=h['activity_site_summary']+' '
+        activity_text=hk_preopen_activity+activity_text
+    hk_industry_signal=MINING/'acceptance/HK-INDUSTRY-SIGNAL-v402-v405-ROOT-v1.json'
+    if args.focus=='mining' and hk_industry_signal.exists():
+        h=read(hk_industry_signal)
+        assert h['new_paper_accounts']==h['actual_orders']==0
+        assert all(digest(ROOT/path)==expected for path,expected in h['pins'].items())
+        extra_sources['hk_industry_downside_signal']=hk_industry_signal
+        current_work['owners'][15:15]=[
+            dict(name='港股工商 · 127 日双源原收',status='snapshot',task=h['price_site_summary']),
+            dict(name='港股工商 · 发行人公司行动',status='snapshot',task=h['action_site_summary']),
+            dict(name='港股工商 · 冻结下行信号',status='snapshot',task=h['signal_site_summary'])]
+        if hk_preopen_activity:
+            activity_text=activity_text.removeprefix(hk_preopen_activity)
         activity_text=h['activity_site_summary']+' '+activity_text
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
