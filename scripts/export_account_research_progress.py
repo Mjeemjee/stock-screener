@@ -26,6 +26,8 @@ PDBC_PREFLIGHT_RECEIPT=MINING/'acceptance/PDBC-2015-v245-ROOT-v1.json'
 IEF_PREFLIGHT_RECEIPT=MINING/'acceptance/IEF-FOMC-v250-v252-ROOT-v1.json'
 IEF_RESULT_RECEIPT=MINING/'acceptance/IEF-ACCOUNT-v257-v258-ROOT-v1.json'
 SOUTHBOUND_RECEIPT=MINING/'acceptance/HK-SOUTHBOUND-v262-v265-ROOT-v1.json'
+SOUTHBOUND_MARCH_RECEIPT=MINING/'acceptance/HK-CONNECT-MARCH-v266-v268-v271-ROOT-v1.json'
+ISSUER_TENDER_RECEIPT=MINING/'acceptance/US-ISSUER-TENDER-v269-v270-ROOT-v1.json'
 OUT=ROOT/'portfolio-board/public/research-progress'
 def read(path):return json.loads(path.read_text(encoding='utf-8-sig'))
 def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -161,6 +163,15 @@ def southbound_projection():
     result=receipt['site_southbound']
     assert result['qualified_pairs']==result['return_tests']==0
     assert [row['code'] for row in result['samples']]==['HK.06603','HK.02661']
+    if SOUTHBOUND_MARCH_RECEIPT.exists():
+        march=read(SOUTHBOUND_MARCH_RECEIPT)
+        assert march['decision']=='FOUR_REMAINING_WITHOUT_POINT_IN_TIME_INDUSTRY_SIZE_FREE_FLOAT'
+        assert march['qualified_pairs']==march['return_tests']==0 and march['pins']
+        for name,expected in march['pins'].items():
+            path=(ROOT/name).resolve()
+            assert path.is_relative_to(ROOT) and digest(path)==expected,name
+        result['march_controls']={key:march[key] for key in ('initial_candidates','both_routes_buy_unchanged',
+            'both_routes_not_buy_unchanged','age_pass','turnover_pass','remaining','turnover')}
     return result
 
 
@@ -1927,8 +1938,22 @@ def main():
         extra_sources['published_V22_legacy_record_dates']=legacy_dates
     if southbound:
         extra_sources['hk_southbound_first_eligibility']=SOUTHBOUND_RECEIPT
+        march_checked='march_controls' in southbound
+        if march_checked:
+            extra_sources['hk_southbound_march_matching']=SOUTHBOUND_MARCH_RECEIPT
         current_work['owners'].insert(0,dict(name='港股通首次开放买入',status='snapshot',
-            task='沪深两案各核到一次调入。已算开盘整手与回本门槛。同批指数对照的行业、规模、成交额及事前资格待核。'))
+            task=('3 月同批 14 只均已复原沪深资格。上市龄筛后 8 只，再按成交额筛至 4 只。待核当时的行业、指数市值分组和自由流通市值。'
+                  if march_checked else '沪深两案各核到一次调入。已算开盘整手与回本门槛。同批指数对照的行业、规模、成交额及事前资格待核。')))
+    if args.focus=='mining' and ISSUER_TENDER_RECEIPT.exists():
+        tender=read(ISSUER_TENDER_RECEIPT)
+        assert tender['qualified_candidates']==tender['return_tests']==0 and tender['pins']
+        for name,expected in tender['pins'].items():
+            path=(ROOT/name).resolve()
+            assert path.is_relative_to(ROOT) and digest(path)==expected,name
+        extra_sources['us_issuer_tender_preflight']=ISSUER_TENDER_RECEIPT
+        current_work['owners'].insert(1,dict(name='美股发行人现金要约',status='snapshot',task=(
+            f"SEC 一季度 {tender['q1_initial']} 份初始要约已登记。1 月 {tender['january_initial']} 份中 "
+            f"{tender['january_source_excluded']} 份已由原件排除，{tender['january_unknown']} 份仍待核固定价格及不足百股优先条款。")))
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
