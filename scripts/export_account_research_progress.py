@@ -13,6 +13,8 @@ MINING=ROOT/'reports/factor-mining-resume-20261117'
 SGOV_PACKET=ROOT/'reports/us-sgov-paper-owner-20261117-v140'
 DIVERSIFIED_RECEIPT=MINING/'paper-continuation-20261118-v179/ROOT-CONTINUATION-v1.json'
 FORM4_RECEIPT=MINING/'acceptance/FORM4-v219-v220-ROOT-v1.json'
+FORM4_ANNUAL_RECEIPT=MINING/'acceptance/FORM4-v222-ROOT-v1.json'
+FORM4_AUDIT_RECEIPT=MINING/'acceptance/FORM4-v224-ROOT-v1.json'
 OUT=ROOT/'portfolio-board/public/research-progress'
 def read(path):return json.loads(path.read_text(encoding='utf-8-sig'))
 def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -31,6 +33,30 @@ def form4_projection():
     assert result['forms_4']+result['amendments']==result['filings']
     assert result['explicit_public_market_purchase_rows']+result['unknown_buy_venue']==result['purchases_coded']
     assert result['explicit_public_market_purchase_rows']==result['actual_return_tests']==0
+    if FORM4_ANNUAL_RECEIPT.exists():
+        annual=read(FORM4_ANNUAL_RECEIPT)
+        assert annual['decision']=='ACCEPT_2018_FORM4_STRUCTURE_ONLY' and annual['pins']
+        for name,sha in annual['pins'].items():
+            path=(ROOT/name).resolve()
+            assert path.is_relative_to(ROOT) and digest(path)==sha,name
+        assert annual['form_4']+annual['amendments']==annual['filings']
+        assert annual['candidate_venue_unqualified']==annual['structure_rows']
+        assert annual['explicit_public_market_footnotes']==annual['actual_return_tests']==0
+        result['annual']={k:annual[k] for k in (
+            'filings','issuers','structure_rows','structure_filings','structure_issuer_days',
+            'dividend_reinvestment_hints','explicit_public_market_footnotes','actual_return_tests')}
+        if FORM4_AUDIT_RECEIPT.exists():
+            audit=read(FORM4_AUDIT_RECEIPT)
+            assert audit['decision']=='ACCEPT_PURPOSIVE_ATTACHMENT_AUDIT_ONLY' and audit['pins']
+            for name,sha in audit['pins'].items():
+                path=(ROOT/name).resolve()
+                assert path.is_relative_to(ROOT) and digest(path)==sha,name
+            categories=('automatic_dividend_reinvestment_rows','prearranged_plan_purchase_rows',
+                        'direction_conflict_rows','other_paid_acquisition_rows')
+            assert sum(audit[key] for key in categories)==audit['rows_reviewed']
+            assert audit['explicit_public_market_rows']==audit['actual_return_tests']==0
+            result['annual']['attachment_audit']={k:audit[k] for k in (
+                'original_filings_reviewed','rows_reviewed',*categories,'explicit_public_market_rows')}
     return result
 
 
@@ -1578,10 +1604,15 @@ def main():
         'old_factor_catalog_review':ROOT/'reports/us-anchor-factor-owner-20261117-v132/OLD-CATALOG-REVIEW-v1.json'}
     if form4:
         extra_sources['form4_root_acceptance']=FORM4_RECEIPT
-        current_work['owners'].append(dict(name='美股 Form 4 披露',status='snapshot',
-            task='四家公司单季来源试点已复核。下一步核对固定40股的全年申报覆盖及可确认交易场所的原件。'))
+        if 'annual' in form4:
+            extra_sources['form4_annual_root_acceptance']=FORM4_ANNUAL_RECEIPT
+            if 'attachment_audit' in form4['annual']:
+                extra_sources['form4_attachment_audit_root_acceptance']=FORM4_AUDIT_RECEIPT
+        form4_task=('固定40股的2018年全年申报结构已核对，正在逐份核查候选原件的交易场所。'
+                    if 'annual' in form4 else '四家公司单季来源试点已复核，下一步核对固定40股的全年申报覆盖。')
+        current_work['owners'].append(dict(name='美股 Form 4 披露',status='snapshot',task=form4_task))
         current_work['owners'].append(dict(name='03086 · 11月19日纸面',status='snapshot',
-            task='香港时间09:00前缺少合规事前意向，本日无有效意向可执行；本次快照时16:30观察窗口待到期。'))
+            task='香港时间09:00前的登记缺失。按11月18日可用资料只读核算，11月19日为非月度复核日，四组均持现金，规则未安排买卖。16:30才取完整日线。'))
     for name,file in [('continuous_goal','GOAL-CONTINUOUS-v2.md'),('restored_goal_receipt','GOAL-RESTORED-RECEIPT-v2.json')]:
         if (MINING/file).exists():extra_sources[name]=MINING/file
     for version,folder,review_file in [('v141','us-intraday-persistence-owner-20261117-v141','US-INTRADAY-v141-ROOT-REVIEW-v1.json'),

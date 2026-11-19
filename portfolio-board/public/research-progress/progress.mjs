@@ -343,7 +343,9 @@ if (typeof document !== 'undefined') {
   }
   function renderForm4(data) {
     const source = data.form4
+    find('form4-source').hidden = !source
     if (!source) return
+    find('form4-metrics').replaceChildren()
     find('form4-sample').textContent = `2018 年第二季度核对 ${source.issuers} 家公司的 ${source.filings} 份披露，包括 ${source.forms_4} 份 Form 4 和 ${source.amendments} 份 Form 4/A 更正。`
     for (const [label, value] of [
       ['P 买入交易行', source.purchases_coded],
@@ -368,7 +370,18 @@ if (typeof document !== 'undefined') {
       const url = new URL(value)
       if (url.protocol === 'https:' && ['www.sec.gov', 'investors.abbvie.com'].includes(url.hostname)) find(id).href = url.href
     }
-    find('form4-source').hidden = false
+    const annual = source.annual
+    find('form4-annual').hidden = !annual
+    const audit = annual?.attachment_audit
+    find('form4-annual-audit').hidden = !audit
+    if (annual) {
+      const filings = annual.filings.toLocaleString('en-US')
+      find('form4-annual-coverage').textContent = `固定样本的 ${annual.issuers} 家公司共 ${filings} 份披露。筛得 ${annual.structure_rows} 条符合预设买入结构的交易行，涉及 ${annual.structure_filings} 份披露和 ${annual.structure_issuer_days} 个发行人披露日。`
+      find('form4-annual-review').textContent = `其中 ${annual.dividend_reinvestment_hints} 条有股息再投资线索。批量数据脚注明示公开市场的交易行有 ${annual.explicit_public_market_footnotes} 条。交易场所仍在逐份核对原件，已做收益检验 ${annual.actual_return_tests} 次。`
+    }
+    if (audit) {
+      find('form4-annual-audit').textContent = `按特征选取 ${audit.original_filings_reviewed} 份原件核查 ${audit.rows_reviewed} 条交易行，证实公开市场买入 ${audit.explicit_public_market_rows} 条。抽查涉及 ${audit.automatic_dividend_reinvestment_rows} 条自动股息再投资、${audit.prearranged_plan_purchase_rows} 条预设计划买入、${audit.direction_conflict_rows} 条买卖方向矛盾，以及 ${audit.other_paid_acquisition_rows} 条可证付价买入但原件未披露场所。抽查结果仅适用于这批原件。`
+    }
   }
 
   function renderFiling(data) {
