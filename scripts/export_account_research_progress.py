@@ -2222,6 +2222,19 @@ def main():
             dict(name='美股 COWZ · 自由现金流来源',status='snapshot',task=q['cowz_site_summary'])]
         activity_text='港股跨行业财报与整手容量已核。下一项准备核 COWZ 原价和现金分派。 '+activity_text.replace(
             '港股质量因子已核一批时点财报，正在排查多期数据及报表口径。 ', '')
+    cowz_result=MINING/'acceptance/COWZ-AND-HK-LOTS-v379-v382-ROOT-v1.json'
+    if args.focus=='mining' and cowz_result.exists():
+        q=read(cowz_result)
+        assert q['new_paper_accounts']==q['actual_orders']==0
+        assert all(digest(ROOT/path)==expected for path,expected in q['pins'].items())
+        extra_sources['cowz_and_hk_lots']=cowz_result
+        current_work['owners'][15:15]=[
+            dict(name='美股 COWZ · 半仓开发账户',status='snapshot',task=q['half_site_summary']),
+            dict(name='美股 COWZ · 四成预算留存准备',status='snapshot',task=q['reduced_site_summary']),
+            dict(name='美股 COWZ · 报价与分派复核',status='snapshot',task=q['audit_site_summary']),
+            dict(name='港股质量 · 扩大整手筛选',status='snapshot',task=q['hk_site_summary'])]
+        activity_text='COWZ 半仓筛退，四成预算已在已见历史完成诊断，正在核验 2024 留存来源。 '+activity_text.replace(
+            '港股跨行业财报与整手容量已核。下一项准备核 COWZ 原价和现金分派。 ', '')
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
