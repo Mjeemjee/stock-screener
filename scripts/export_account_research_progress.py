@@ -2236,6 +2236,7 @@ def main():
         activity_text='COWZ 半仓筛退，四成预算已在已见历史完成诊断，正在核验 2024 留存来源。 '+activity_text.replace(
             '港股跨行业财报与整手容量已核。下一项准备核 COWZ 原价和现金分派。 ', '')
     cowz_holdout=MINING/'acceptance/COWZ-2024-v385-v388-ROOT-v1.json'
+    cowz_holdout_activity=''
     if args.focus=='mining' and cowz_holdout.exists():
         q=read(cowz_holdout)
         assert q['new_paper_accounts']==q['actual_orders']==0
@@ -2244,8 +2245,22 @@ def main():
         current_work['owners'][15:15]=[
             dict(name='美股 COWZ · 2024 年冻结留存',status='snapshot',task=q['holdout_site_summary']),
             dict(name='美股 COWZ · 基准和漏单复核',status='snapshot',task=q['comparison_site_summary'])]
-        activity_text=q['activity_site_summary']+' '+activity_text.replace(
+        cowz_holdout_activity=q['activity_site_summary']+' '
+        activity_text=cowz_holdout_activity+activity_text.replace(
             'COWZ 半仓筛退，四成预算已在已见历史完成诊断，正在核验 2024 留存来源。 ', '')
+    bank_reit=MINING/'acceptance/HK-BANK-REIT-v390-v393-ROOT-v1.json'
+    if args.focus=='mining' and bank_reit.exists():
+        h=read(bank_reit)
+        assert h['new_paper_accounts']==h['actual_orders']==0
+        assert all(digest(ROOT/path)==expected for path,expected in h['pins'].items())
+        extra_sources['hk_bank_reit_calibration']=bank_reit
+        current_work['owners'][15:15]=[
+            dict(name='港股中行＋领展 · 合费整手',status='snapshot',task=h['budget_site_summary']),
+            dict(name='港股中行＋领展 · 两段静持诊断',status='snapshot',task=h['account_site_summary']),
+            dict(name='港股领展 · 供股与除净',status='snapshot',task=h['action_site_summary'])]
+        if cowz_holdout_activity:
+            activity_text=activity_text.removeprefix(cowz_holdout_activity)
+        activity_text=h['activity_site_summary']+' '+activity_text
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
