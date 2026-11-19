@@ -2120,6 +2120,17 @@ def main():
                  task='8 个非重叠窗口，配对毛差 +61.42 基点，低于一万压力摩擦 88.42 基点。三档压力净变动 −127.55／+281.43／+665.26 港币，漏掉最高毛收益一笔后三档都亏。'),
             dict(name='美股 FLOT · 半年净息开关',status='snapshot',
                  task='一万和两万档压力均零持仓。三万档仅一段，净 +248.73 港币，低于静持 +345.19 港币。两条美股候选均筛退，留存未运行。')]
+    weekly_creations=MINING/'acceptance/WEEKLY-FUND-CREATIONS-v331-v335-ROOT-v1.json'
+    if args.focus=='mining' and weekly_creations.exists():
+        q=read(weekly_creations)
+        assert q['new_paper_accounts']==q['actual_orders']==0
+        assert all(digest(ROOT/path)==expected for path,expected in q['pins'].items())
+        extra_sources['weekly_fund_creations']=weekly_creations
+        current_work['owners'][15:15]=[
+            dict(name='港股 02823 · 周净创设',status='snapshot',
+                 task='周末份额取到 361／365。23 个非重叠窗口相对同资产配对毛差 −15.11 基点。三档各成交 15 笔，压力净变动 −1817.92／−2582.71／−3253.94 港币。纳入停市日已发布原件后覆盖 365／365，账面结果相同。'),
+            dict(name='美股 GLD · 东京份额公告',status='snapshot',
+                 task='东京 1326 与纽约 GLD 对应同一信托。交易所验证三个连续周末份额与实际刊登时点，周差 −10 万／+120 万股。本轮未核长历史覆盖，尚未计算策略收益。')]
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
