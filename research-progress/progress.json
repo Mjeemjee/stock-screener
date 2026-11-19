@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-19T20:44:19.149608+08:00",
+  "updated_at": "2026-11-19T20:53:05.803620+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
@@ -8983,6 +8983,11 @@
         "task": "富途曾受理 2023 年 Docebo 的 99 股优先申报，该次券商截止比发行人早 8 天 14 小时。另核 2026 年 Docebo 的跨境申报：20.40 美元定价在 15% 预扣税情景下折至约 18.56 美元，低于正式要约后的参考开盘 19.26 美元。尚无通过账户资格的案例或收益检验。"
       },
       {
+        "name": "富途专属公告抽查",
+        "status": "snapshot",
+        "task": "5 宗历史通知中，4 宗初始价格不固定。2023 年 Docebo 每股 55 美元回购，假设对视同股息部分预扣 15%，估算每股到手 47.95 美元，低于 49.18 和 48.37 美元两个开盘参考。三档本金均未过门槛，未计券商费。RBNE 仍待事件专属证据。"
+      },
+      {
         "name": "分层评价验收",
         "task": "分层经济评价合同已接受：保留原本金、原T0及换汇费用，原账面收益与扣必要退出成本后的估值分别列示；原8臂与已激活的组合8臂不当作16份独立样本。 正式统计推断仍未启用，所需假设尚无充分依据。没有规定等满几个月、凑够交易笔数或某次盈利即可成功；单个统计方案也不是永久验收门槛。",
         "status": "snapshot"
@@ -14222,7 +14227,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-19T20:44:20.668571+08:00",
+    "checked_at": "2026-11-19T20:53:10.620285+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -14454,7 +14459,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-19T20:44:19.693092+08:00",
+    "checked_at": "2026-11-19T20:53:07.554507+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -14548,9 +14553,9 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "755c34b8283ad1a0dc43b044ef633fae37aef698a0d10e38cfcb193e4c87f0db",
+    "mining_goal": "15e8a12d30b96f0e6012a5d66bf4795c478a770c6dc008aec156d7accd1f402d",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
-    "mining_team": "498369683714760f9d94631da6aeb0baf9e19ddbd578271b4c91f231d062856b",
+    "mining_team": "53c1b51c28da90a6ac4c2ac988d7fb4a8fbb6f63bd2b3c3ae5d022ace8a5dcdc",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
     "fip_original": "9c598341d1b0e59753bc0134509908b4698209cfff0b95c22f973f655b868296",
     "fip_calendar_correction": "33d2d80372b6c433688dbbcabcc49f2a458989a633ed783c0c2fa42d6f824695",
@@ -14662,7 +14667,8 @@
     "us_issuer_tender_preflight": "d94314eda2cc08f2f295217bdb1818c88c3fa8f8a9cf265bc1c5622c8976f79b",
     "us_issuer_tender_closeout": "4d7f1a429f007142ac2fe7f4db8d1941290d5a03814d110c01c6985267a29624",
     "us_issuer_tender_coverage": "16b8ad94a4f3e13365ec5d088af6863c38658b8dcd5e0f46fc47730022f025dc",
-    "us_issuer_tender_execution": "7b604b82ee172597c5fbff95157dff2d69d9209b3bc4101687994b2b438e5090"
+    "us_issuer_tender_execution": "7b604b82ee172597c5fbff95157dff2d69d9209b3bc4101687994b2b438e5090",
+    "us_issuer_tender_broker_first": "5cdbdf0db03588967b8b6d13a41f72552753c732275d3e33dfb932c6c1a90d5b"
   },
   "filing_event": {
     "sources": [
