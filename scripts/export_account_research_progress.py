@@ -2500,6 +2500,20 @@ def main():
         if iyr_real_rate.exists():
             activity_text=activity_text.removeprefix(read(iyr_real_rate)['activity_site_summary']+' ')
         activity_text=midland['activity_site_summary']+' '+activity_text
+    us_em_dollar=MINING/'acceptance/US-EM-DOLLAR-v512-v517-ROOT-v1.json'
+    if args.focus=='mining' and us_em_dollar.exists():
+        usd=read(us_em_dollar)
+        assert usd['new_paper_accounts']==usd['actual_orders']==0
+        assert all(digest(ROOT/path)==expected for path,expected in usd['pins'].items())
+        extra_sources['us_em_dollar']=us_em_dollar
+        current_work['owners'][15:15]=[
+            dict(name='美股 EEM／EWZ／INDA · 美元月度信号',status='snapshot',task=usd['account_site_summary']),
+            dict(name='美元月度信号 · 2026追加历史检验',status='snapshot',task=usd['latest_site_summary']),
+            dict(name='美股新兴市场ETF · 版本与小账户成本',status='snapshot',task=usd['source_site_summary']),
+            dict(name='港股 · 证监会淡仓周报预检',status='active',task=usd['hk_site_summary'])]
+        if midland_registration.exists():
+            activity_text=activity_text.removeprefix(read(midland_registration)['activity_site_summary']+' ')
+        activity_text=usd['activity_site_summary']+' '+activity_text
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
