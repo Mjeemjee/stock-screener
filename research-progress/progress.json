@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-19T21:17:13.064325+08:00",
+  "updated_at": "2026-11-19T21:32:25.358223+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
@@ -9013,6 +9013,16 @@
         "task": "2019 年每手 10 份改为 100 份。按预先固定的规则和两套成本，2020 年 4 月 2 日必要退出时，1 万／2 万／3 万档各余 20／50／80 份碎股。缺历史碎股可执行报价，6 个情景均无法完成账户回放。"
       },
       {
+        "name": "港股 02800 · 恒指波动策略",
+        "status": "snapshot",
+        "task": "2017–2021 年，1 万港币在 60 个预定开盘都不足一手。2 万／3 万档压力成本后分别 −340.11／−80.22 港币，收盘回撤 22.91%／27.34%，均劣于同档持续持有。固定规则筛退，留存期未运行。"
+      },
+      {
+        "name": "美股 VTI · 单确认对照复核",
+        "status": "snapshot",
+        "task": "六个月规则与旧 SMA200 在 36 月中有 30 月同方向；三年派息总额获发行人年报佐证，逐次派息到账证据未补齐。保持开发期对照，不开新纸面。"
+      },
+      {
         "name": "分层评价验收",
         "task": "分层经济评价合同已接受：保留原本金、原T0及换汇费用，原账面收益与扣必要退出成本后的估值分别列示；原8臂与已激活的组合8臂不当作16份独立样本。 正式统计推断仍未启用，所需假设尚无充分依据。没有规定等满几个月、凑够交易笔数或某次盈利即可成功；单个统计方案也不是永久验收门槛。",
         "status": "snapshot"
@@ -14252,7 +14262,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-19T21:17:17.731045+08:00",
+    "checked_at": "2026-11-19T21:32:29.764555+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -14484,7 +14494,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-19T21:17:14.789976+08:00",
+    "checked_at": "2026-11-19T21:32:27.047833+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -14578,9 +14588,9 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "3df8e9a922671e6356ce4a0dd60853f7440a5283f76d525eead15f21385178fa",
+    "mining_goal": "498e8d3d9f85595d53a58bd2987533c4464dfaa5f37d43680cda118dc398f16c",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
-    "mining_team": "e3c932f4128ca1f91f69b9183aa26cd97b12f9b41c34f0634ccecf10c12a30f3",
+    "mining_team": "fad1eb5451ebc41ab3cd0c280b2f1525ab8388d834f0dda04bd8fda4b9084685",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
     "fip_original": "9c598341d1b0e59753bc0134509908b4698209cfff0b95c22f973f655b868296",
     "fip_calendar_correction": "33d2d80372b6c433688dbbcabcc49f2a458989a633ed783c0c2fa42d6f824695",
@@ -14696,7 +14706,8 @@
     "us_issuer_tender_broker_first": "5cdbdf0db03588967b8b6d13a41f72552753c732275d3e33dfb932c6c1a90d5b",
     "new_execution_mechanisms": "c87e7b5795031b2c302cc11e4d1da6655f8a9af962633ada70188928631c6b6e",
     "benchmark_and_us_breadth": "216640410f56e9bbf70096a952a88585f7c87ddf514686e08a8d27846073922b",
-    "hk_benchmark_odd_lot_gate": "09d2acdcdc1ff0b078435567a4e200222f5064752edda29b4612fe0051ed0e5a"
+    "hk_benchmark_odd_lot_gate": "09d2acdcdc1ff0b078435567a4e200222f5064752edda29b4612fe0051ed0e5a",
+    "hk_tracker_volatility": "49ea33144825df7b3e25a3ad67ddd70fc782f7d8d36232ea44b9f804a6a20a32"
   },
   "filing_event": {
     "sources": [
