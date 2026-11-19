@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-19T22:55:41.676319+08:00",
+  "updated_at": "2026-11-19T23:11:09.321672+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
@@ -8958,7 +8958,7 @@
     "milestone_label": "历史候选交付完成（里程碑）",
     "evidence_label": "稳定盈利与持续性尚未证实",
     "task": "T-012",
-    "team_updated_at": "2026-11-19T22:55:41+08:00",
+    "team_updated_at": "2026-11-19T23:11:09+08:00",
     "active_work": {
       "account": false,
       "registration": false,
@@ -9041,6 +9041,16 @@
         "name": "美股 SGOV／VTI／GLD · 调仓门槛",
         "status": "snapshot",
         "task": "月度偏离 5 个百分点才调仓。1 万档 32 次触发却没有调仓；2 万／3 万档压力净额虽为正，均低于买入后持有的同成本对照。固定规则筛退，留存期未跑。"
+      },
+      {
+        "name": "港股 02823 · 周净创设",
+        "status": "snapshot",
+        "task": "周末份额取到 361／365。23 个非重叠窗口相对同资产配对毛差 −15.11 基点。三档各成交 15 笔，压力净变动 −1817.92／−2582.71／−3253.94 港币。纳入停市日已发布原件后覆盖 365／365，账面结果相同。"
+      },
+      {
+        "name": "美股 GLD · 东京份额公告",
+        "status": "snapshot",
+        "task": "东京 1326 与纽约 GLD 对应同一信托。交易所验证三个连续周末份额与实际刊登时点，周差 −10 万／+120 万股。本轮未核长历史覆盖，尚未计算策略收益。"
       },
       {
         "name": "港股 02823 · 净创设公告",
@@ -14342,7 +14352,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-19T22:55:42.923938+08:00",
+    "checked_at": "2026-11-19T23:11:10.789894+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -14574,7 +14584,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-19T22:55:42.117731+08:00",
+    "checked_at": "2026-11-19T23:11:09.827053+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -14668,9 +14678,9 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "46f4a7bc9ed8089aff1af0f44e60742c594760e9dccbfa4c4528018b631bc885",
+    "mining_goal": "c10dff777d7e1b5c28729f238b1ae890124c468c96877ac21b43d69605d26f11",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
-    "mining_team": "5f90309d1b5eb4cc38783309e64c5eee570a9db3f453df29c8d069be1b132161",
+    "mining_team": "8980993359d93cfce6d8986f2d9d45e9066d229ccaac252ff5006385a0561019",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
     "fip_original": "9c598341d1b0e59753bc0134509908b4698209cfff0b95c22f973f655b868296",
     "fip_calendar_correction": "33d2d80372b6c433688dbbcabcc49f2a458989a633ed783c0c2fa42d6f824695",
@@ -14793,7 +14803,8 @@
     "hk_us_recovery_pilots": "3e2141290c40adf9d552cd3f2b9c4e55a5be41648e67821b39fe7108d45e97c4",
     "hk_us_frequent_mechanisms": "899214041687dcdc30968c390b10ffdc1d37bc56174e2329b508d65b45e7c4ce",
     "small_capital_cost_first": "5832ed7345b53da32aaae3b1e263ac2a0a217ca214a38f41e53f15d103821242",
-    "fund_flows_and_rates": "518f4c549d0296340cc1447a777948eff89a596e1c42e23f4cea59353d253a60"
+    "fund_flows_and_rates": "518f4c549d0296340cc1447a777948eff89a596e1c42e23f4cea59353d253a60",
+    "weekly_fund_creations": "c59420d2742720a022383397936cb9bde77174d98591833b87e6b342e2c35158"
   },
   "filing_event": {
     "sources": [
