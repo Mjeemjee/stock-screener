@@ -33,6 +33,7 @@ TENDER_CLOSEOUT=MINING/'acceptance/US-ISSUER-TENDER-v274-v275-ROOT-v1.json'
 HK_NOV19_RECEIPT=MINING/'paper-nov19-20261119/ROOT-HK-CONTINUATION-v1.json'
 TENDER_COVERAGE=MINING/'acceptance/US-ISSUER-TENDER-COVERAGE-v277-v279-ROOT-v1.json'
 TENDER_EXECUTION=MINING/'acceptance/US-ISSUER-TENDER-EXECUTION-v279-ROOT-v1.json'
+TENDER_BROKER=MINING/'acceptance/US-ISSUER-TENDER-BROKER-FIRST-v283-ROOT-v1.json'
 OUT=ROOT/'portfolio-board/public/research-progress'
 def read(path):return json.loads(path.read_text(encoding='utf-8-sig'))
 def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -1997,6 +1998,13 @@ def main():
             '3 月 50 宗排除 49 宗，只留 RBNE 条款候选，富途办理待证。')
         current_work['owners'].insert(2,dict(name='不足百股要约 · 富途与税费',status='snapshot',
             task='富途曾受理 2023 年 Docebo 的 99 股优先申报，该次券商截止比发行人早 8 天 14 小时。另核 2026 年 Docebo 的跨境申报：20.40 美元定价在 15% 预扣税情景下折至约 18.56 美元，低于正式要约后的参考开盘 19.26 美元。尚无通过账户资格的案例或收益检验。'))
+    if args.focus=='mining' and TENDER_BROKER.exists():
+        tb=read(TENDER_BROKER)
+        assert tb['return_tests']==tb['qualified_candidates']==tb['actual_orders']==0
+        assert all(digest(ROOT/path)==expected for path,expected in tb['pins'].items())
+        extra_sources['us_issuer_tender_broker_first']=TENDER_BROKER
+        current_work['owners'].insert(3,dict(name='富途专属公告抽查',status='snapshot',
+            task='5 宗历史通知中，4 宗初始价格不固定。2023 年 Docebo 每股 55 美元回购，假设对视同股息部分预扣 15%，估算每股到手 47.95 美元，低于 49.18 和 48.37 美元两个开盘参考。三档本金均未过门槛，未计券商费。RBNE 仍待事件专属证据。'))
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
