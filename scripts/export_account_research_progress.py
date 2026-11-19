@@ -18,6 +18,7 @@ FORM4_AUDIT_RECEIPT=MINING/'acceptance/FORM4-v224-ROOT-v1.json'
 FORM4_FINAL_RECEIPT=MINING/'acceptance/FORM4-v226-v227-ROOT-v1.json'
 MERGER_RECEIPT=MINING/'acceptance/US-CASH-MERGER-v230-v232-ROOT-v1.json'
 CIVITAS_RECEIPT=MINING/'acceptance/US-CASH-MERGER-CIVITAS-NO-OPEN-v1.json'
+MERGER_EXECUTION_CHECKS=MINING/'acceptance/US-MERGER-EXECUTION-CHECKS-v1.json'
 OUT=ROOT/'portfolio-board/public/research-progress'
 def read(path):return json.loads(path.read_text(encoding='utf-8-sig'))
 def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -54,6 +55,21 @@ def civitas_projection():
         assert path.is_relative_to(ROOT) and digest(path)==sha,name
     return {key:accepted[key] for key in ('symbol','public_shareholder_approval_date',
         'next_scheduled_open','proof_exchange_source')}
+
+
+def merger_cost_projection():
+    if not MERGER_EXECUTION_CHECKS.exists():
+        return None
+    record=read(MERGER_EXECUTION_CHECKS)
+    assert record['decision']=='ACCEPT_MERGER_EXECUTION_CHECKS_ONLY' and record['pins']
+    for name,expected in record['pins'].items():
+        path=(ROOT/name).resolve()
+        assert path.is_relative_to(ROOT) and digest(path)==expected,name
+    result=record['site_merger_execution']
+    assert result['substantive_exchange_exhibits']+result['placeholder_exhibits']==result['ordinary_terminal_filings']
+    assert result['full_backtests']==0
+    assert [r['hkd'] for r in result['tiers']]==[10000,20000,30000]
+    return result
 
 
 def form4_projection():
@@ -1573,6 +1589,7 @@ def main():
     form4=form4_projection() if args.focus=='mining' else None
     merger=merger_projection() if args.focus=='mining' else None
     merger_execution_control=civitas_projection() if merger else None
+    merger_cost_control=merger_cost_projection() if merger else None
     if args.focus=='mining':
         team=read(MINING/'TEAM.json')
         checking=args.activity in ['preparing','checking']
@@ -1671,6 +1688,8 @@ def main():
         extra_sources['merger_root_acceptance']=MERGER_RECEIPT
         if merger_execution_control:
             extra_sources['merger_civitas_root_acceptance']=CIVITAS_RECEIPT
+        if merger_cost_control:
+            extra_sources['merger_cost_control']=MERGER_EXECUTION_CHECKS
         current_work['owners'].append(dict(name='美股现金并购',status='snapshot',
             task='正在核对 2019 年第一季度股东批准样例、并购终局和可执行行情。已做收益检验 0 次。'))
         current_work['owners'].append(dict(name='03086 · 11月19日纸面',status='snapshot',
@@ -1803,6 +1822,7 @@ def main():
     payload['form4']=form4
     payload['merger']=merger
     payload['merger_execution_control']=merger_execution_control
+    payload['merger_cost_control']=merger_cost_control
     payload['nov18_cost_attribution']=november18_attribution() if diversified['activated'] else []
     OUT.mkdir(exist_ok=True,parents=True);(OUT/'assets').mkdir(exist_ok=True)
     if tip_account_review:render_tip_history_chart(tip_account_review)
