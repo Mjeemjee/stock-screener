@@ -448,6 +448,21 @@ if (typeof document !== 'undefined') {
       }
       rows.append(row)
     }
+    const march = study.march_controls
+    find('southbound-march-controls').hidden = !march
+    if (!march) return
+    find('southbound-march-summary').textContent = `${march.initial_candidates} 只的沪深资格在生效前后均相同，其中 ${march.both_routes_buy_unchanged} 只两地都可买，${march.both_routes_not_buy_unchanged} 只两地都不可买。上市龄筛后剩 ${march.age_pass} 只，成交额在目标的 0.5 至 2 倍之间的剩 ${march.turnover_pass} 只。`
+    const controlRows = find('southbound-march-rows')
+    controlRows.replaceChildren()
+    for (const control of march.turnover.controls) {
+      const row = element('tr')
+      const label = element('th', control.code)
+      label.scope = 'row'
+      const ratio = control.ratio_to_target === null ? '待核' : `${Number(control.ratio_to_target).toFixed(2)} 倍`
+      const gate = {PASS: '通过', FAIL: '超出范围'}[control.turnover_gate] ?? '待核'
+      row.append(label, element('td', ratio), element('td', gate))
+      controlRows.append(row)
+    }
   }
 
   function renderIefStudy(study) {

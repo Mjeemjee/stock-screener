@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-19T15:08:48.193431+08:00",
+  "updated_at": "2026-11-19T15:32:33.311866+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
@@ -8958,7 +8958,7 @@
     "milestone_label": "历史候选交付完成（里程碑）",
     "evidence_label": "稳定盈利与持续性尚未证实",
     "task": "T-012",
-    "team_updated_at": "2026-11-19T15:08:48+08:00",
+    "team_updated_at": "2026-11-19T15:32:17+08:00",
     "active_work": {
       "account": false,
       "registration": false,
@@ -8970,7 +8970,12 @@
       {
         "name": "港股通首次开放买入",
         "status": "snapshot",
-        "task": "沪深两案各核到一次调入。已算开盘整手与回本门槛。同批指数对照的行业、规模、成交额及事前资格待核。"
+        "task": "3 月同批 14 只均已复原沪深资格。上市龄筛后 8 只，再按成交额筛至 4 只。待核当时的行业、指数市值分组和自由流通市值。"
+      },
+      {
+        "name": "美股发行人现金要约",
+        "status": "snapshot",
+        "task": "SEC 一季度 151 份初始要约已登记。1 月 38 份中 8 份已由原件排除，30 份仍待核固定价格及不足百股优先条款。"
       },
       {
         "name": "分层评价验收",
@@ -14212,7 +14217,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-19T15:08:49.596596+08:00",
+    "checked_at": "2026-11-19T15:32:34.819610+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -14444,7 +14449,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-19T15:08:48.668554+08:00",
+    "checked_at": "2026-11-19T15:32:33.910249+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -14538,9 +14543,9 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "3ec21dd00320e67a5885eb42257222afe71bf5c2c0018eef082b8c2431b1367c",
+    "mining_goal": "20f5cceee1514e0f975ac52d1b738502b495b87f96db4c57f20dd2f5dfd32289",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
-    "mining_team": "2afbdfb3286e78e5643594b3a5f17ccf51319ff49eabdc272ba615cd7903fef8",
+    "mining_team": "600e3b3cf0aee0cc5242f55662d8dbb46d49459c6cb75df0eb522f83dc72dec6",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
     "fip_original": "9c598341d1b0e59753bc0134509908b4698209cfff0b95c22f973f655b868296",
     "fip_calendar_correction": "33d2d80372b6c433688dbbcabcc49f2a458989a633ed783c0c2fa42d6f824695",
@@ -14645,7 +14650,9 @@
     "sgov_paper_policy": "75e9ba32166823e7b00141e26e2e50ba90a8efc3bdbaf333c1e7d060ada06519",
     "sgov_real_paper_activation": "c09203a9d958455c35c90ac9d58f090cd6b150261eae13de6a41e90b13067044",
     "published_V22_legacy_record_dates": "0eafefa7cb8cf62e1f0b115587cf7ce6af21f7fbedc4ddf8363bb10834b22c6e",
-    "hk_southbound_first_eligibility": "9868f39bf815b03738b7a77088b336e99e3148fb60e2f7d3f679adaca9ad2d0c"
+    "hk_southbound_first_eligibility": "9868f39bf815b03738b7a77088b336e99e3148fb60e2f7d3f679adaca9ad2d0c",
+    "hk_southbound_march_matching": "a4a16046c51a562d76b647b438ca511d1cd6d0c75d4b30d9c8d22ed7179778d4",
+    "us_issuer_tender_preflight": "d94314eda2cc08f2f295217bdb1818c88c3fa8f8a9cf265bc1c5622c8976f79b"
   },
   "filing_event": {
     "sources": [
@@ -15247,7 +15254,100 @@
       }
     ],
     "qualified_pairs": 0,
-    "return_tests": 0
+    "return_tests": 0,
+    "march_controls": {
+      "initial_candidates": 14,
+      "both_routes_buy_unchanged": 4,
+      "both_routes_not_buy_unchanged": 10,
+      "age_pass": 8,
+      "turnover_pass": 4,
+      "remaining": [
+        "00800",
+        "02635",
+        "02718",
+        "06031"
+      ],
+      "turnover": {
+        "event": "2026-03-09",
+        "first_session": "2026-02-04",
+        "last_session": "2026-03-06",
+        "source": "Futu OpenD K_DAY AuType.NONE turnover",
+        "target_turnover_20d_median_hkd": "33381980.0",
+        "controls": [
+          {
+            "code": "00800",
+            "turnover_20d_median_hkd": "22940575.5",
+            "ratio_to_target": "0.6872143443858033585784905509",
+            "turnover_gate": "PASS"
+          },
+          {
+            "code": "02026",
+            "turnover_20d_median_hkd": "124033491.0",
+            "ratio_to_target": "3.715582209323712973286785266",
+            "turnover_gate": "FAIL"
+          },
+          {
+            "code": "02635",
+            "turnover_20d_median_hkd": "32464840.0",
+            "ratio_to_target": "0.9725258957078040307974541953",
+            "turnover_gate": "PASS"
+          },
+          {
+            "code": "02718",
+            "turnover_20d_median_hkd": "55088454.5",
+            "ratio_to_target": "1.650245267057256639660080079",
+            "turnover_gate": "PASS"
+          },
+          {
+            "code": "03881",
+            "turnover_20d_median_hkd": "5310305.0",
+            "ratio_to_target": "0.1590769930363627322285856022",
+            "turnover_gate": "FAIL"
+          },
+          {
+            "code": "03887",
+            "turnover_20d_median_hkd": "14535546.5",
+            "ratio_to_target": "0.4354309271049829878275644524",
+            "turnover_gate": "FAIL"
+          },
+          {
+            "code": "06031",
+            "turnover_20d_median_hkd": "60491695.5",
+            "ratio_to_target": "1.812106277099201425439713282",
+            "turnover_gate": "PASS"
+          },
+          {
+            "code": "09927",
+            "turnover_20d_median_hkd": "75101604.5",
+            "ratio_to_target": "2.249764828209710748134172988",
+            "turnover_gate": "FAIL"
+          }
+        ],
+        "calendar_sessions": [
+          "2026-02-04",
+          "2026-02-05",
+          "2026-02-06",
+          "2026-02-09",
+          "2026-02-10",
+          "2026-02-11",
+          "2026-02-12",
+          "2026-02-13",
+          "2026-02-16",
+          "2026-02-20",
+          "2026-02-23",
+          "2026-02-24",
+          "2026-02-25",
+          "2026-02-26",
+          "2026-02-27",
+          "2026-03-02",
+          "2026-03-03",
+          "2026-03-04",
+          "2026-03-05",
+          "2026-03-06"
+        ],
+        "return_tests": 0
+      }
+    }
   },
   "nov18_cost_attribution": [
     {
