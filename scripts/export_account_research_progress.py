@@ -2169,9 +2169,22 @@ def main():
             dict(name='美股 VIX 期限 · 历史版本与归因',status='snapshot',
                  task='92／108 次决策的指数值有开盘前日期级记录。9 个目标现金月 VTI 有 6 个上涨，平均原价涨约 2.00%。1 万档日均实际股票比重 35.26%，静持 50.88%。留存未运行。'),
             dict(name='美股 USMV · 低波宽基分派资料',status='snapshot',
-                 task='从发行人同一基金原表核对 2015–2023 年 37 条分派的除息、登记、支付日期及金额。当前未计算该基金的策略收益。')]
+                 task='从发行人同一基金原表核对 2015–2023 年 37 条分派的除息、登记、支付日期及金额。')]
         if q.get('hk_source_review_complete'):
             current_work['owners'].insert(17,dict(name='港股 VHSI · 香港波动率资料',status='snapshot',task=q['hk_site_summary']))
+    usmv_receipt=MINING/'acceptance/USMV-RISK-v355-v358-ROOT-v1.json'
+    if args.focus=='mining' and usmv_receipt.exists():
+        q=read(usmv_receipt)
+        assert q['new_paper_accounts']==q['actual_orders']==0
+        assert all(digest(ROOT/path)==expected for path,expected in q['pins'].items())
+        extra_sources['usmv_risk_historical']=usmv_receipt
+        current_work['owners'][15:15]=[
+            dict(name='美股 USMV · 低波 ETF 同预算静持',status='snapshot',task=q['account_site_summary']),
+            dict(name='美股 USMV · 价格与账户复核',status='snapshot',task=q['audit_site_summary']),
+            dict(name='美股 QUAL · 质量因子来源',status='snapshot',task=q['qual_site_summary'])]
+        if q.get('hk_site_summary'):
+            current_work['owners'].insert(17,dict(name='港股低波 · 上市产品核查',status='snapshot',task=q['hk_site_summary']))
+        activity_text='USMV 静持已复算并筛退。接下来核对 QUAL 历史价格的股份单位。 '+activity_text
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
