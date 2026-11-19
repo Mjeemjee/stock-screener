@@ -2046,6 +2046,17 @@ def main():
                  task='2017–2021 年，1 万港币在 60 个预定开盘都不足一手。2 万／3 万档压力成本后分别 −340.11／−80.22 港币，收盘回撤 22.91%／27.34%，均劣于同档持续持有。固定规则筛退，留存期未运行。'),
             dict(name='美股 VTI · 单确认对照复核',status='snapshot',
                  task='六个月规则与旧 SMA200 在 36 月中有 30 月同方向；三年派息总额获发行人年报佐证，逐次派息到账证据未补齐。保持开发期对照，不开新纸面。')]
+    quarter_pilots=MINING/'acceptance/QUARTER-END-PILOTS-v301-v302-ROOT-v1.json'
+    if args.focus=='mining' and quarter_pilots.exists():
+        q=read(quarter_pilots)
+        assert q['new_paper_accounts']==q['actual_orders']==0
+        assert all(digest(ROOT/path)==expected for path,expected in q['pins'].items())
+        extra_sources['hk_us_quarter_end_pilots']=quarter_pilots
+        current_work['owners'][11:11]=[
+            dict(name='港股 03033 · 季末三日窗口',status='snapshot',
+                 task='2021–2023 年季末相对同季普通月毛差 +68.16 基点；12 次机会、8 次模型成交。1 万／2 万／3 万档压力净变动 −397.94／−268.61／−84.40 港币，固定规则筛退。'),
+            dict(name='美股 VTI／IEF · 季末再平衡',status='snapshot',
+                 task='开发段 11 个窗口仅触发 1 次，原开盘至开盘 −136.28 基点。三档压力净变动 −301.94／−565.22／−828.58 港币，均低于美元现金对照。两条规则的留存期均未运行。')]
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
