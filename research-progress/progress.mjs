@@ -429,6 +429,27 @@ if (typeof document !== 'undefined') {
     links.hidden = !links.childNodes.length
   }
 
+  function renderSouthboundStudy(study) {
+    find('southbound-study').hidden = !study
+    if (!study) return
+    const total = study.batches.reduce((count, batch) => count + batch.hsc_entrants, 0)
+    const simultaneous = study.batches.reduce((count, batch) => count + batch.connect_additions, 0)
+    find('southbound-verdict').textContent = `沪深现存公告档案支持这两笔为上市后首次调入。两期恒生综指共纳入 ${total} 只新股，其中 ${simultaneous} 只同日获港股通调入。已核准匹配对照 ${study.qualified_pairs} 对，收益检验 ${study.return_tests} 次。`
+    const rows = find('southbound-rows')
+    rows.replaceChildren()
+    for (const sample of study.samples) {
+      const row = element('tr')
+      const name = element('th', `${sample.code.slice(3)} · ${sample.date}`)
+      name.scope = 'row'
+      row.append(name)
+      for (const tier of sample.pressure) {
+        const label = tier.lots ? `${tier.lots} 手 · ${Number(tier.hurdle_pct).toFixed(2)}%` : '不足 1 手'
+        row.append(element('td', label))
+      }
+      rows.append(row)
+    }
+  }
+
   function renderIefStudy(study) {
     find('ief-study').hidden = !study
     if (!study) return
@@ -861,7 +882,7 @@ if (typeof document !== 'undefined') {
       const item = element('li', stage.name, `stage ${stage.status}`)
       item.append(element('small', stage.detail ?? names[stage.status] ?? stage.status)); find('stages').append(item)
     }
-    renderWork(data); renderMerger(data); renderIefStudy(data.ief_account); renderForm4(data); renderFiling(data); renderPortfolio(data); renderFactors(data); renderEvidenceUpdates(data); renderSgovHistory(data); renderTipHistory(data); renderTipContinuation(data); renderCards(data); renderPaper(data); renderRecords()
+    renderWork(data); renderSouthboundStudy(data.southbound); renderMerger(data); renderIefStudy(data.ief_account); renderForm4(data); renderFiling(data); renderPortfolio(data); renderFactors(data); renderEvidenceUpdates(data); renderSgovHistory(data); renderTipHistory(data); renderTipContinuation(data); renderCards(data); renderPaper(data); renderRecords()
     if (selectedEvidenceView === null) selectEvidenceView(data.default_evidence_view === 'paper' ? 'paper' : 'history')
     find('research-note').textContent = data.research_note
     find('baseline-note').textContent = `同为3万初始资金，基础成本月度版历史标记 ${money(data.baseline.monthly_base_net_hkd)} 港元，报价回撤约 ${data.baseline.monthly_base_risk_pct.toFixed(2)}%；被动参考 ${money(data.baseline.passive_base_net_hkd)} 港元、约 ${data.baseline.passive_base_risk_pct.toFixed(2)}%。未证明稳定独立超额收益。`
