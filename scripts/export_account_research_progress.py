@@ -2473,6 +2473,19 @@ def main():
         if placement_lapse.exists():
             activity_text=activity_text.removeprefix(read(placement_lapse)['activity_site_summary']+' ')
         activity_text=frn['activity_site_summary']+' '+activity_text
+    iyr_real_rate=MINING/'acceptance/US-IYR-DFII10-v499-v503-ROOT-v1.json'
+    if args.focus=='mining' and iyr_real_rate.exists():
+        reit=read(iyr_real_rate)
+        assert reit['new_paper_accounts']==reit['actual_orders']==0
+        assert all(digest(ROOT/path)==expected for path,expected in reit['pins'].items())
+        extra_sources['us_iyr_dfii10']=iyr_real_rate
+        current_work['owners'][15:15]=[
+            dict(name='美股 IYR · 实际利率月度择时',status='snapshot',task=reit['iyr_site_summary']),
+            dict(name='美股 IYR · 信号与交易成本',status='snapshot',task=reit['diagnostic_site_summary']),
+            dict(name='港股 01200 · 住宅买卖登记',status='active',task=reit['hk_site_summary'])]
+        if treasury_frn.exists():
+            activity_text=activity_text.removeprefix(read(treasury_frn)['activity_site_summary']+' ')
+        activity_text=reit['activity_site_summary']+' '+activity_text
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
