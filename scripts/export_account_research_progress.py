@@ -2081,6 +2081,19 @@ def main():
                  task='2021–2023 年 6 次触发，剩 3 次非重叠机会，三次原始收益均为负，平均 −215.58 基点。三档压力净变动 −503.33／−898.71／−1246.04 港币。两条规则均筛退，留存期未运行。'),
             dict(name='港股 02823 · 月末汇率来源',status='snapshot',
                  task='原定 TMA 同时点定盘仍为 0／85 个合格月末。港交所免费结算文件仅 23／85 个月末取得 ZIP 文件头，且期货交收口径不同。8 个分派实付日均匹配金管局收盘换汇参考，可用于现金敏感度。')]
+    frequent_mechanisms=MINING/'acceptance/FREQUENT-MECHANISMS-v315-v318-ROOT-v1.json'
+    if args.focus=='mining' and frequent_mechanisms.exists():
+        q=read(frequent_mechanisms)
+        assert q['new_paper_accounts']==q['actual_orders']==0
+        assert all(digest(ROOT/path)==expected for path,expected in q['pins'].items())
+        extra_sources['hk_us_frequent_mechanisms']=frequent_mechanisms
+        current_work['owners'][15:15]=[
+            dict(name='港股 03033 · 低开修复',status='snapshot',
+                 task='493 日有 10 次低开后收复昨收，压力成本下只完成 7 笔。1 万／2 万／3 万档净变动 +1.47／+515.33／+1111.54 港币，各档减去最大盈利一笔后均转负，样本未达门槛。'),
+            dict(name='港股 03067 · 净值折价',status='snapshot',
+                 task='36 个互不重叠窗口，对同资产同季配对毛差 +266.02 基点。三档压力每笔平均 −59.18／−49.47／−40.46 港币，均为负。净值网页首次发布时间仍未核实。'),
+            dict(name='美股 VTI · 跌破前低后收复',status='snapshot',
+                 task='37 次非重叠，原价毛均 −25.30 基点，低于同期 VTI 全部日内均值 −2.49 基点。三档压力净变动 −2840.17／−3600.24／−4347.88 港币。三条规则均筛退，留存期未运行。')]
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,

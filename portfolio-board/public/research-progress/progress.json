@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-19T22:17:36.971647+08:00",
+  "updated_at": "2026-11-19T22:29:44.075217+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
@@ -8958,7 +8958,7 @@
     "milestone_label": "历史候选交付完成（里程碑）",
     "evidence_label": "稳定盈利与持续性尚未证实",
     "task": "T-012",
-    "team_updated_at": "2026-11-19T22:16:37+08:00",
+    "team_updated_at": "2026-11-19T22:29:43+08:00",
     "active_work": {
       "account": false,
       "registration": false,
@@ -9041,6 +9041,21 @@
         "name": "美股 SGOV／VTI／GLD · 调仓门槛",
         "status": "snapshot",
         "task": "月度偏离 5 个百分点才调仓。1 万档 32 次触发却没有调仓；2 万／3 万档压力净额虽为正，均低于买入后持有的同成本对照。固定规则筛退，留存期未跑。"
+      },
+      {
+        "name": "港股 03033 · 低开修复",
+        "status": "snapshot",
+        "task": "493 日有 10 次低开后收复昨收，压力成本下只完成 7 笔。1 万／2 万／3 万档净变动 +1.47／+515.33／+1111.54 港币，各档减去最大盈利一笔后均转负，样本未达门槛。"
+      },
+      {
+        "name": "港股 03067 · 净值折价",
+        "status": "snapshot",
+        "task": "36 个互不重叠窗口，对同资产同季配对毛差 +266.02 基点。三档压力每笔平均 −59.18／−49.47／−40.46 港币，均为负。净值网页首次发布时间仍未核实。"
+      },
+      {
+        "name": "美股 VTI · 跌破前低后收复",
+        "status": "snapshot",
+        "task": "37 次非重叠，原价毛均 −25.30 基点，低于同期 VTI 全部日内均值 −2.49 基点。三档压力净变动 −2840.17／−3600.24／−4347.88 港币。三条规则均筛退，留存期未运行。"
       },
       {
         "name": "港股 03033 · 月度修复",
@@ -14297,7 +14312,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-19T22:17:38.206044+08:00",
+    "checked_at": "2026-11-19T22:29:45.400901+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -14529,7 +14544,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-19T22:17:37.444099+08:00",
+    "checked_at": "2026-11-19T22:29:44.517579+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -14623,9 +14638,9 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "c422cc1bd4616f9ba82c060073c7c7f26c036d4a4d5249bfcbef2aa07195e62f",
+    "mining_goal": "b7c2f997dd985f232265416adcc18fefa23409894acb595574d03996a34531f3",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
-    "mining_team": "e633bf138f1841c36b09862aa0f045070192a8b4c99233fe6d29b71f41c699fc",
+    "mining_team": "f6dbd2b92f3e0ed44ef5dceef91628213dff96bdfe7a546619ec5cbd67b8bf3b",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
     "fip_original": "9c598341d1b0e59753bc0134509908b4698209cfff0b95c22f973f655b868296",
     "fip_calendar_correction": "33d2d80372b6c433688dbbcabcc49f2a458989a633ed783c0c2fa42d6f824695",
@@ -14745,7 +14760,8 @@
     "hk_tracker_volatility": "49ea33144825df7b3e25a3ad67ddd70fc782f7d8d36232ea44b9f804a6a20a32",
     "hk_us_quarter_end_pilots": "89d2a3544596f7837d92e78a23d8d311b13292aeaeff32985f5e54c6b9f2b075",
     "hk_us_longer_hold_pilots": "8582452d73d0a4cea0729ecc362a019bd639a4f017b81094ea980827b2b0b112",
-    "hk_us_recovery_pilots": "3e2141290c40adf9d552cd3f2b9c4e55a5be41648e67821b39fe7108d45e97c4"
+    "hk_us_recovery_pilots": "3e2141290c40adf9d552cd3f2b9c4e55a5be41648e67821b39fe7108d45e97c4",
+    "hk_us_frequent_mechanisms": "899214041687dcdc30968c390b10ffdc1d37bc56174e2329b508d65b45e7c4ce"
   },
   "filing_event": {
     "sources": [
