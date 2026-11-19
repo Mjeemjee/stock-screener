@@ -341,6 +341,46 @@ if (typeof document !== 'undefined') {
     }
     find('work-note').textContent = data.current_work?.note ?? ''
   }
+  function renderMerger(data) {
+    const source = data.merger
+    find('merger-source').hidden = !source
+    if (!source) return
+    find('merger-proxy').textContent = `以 2019 年第一季度公开投票结果为试点。代理申报目录覆盖 2018 年第四季度 ${source.q4_proxy} 份、2019 年第一季度 ${source.q1_proxy} 份，共 ${source.proxy_roster} 份，${source.proxy_available} 份原件可读。已分类 ${source.proxy_classified} 份，识别 ${source.proxy_vote_candidates} 个有批准结果的固定现金候选。还有 ${source.proxy_open} 份待分类。`
+    find('merger-vote').textContent = `投票关键词筛查命中 merger ${source.vote_merger_docs} 件文档、acquisition ${source.vote_acquisition_docs} 件文档。合并去重后有 ${source.vote_union_docs} 件文档，分属 ${source.vote_union_accessions} 个 SEC 申报编号。两组共同命中 ${source.vote_overlap_accessions} 个申报编号，合并后还有 ${source.vote_unreviewed_accessions} 个待逐件人工核查。`
+    const controls = find('merger-controls')
+    const civitas = data.merger_execution_control
+    controls.replaceChildren()
+    for (const detail of [
+      '完成｜Red Hat、Imperva、athenahealth。',
+      '批准后失败｜PacBio 于 2019 年 1 月 24 日获股东批准，2020 年 1 月 2 日宣布终止。',
+      '同日终局｜MINDBODY 在同一份 SEC 申报中披露投票结果和收购完成，尚未证实投票结果曾更早公开。',
+      '待核行情｜RHT 的候选开盘报价仍需核对证券身份，终交易日成交量仍需核对。PacBio 的候选入场及终止行情目前各有一个报价来源。ROG 属于样本窗外。'
+    ]) {
+      const item = document.createElement('li')
+      item.textContent = detail
+      controls.append(item)
+    }
+    if (civitas) {
+      const item = document.createElement('li')
+      item.textContent = `次日无开盘｜Civitas Solutions（${civitas.symbol}）于 ${civitas.public_shareholder_approval_date} 公布批准结果。纽交所确认股票在 ${civitas.next_scheduled_open} 开盘前已停牌，该信号无法按次日开盘入场。`
+      controls.append(item)
+    }
+    find('merger-result').textContent = `两条路径合并确认 ${source.firm_vote_cash_candidates} 个有批准结果的固定现金候选，其中 ${source.completed_candidates} 个完成、${source.terminated_candidates} 个终止。样本覆盖和可执行行情仍待核查，收益检验 ${source.return_tests} 次。`
+    const links = find('merger-links')
+    links.replaceChildren()
+    const references = [['SEC 申报目录',source.links.index], ['PacBio 批准申报',source.links.approved_pacb],
+      ['PacBio 终止申报',source.links.terminated_pacb], ['MINDBODY 投票及完成申报',source.links.mindbody]]
+    if (civitas) references.push(['CIVI 纽交所停牌申报',civitas.proof_exchange_source])
+    for (const [label, url] of references) {
+      if (links.childNodes.length) links.append(' · ')
+      const link = document.createElement('a')
+      link.href = url
+      link.textContent = label
+      links.append(link)
+    }
+    links.hidden = !links.childNodes.length
+  }
+
   function renderForm4(data) {
     const source = data.form4
     find('form4-source').hidden = !source
@@ -750,7 +790,7 @@ if (typeof document !== 'undefined') {
       const item = element('li', stage.name, `stage ${stage.status}`)
       item.append(element('small', stage.detail ?? names[stage.status] ?? stage.status)); find('stages').append(item)
     }
-    renderWork(data); renderForm4(data); renderFiling(data); renderPortfolio(data); renderFactors(data); renderEvidenceUpdates(data); renderSgovHistory(data); renderTipHistory(data); renderTipContinuation(data); renderCards(data); renderPaper(data); renderRecords()
+    renderWork(data); renderMerger(data); renderForm4(data); renderFiling(data); renderPortfolio(data); renderFactors(data); renderEvidenceUpdates(data); renderSgovHistory(data); renderTipHistory(data); renderTipContinuation(data); renderCards(data); renderPaper(data); renderRecords()
     if (selectedEvidenceView === null) selectEvidenceView(data.default_evidence_view === 'paper' ? 'paper' : 'history')
     find('research-note').textContent = data.research_note
     find('baseline-note').textContent = `同为3万初始资金，基础成本月度版历史标记 ${money(data.baseline.monthly_base_net_hkd)} 港元，报价回撤约 ${data.baseline.monthly_base_risk_pct.toFixed(2)}%；被动参考 ${money(data.baseline.passive_base_net_hkd)} 港元、约 ${data.baseline.passive_base_risk_pct.toFixed(2)}%。未证明稳定独立超额收益。`

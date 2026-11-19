@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-19T12:21:05.062816+08:00",
+  "updated_at": "2026-11-19T12:39:23.751181+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
@@ -8958,7 +8958,7 @@
     "milestone_label": "历史候选交付完成（里程碑）",
     "evidence_label": "稳定盈利与持续性尚未证实",
     "task": "T-012",
-    "team_updated_at": "2026-11-19T12:12:42.086878+08:00",
+    "team_updated_at": "2026-11-19T12:24:12.085137+08:00",
     "active_work": {
       "account": false,
       "registration": false,
@@ -9056,6 +9056,11 @@
         "name": "美股 Form 4 披露",
         "status": "snapshot",
         "task": "固定样本的 Form 4 原件来源核查已收尾。严格公开市场买入证据不足，本轮未做收益检验。"
+      },
+      {
+        "name": "美股现金并购",
+        "status": "snapshot",
+        "task": "正在核对 2019 年第一季度股东批准样例、并购终局和可执行行情。已做收益检验 0 次。"
       },
       {
         "name": "03086 · 11月19日纸面",
@@ -14192,7 +14197,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-19T12:21:06.344348+08:00",
+    "checked_at": "2026-11-19T12:39:24.959220+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -14424,7 +14429,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-19T12:21:05.562208+08:00",
+    "checked_at": "2026-11-19T12:39:24.209529+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -14518,9 +14523,9 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "8790f4194796d37b15e3f10d2e2bd393d9e99d11b0e0bcfe8d565e506cd26ccd",
+    "mining_goal": "f82f0002063669f48e32cf4a72f05287df7e493db7ea2cb876bf6600b6a15865",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
-    "mining_team": "cce68a0321318f4eaa5229f9695d33e2c6ceb789b17130a5811dec8a3150cc0d",
+    "mining_team": "2d1c7a8f5a4c61d2862b5e69a430ca804ac9b03f88557f50cd7bff64dd42e010",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
     "fip_original": "9c598341d1b0e59753bc0134509908b4698209cfff0b95c22f973f655b868296",
     "fip_calendar_correction": "33d2d80372b6c433688dbbcabcc49f2a458989a633ed783c0c2fa42d6f824695",
@@ -14532,6 +14537,8 @@
     "form4_annual_root_acceptance": "842c3d49725c019a9f1a88c772d6cc61a00e14b51afb909df2d324c3a93743b5",
     "form4_attachment_audit_root_acceptance": "f2bdafab9e34f1a37a9d0cbfd1e4c7e6a87e71cee76c4668502d75bbd3039c42",
     "form4_final_root_acceptance": "ca1290d76d4f8a46f888a57a4729ec972a0aa6ed4dcfa2caa877a319633f6004",
+    "merger_root_acceptance": "d9a3d8a2266059d9f21743535a328537530f41ea34b0930d8374e955620a0465",
+    "merger_civitas_root_acceptance": "f069e855ad059a2015aa523601294c2173892b84396cd8b3c8395393b45304e8",
     "continuous_goal": "54540eb3e3c9d837cd41b37dae0cbe45a318306b87ab5f6951d184589af7ddff",
     "restored_goal_receipt": "533e3f1709605a5d2dfe70bfb16d724ed5abffe52cf806b5422933305ee72c16",
     "v141_RESULT-v1.json": "4211c36206d0a380ceb82cb5cc18e866bc80064690ed009208f62ec452fb70db",
@@ -14905,6 +14912,44 @@
         "actual_return_tests": 0
       }
     }
+  },
+  "merger": {
+    "proxy_roster": 125,
+    "proxy_available": 125,
+    "q4_proxy": 73,
+    "q1_proxy": 52,
+    "proxy_classified": 34,
+    "proxy_open": 91,
+    "vote_merger_docs": 234,
+    "vote_acquisition_docs": 164,
+    "vote_union_accessions": 149,
+    "vote_union_docs": 279,
+    "vote_overlap_accessions": 79,
+    "vote_unreviewed_accessions": 122,
+    "proxy_vote_candidates": 17,
+    "firm_vote_cash_candidates": 18,
+    "completed_candidates": 17,
+    "terminated_candidates": 1,
+    "return_tests": 0,
+    "state": "SOURCE_SCREEN_INCOMPLETE",
+    "controls": {
+      "completed": "Red Hat, Imperva, athenahealth",
+      "failed": "PacBio: approved 2019-01-24; terminated 2020-01-02.",
+      "timing": "MINDBODY: vote result and completed merger in the same filing; earlier publication unverified.",
+      "quote": "RHT price identity and volume reconciliation pending. PACB entry and termination candidate bars have one provider. ROG is outside the sample window."
+    },
+    "links": {
+      "index": "https://www.sec.gov/search-filings/edgar-search-assistance/accessing-edgar-data",
+      "approved_pacb": "https://www.sec.gov/Archives/edgar/data/1299130/0001193125-19-015953.txt",
+      "terminated_pacb": "https://www.sec.gov/Archives/edgar/data/1299130/000119312520000641/d839203d8k.htm",
+      "mindbody": "https://www.sec.gov/Archives/edgar/data/1458962/000119312519041728/d659409d8k.htm"
+    }
+  },
+  "merger_execution_control": {
+    "symbol": "CIVI",
+    "public_shareholder_approval_date": "2019-03-07",
+    "next_scheduled_open": "2019-03-08",
+    "proof_exchange_source": "https://www.sec.gov/Archives/edgar/data/1608638/0000876661-19-000201.txt"
   },
   "nov18_cost_attribution": [
     {

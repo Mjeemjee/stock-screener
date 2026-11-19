@@ -16,10 +16,44 @@ FORM4_RECEIPT=MINING/'acceptance/FORM4-v219-v220-ROOT-v1.json'
 FORM4_ANNUAL_RECEIPT=MINING/'acceptance/FORM4-v222-ROOT-v1.json'
 FORM4_AUDIT_RECEIPT=MINING/'acceptance/FORM4-v224-ROOT-v1.json'
 FORM4_FINAL_RECEIPT=MINING/'acceptance/FORM4-v226-v227-ROOT-v1.json'
+MERGER_RECEIPT=MINING/'acceptance/US-CASH-MERGER-v230-v232-ROOT-v1.json'
+CIVITAS_RECEIPT=MINING/'acceptance/US-CASH-MERGER-CIVITAS-NO-OPEN-v1.json'
 OUT=ROOT/'portfolio-board/public/research-progress'
 def read(path):return json.loads(path.read_text(encoding='utf-8-sig'))
 def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 def clean(text):return re.sub(r'\[([^\]]+)\]\([^)]+\)',r'\1',text).replace('`','').replace('**','').strip()
+
+
+def merger_projection():
+    if not MERGER_RECEIPT.exists():
+        return None
+    accepted=read(MERGER_RECEIPT)
+    assert accepted['pins']
+    for name,sha in accepted['pins'].items():
+        path=(ROOT/name).resolve()
+        assert path.is_relative_to(ROOT) and digest(path)==sha,name
+    result=accepted['site_merger']
+    assert result['state']=='SOURCE_SCREEN_INCOMPLETE' and result['return_tests']==0
+    assert result['q4_proxy']+result['q1_proxy']==result['proxy_roster']
+    assert result['proxy_classified']+result['proxy_open']==result['proxy_roster']
+    assert result['proxy_roster']==result['proxy_available']
+    assert result['vote_union_docs']>=result['vote_union_accessions']
+    assert result['vote_union_docs']<=result['vote_merger_docs']+result['vote_acquisition_docs']
+    assert all(re.fullmatch(r'https://www\.sec\.gov/[^\s]+',url) for url in result.get('links',{}).values())
+    return result
+
+
+def civitas_projection():
+    if not CIVITAS_RECEIPT.exists():
+        return None
+    accepted=read(CIVITAS_RECEIPT)
+    assert accepted['decision']=='CONFIRMED_NO_NEXT_REGULAR_OPEN_CIVITAS_SOLUTIONS'
+    assert accepted['economic_tests']==0 and accepted['pins']
+    for name,sha in accepted['pins'].items():
+        path=(ROOT/name).resolve()
+        assert path.is_relative_to(ROOT) and digest(path)==sha,name
+    return {key:accepted[key] for key in ('symbol','public_shareholder_approval_date',
+        'next_scheduled_open','proof_exchange_source')}
 
 
 def form4_projection():
@@ -1537,6 +1571,8 @@ def main():
     amihud=accepted_amihud_review()
     filing_event=filing_event_projection() if args.focus=='mining' else None
     form4=form4_projection() if args.focus=='mining' else None
+    merger=merger_projection() if args.focus=='mining' else None
+    merger_execution_control=civitas_projection() if merger else None
     if args.focus=='mining':
         team=read(MINING/'TEAM.json')
         checking=args.activity in ['preparing','checking']
@@ -1631,6 +1667,12 @@ def main():
             extra_sources['form4_final_root_acceptance']=FORM4_FINAL_RECEIPT
             form4_task='固定样本的 Form 4 原件来源核查已收尾。严格公开市场买入证据不足，本轮未做收益检验。'
         current_work['owners'].append(dict(name='美股 Form 4 披露',status='snapshot',task=form4_task))
+    if merger:
+        extra_sources['merger_root_acceptance']=MERGER_RECEIPT
+        if merger_execution_control:
+            extra_sources['merger_civitas_root_acceptance']=CIVITAS_RECEIPT
+        current_work['owners'].append(dict(name='美股现金并购',status='snapshot',
+            task='正在核对 2019 年第一季度股东批准样例、并购终局和可执行行情。已做收益检验 0 次。'))
         current_work['owners'].append(dict(name='03086 · 11月19日纸面',status='snapshot',
             task='香港时间09:00前的登记缺失。按11月18日可用资料只读核算，11月19日为非月度复核日，四组均持现金，规则未安排买卖。16:30才取完整日线。'))
     for name,file in [('continuous_goal','GOAL-CONTINUOUS-v2.md'),('restored_goal_receipt','GOAL-RESTORED-RECEIPT-v2.json')]:
@@ -1759,6 +1801,8 @@ def main():
       source_hashes={**{k:digest(TEAM/v) for k,v in source_paths.items()},**{k:digest(v) for k,v in extra_sources.items()}})
     payload['filing_event']=filing_event
     payload['form4']=form4
+    payload['merger']=merger
+    payload['merger_execution_control']=merger_execution_control
     payload['nov18_cost_attribution']=november18_attribution() if diversified['activated'] else []
     OUT.mkdir(exist_ok=True,parents=True);(OUT/'assets').mkdir(exist_ok=True)
     if tip_account_review:render_tip_history_chart(tip_account_review)
