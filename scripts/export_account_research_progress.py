@@ -24,6 +24,7 @@ MERGER_CLOSEOUT_RECEIPT=MINING/'acceptance/US-MERGER-v242-v244-ROOT-v1.json'
 MERGER_STRESS_RECEIPT=MINING/'acceptance/US-MERGER-v247-v249-ROOT-v1.json'
 PDBC_PREFLIGHT_RECEIPT=MINING/'acceptance/PDBC-2015-v245-ROOT-v1.json'
 IEF_PREFLIGHT_RECEIPT=MINING/'acceptance/IEF-FOMC-v250-v252-ROOT-v1.json'
+IEF_RESULT_RECEIPT=MINING/'acceptance/IEF-ACCOUNT-v257-v258-ROOT-v1.json'
 OUT=ROOT/'portfolio-board/public/research-progress'
 def read(path):return json.loads(path.read_text(encoding='utf-8-sig'))
 def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -131,6 +132,21 @@ def merger_stress_projection():
     assert [row['capital'] for row in stress['tier_hkd']]==[10000,20000,30000]
     assert all(len(row['scenario_losses'])==3 for row in stress['tier_hkd'])
     return stress
+
+
+def ief_result_projection():
+    if not IEF_RESULT_RECEIPT.exists():
+        return None
+    receipt=read(IEF_RESULT_RECEIPT)
+    assert receipt['decision']=='REJECT_FIXED_CUT_TIMING_FOR_PROMOTION' and receipt['pins']
+    for path,expected in receipt['pins'].items():
+        source=(ROOT/path).resolve()
+        assert source.is_relative_to(ROOT) and digest(source)==expected,path
+    result=receipt['site_ief_account']
+    assert result['negative_matched_scenarios']==result['scenario_count']==24
+    assert result['matched_pairs']==9 and result['forward_observations']==0
+    assert [row['capital'] for row in result['base_and_pressure']]==[10000,20000,30000]
+    return result
 
 
 def form4_projection():
@@ -1653,6 +1669,7 @@ def main():
     merger_cost_control=merger_cost_projection() if merger else None
     merger_review=merger_review_projection() if merger else None
     merger_stress=merger_stress_projection() if merger else None
+    ief_result=ief_result_projection() if args.focus=='mining' else None
     pdbc_preflight=pdbc_preflight_projection() if args.focus=='mining' else None
     if args.focus=='mining':
         team=read(MINING/'TEAM.json')
@@ -1773,7 +1790,11 @@ def main():
         losses='、'.join(f"{float(row['mark_change_hkd']):,.0f}" for row in pdbc_preflight['tiers'])
         current_work['owners'].append(dict(name='PDBC 商品 ETF',status='snapshot',
             task=f'2015 年两个价格端点由富途 OpenD 与 Yahoo 对照。在固定汇率下，1 万、2 万、3 万港币三档的整股市值变化分别约为 {losses} 港币，均低于 −20%。全仓持有未通过风险初筛。'))
-    if args.focus=='mining' and IEF_PREFLIGHT_RECEIPT.exists():
+    if ief_result:
+        extra_sources['fomc_ief_account']=IEF_RESULT_RECEIPT
+        current_work['owners'].append(dict(name='联储降息后的 IEF 持有检验',status='snapshot',
+            task='双源、三档本金和两种分派预扣情景已核。9 个降息窗口对照 9 个维持利率窗口，24 个情景的平均匹配差额均为负，固定降息择时规则筛退。'))
+    elif args.focus=='mining' and IEF_PREFLIGHT_RECEIPT.exists():
         ief=read(IEF_PREFLIGHT_RECEIPT)
         assert ief['decision']=='SOURCE_PILOT_ONLY_CASH_EVENTS_PENDING' and ief['return_tests']==0
         assert ief['pins']
@@ -1917,6 +1938,7 @@ def main():
     payload['merger_cost_control']=merger_cost_control
     payload['merger_review']=merger_review
     payload['merger_stress']=merger_stress
+    payload['ief_account']=ief_result
     payload['nov18_cost_attribution']=november18_attribution() if diversified['activated'] else []
     OUT.mkdir(exist_ok=True,parents=True);(OUT/'assets').mkdir(exist_ok=True)
     if tip_account_review:render_tip_history_chart(tip_account_review)

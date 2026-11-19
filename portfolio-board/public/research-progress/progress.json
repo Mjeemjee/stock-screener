@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-19T13:37:15.143274+08:00",
+  "updated_at": "2026-11-19T14:37:53.123445+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
@@ -8958,7 +8958,7 @@
     "milestone_label": "历史候选交付完成（里程碑）",
     "evidence_label": "稳定盈利与持续性尚未证实",
     "task": "T-012",
-    "team_updated_at": "2026-11-19T13:23:56+08:00",
+    "team_updated_at": "2026-11-19T13:46:41+08:00",
     "active_work": {
       "account": false,
       "registration": false,
@@ -9070,7 +9070,7 @@
       {
         "name": "联储降息后的 IEF 持有检验",
         "status": "snapshot",
-        "task": "已核三个预定降息日和一个维持决议。四个窗口的 8 个开盘端点均有两源报价，其中 1 个相差半美分。待补发行人现金事件，暂无收益结果。"
+        "task": "双源、三档本金和两种分派预扣情景已核。9 个降息窗口对照 9 个维持利率窗口，24 个情景的平均匹配差额均为负，固定降息择时规则筛退。"
       },
       {
         "name": "03086 · 11月19日纸面",
@@ -14207,7 +14207,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-19T13:37:19.290748+08:00",
+    "checked_at": "2026-11-19T14:37:55.930243+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -14439,7 +14439,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-19T13:37:16.782421+08:00",
+    "checked_at": "2026-11-19T14:37:54.112693+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -14533,9 +14533,9 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "7bd9958128c32ed73bc15bfce7de0952c8d3d7e85696094df804ec78a17002d2",
+    "mining_goal": "e3d85d1db89fe09c9e81d51b615ee29263fb44074b9b12ef0f8f22ce4de1901d",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
-    "mining_team": "e25e2b39b589e5370569fc0c00ca6cdcb4573ef1ba7965ea94be693c0873e8b3",
+    "mining_team": "1f47e2e7e9e036da731e0718cfec3ed55a8668c43dcd7842904bdcdc82a7ed75",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
     "fip_original": "9c598341d1b0e59753bc0134509908b4698209cfff0b95c22f973f655b868296",
     "fip_calendar_correction": "33d2d80372b6c433688dbbcabcc49f2a458989a633ed783c0c2fa42d6f824695",
@@ -14554,7 +14554,7 @@
     "merger_vote_closeout": "ca872055ae1261f65048faade49f62a5ce673b02aaa36032739ed9f1b5e917ac",
     "merger_failure_and_timing": "12bcf02458fcf288ce92650e1722ce6b76c88c48baac661a87f29812c85dc3de",
     "pdbc_risk_preflight": "59a74c721ef25cdb6aca7988e84642aef9675c63b97e2c919586dc8cf9df97b8",
-    "fomc_ief_preflight": "c76cb713f1c164329adb74e6be3675f69172931edfa72d3bd5252695e90d291b",
+    "fomc_ief_account": "4551a60c41aea9715815bbf993ebb58ac05990833fcac3df14b1d7273670e176",
     "continuous_goal": "54540eb3e3c9d837cd41b37dae0cbe45a318306b87ab5f6951d184589af7ddff",
     "restored_goal_receipt": "533e3f1709605a5d2dfe70bfb16d724ed5abffe52cf806b5422933305ee72c16",
     "v141_RESULT-v1.json": "4211c36206d0a380ceb82cb5cc18e866bc80064690ed009208f62ec452fb70db",
@@ -15074,6 +15074,48 @@
     ],
     "input_source": "https://www.futuhk.com/hans/support/topic2_283",
     "settlement_source": "https://www.sec.gov/newsroom/press-releases/2017-68-0"
+  },
+  "ief_account": {
+    "period": [
+      "2018-01-01",
+      "2026-11-18"
+    ],
+    "base_and_pressure": [
+      {
+        "capital": 10000,
+        "base_net": "11.63",
+        "pressure_net": "-135.15",
+        "pressure_matched_average": "-23.56777777777777777777777778",
+        "pressure_drawdown_pct": "6.462483374927148557167834780",
+        "pressure_cash_baseline": "-99.53",
+        "pressure_buy_hold": "-158.35"
+      },
+      {
+        "capital": 20000,
+        "base_net": "340.71",
+        "pressure_net": "42.39",
+        "pressure_matched_average": "-45.58111111111111111111111111",
+        "pressure_drawdown_pct": "6.131571998646271482072394723",
+        "pressure_cash_baseline": "-199.06",
+        "pressure_buy_hold": "-284.59"
+      },
+      {
+        "capital": 30000,
+        "base_net": "624.98",
+        "pressure_net": "185.16",
+        "pressure_matched_average": "-72.29777777777777777777777778",
+        "pressure_drawdown_pct": "6.002131139416166922733805819",
+        "pressure_cash_baseline": "-298.58",
+        "pressure_buy_hold": "-411.97"
+      }
+    ],
+    "matched_pairs": 9,
+    "cycles": 2,
+    "scenario_count": 24,
+    "negative_matched_scenarios": 24,
+    "forward_observations": 0,
+    "fed_source": "https://www.federalreserve.gov/monetarypolicy/openmarket.htm",
+    "issuer_source": "https://www.ishares.com/us/products/239456/ishares-7-10-year-treasury-bond-etf-ief"
   },
   "nov18_cost_attribution": [
     {

@@ -429,6 +429,29 @@ if (typeof document !== 'undefined') {
     links.hidden = !links.childNodes.length
   }
 
+  function renderIefStudy(study) {
+    find('ief-study').hidden = !study
+    if (!study) return
+    find('ief-verdict').textContent = `从 ${study.period[0]} 至 ${study.period[1]}，预定降息后次日开盘买入，持有 20 个开盘间隔。样本得到 ${study.matched_pairs} 对降息与维持利率窗口，覆盖 ${study.cycles} 个降息周期。${study.scenario_count} 个行情、费用和税率情景的平均匹配差额均为负。`
+    const rows = find('ief-rows')
+    rows.replaceChildren()
+    for (const values of study.base_and_pressure) {
+      const row = element('tr')
+      const label = element('th', `${values.capital / 10000} 万`)
+      label.scope = 'row'
+      row.append(label, element('td', money(Number(values.base_net))), element('td', money(Number(values.pressure_net))),
+        element('td', `${Number(values.pressure_drawdown_pct).toFixed(2)}%`), element('td', money(Number(values.pressure_matched_average))))
+      rows.append(row)
+    }
+    const links = find('ief-links')
+    links.replaceChildren()
+    for (const [label, url] of [['联储决议与生效利率', study.fed_source], ['iShares 发行人分派', study.issuer_source]]) {
+      const link = element('a', label)
+      link.href = url
+      if (links.childNodes.length) links.append(' · ')
+      links.append(link)
+    }
+  }
   function renderForm4(data) {
     const source = data.form4
     find('form4-source').hidden = !source
@@ -838,7 +861,7 @@ if (typeof document !== 'undefined') {
       const item = element('li', stage.name, `stage ${stage.status}`)
       item.append(element('small', stage.detail ?? names[stage.status] ?? stage.status)); find('stages').append(item)
     }
-    renderWork(data); renderMerger(data); renderForm4(data); renderFiling(data); renderPortfolio(data); renderFactors(data); renderEvidenceUpdates(data); renderSgovHistory(data); renderTipHistory(data); renderTipContinuation(data); renderCards(data); renderPaper(data); renderRecords()
+    renderWork(data); renderMerger(data); renderIefStudy(data.ief_account); renderForm4(data); renderFiling(data); renderPortfolio(data); renderFactors(data); renderEvidenceUpdates(data); renderSgovHistory(data); renderTipHistory(data); renderTipContinuation(data); renderCards(data); renderPaper(data); renderRecords()
     if (selectedEvidenceView === null) selectEvidenceView(data.default_evidence_view === 'paper' ? 'paper' : 'history')
     find('research-note').textContent = data.research_note
     find('baseline-note').textContent = `同为3万初始资金，基础成本月度版历史标记 ${money(data.baseline.monthly_base_net_hkd)} 港元，报价回撤约 ${data.baseline.monthly_base_risk_pct.toFixed(2)}%；被动参考 ${money(data.baseline.passive_base_net_hkd)} 港元、约 ${data.baseline.passive_base_risk_pct.toFixed(2)}%。未证明稳定独立超额收益。`
