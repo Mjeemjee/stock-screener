@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-19T15:32:33.311866+08:00",
+  "updated_at": "2026-11-19T20:24:32.499857+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
@@ -8970,12 +8970,12 @@
       {
         "name": "港股通首次开放买入",
         "status": "snapshot",
-        "task": "3 月同批 14 只均已复原沪深资格。上市龄筛后 8 只，再按成交额筛至 4 只。待核当时的行业、指数市值分组和自由流通市值。"
+        "task": "3 月 4 只通过成交额筛选的对照均不符行业或市值分组。9 月唯一同组对照的富途成交额为目标的 2.0050 倍，超过 2 倍上限。两批均无合格配对，未检验收益。"
       },
       {
         "name": "美股发行人现金要约",
         "status": "snapshot",
-        "task": "SEC 一季度 151 份初始要约已登记。1 月 38 份中 8 份已由原件排除，30 份仍待核固定价格及不足百股优先条款。"
+        "task": "第一季度登记 151 宗。1 月 38 宗全部排除。3 月 RBNE 原件确认每股 3 美元现金及最多 99 股的优先条款，富途办理和买入后资格待证。尚无通过资格的候选或收益检验。"
       },
       {
         "name": "分层评价验收",
@@ -9085,7 +9085,7 @@
       {
         "name": "03086 · 11月19日纸面",
         "status": "snapshot",
-        "task": "香港时间09:00前的登记缺失。按11月18日可用资料只读核算，11月19日为非月度复核日，四组均持现金，规则未安排买卖。16:30才取完整日线。"
+        "task": "收盘后连接本机富途 OpenD 超时，11 月 19 日未取得完整日线。纸面最后确认到 11 月 18 日，盘前登记缺口保留。"
       }
     ],
     "note": "历史候选交付是一项已完成里程碑，不代表总目标完成。工作分工只反映同步时观察，超过15分钟停动画；没有后台持续计算承诺。"
@@ -14217,7 +14217,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-19T15:32:34.819610+08:00",
+    "checked_at": "2026-11-19T20:24:34.104695+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -14449,7 +14449,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-19T15:32:33.910249+08:00",
+    "checked_at": "2026-11-19T20:24:33.088463+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -14543,9 +14543,9 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "20f5cceee1514e0f975ac52d1b738502b495b87f96db4c57f20dd2f5dfd32289",
+    "mining_goal": "28e31791935b578ef921d5cfde6e4b23068be48431b7bb769147d301bfc38015",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
-    "mining_team": "600e3b3cf0aee0cc5242f55662d8dbb46d49459c6cb75df0eb522f83dc72dec6",
+    "mining_team": "8c444a21b87edf1b46da0cb8cd18d20c3196aa99f7c872f2408ed6b605854598",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
     "fip_original": "9c598341d1b0e59753bc0134509908b4698209cfff0b95c22f973f655b868296",
     "fip_calendar_correction": "33d2d80372b6c433688dbbcabcc49f2a458989a633ed783c0c2fa42d6f824695",
@@ -14565,6 +14565,7 @@
     "merger_failure_and_timing": "12bcf02458fcf288ce92650e1722ce6b76c88c48baac661a87f29812c85dc3de",
     "pdbc_risk_preflight": "59a74c721ef25cdb6aca7988e84642aef9675c63b97e2c919586dc8cf9df97b8",
     "fomc_ief_account": "4551a60c41aea9715815bbf993ebb58ac05990833fcac3df14b1d7273670e176",
+    "hk_03086_nov19_collection": "c3092925cbccc26e8efc2f0b2c47a6c9f49b02d6c55cbf5fa957f27fb6629bb7",
     "continuous_goal": "54540eb3e3c9d837cd41b37dae0cbe45a318306b87ab5f6951d184589af7ddff",
     "restored_goal_receipt": "533e3f1709605a5d2dfe70bfb16d724ed5abffe52cf806b5422933305ee72c16",
     "v141_RESULT-v1.json": "4211c36206d0a380ceb82cb5cc18e866bc80064690ed009208f62ec452fb70db",
@@ -14652,7 +14653,9 @@
     "published_V22_legacy_record_dates": "0eafefa7cb8cf62e1f0b115587cf7ce6af21f7fbedc4ddf8363bb10834b22c6e",
     "hk_southbound_first_eligibility": "9868f39bf815b03738b7a77088b336e99e3148fb60e2f7d3f679adaca9ad2d0c",
     "hk_southbound_march_matching": "a4a16046c51a562d76b647b438ca511d1cd6d0c75d4b30d9c8d22ed7179778d4",
-    "us_issuer_tender_preflight": "d94314eda2cc08f2f295217bdb1818c88c3fa8f8a9cf265bc1c5622c8976f79b"
+    "hk_southbound_control_closeout": "85407bf7527e8f53e656f84e0ef28e48c95fcbdbcd3f321ed3074349c9919f2d",
+    "us_issuer_tender_preflight": "d94314eda2cc08f2f295217bdb1818c88c3fa8f8a9cf265bc1c5622c8976f79b",
+    "us_issuer_tender_closeout": "4d7f1a429f007142ac2fe7f4db8d1941290d5a03814d110c01c6985267a29624"
   },
   "filing_event": {
     "sources": [
@@ -15347,6 +15350,46 @@
         ],
         "return_tests": 0
       }
+    },
+    "control_closeout": {
+      "march_classification": {
+        "02661": [
+          "HSCI-CD",
+          "HSSI"
+        ],
+        "00800": [
+          "HSCI-IT",
+          "HSMI"
+        ],
+        "02635": [
+          "HSCI-IT",
+          "HSSI"
+        ],
+        "02718": [
+          "HSCI-IT",
+          "HSMI"
+        ],
+        "06031": [
+          "HSCI-IND",
+          "HSSI"
+        ],
+        "09927": [
+          "HSCI-CD",
+          "HSSI"
+        ]
+      },
+      "september_classification": {
+        "06603": [
+          "HSCI-CS",
+          "HSSI"
+        ],
+        "03288": [
+          "HSCI-CS",
+          "HSSI"
+        ]
+      },
+      "september_ratio": "2.005028488037595838478975466",
+      "september_limit": "2"
     }
   },
   "nov18_cost_attribution": [

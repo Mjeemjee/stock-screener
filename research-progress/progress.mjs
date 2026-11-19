@@ -452,6 +452,14 @@ if (typeof document !== 'undefined') {
     find('southbound-march-controls').hidden = !march
     if (!march) return
     find('southbound-march-summary').textContent = `${march.initial_candidates} 只的沪深资格在生效前后均相同，其中 ${march.both_routes_buy_unchanged} 只两地都可买，${march.both_routes_not_buy_unchanged} 只两地都不可买。上市龄筛后剩 ${march.age_pass} 只，成交额在目标的 0.5 至 2 倍之间的剩 ${march.turnover_pass} 只。`
+    const closeout = study.control_closeout
+    if (closeout) {
+      find('southbound-march-next').textContent = '恒指公司历史记录显示，剩余 4 只均不符当时的行业或指数市值分组。唯一行业及分组相同的 09927，成交额为目标的 2.25 倍。'
+      const september = find('southbound-september-closeout')
+      const ratio = Number(closeout.september_ratio).toFixed(4)
+      september.textContent = `9 月唯一同组对照 03288，按富途日线成交额中位数为目标的 ${ratio} 倍，超过 ${closeout.september_limit} 倍上限。两批均未进入收益检验。`
+      september.hidden = false
+    }
     const controlRows = find('southbound-march-rows')
     controlRows.replaceChildren()
     for (const control of march.turnover.controls) {
