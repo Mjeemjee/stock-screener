@@ -2131,6 +2131,19 @@ def main():
                  task='周末份额取到 361／365。23 个非重叠窗口相对同资产配对毛差 −15.11 基点。三档各成交 15 笔，压力净变动 −1817.92／−2582.71／−3253.94 港币。纳入停市日已发布原件后覆盖 365／365，账面结果相同。'),
             dict(name='美股 GLD · 东京份额公告',status='snapshot',
                  task='东京 1326 与纽约 GLD 对应同一信托。交易所验证三个连续周末份额与实际刊登时点，周差 −10 万／+120 万股。本轮未核长历史覆盖，尚未计算策略收益。')]
+    gold_filings=MINING/'acceptance/GOLD-FLOW-COVERAGE-v337-v340-ROOT-v1.json'
+    if args.focus=='mining' and gold_filings.exists():
+        q=read(gold_filings)
+        assert q['new_paper_accounts']==q['actual_orders']==0
+        assert all(digest(ROOT/path)==expected for path,expected in q['pins'].items())
+        extra_sources['gold_flow_historical_coverage']=gold_filings
+        current_work['owners'][15:15]=[
+            dict(name='美股 GLD · 东京历史公告',status='snapshot',
+                 task='两条免费官方查询路线核到 2021 首季 0／12 合格周末。近期原件和 2021 半年报仍可读取，历史逐周原件及刊登时分尚未取得。'),
+            dict(name='美股 GLD · SEC 季度净份额',status='snapshot',
+                 task='37 个报告期末份额独立通过原 accession，公告滞后中位 38 天。10 次信号原价毛均 −43.99 基点，只有 2 对中性配对；三档压力净额 −992.20／−1417.30／−1785.20 港币，开发筛退。'),
+            dict(name='港股 03081 · 黄金份额原表',status='snapshot',
+                 task='2021 首季 12／12 周末及期初基线取得原表，2021–2023 年索引有 724 条日公告。三柜台合计份额只计一次、一万满预算压力保本中位约 1.34%。尚未计算该规则的收益。')]
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
