@@ -28,6 +28,9 @@ IEF_RESULT_RECEIPT=MINING/'acceptance/IEF-ACCOUNT-v257-v258-ROOT-v1.json'
 SOUTHBOUND_RECEIPT=MINING/'acceptance/HK-SOUTHBOUND-v262-v265-ROOT-v1.json'
 SOUTHBOUND_MARCH_RECEIPT=MINING/'acceptance/HK-CONNECT-MARCH-v266-v268-v271-ROOT-v1.json'
 ISSUER_TENDER_RECEIPT=MINING/'acceptance/US-ISSUER-TENDER-v269-v270-ROOT-v1.json'
+HK_CONTROL_CLOSEOUT=MINING/'acceptance/HK-CONNECT-CONTROL-CLOSEOUT-v272-v276-ROOT-v1.json'
+TENDER_CLOSEOUT=MINING/'acceptance/US-ISSUER-TENDER-v274-v275-ROOT-v1.json'
+HK_NOV19_RECEIPT=MINING/'paper-nov19-20261119/ROOT-HK-CONTINUATION-v1.json'
 OUT=ROOT/'portfolio-board/public/research-progress'
 def read(path):return json.loads(path.read_text(encoding='utf-8-sig'))
 def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -172,6 +175,11 @@ def southbound_projection():
             assert path.is_relative_to(ROOT) and digest(path)==expected,name
         result['march_controls']={key:march[key] for key in ('initial_candidates','both_routes_buy_unchanged',
             'both_routes_not_buy_unchanged','age_pass','turnover_pass','remaining','turnover')}
+    if HK_CONTROL_CLOSEOUT.exists():
+        end=read(HK_CONTROL_CLOSEOUT)
+        assert end['decision']=='NO_MATCH_AT_FIXED_GATES' and end['qualified_pairs']==end['return_tests']==0
+        assert all(digest(ROOT/path)==expected for path,expected in end['pins'].items())
+        result['control_closeout']={k:end[k] for k in ('march_classification','september_classification','september_ratio','september_limit')}
     return result
 
 
@@ -1831,7 +1839,14 @@ def main():
         extra_sources['fomc_ief_preflight']=IEF_PREFLIGHT_RECEIPT
         current_work['owners'].append(dict(name='联储降息后的 IEF 持有检验',status='snapshot',
             task='已核三个预定降息日和一个维持决议。四个窗口的 8 个开盘端点均有两源报价，其中 1 个相差半美分。待补发行人现金事件，暂无收益结果。'))
-    if merger:
+    if merger and HK_NOV19_RECEIPT.exists():
+        hkn=read(HK_NOV19_RECEIPT)
+        assert hkn['observed'] is False and hkn['actual_orders']==0
+        assert all(digest(ROOT/path)==expected for path,expected in hkn['pins'].items())
+        extra_sources['hk_03086_nov19_collection']=HK_NOV19_RECEIPT
+        current_work['owners'].append(dict(name='03086 · 11月19日纸面',status='snapshot',
+            task='收盘后连接本机富途 OpenD 超时，11 月 19 日未取得完整日线。纸面最后确认到 11 月 18 日，盘前登记缺口保留。'))
+    elif merger:
         current_work['owners'].append(dict(name='03086 · 11月19日纸面',status='snapshot',
             task='香港时间09:00前的登记缺失。按11月18日可用资料只读核算，11月19日为非月度复核日，四组均持现金，规则未安排买卖。16:30才取完整日线。'))
     for name,file in [('continuous_goal','GOAL-CONTINUOUS-v2.md'),('restored_goal_receipt','GOAL-RESTORED-RECEIPT-v2.json')]:
@@ -1941,9 +1956,13 @@ def main():
         march_checked='march_controls' in southbound
         if march_checked:
             extra_sources['hk_southbound_march_matching']=SOUTHBOUND_MARCH_RECEIPT
+        if 'control_closeout' in southbound:
+            extra_sources['hk_southbound_control_closeout']=HK_CONTROL_CLOSEOUT
         current_work['owners'].insert(0,dict(name='港股通首次开放买入',status='snapshot',
             task=('3 月同批 14 只均已复原沪深资格。上市龄筛后 8 只，再按成交额筛至 4 只。待核当时的行业、指数市值分组和自由流通市值。'
                   if march_checked else '沪深两案各核到一次调入。已算开盘整手与回本门槛。同批指数对照的行业、规模、成交额及事前资格待核。')))
+        if 'control_closeout' in southbound:
+            current_work['owners'][0]['task']='3 月 4 只通过成交额筛选的对照均不符行业或市值分组。9 月唯一同组对照的富途成交额为目标的 2.0050 倍，超过 2 倍上限。两批均无合格配对，未检验收益。'
     if args.focus=='mining' and ISSUER_TENDER_RECEIPT.exists():
         tender=read(ISSUER_TENDER_RECEIPT)
         assert tender['qualified_candidates']==tender['return_tests']==0 and tender['pins']
@@ -1954,6 +1973,12 @@ def main():
         current_work['owners'].insert(1,dict(name='美股发行人现金要约',status='snapshot',task=(
             f"SEC 一季度 {tender['q1_initial']} 份初始要约已登记。1 月 {tender['january_initial']} 份中 "
             f"{tender['january_source_excluded']} 份已由原件排除，{tender['january_unknown']} 份仍待核固定价格及不足百股优先条款。")))
+    if args.focus=='mining' and TENDER_CLOSEOUT.exists():
+        t=read(TENDER_CLOSEOUT)
+        assert t['january_initial']==t['january_source_excluded']==38 and t['january_unknown']==t['return_tests']==t['qualified_candidates']==0
+        assert all(digest(ROOT/path)==expected for path,expected in t['pins'].items())
+        extra_sources['us_issuer_tender_closeout']=TENDER_CLOSEOUT
+        current_work['owners'][1]['task']='第一季度登记 151 宗。1 月 38 宗全部排除。3 月 RBNE 原件确认每股 3 美元现金及最多 99 股的优先条款，富途办理和买入后资格待证。尚无通过资格的候选或收益检验。'
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
