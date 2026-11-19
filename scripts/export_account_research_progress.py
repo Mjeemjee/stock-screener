@@ -12,10 +12,26 @@ TEAM=ROOT/'reports/hk-strategy-team-20261112'
 MINING=ROOT/'reports/factor-mining-resume-20261117'
 SGOV_PACKET=ROOT/'reports/us-sgov-paper-owner-20261117-v140'
 DIVERSIFIED_RECEIPT=MINING/'paper-continuation-20261118-v179/ROOT-CONTINUATION-v1.json'
+FORM4_RECEIPT=MINING/'acceptance/FORM4-v219-v220-ROOT-v1.json'
 OUT=ROOT/'portfolio-board/public/research-progress'
 def read(path):return json.loads(path.read_text(encoding='utf-8-sig'))
 def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 def clean(text):return re.sub(r'\[([^\]]+)\]\([^)]+\)',r'\1',text).replace('`','').replace('**','').strip()
+
+
+def form4_projection():
+    if not FORM4_RECEIPT.exists():
+        return None
+    accepted=read(FORM4_RECEIPT)
+    assert accepted['decision']=='ACCEPT_SOURCE_PILOT_ONLY_NO_ELIGIBLE_PUBLIC_MARKET_BUY' and accepted['pins']
+    for name,sha in accepted['pins'].items():
+        path=(ROOT/name).resolve()
+        assert path.is_relative_to(ROOT) and digest(path)==sha,name
+    result=accepted['site_form4']
+    assert result['forms_4']+result['amendments']==result['filings']
+    assert result['explicit_public_market_purchase_rows']+result['unknown_buy_venue']==result['purchases_coded']
+    assert result['explicit_public_market_purchase_rows']==result['actual_return_tests']==0
+    return result
 
 
 def filing_event_projection():
@@ -1477,6 +1493,7 @@ def main():
         if owner['name']=='两套固定纸面':owner.update(name='三套固定纸面',status='snapshot',task=paper_progress)
     amihud=accepted_amihud_review()
     filing_event=filing_event_projection() if args.focus=='mining' else None
+    form4=form4_projection() if args.focus=='mining' else None
     if args.focus=='mining':
         team=read(MINING/'TEAM.json')
         checking=args.activity in ['preparing','checking']
@@ -1559,6 +1576,12 @@ def main():
         'liquidity_factor':ROOT/'reports/hk-liquidity-factor-owner-20261117-v130/RESULT-v1.json',
         'us_anchor_factor':ROOT/'reports/us-anchor-factor-owner-20261117-v132/RESULT-v1.json',
         'old_factor_catalog_review':ROOT/'reports/us-anchor-factor-owner-20261117-v132/OLD-CATALOG-REVIEW-v1.json'}
+    if form4:
+        extra_sources['form4_root_acceptance']=FORM4_RECEIPT
+        current_work['owners'].append(dict(name='美股 Form 4 披露',status='snapshot',
+            task='四家公司单季来源试点已复核。下一步核对固定40股的全年申报覆盖及可确认交易场所的原件。'))
+        current_work['owners'].append(dict(name='03086 · 11月19日纸面',status='snapshot',
+            task='香港时间09:00前缺少合规事前意向，本日无有效意向可执行；本次快照时16:30观察窗口待到期。'))
     for name,file in [('continuous_goal','GOAL-CONTINUOUS-v2.md'),('restored_goal_receipt','GOAL-RESTORED-RECEIPT-v2.json')]:
         if (MINING/file).exists():extra_sources[name]=MINING/file
     for version,folder,review_file in [('v141','us-intraday-persistence-owner-20261117-v141','US-INTRADAY-v141-ROOT-REVIEW-v1.json'),
@@ -1684,6 +1707,7 @@ def main():
                           note=f"其中500条为30种基础表达式的模板组合，不是538个有效因子。旧US缓存发现拆股阶跃，相关旧条目未获本轮资格认证；原IC和原结论保留。与已验收的{factor_research['unique_new_signals']}个信号分开计数。"),
       source_hashes={**{k:digest(TEAM/v) for k,v in source_paths.items()},**{k:digest(v) for k,v in extra_sources.items()}})
     payload['filing_event']=filing_event
+    payload['form4']=form4
     payload['nov18_cost_attribution']=november18_attribution() if diversified['activated'] else []
     OUT.mkdir(exist_ok=True,parents=True);(OUT/'assets').mkdir(exist_ok=True)
     if tip_account_review:render_tip_history_chart(tip_account_review)

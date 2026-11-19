@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-19T11:41:00.670757+08:00",
+  "updated_at": "2026-11-19T11:57:59.891643+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
@@ -8958,7 +8958,7 @@
     "milestone_label": "历史候选交付完成（里程碑）",
     "evidence_label": "稳定盈利与持续性尚未证实",
     "task": "T-012",
-    "team_updated_at": "2026-11-19T11:35:26.998479+08:00",
+    "team_updated_at": "2026-11-19T11:46:45.603513+08:00",
     "active_work": {
       "account": false,
       "registration": false,
@@ -9051,6 +9051,16 @@
         "name": "Amihud固定筛选",
         "status": "snapshot",
         "task": "20／60日RankIC +0.02145／+0.03640，HAC t 1.065／1.137；前组相对同池毛权益差 +62.50／+198.27bp。正毛差尚不能通过预定排序证据门槛，两个固定期限均筛退；这不是对所有流动性策略的否定。"
+      },
+      {
+        "name": "美股 Form 4 披露",
+        "status": "snapshot",
+        "task": "四家公司单季来源试点已复核。下一步核对固定40股的全年申报覆盖及可确认交易场所的原件。"
+      },
+      {
+        "name": "03086 · 11月19日纸面",
+        "status": "snapshot",
+        "task": "香港时间09:00前缺少合规事前意向，本日无有效意向可执行；本次快照时16:30观察窗口待到期。"
       }
     ],
     "note": "历史候选交付是一项已完成里程碑，不代表总目标完成。工作分工只反映同步时观察，超过15分钟停动画；没有后台持续计算承诺。"
@@ -14182,7 +14192,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-19T11:41:07.482961+08:00",
+    "checked_at": "2026-11-19T11:58:01.728306+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -14414,7 +14424,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-19T11:41:02.293686+08:00",
+    "checked_at": "2026-11-19T11:58:00.528314+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -14508,9 +14518,9 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "7c66891ed0eb8bae82aaa0a89d038630d5e335678905f8132f4e24d3507f61b1",
+    "mining_goal": "b651acc8d59b23de31cda3dddba2dff56da2bcfc5505abb55a9973e7bd4c5750",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
-    "mining_team": "01bc0301627b728724b3f2faefb81feca7e94c91b2fd71eff52f13f98dc321ab",
+    "mining_team": "fbc8b760925fd7e2038adb45b7ceec6c2d0320f59cda94106b92ef4f2e6d6306",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
     "fip_original": "9c598341d1b0e59753bc0134509908b4698209cfff0b95c22f973f655b868296",
     "fip_calendar_correction": "33d2d80372b6c433688dbbcabcc49f2a458989a633ed783c0c2fa42d6f824695",
@@ -14518,6 +14528,7 @@
     "liquidity_factor": "e5dbad4659809e0b0d5576793970139e8e37ddd7d90ac5d8396bf713ca87b561",
     "us_anchor_factor": "159fa257905260d0bf2048e726bde3f90cbec2ce678d46305ab48d449905774a",
     "old_factor_catalog_review": "03a1e012cb63b8872578c04f8107bcbb3f221dc1e4f8f0d7a9ed4ec4c99a870f",
+    "form4_root_acceptance": "87d4c25c463a681a7cfcfbc2db49cf27ef10ff74bdae27ea579f5c1784acc0ea",
     "continuous_goal": "54540eb3e3c9d837cd41b37dae0cbe45a318306b87ab5f6951d184589af7ddff",
     "restored_goal_receipt": "533e3f1709605a5d2dfe70bfb16d724ed5abffe52cf806b5422933305ee72c16",
     "v141_RESULT-v1.json": "4211c36206d0a380ceb82cb5cc18e866bc80064690ed009208f62ec452fb70db",
@@ -14843,6 +14854,21 @@
     "event_tests": 1,
     "source_files": 25,
     "confirmed_first_public_minutes": 0
+  },
+  "form4": {
+    "filings": 63,
+    "forms_4": 62,
+    "amendments": 1,
+    "issuers": 4,
+    "purchases_coded": 2,
+    "sales_coded": 24,
+    "explicit_public_market_purchase_rows": 0,
+    "unknown_buy_venue": 2,
+    "candidate_disposition": "SOURCE_PILOT_ONLY",
+    "evidence_url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets",
+    "buy_example_url": "https://investors.abbvie.com/node/11951/html",
+    "timing_url": "https://www.sec.gov/info/edgar/edgarfm-vol2-v46.pdf",
+    "actual_return_tests": 0
   },
   "nov18_cost_attribution": [
     {

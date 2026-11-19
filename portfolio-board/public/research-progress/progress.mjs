@@ -341,6 +341,36 @@ if (typeof document !== 'undefined') {
     }
     find('work-note').textContent = data.current_work?.note ?? ''
   }
+  function renderForm4(data) {
+    const source = data.form4
+    if (!source) return
+    find('form4-sample').textContent = `2018 年第二季度核对 ${source.issuers} 家公司的 ${source.filings} 份披露，包括 ${source.forms_4} 份 Form 4 和 ${source.amendments} 份 Form 4/A 更正。`
+    for (const [label, value] of [
+      ['P 买入交易行', source.purchases_coded],
+      ['S 卖出交易行', source.sales_coded],
+      ['买入场所未知', source.unknown_buy_venue],
+      ['明确公开市场买入', source.explicit_public_market_purchase_rows],
+      ['收益检验次数', source.actual_return_tests],
+    ]) {
+      const item = document.createElement('div')
+      const name = document.createElement('dt')
+      const count = document.createElement('dd')
+      name.textContent = label
+      count.textContent = value
+      item.append(name, count)
+      find('form4-metrics').append(item)
+    }
+    for (const [id, value] of [
+      ['form4-dataset', source.evidence_url],
+      ['form4-example', source.buy_example_url],
+      ['form4-timing', source.timing_url],
+    ]) {
+      const url = new URL(value)
+      if (url.protocol === 'https:' && ['www.sec.gov', 'investors.abbvie.com'].includes(url.hostname)) find(id).href = url.href
+    }
+    find('form4-source').hidden = false
+  }
+
   function renderFiling(data) {
     const events = data.filing_event
     find('filing-event').hidden = !events
@@ -700,7 +730,7 @@ if (typeof document !== 'undefined') {
       const item = element('li', stage.name, `stage ${stage.status}`)
       item.append(element('small', stage.detail ?? names[stage.status] ?? stage.status)); find('stages').append(item)
     }
-    renderWork(data); renderFiling(data); renderPortfolio(data); renderFactors(data); renderEvidenceUpdates(data); renderSgovHistory(data); renderTipHistory(data); renderTipContinuation(data); renderCards(data); renderPaper(data); renderRecords()
+    renderWork(data); renderForm4(data); renderFiling(data); renderPortfolio(data); renderFactors(data); renderEvidenceUpdates(data); renderSgovHistory(data); renderTipHistory(data); renderTipContinuation(data); renderCards(data); renderPaper(data); renderRecords()
     if (selectedEvidenceView === null) selectEvidenceView(data.default_evidence_view === 'paper' ? 'paper' : 'history')
     find('research-note').textContent = data.research_note
     find('baseline-note').textContent = `同为3万初始资金，基础成本月度版历史标记 ${money(data.baseline.monthly_base_net_hkd)} 港元，报价回撤约 ${data.baseline.monthly_base_risk_pct.toFixed(2)}%；被动参考 ${money(data.baseline.passive_base_net_hkd)} 港元、约 ${data.baseline.passive_base_risk_pct.toFixed(2)}%。未证明稳定独立超额收益。`
