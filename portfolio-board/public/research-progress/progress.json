@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-19T13:19:58.944855+08:00",
+  "updated_at": "2026-11-19T13:37:15.143274+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
@@ -8958,7 +8958,7 @@
     "milestone_label": "历史候选交付完成（里程碑）",
     "evidence_label": "稳定盈利与持续性尚未证实",
     "task": "T-012",
-    "team_updated_at": "2026-11-19T13:06:05+08:00",
+    "team_updated_at": "2026-11-19T13:23:56+08:00",
     "active_work": {
       "account": false,
       "registration": false,
@@ -9060,12 +9060,17 @@
       {
         "name": "美股现金并购",
         "status": "snapshot",
-        "task": "试点补查的 122 份投票申报已全部核过，新增合格事件为 0。PacBio 两个退出日期已对照两家行情发布方，仍需核对可执行性与现金到帐。"
+        "task": "固定候选中，PACB 全仓未通过失败压力筛选。已复核 36 个损失情景和 12 个资金排程，组合收益待验证。"
       },
       {
         "name": "PDBC 商品 ETF",
         "status": "snapshot",
         "task": "2015 年两个价格端点由富途 OpenD 与 Yahoo 对照。在固定汇率下，1 万、2 万、3 万港币三档的整股市值变化分别约为 -3,010、-6,020、-9,030 港币，均低于 −20%。全仓持有未通过风险初筛。"
+      },
+      {
+        "name": "联储降息后的 IEF 持有检验",
+        "status": "snapshot",
+        "task": "已核三个预定降息日和一个维持决议。四个窗口的 8 个开盘端点均有两源报价，其中 1 个相差半美分。待补发行人现金事件，暂无收益结果。"
       },
       {
         "name": "03086 · 11月19日纸面",
@@ -14202,7 +14207,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-19T13:20:00.508820+08:00",
+    "checked_at": "2026-11-19T13:37:19.290748+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -14434,7 +14439,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-19T13:19:59.516763+08:00",
+    "checked_at": "2026-11-19T13:37:16.782421+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -14528,9 +14533,9 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "c1b9efe75b9afb02c0678acbba4cb82f60f4349e8db7861224e32d62355c696c",
+    "mining_goal": "7bd9958128c32ed73bc15bfce7de0952c8d3d7e85696094df804ec78a17002d2",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
-    "mining_team": "8c714f8a1126d31f3d65fe5f887dffaef55e95380b8fd88134c34abfc0277b8b",
+    "mining_team": "e25e2b39b589e5370569fc0c00ca6cdcb4573ef1ba7965ea94be693c0873e8b3",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
     "fip_original": "9c598341d1b0e59753bc0134509908b4698209cfff0b95c22f973f655b868296",
     "fip_calendar_correction": "33d2d80372b6c433688dbbcabcc49f2a458989a633ed783c0c2fa42d6f824695",
@@ -14547,7 +14552,9 @@
     "merger_cost_control": "6da6e316af920b4ae0bae41a8f154f15b0df8daffdca70c6e48b10a5fe256059",
     "merger_review_progress": "acc49a00a858c3f5bfa4c5a2b155c83a8302151353585f56088330726c071a3c",
     "merger_vote_closeout": "ca872055ae1261f65048faade49f62a5ce673b02aaa36032739ed9f1b5e917ac",
+    "merger_failure_and_timing": "12bcf02458fcf288ce92650e1722ce6b76c88c48baac661a87f29812c85dc3de",
     "pdbc_risk_preflight": "59a74c721ef25cdb6aca7988e84642aef9675c63b97e2c919586dc8cf9df97b8",
+    "fomc_ief_preflight": "c76cb713f1c164329adb74e6be3675f69172931edfa72d3bd5252695e90d291b",
     "continuous_goal": "54540eb3e3c9d837cd41b37dae0cbe45a318306b87ab5f6951d184589af7ddff",
     "restored_goal_receipt": "533e3f1709605a5d2dfe70bfb16d724ed5abffe52cf806b5422933305ee72c16",
     "v141_RESULT-v1.json": "4211c36206d0a380ceb82cb5cc18e866bc80064690ed009208f62ec452fb70db",
@@ -15018,6 +15025,55 @@
       "idti_open_display_usd": "48.35",
       "idti_exchange_notice": "https://www.nasdaqtrader.com/TraderNews.aspx?id=ECA2019-13"
     }
+  },
+  "merger_stress": {
+    "tier_hkd": [
+      {
+        "capital": 10000,
+        "scenario_losses": [
+          "-2900.19600000",
+          "-1465.62000000",
+          "-732.03000000"
+        ]
+      },
+      {
+        "capital": 20000,
+        "scenario_losses": [
+          "-5809.05000000",
+          "-2900.19600000",
+          "-1465.62000000"
+        ]
+      },
+      {
+        "capital": 30000,
+        "scenario_losses": [
+          "-8721.96000000",
+          "-4360.90200000",
+          "-2182.90800000"
+        ]
+      }
+    ],
+    "primary_full_pct": "-29.07320000",
+    "enough_1pct_wins": 30,
+    "double_slot_timing": [
+      {
+        "additional_sessions": 0,
+        "provisional_admissions": 7,
+        "capacity_skips": 9
+      },
+      {
+        "additional_sessions": 2,
+        "provisional_admissions": 4,
+        "capacity_skips": 12
+      },
+      {
+        "additional_sessions": 5,
+        "provisional_admissions": 4,
+        "capacity_skips": 12
+      }
+    ],
+    "input_source": "https://www.futuhk.com/hans/support/topic2_283",
+    "settlement_source": "https://www.sec.gov/newsroom/press-releases/2017-68-0"
   },
   "nov18_cost_attribution": [
     {

@@ -21,7 +21,9 @@ CIVITAS_RECEIPT=MINING/'acceptance/US-CASH-MERGER-CIVITAS-NO-OPEN-v1.json'
 MERGER_EXECUTION_CHECKS=MINING/'acceptance/US-MERGER-EXECUTION-CHECKS-v1.json'
 MERGER_REVIEW_RECEIPT=MINING/'acceptance/US-MERGER-v234-v236-ROOT-v1.json'
 MERGER_CLOSEOUT_RECEIPT=MINING/'acceptance/US-MERGER-v242-v244-ROOT-v1.json'
+MERGER_STRESS_RECEIPT=MINING/'acceptance/US-MERGER-v247-v249-ROOT-v1.json'
 PDBC_PREFLIGHT_RECEIPT=MINING/'acceptance/PDBC-2015-v245-ROOT-v1.json'
+IEF_PREFLIGHT_RECEIPT=MINING/'acceptance/IEF-FOMC-v250-v252-ROOT-v1.json'
 OUT=ROOT/'portfolio-board/public/research-progress'
 def read(path):return json.loads(path.read_text(encoding='utf-8-sig'))
 def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -113,6 +115,22 @@ def pdbc_preflight_projection():
     assert receipt['account_backtests']==0
     assert [row['capital_hkd'] for row in receipt['tiers']]==[10000,20000,30000]
     return receipt
+
+
+def merger_stress_projection():
+    if not MERGER_STRESS_RECEIPT.exists():
+        return None
+    receipt=read(MERGER_STRESS_RECEIPT)
+    assert receipt['decision']=='REJECT_FULL_EXPOSURE_IN_FAILURE_CONTROL_CONTINUE_OTHER_MECHANISMS' and receipt['pins']
+    for path,expected in receipt['pins'].items():
+        source=(ROOT/path).resolve()
+        assert source.is_relative_to(ROOT) and digest(source)==expected,path
+    assert receipt['verified_single_case_scenarios']==36 and receipt['verified_capacity_rows']==216
+    assert receipt['portfolio_backtests']==receipt['actual_orders']==0
+    stress=receipt['site_merger_stress']
+    assert [row['capital'] for row in stress['tier_hkd']]==[10000,20000,30000]
+    assert all(len(row['scenario_losses'])==3 for row in stress['tier_hkd'])
+    return stress
 
 
 def form4_projection():
@@ -1634,6 +1652,7 @@ def main():
     merger_execution_control=civitas_projection() if merger else None
     merger_cost_control=merger_cost_projection() if merger else None
     merger_review=merger_review_projection() if merger else None
+    merger_stress=merger_stress_projection() if merger else None
     pdbc_preflight=pdbc_preflight_projection() if args.focus=='mining' else None
     if args.focus=='mining':
         team=read(MINING/'TEAM.json')
@@ -1744,6 +1763,9 @@ def main():
             merger_task='已完成 125 份代理书分类，并从 122 份补取的投票申报提取正文。继续核对 106 份仅分诊的投票材料及可执行价格。'
         else:
             merger_task='正在核对 2019 年第一季度股东批准样例、并购终局和可执行行情。'
+        if merger_stress:
+            extra_sources['merger_failure_and_timing']=MERGER_STRESS_RECEIPT
+            merger_task='固定候选中，PACB 全仓未通过失败压力筛选。已复核 36 个损失情景和 12 个资金排程，组合收益待验证。'
         current_work['owners'].append(dict(name='美股现金并购',status='snapshot',
             task=merger_task))
     if pdbc_preflight:
@@ -1751,6 +1773,16 @@ def main():
         losses='、'.join(f"{float(row['mark_change_hkd']):,.0f}" for row in pdbc_preflight['tiers'])
         current_work['owners'].append(dict(name='PDBC 商品 ETF',status='snapshot',
             task=f'2015 年两个价格端点由富途 OpenD 与 Yahoo 对照。在固定汇率下，1 万、2 万、3 万港币三档的整股市值变化分别约为 {losses} 港币，均低于 −20%。全仓持有未通过风险初筛。'))
+    if args.focus=='mining' and IEF_PREFLIGHT_RECEIPT.exists():
+        ief=read(IEF_PREFLIGHT_RECEIPT)
+        assert ief['decision']=='SOURCE_PILOT_ONLY_CASH_EVENTS_PENDING' and ief['return_tests']==0
+        assert ief['pins']
+        for path,expected in ief['pins'].items():
+            source=(ROOT/path).resolve()
+            assert source.is_relative_to(ROOT) and digest(source)==expected,path
+        extra_sources['fomc_ief_preflight']=IEF_PREFLIGHT_RECEIPT
+        current_work['owners'].append(dict(name='联储降息后的 IEF 持有检验',status='snapshot',
+            task='已核三个预定降息日和一个维持决议。四个窗口的 8 个开盘端点均有两源报价，其中 1 个相差半美分。待补发行人现金事件，暂无收益结果。'))
     if merger:
         current_work['owners'].append(dict(name='03086 · 11月19日纸面',status='snapshot',
             task='香港时间09:00前的登记缺失。按11月18日可用资料只读核算，11月19日为非月度复核日，四组均持现金，规则未安排买卖。16:30才取完整日线。'))
@@ -1884,6 +1916,7 @@ def main():
     payload['merger_execution_control']=merger_execution_control
     payload['merger_cost_control']=merger_cost_control
     payload['merger_review']=merger_review
+    payload['merger_stress']=merger_stress
     payload['nov18_cost_attribution']=november18_attribution() if diversified['activated'] else []
     OUT.mkdir(exist_ok=True,parents=True);(OUT/'assets').mkdir(exist_ok=True)
     if tip_account_review:render_tip_history_chart(tip_account_review)
