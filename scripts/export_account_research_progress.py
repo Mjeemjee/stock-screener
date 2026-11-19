@@ -2157,6 +2157,21 @@ def main():
                  task='2018–2023 年 313／313 观察周齐全，两条官方数据渠道一致。仅核到 10 个实际发布日期，已见黄金历史值在首发后更正。全期首发时间及版本待证，未计算收益。'),
             dict(name='美股研究 · Cboe 波动率期限',status='snapshot',
                  task='2015–2023 年 2264 个美股交易日均取得 VIX 与 VIX3M。VIX 另有 12 个股票停市日数据，后续不能据此模拟当日股票成交。当前只验证来源覆盖。')]
+    vix_rule=MINING/'acceptance/VIX-CURVE-VTI-v349-v352-ROOT-v1.json'
+    if args.focus=='mining' and vix_rule.exists():
+        q=read(vix_rule)
+        assert q['new_paper_accounts']==q['actual_orders']==0
+        assert all(digest(ROOT/path)==expected for path,expected in q['pins'].items())
+        extra_sources['vix_curve_vti_historical']=vix_rule
+        current_work['owners'][15:15]=[
+            dict(name='美股 VTI · VIX 期限倒挂月度规则',status='snapshot',
+                 task='108 次决策、7 段目标现金。1 万／2 万／3 万压力净额 +3098.00／+6935.01／+10930.81 港币，回撤约 11.5%，但只保留静持净收益的 58.54%–61.33%，规则筛退。'),
+            dict(name='美股 VIX 期限 · 历史版本与归因',status='snapshot',
+                 task='92／108 次决策的指数值有开盘前日期级记录。9 个目标现金月 VTI 有 6 个上涨，平均原价涨约 2.00%。1 万档日均实际股票比重 35.26%，静持 50.88%。留存未运行。'),
+            dict(name='美股 USMV · 低波宽基分派资料',status='snapshot',
+                 task='从发行人同一基金原表核对 2015–2023 年 37 条分派的除息、登记、支付日期及金额。当前未计算该基金的策略收益。')]
+        if q.get('hk_source_review_complete'):
+            current_work['owners'].insert(17,dict(name='港股 VHSI · 香港波动率资料',status='snapshot',task=q['hk_site_summary']))
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
