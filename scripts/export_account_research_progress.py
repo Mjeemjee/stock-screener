@@ -2235,6 +2235,17 @@ def main():
             dict(name='港股质量 · 扩大整手筛选',status='snapshot',task=q['hk_site_summary'])]
         activity_text='COWZ 半仓筛退，四成预算已在已见历史完成诊断，正在核验 2024 留存来源。 '+activity_text.replace(
             '港股跨行业财报与整手容量已核。下一项准备核 COWZ 原价和现金分派。 ', '')
+    cowz_holdout=MINING/'acceptance/COWZ-2024-v385-v388-ROOT-v1.json'
+    if args.focus=='mining' and cowz_holdout.exists():
+        q=read(cowz_holdout)
+        assert q['new_paper_accounts']==q['actual_orders']==0
+        assert all(digest(ROOT/path)==expected for path,expected in q['pins'].items())
+        extra_sources['cowz_2024_holdout']=cowz_holdout
+        current_work['owners'][15:15]=[
+            dict(name='美股 COWZ · 2024 年冻结留存',status='snapshot',task=q['holdout_site_summary']),
+            dict(name='美股 COWZ · 基准和漏单复核',status='snapshot',task=q['comparison_site_summary'])]
+        activity_text=q['activity_site_summary']+' '+activity_text.replace(
+            'COWZ 半仓筛退，四成预算已在已见历史完成诊断，正在核验 2024 留存来源。 ', '')
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
