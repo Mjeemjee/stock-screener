@@ -345,8 +345,15 @@ if (typeof document !== 'undefined') {
     const source = data.merger
     find('merger-source').hidden = !source
     if (!source) return
-    find('merger-proxy').textContent = `以 2019 年第一季度公开投票结果为试点。代理申报目录覆盖 2018 年第四季度 ${source.q4_proxy} 份、2019 年第一季度 ${source.q1_proxy} 份，共 ${source.proxy_roster} 份，${source.proxy_available} 份原件可读。已分类 ${source.proxy_classified} 份，识别 ${source.proxy_vote_candidates} 个有批准结果的固定现金候选。还有 ${source.proxy_open} 份待分类。`
-    find('merger-vote').textContent = `投票关键词筛查命中 merger ${source.vote_merger_docs} 件文档、acquisition ${source.vote_acquisition_docs} 件文档。合并去重后有 ${source.vote_union_docs} 件文档，分属 ${source.vote_union_accessions} 个 SEC 申报编号。两组共同命中 ${source.vote_overlap_accessions} 个申报编号，合并后还有 ${source.vote_unreviewed_accessions} 个待逐件人工核查。`
+    const review = data.merger_review
+    const proxyStatus = review
+      ? `${review.proxy_document_classifications_total} 份均已按议案、条款或计划日期分类。补审 ${review.proxy_residual_reviewed} 份未发现新候选。原有 ${source.proxy_vote_candidates} 个候选有批准结果。`
+      : `已分类 ${source.proxy_classified} 份，识别 ${source.proxy_vote_candidates} 个有批准结果的固定现金候选。还有 ${source.proxy_open} 份待分类。`
+    find('merger-proxy').textContent = `以 2019 年第一季度公开投票结果为试点。代理申报目录覆盖 2018 年第四季度 ${source.q4_proxy} 份、2019 年第一季度 ${source.q1_proxy} 份，共 ${source.proxy_roster} 份，${source.proxy_available} 份原件可读。${proxyStatus}`
+    const voteStatus = review
+      ? `补查的 ${review.remaining_vote_documents_retrieved} 份均已提取投票段落，其中 ${review.remaining_vote_documents_classified} 份已逐件核对，${review.remaining_vote_only_routed} 份仍待确认。`
+      : `合并后还有 ${source.vote_unreviewed_accessions} 个待逐件人工核查。`
+    find('merger-vote').textContent = `投票关键词筛查命中 merger ${source.vote_merger_docs} 件文档、acquisition ${source.vote_acquisition_docs} 件文档。合并去重后有 ${source.vote_union_docs} 件文档，分属 ${source.vote_union_accessions} 个 SEC 申报编号。两组共同命中 ${source.vote_overlap_accessions} 个申报编号。${voteStatus}`
     const controls = find('merger-controls')
     const civitas = data.merger_execution_control
     controls.replaceChildren()
@@ -371,6 +378,9 @@ if (typeof document !== 'undefined') {
     if (cost) {
       const limits = cost.tiers.map(row => Number(row.upper_bound_hkd).toFixed(2)).join('、')
       feeExample.textContent = `17 个已完成案例均核到普通股退市申报。${cost.substantive_exchange_exhibits} 份交易所附件附有事件说明，另 ${cost.placeholder_exhibits} 份附件只有文件标识。Imperva 作为单笔成本示例，次日开盘 ${cost.entry_usd} 美元，对价 ${cost.cash_payoff_usd} 美元。按标准买入最低收费 ${cost.fee_floor_usd} 美元，1 万、2 万、3 万港币三档的净额上限分别为 ${limits} 港币。这里假设没有滑点、换汇差价或其他收费。`
+      if (review) {
+        feeExample.textContent += `四个短窗口案例的 ${review.fee_floor_capital_scenarios} 个本金情景中，${review.negative_fee_floor_scenarios} 个连标准佣金与平台费都无法覆盖，其余 ${review.near_zero_positive_fee_floor_scenarios} 个的上限不足 1 港币。这里的费用与价格均为示例假设。`
+      }
     }
     find('merger-result').textContent = `两条路径合并确认 ${source.firm_vote_cash_candidates} 个有批准结果的固定现金候选，其中 ${source.completed_candidates} 个完成、${source.terminated_candidates} 个终止。样本覆盖和可执行行情仍待核查，组合回测 ${source.return_tests} 次。`
     const links = find('merger-links')

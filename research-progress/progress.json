@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-19T12:47:33.894502+08:00",
+  "updated_at": "2026-11-19T12:54:23.117046+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
@@ -9060,7 +9060,7 @@
       {
         "name": "美股现金并购",
         "status": "snapshot",
-        "task": "正在核对 2019 年第一季度股东批准样例、并购终局和可执行行情。已做收益检验 0 次。"
+        "task": "已完成 125 份代理书分类，并从 122 份补取的投票申报提取正文。继续核对 106 份仅分诊的投票材料及可执行价格。"
       },
       {
         "name": "03086 · 11月19日纸面",
@@ -14197,7 +14197,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-19T12:47:35.056412+08:00",
+    "checked_at": "2026-11-19T12:54:24.458781+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -14429,7 +14429,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-19T12:47:34.304866+08:00",
+    "checked_at": "2026-11-19T12:54:23.583659+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -14540,6 +14540,7 @@
     "merger_root_acceptance": "d9a3d8a2266059d9f21743535a328537530f41ea34b0930d8374e955620a0465",
     "merger_civitas_root_acceptance": "f069e855ad059a2015aa523601294c2173892b84396cd8b3c8395393b45304e8",
     "merger_cost_control": "6da6e316af920b4ae0bae41a8f154f15b0df8daffdca70c6e48b10a5fe256059",
+    "merger_review_progress": "acc49a00a858c3f5bfa4c5a2b155c83a8302151353585f56088330726c071a3c",
     "continuous_goal": "54540eb3e3c9d837cd41b37dae0cbe45a318306b87ab5f6951d184589af7ddff",
     "restored_goal_receipt": "533e3f1709605a5d2dfe70bfb16d724ed5abffe52cf806b5422933305ee72c16",
     "v141_RESULT-v1.json": "4211c36206d0a380ceb82cb5cc18e866bc80064690ed009208f62ec452fb70db",
@@ -14983,6 +14984,16 @@
     "quote_link": "https://www.investing.com/equities/imperva-inc-historical-data",
     "interpretation": "one event optimistic price and published standard fees only; final small-account historical net remains untested",
     "full_backtests": 0
+  },
+  "merger_review": {
+    "proxy_document_classifications_total": 125,
+    "proxy_residual_reviewed": 91,
+    "remaining_vote_documents_retrieved": 122,
+    "remaining_vote_documents_classified": 16,
+    "remaining_vote_only_routed": 106,
+    "negative_fee_floor_scenarios": 10,
+    "near_zero_positive_fee_floor_scenarios": 2,
+    "fee_floor_capital_scenarios": 12
   },
   "nov18_cost_attribution": [
     {
