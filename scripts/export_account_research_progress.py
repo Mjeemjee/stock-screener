@@ -2005,6 +2005,17 @@ def main():
         extra_sources['us_issuer_tender_broker_first']=TENDER_BROKER
         current_work['owners'].insert(3,dict(name='富途专属公告抽查',status='snapshot',
             task='5 宗历史通知中，4 宗初始价格不固定。2023 年 Docebo 每股 55 美元回购，假设对视同股息部分预扣 15%，估算每股到手 47.95 美元，低于 49.18 和 48.37 美元两个开盘参考。三档本金均未过门槛，未计券商费。RBNE 仍待事件专属证据。'))
+    next_exec=MINING/'acceptance/EXECUTION-NEW-MECHANISMS-v281-v282-ROOT-v1.json'
+    if args.focus=='mining' and next_exec.exists():
+        e=read(next_exec)
+        assert e['return_tests']==e['actual_orders']==0
+        assert all(digest(ROOT/path)==expected for path,expected in e['pins'].items())
+        extra_sources['new_execution_mechanisms']=next_exec
+        current_work['owners'][4:4]=[
+            dict(name='港股 03115 · 月度波动筛选',status='snapshot',
+                 task='60 个月仅 44 个月具合格信号，16 个月因收盘时段成交数据缺口未知。按原开盘价、未扣费且有正成交字段，1 万／2 万／3 万档名义可负担 47／59／59 个月。未做收益检验。下一步查官方恒指总收益数据。'),
+            dict(name='美股 SPY · 失业率信号筛选',status='snapshot',
+                 task='2020–2025 年可见 15 个信号达标月，却只集中于 2 次独立触发，低于事先设定的 3 次。没有运行 SPY 收益回测。')]
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
