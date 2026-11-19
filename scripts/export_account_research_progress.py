@@ -2210,6 +2210,18 @@ def main():
             dict(name='港股质量 · 旧财报档复用',status='snapshot',task=q['archive_site_summary'])]
         activity_text='港股质量因子已核一批时点财报，正在排查多期数据及报表口径。 '+activity_text.replace(
             'QUAL 历史测试已结案，开始扩充港股质量因子的时点财报与历史股票池。 ', '')
+    hk_quality_sector=MINING/'acceptance/HK-QUALITY-SECTORS-v373-v376-ROOT-v1.json'
+    if args.focus=='mining' and hk_quality_sector.exists():
+        q=read(hk_quality_sector)
+        assert q['new_paper_accounts']==q['actual_orders']==0
+        assert all(digest(ROOT/path)==expected for path,expected in q['pins'].items())
+        extra_sources['hk_quality_sector_and_board_lot']=hk_quality_sector
+        current_work['owners'][15:15]=[
+            dict(name='港股质量 · 两个时点跨行业财报',status='snapshot',task=q['financial_site_summary']),
+            dict(name='港股质量 · 六只股票整手容量',status='snapshot',task=q['capacity_site_summary']),
+            dict(name='美股 COWZ · 自由现金流来源',status='snapshot',task=q['cowz_site_summary'])]
+        activity_text='港股跨行业财报与整手容量已核。下一项准备核 COWZ 原价和现金分派。 '+activity_text.replace(
+            '港股质量因子已核一批时点财报，正在排查多期数据及报表口径。 ', '')
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
