@@ -5,7 +5,7 @@
   <meta name="description" content="港美个股及普通ETF的小资金研究：新因子有效性、条件历史账户、当前分工与真实日期纸面记录。">
   <title>港美因子与账户研究 · 研究进展</title>
   <link rel="stylesheet" href="progress.css?v=20261118-199-1">
-  <script type="module" src="progress.mjs?v=20261119-233"></script>
+  <script type="module" src="progress.mjs?v=20261119-251"></script>
 </head>
 <body>
   <header class="masthead"><a class="brand" href="../">港股量化 <span>/ 账户研究</span></a><nav aria-label="页面导航"><a href="#factor-section">新因子结论</a><a href="#results-section">全部账户策略</a><a href="../#/validation">验证说明</a><a href="../#/lab/research">因子研究</a><a href="#records">研究记录</a></nav></header>
@@ -31,6 +31,18 @@
       <h3 class="evidence-subtitle">终局样例与行情核对</h3>
       <ul id="merger-controls"></ul>
       <p id="merger-cost-control" hidden></p>
+      <details id="merger-failure" hidden>
+        <summary>PACB 并购失败的损失与资金占用</summary>
+        <p id="merger-failure-summary"></p>
+        <div class="table-wrap" tabindex="0" aria-label="PACB 三档本金的损失对照，可横向滚动">
+          <table>
+            <caption>终止公告后开盘退出，含标准佣金和平台费。数字为初始账户净变动，单位港币。</caption>
+            <thead><tr><th scope="col">本金</th><th scope="col">全仓</th><th scope="col">半仓</th><th scope="col">四分之一仓</th></tr></thead>
+            <tbody id="merger-failure-rows"></tbody>
+          </table>
+        </div>
+        <p id="merger-cash-timing" hidden></p>
+      </details>
       <p id="merger-result"></p>
       <p id="merger-links"></p>
     </section>

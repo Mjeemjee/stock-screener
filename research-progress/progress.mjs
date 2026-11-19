@@ -341,6 +341,28 @@ if (typeof document !== 'undefined') {
     }
     find('work-note').textContent = data.current_work?.note ?? ''
   }
+  function renderMergerStress(stress) {
+    find('merger-failure').hidden = !stress
+    if (!stress) return
+    const rows = find('merger-failure-rows')
+    rows.replaceChildren()
+    for (const result of stress.tier_hkd) {
+      const row = element('tr')
+      row.append(element('th', `${result.capital / 10000} 万`))
+      row.firstChild.scope = 'row'
+      for (const loss of result.scenario_losses) row.append(element('td', money(Number(loss))))
+      rows.append(row)
+    }
+    const fullLoss = Math.abs(Number(stress.primary_full_pct)).toFixed(2)
+    find('merger-failure-summary').textContent = `按两家发布方显示的开盘价估算，三万港币全仓在 PACB 终止公告后退出亏 ${fullLoss}%。如果每笔成功净赚最初本金的 1%，需要 ${stress.enough_1pct_wins} 笔填平。这里使用固定汇率，其他费用、滑点与实盘成交待核。`
+    const timing = stress.double_slot_timing
+    const note = find('merger-cash-timing')
+    note.hidden = !timing?.length
+    if (timing?.length) {
+      const starts = timing.map(row => row.provisional_admissions).join('、')
+      note.textContent = `以交割日收盘为起点，额外等待 0、2、5 个完整交易日后再用资金。按固定候选顺序排两个半仓，分别有 ${starts} 个候选排入。这是排程结果，实际成交和到账仍待核。`
+    }
+  }
   function renderMerger(data) {
     const source = data.merger
     find('merger-source').hidden = !source
@@ -387,6 +409,7 @@ if (typeof document !== 'undefined') {
         feeExample.textContent += `四个短窗口案例的 ${review.fee_floor_capital_scenarios} 个本金情景中，${review.negative_fee_floor_scenarios} 个连标准佣金与平台费都无法覆盖，其余 ${review.near_zero_positive_fee_floor_scenarios} 个的上限不足 1 港币。这里的费用与价格均为示例假设。`
       }
     }
+    renderMergerStress(data.merger_stress)
     find('merger-result').textContent = `两条路径合并确认 ${source.firm_vote_cash_candidates} 个有批准结果的固定现金候选，其中 ${source.completed_candidates} 个完成、${source.terminated_candidates} 个终止。样本覆盖和可执行行情仍待核查，组合回测 ${source.return_tests} 次。`
     const links = find('merger-links')
     links.replaceChildren()
@@ -395,6 +418,7 @@ if (typeof document !== 'undefined') {
     if (civitas) references.push(['CIVI 纽交所停牌申报',civitas.proof_exchange_source])
     if (cost) references.push(['Imperva 完成公告',cost.offer_link], ['Imperva 日线',cost.quote_link], ['富途标准收费',cost.fee_link])
     if (closeout) references.push(['PacBio FTC 案卷',closeout.pacb_ftc_case], ['IDTI Nasdaq 停牌公告',closeout.idti_exchange_notice])
+    if (data.merger_stress) references.push(['历史 T+2 交收规则',data.merger_stress.settlement_source])
     for (const [label, url] of references) {
       if (links.childNodes.length) links.append(' · ')
       const link = document.createElement('a')
