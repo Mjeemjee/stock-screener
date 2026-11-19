@@ -2094,6 +2094,19 @@ def main():
                  task='36 个互不重叠窗口，对同资产同季配对毛差 +266.02 基点。三档压力每笔平均 −59.18／−49.47／−40.46 港币，均为负。净值网页首次发布时间仍未核实。'),
             dict(name='美股 VTI · 跌破前低后收复',status='snapshot',
                  task='37 次非重叠，原价毛均 −25.30 基点，低于同期 VTI 全部日内均值 −2.49 基点。三档压力净变动 −2840.17／−3600.24／−4347.88 港币。三条规则均筛退，留存期未运行。')]
+    cost_first=MINING/'acceptance/COST-FIRST-v320-v323-ROOT-v1.json'
+    if args.focus=='mining' and cost_first.exists():
+        q=read(cost_first)
+        assert q['new_paper_accounts']==q['actual_orders']==0
+        assert all(digest(ROOT/path)==expected for path,expected in q['pins'].items())
+        extra_sources['small_capital_cost_first']=cost_first
+        current_work['owners'][15:15]=[
+            dict(name='港美 ETF · 小账户保本门槛',status='snapshot',
+                 task='同一历史日开盘示例，1 万档压力保本涨幅：03033／03067 约 2.22%，VTI／GLD 约 1.90%／2.32%（复用美元）。价格档、整手与平台费均计入。'),
+            dict(name='港股 03033 · 相对宽基放量',status='snapshot',
+                 task='37 次放量越阈，15 个非重叠的 20 日窗口，毛均 −36.82 基点，一万初始压力摩擦中位 141.24 基点。三档压力净变动 −3446.40／−6864.97／−10301.61 港币，回撤约 50%，固定规则筛退。'),
+            dict(name='美股 GLD · 避险状态切换',status='snapshot',
+                 task='持有 20 个交易日，共 11 笔，毛均 −93.04 基点，低于 GLD 同长滚动基准 +26.97 基点。三档压力净变动 −1138.96／−1725.64／−2355.40 港币。两条候选均未运行留存。')]
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
