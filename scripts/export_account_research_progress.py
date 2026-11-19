@@ -49,7 +49,27 @@ def filing_event_projection():
             assert supplement['source_sha256']==digest(event_path) and supplement['denominator']==len(cells)
             assert supplement['skip_assumed_cash_return_pct']==0
             comparison=next(r for r in supplement['rows'] if r['round_trip_cost_pct']==.5)
-    return dict(sources=cells,result=event,equal_opportunity=comparison,event_tests=int(event is not None),
+    expansion=None
+    expansion_source=MINING/'acceptance/FILING-SOURCE-v212-ROOT-v1.json'
+    expansion_review=MINING/'acceptance/FILING-EVENT-v214-ROOT-v1.json'
+    if event and expansion_review.exists():
+        acceptance=read(expansion_review); source48=read(expansion_source)
+        result_path=ROOT/'reports/us-filing-expanded-screen-20261119-v214/RESULT.json'
+        assert acceptance['pins'][result_path.relative_to(ROOT).as_posix()]==digest(result_path)
+        for pinset in (acceptance['pins'],source48['pins']):
+            for name,sha in pinset.items():
+                path=(ROOT/name).resolve(); assert path.is_relative_to(ROOT) and digest(path)==sha,name
+        assert source48['qualified']==source48['planned']==48 and source48['independent_sample_matches']==source48['independent_sample_size']==8
+        result=read(result_path); summary=result['primary']
+        assert acceptance['decision']=='REJECT_EPS_GROWTH_ONLY_AS_A_BUY_FILTER_IN_THIS_FOUR_ISSUER_EXPANSION' and all(acceptance[name]==result[name] for name in ('primary','by_year','concentration_positive','overlap_all'))
+        assert summary['planned']==summary['stock_priced']==summary['peer_comparable']==48
+        assert result['new_account_runs']==result['IC_trials']==result['actual_orders']==0 and result['stable_profitability_proven'] is False
+        years=[dict(year=int(y),priced=s['stock_priced'],positive=s['positive_priced'],**s['same_opportunity_costs']['50']) for y,s in sorted(result['by_year'].items())]
+        expansion=dict(planned=summary['planned'],priced=summary['stock_priced'],positive=summary['positive_priced'],years=years,
+                       cost50=summary['same_opportunity_costs']['50'],positive_peer_bp=summary['positive_mean_excess_bp'],
+                       other_peer_bp=summary['nonpositive_mean_excess_bp'],leave_best_peer_bp=result['concentration_positive']['mean_omitting_best_bp'],
+                       overlap=result['overlap_all']['max_simultaneous'])
+    return dict(sources=cells,expansion=expansion,result=event,equal_opportunity=comparison,event_tests=int(event is not None),
                 source_files=source['source_files_verified'],confirmed_first_public_minutes=source['confirmed_first_public_minutes'])
 
 
@@ -1464,6 +1484,8 @@ def main():
         if filing_event:
             filing_task=('四家公司八份原始公告已核实。20日事件诊断已完成，下方可查看每一例及费用敏感性。'
                          if filing_event['result'] else '四家公司八份原始公告已核实。20日事件诊断等待验收。')
+            if filing_event.get('expansion'):
+                filing_task='四家公司48份新增财报已核实并独立复算。下方对比只买盈利增长和每次公告都买，保留首批八次结果。'
         else:
             filing_task='正在核对美股财报披露时点与当期公告中的盈利数据。' if filing_active else None
         if filing_task:current_work['owners'].append(dict(name='美股财报事件',status='snapshot' if filing_event else 'active',task=filing_task))
@@ -1471,7 +1493,7 @@ def main():
         audit_running=checking and any(o['status']=='ACTIVE' and any('v187/' in p for p in o['write_paths']) for o in team['owners'])
         current_work['owners']=[o for o in current_work['owners'] if o['name']!='主会话核验与发布']
         current_work['owners'].append(dict(name='主会话核验与发布',status='active' if root_running else 'snapshot',
-            task='同步财报事件检验与三ETF组合的首日成本拆解。' if filing_event else '同步TIP固定后段结论、实际日期纸面接续与下一因子审核状态。'))
+            task='同步48份财报的同机会比较；跟踪原有纸面账户。' if filing_event and filing_event.get('expansion') else '同步财报事件检验与三ETF组合的首日成本拆解。' if filing_event else '同步TIP固定后段结论、实际日期纸面接续与下一因子审核状态。'))
         current_work['owners'].append(dict(name='Amihud固定筛选',status='snapshot' if amihud or not audit_running else 'active',
             task=amihud['site_factor']['conclusion'] if amihud else 'Amihud固定训练已首跑，独立审计与root验收尚未完成；不展示作者指标，也不增加已验收信号或期限。'))
         activity_text=f"总目标运行中，稳定盈利尚未证实；历史候选交付仍只是里程碑。当前已验收{factor_research['unique_new_signals']}个信号、{factor_research['planned_horizon_trials']}个预定期限。"
@@ -1581,7 +1603,7 @@ def main():
     extra_sources['v148_classification']=ROOT/'reports/us-cash-tax-fee-source-owner-20261118-v148/SGOV-QII-QUALIFICATION-v2.json'
     extra_sources['v148_source_findings']=ROOT/'reports/us-cash-tax-fee-source-owner-20261118-v148/SOURCE-FINDINGS-v1.md'
     if filing_event:
-        for filename in ['FILING-SOURCE-v208-v210-ROOT-v1.json','FILING-EVENT-v211-ROOT-v1.json','FILING-EVENT-v211-EQUAL-OPPORTUNITY.json']:
+        for filename in ['FILING-SOURCE-v208-v210-ROOT-v1.json','FILING-EVENT-v211-ROOT-v1.json','FILING-EVENT-v211-EQUAL-OPPORTUNITY.json','FILING-SOURCE-v212-ROOT-v1.json','FILING-EVENT-v214-ROOT-v1.json']:
             path=MINING/'acceptance'/filename
             if path.exists():extra_sources[path.stem]=path
     extra_sources['v149_root_acceptance']=MINING/'acceptance/FORWARD-EVALUATION-v149-ROOT-ACCEPTANCE-v1.json'

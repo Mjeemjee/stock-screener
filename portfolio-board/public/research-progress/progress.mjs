@@ -126,6 +126,13 @@ export function validateSnapshot(value) {
   if (['done', 'waiting'].includes(value.activity.status) && value.activity.active_at_snapshot) throw new Error('已交付或等待阶段不能显示进行中动画。')
   if (value.filing_event) {
     const {sources, result, event_tests: tests} = value.filing_event
+    const e = value.filing_event.expansion
+    if (e && (!result || e.planned !== 48 || e.priced !== 48 || !Number.isSafeInteger(e.positive) || e.positive < 0 || e.positive > e.priced ||
+        ![e.positive_peer_bp, e.other_peer_bp, e.leave_best_peer_bp, e.cost50?.filtered_bp, e.cost50?.unconditional_bp, e.cost50?.increment_bp].every(Number.isFinite) ||
+        !Array.isArray(e.years) || e.years.map(y=>y.year).join(',') !== '2016,2017,2018' ||
+        !e.years.every(y => y.priced === 16 && [y.filtered_bp,y.unconditional_bp,y.increment_bp].every(Number.isFinite)))) {
+      throw new Error('财报扩样数据不完整。')
+    }
     if (sources.length !== 8 || !sources.every(s => /^https:\/\/www\.sec\.gov\/Archives\//.test(s.official_index)) ||
         tests !== Number(Boolean(result)) || result && (result.rows.length !== 8 || result.cells !== 8 || result.issuers !== 4 ||
         result.horizon_sessions !== 20 || result.net_account_hkd !== null || result.real_orders !== 0)) {
@@ -371,6 +378,28 @@ if (typeof document !== 'undefined') {
       find('filing-rows').append(tr)
     }
     find('filing-next').textContent = r ? '预定扩样覆盖同四家公司2016—2018年的48个财季，先核对当时可得的公告，再与全部公告比较。当前结果只计一次事件检验；现金账户净利和回撤尚未计算。' : ''
+    const x = events.expansion
+    find('filing-expansion').hidden = !x
+    if (x) {
+      const pct = b => amount(b / 100) + '%'
+      const pp = b => amount(b / 100) + ' 个百分点'
+      find('filing-stage').textContent = '首批 8 次 · 扩样 48 次'
+      find('filing-expanded-summary').textContent = `同四家公司又核实了 ${x.priced} 份季度公告，其中 ${x.positive} 份盈利同比增长。每个机会分配相同金额、每次买入扣往返 0.50%，持有 20 个交易日。`
+      const metrics = find('filing-expanded-metrics')
+      metrics.replaceChildren()
+      for (const [title,val] of [['只买盈利增长',pct(x.cost50.filtered_bp)],['每次公告都买',pct(x.cost50.unconditional_bp)],['筛选增加的收益',pp(x.cost50.increment_bp)]]) {
+        const pair=element('div'); pair.append(element('dt',title),element('dd',val));metrics.append(pair)
+      }
+      find('filing-expanded-compare').textContent = `增长组相对同日股票池的毛差为 ${pp(x.positive_peer_bp)}，其余公告为 ${pp(x.other_peer_bp)}。扣往返 0.50% 后，增长组相对股票池为 ${pp(x.positive_peer_bp - 50)}；去掉表现最好的一次则为 ${pp(x.leave_best_peer_bp - 50)}。但跳过其他公告会持有现金；在全部机会中，过滤后${x.cost50.increment_bp<0?'少赚':'多赚'} ${Math.abs(x.cost50.increment_bp / 100).toFixed(2)} 个百分点。`
+      const rows=find('filing-expanded-rows');rows.replaceChildren()
+      for (const y of x.years) {
+        const row=element('tr')
+        for(const t of [String(y.year),y.positive+' / '+y.priced,pct(y.filtered_bp),pct(y.unconditional_bp),pp(y.increment_bp)]) row.append(element('td',t))
+        rows.append(row)
+      }
+      find('filing-expanded-limits').textContent=`四家公司都在后来的股票样本中，不能代表全部美股。不同公告的持有期最多同时有 ${x.overlap} 笔；这里没有按有限现金、整数股与换汇重建资金流水，不是账户收益。首批 8 次与这 48 次分开列示。`
+      find('filing-next').textContent='新增48个财季与首批八次公告均来自训练期历史，不能据此认定稳定盈利。'
+    }
   }
 
   function renderFactors(data) {
