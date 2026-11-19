@@ -31,6 +31,8 @@ ISSUER_TENDER_RECEIPT=MINING/'acceptance/US-ISSUER-TENDER-v269-v270-ROOT-v1.json
 HK_CONTROL_CLOSEOUT=MINING/'acceptance/HK-CONNECT-CONTROL-CLOSEOUT-v272-v276-ROOT-v1.json'
 TENDER_CLOSEOUT=MINING/'acceptance/US-ISSUER-TENDER-v274-v275-ROOT-v1.json'
 HK_NOV19_RECEIPT=MINING/'paper-nov19-20261119/ROOT-HK-CONTINUATION-v1.json'
+TENDER_COVERAGE=MINING/'acceptance/US-ISSUER-TENDER-COVERAGE-v277-v279-ROOT-v1.json'
+TENDER_EXECUTION=MINING/'acceptance/US-ISSUER-TENDER-EXECUTION-v279-ROOT-v1.json'
 OUT=ROOT/'portfolio-board/public/research-progress'
 def read(path):return json.loads(path.read_text(encoding='utf-8-sig'))
 def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -1979,6 +1981,22 @@ def main():
         assert all(digest(ROOT/path)==expected for path,expected in t['pins'].items())
         extra_sources['us_issuer_tender_closeout']=TENDER_CLOSEOUT
         current_work['owners'][1]['task']='第一季度登记 151 宗。1 月 38 宗全部排除。3 月 RBNE 原件确认每股 3 美元现金及最多 99 股的优先条款，富途办理和买入后资格待证。尚无通过资格的候选或收益检验。'
+    if args.focus=='mining' and TENDER_COVERAGE.exists():
+        tc=read(TENDER_COVERAGE)
+        te=read(TENDER_EXECUTION)
+        for receipt in (tc,te):
+            assert receipt['qualified_candidates']==receipt['return_tests']==receipt['actual_orders']==0
+            assert all(digest(ROOT/path)==expected for path,expected in receipt['pins'].items())
+        extra_sources['us_issuer_tender_coverage']=TENDER_COVERAGE
+        extra_sources['us_issuer_tender_execution']=TENDER_EXECUTION
+        tf=tc['february']
+        feb=(f"2 月 {tf['total']} 宗排除 {tf['excluded']} 宗，{tf['unknown']} 宗未知。"
+             if tf['delivered'] else '2 月 63 宗仍在核原件。')
+        current_work['owners'][1]['task']=(
+            '第一季度登记 151 宗。1 月 38 宗全部排除。'+feb+
+            '3 月 50 宗排除 49 宗，只留 RBNE 条款候选，富途办理待证。')
+        current_work['owners'].insert(2,dict(name='不足百股要约 · 富途与税费',status='snapshot',
+            task='富途曾受理 2023 年 Docebo 的 99 股优先申报，该次券商截止比发行人早 8 天 14 小时。另核 2026 年 Docebo 的跨境申报：20.40 美元定价在 15% 预扣税情景下折至约 18.56 美元，低于正式要约后的参考开盘 19.26 美元。尚无通过账户资格的案例或收益检验。'))
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
