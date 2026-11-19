@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-19T23:23:39.075082+08:00",
+  "updated_at": "2026-11-19T23:38:15.063779+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
@@ -8958,7 +8958,7 @@
     "milestone_label": "历史候选交付完成（里程碑）",
     "evidence_label": "稳定盈利与持续性尚未证实",
     "task": "T-012",
-    "team_updated_at": "2026-11-19T23:23:38+08:00",
+    "team_updated_at": "2026-11-19T23:38:14+08:00",
     "active_work": {
       "account": false,
       "registration": false,
@@ -9041,6 +9041,21 @@
         "name": "美股 SGOV／VTI／GLD · 调仓门槛",
         "status": "snapshot",
         "task": "月度偏离 5 个百分点才调仓。1 万档 32 次触发却没有调仓；2 万／3 万档压力净额虽为正，均低于买入后持有的同成本对照。固定规则筛退，留存期未跑。"
+      },
+      {
+        "name": "港股 03081 · 上市份额四周净创设",
+        "status": "snapshot",
+        "task": "155／156 个周末可追原件，148 个四周变化中只确认 1 次穿越。三档压力净变动 −78.42／−90.26／−102.37 港币。把所有未知日期都算作信号也最多 11 次，低于预设 12 次。"
+      },
+      {
+        "name": "美股研究 · 黄金 CFTC 首发版本",
+        "status": "snapshot",
+        "task": "2018–2023 年 313／313 观察周齐全，两条官方数据渠道一致。仅核到 10 个实际发布日期，已见黄金历史值在首发后更正。全期首发时间及版本待证，未计算收益。"
+      },
+      {
+        "name": "美股研究 · Cboe 波动率期限",
+        "status": "snapshot",
+        "task": "2015–2023 年 2264 个美股交易日均取得 VIX 与 VIX3M。VIX 另有 12 个股票停市日数据，后续不能据此模拟当日股票成交。当前只验证来源覆盖。"
       },
       {
         "name": "美股 GLD · 东京历史公告",
@@ -14367,7 +14382,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-19T23:23:40.504494+08:00",
+    "checked_at": "2026-11-19T23:38:16.457182+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -14599,7 +14614,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-19T23:23:39.562655+08:00",
+    "checked_at": "2026-11-19T23:38:15.535002+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -14693,9 +14708,9 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "6ab7be89bd885b0fef8209c9f2bd0a51e2dc2088c704893fba37ffb9533701d6",
+    "mining_goal": "faf1dbd8ea435643601158a593a8fb59ce46c8a12d201df3bff91cdc8e603d97",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
-    "mining_team": "8606d10b906b684941e1fadc01e54779406542a4588447adf245e7577118eaa6",
+    "mining_team": "5b4d59ec521c607971fee7d4fb62c0184ab14eaa1ec6921658e35e3ba8380aea",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
     "fip_original": "9c598341d1b0e59753bc0134509908b4698209cfff0b95c22f973f655b868296",
     "fip_calendar_correction": "33d2d80372b6c433688dbbcabcc49f2a458989a633ed783c0c2fa42d6f824695",
@@ -14820,7 +14835,8 @@
     "small_capital_cost_first": "5832ed7345b53da32aaae3b1e263ac2a0a217ca214a38f41e53f15d103821242",
     "fund_flows_and_rates": "518f4c549d0296340cc1447a777948eff89a596e1c42e23f4cea59353d253a60",
     "weekly_fund_creations": "c59420d2742720a022383397936cb9bde77174d98591833b87e6b342e2c35158",
-    "gold_flow_historical_coverage": "04fb3182bbe2ef2a8edd13745b640848e90df291e1b69bf8e7e11a1c5b4a3081"
+    "gold_flow_historical_coverage": "04fb3182bbe2ef2a8edd13745b640848e90df291e1b69bf8e7e11a1c5b4a3081",
+    "listed_gold_and_cftc_clock": "5a138b33266a8b7121ca0ca46c3f8ed1fafc446b5649deffe3c43dde92d02711"
   },
   "filing_event": {
     "sources": [
