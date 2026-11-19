@@ -17,6 +17,57 @@ def read(path):return json.loads(path.read_text(encoding='utf-8-sig'))
 def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 def clean(text):return re.sub(r'\[([^\]]+)\]\([^)]+\)',r'\1',text).replace('`','').replace('**','').strip()
 
+
+def filing_event_projection():
+    source_path=MINING/'acceptance/FILING-SOURCE-v208-v210-ROOT-v1.json'
+    event_path=MINING/'acceptance/FILING-EVENT-v211-ROOT-v1.json'
+    if not source_path.exists():return None
+    def checked(path,expected):
+        record=read(path)
+        assert record['decision']==expected and record['pins'] and not record.get('TEST_ONLY')
+        for name,h in record['pins'].items():
+            local=(ROOT/name).resolve()
+            assert local.is_relative_to(ROOT) and digest(local)==h,name
+        return record
+    source=checked(source_path,'ACCEPT_EIGHT_FIXED_EDGAR_SOURCE_CELLS_ONLY')
+    fact_path=ROOT/'reports/us-filing-coverage-20261119-v210/FACTS.json'
+    assert fact_path.relative_to(ROOT).as_posix() in source['pins']
+    facts=read(fact_path)['facts']
+    cells=[{k:r[k] for k in ('issuer','year','accepted_et','official_index','eps_change')} for r in facts]
+    assert len(cells)==8 and all(r['official_index'].startswith('https://www.sec.gov/Archives/') for r in cells)
+    event=None
+    comparison=None
+    if event_path.exists():
+        review=checked(event_path,'ACCEPT_EIGHT_CELL_EVENT_DIAGNOSTIC_ONLY')
+        assert review['goal_status']=='ACTIVE' and review['stable_profitability_proven'] is False
+        event=review['site_filing_event']
+        assert event['net_account_hkd'] is None and event['real_orders']==0 and event['horizon_sessions']==20
+        assert {(r['issuer'],str(r['year'])) for r in event['rows']}=={(r['issuer'],str(r['year'])) for r in cells}
+        comparison_path=MINING/'acceptance/FILING-EVENT-v211-EQUAL-OPPORTUNITY.json'
+        if comparison_path.exists():
+            supplement=read(comparison_path)
+            assert supplement['source_sha256']==digest(event_path) and supplement['denominator']==len(cells)
+            assert supplement['skip_assumed_cash_return_pct']==0
+            comparison=next(r for r in supplement['rows'] if r['round_trip_cost_pct']==.5)
+    return dict(sources=cells,result=event,equal_opportunity=comparison,event_tests=int(event is not None),
+                source_files=source['source_files_verified'],confirmed_first_public_minutes=source['confirmed_first_public_minutes'])
+
+
+def november18_attribution():
+    folder=MINING/'paper-nov18-20261119'
+    note=folder/'FIRST-DAY-ATTRIBUTION.md'
+    if not note.exists():return []
+    arms=read(folder/'ROOT-CONTINUATION-v1.json')['site_diversified_paper']['arms']
+    rows=[]
+    for line in note.read_text('utf-8').splitlines():
+        if not re.match(r'^\| (20000|30000) \|',line):continue
+        capital,cost,fx,move,slip,fee,net=[c.strip().replace('**','') for c in line.strip('|').split('|')]
+        match=next(a for a in arms if a['capital_hkd']==int(capital) and a['cost']=={'基础':'base','压力':'pressure'}[cost])
+        assert match['net_hkd']==net and abs(sum(map(float,[fx,move,slip,fee]))-float(net))<.021
+        rows.append(dict(capital=capital,cost=cost,fx=fx,move=move,slip=slip,fee=fee,net=net))
+    assert len(rows)==4
+    return rows
+
 def accepted_us_factor_reports():
     """Read root-reviewed fixed rejections, including thin-runner outputs."""
     accepted=[]
@@ -1405,17 +1456,22 @@ def main():
     for owner in current_work['owners']:
         if owner['name']=='两套固定纸面':owner.update(name='三套固定纸面',status='snapshot',task=paper_progress)
     amihud=accepted_amihud_review()
+    filing_event=filing_event_projection() if args.focus=='mining' else None
     if args.focus=='mining':
         team=read(MINING/'TEAM.json')
         checking=args.activity in ['preparing','checking']
         filing_active=checking and any(o['status']=='ACTIVE' and any('us-filing-source-pilot-20261119-v208/' in p for p in o['write_paths']) for o in team['owners'])
-        filing_task='美股财报披露时点与同比盈利数据可行性核查中；尚未测收益，不增加已验收因子或期限。' if filing_active else None
-        if filing_task:current_work['owners'].append(dict(name='下一候选来源可行性',status='active',task=filing_task))
+        if filing_event:
+            filing_task=('四家公司八份原始公告已核实。20日事件诊断已完成，下方可查看每一例及费用敏感性。'
+                         if filing_event['result'] else '四家公司八份原始公告已核实。20日事件诊断等待验收。')
+        else:
+            filing_task='正在核对美股财报披露时点与当期公告中的盈利数据。' if filing_active else None
+        if filing_task:current_work['owners'].append(dict(name='美股财报事件',status='snapshot' if filing_event else 'active',task=filing_task))
         root_running=checking and any(o['owner']=='/root' and o['status']=='ACTIVE' for o in team['owners'])
         audit_running=checking and any(o['status']=='ACTIVE' and any('v187/' in p for p in o['write_paths']) for o in team['owners'])
         current_work['owners']=[o for o in current_work['owners'] if o['name']!='主会话核验与发布']
         current_work['owners'].append(dict(name='主会话核验与发布',status='active' if root_running else 'snapshot',
-            task='同步TIP固定后段结论、实际日期纸面接续与下一因子审核状态；当前观察日期见纸面区，系统实际订单0。'))
+            task='同步财报事件检验与三ETF组合的首日成本拆解。' if filing_event else '同步TIP固定后段结论、实际日期纸面接续与下一因子审核状态。'))
         current_work['owners'].append(dict(name='Amihud固定筛选',status='snapshot' if amihud or not audit_running else 'active',
             task=amihud['site_factor']['conclusion'] if amihud else 'Amihud固定训练已首跑，独立审计与root验收尚未完成；不展示作者指标，也不增加已验收信号或期限。'))
         activity_text=f"总目标运行中，稳定盈利尚未证实；历史候选交付仍只是里程碑。当前已验收{factor_research['unique_new_signals']}个信号、{factor_research['planned_horizon_trials']}个预定期限。"
@@ -1426,7 +1482,7 @@ def main():
         elif tip_account_review:activity_text+='TIP固定2015—2019一次持有的A段条件历史已独立核对并由root接受；这是五年累计模型结果，B段仅准备、尚未经济检验，不是稳定盈利或新增IC因子。'
         elif tip_source_work:activity_text+='TIP通胀挂钩国债固定A段源已接受，账户结果等待root接受，不展示作者收益；B段仅准备、尚未经济检验。'
         activity_text+=paper_progress
-        if filing_task:activity_text+='当前下一步：'+filing_task
+        if filing_task:activity_text=filing_task+' '+activity_text
     source_paths={'nasdaq':'v103-review/FINAL-REVIEW-v1.json','dividend':'v102-review/FINAL-REVIEW-v1.json','sp500_source':'v106-sp500-development-source/SOURCE-QUALIFICATION-v1.json'}
     if accepted.exists():source_paths['sp500_accepted']=str(accepted.relative_to(TEAM))
     if small_accepted.exists():source_paths['small_nasdaq_accepted']=str(small_accepted.relative_to(TEAM))
@@ -1471,6 +1527,9 @@ def main():
         stage_details[1]+='；TIP B固定后段筛退'
     if args.focus=='mining':
         activity_active=args.activity in ['preparing','checking'] and any(s=='active' for s in stage_status)
+    if filing_event:
+        stage_names[3]='财报事件核验与同步'
+        stage_details[3]=filing_task
     extra_sources={
         'mining_goal':MINING/'GOAL.md','mining_scope':MINING/'GOAL-SCOPE-ADDENDUM-v1.json','mining_team':MINING/'TEAM.json',
         'fip_protocol':MINING/'PROTOCOL-v1.json','fip_original':MINING/'RESULT-v1.json','fip_calendar_correction':MINING/'calendar-correction-v2/RESULT.json',
@@ -1521,6 +1580,10 @@ def main():
     extra_sources['v148_root_review']=MINING/'acceptance/SGOV-QII-v148-ROOT-REVIEW-v1.json'
     extra_sources['v148_classification']=ROOT/'reports/us-cash-tax-fee-source-owner-20261118-v148/SGOV-QII-QUALIFICATION-v2.json'
     extra_sources['v148_source_findings']=ROOT/'reports/us-cash-tax-fee-source-owner-20261118-v148/SOURCE-FINDINGS-v1.md'
+    if filing_event:
+        for filename in ['FILING-SOURCE-v208-v210-ROOT-v1.json','FILING-EVENT-v211-ROOT-v1.json','FILING-EVENT-v211-EQUAL-OPPORTUNITY.json']:
+            path=MINING/'acceptance'/filename
+            if path.exists():extra_sources[path.stem]=path
     extra_sources['v149_root_acceptance']=MINING/'acceptance/FORWARD-EVALUATION-v149-ROOT-ACCEPTANCE-v1.json'
     extra_sources['v149_root_completion']=MINING/'acceptance/FORWARD-EVALUATION-v149-ROOT-COMPLETION-v1.json'
     for key,filename in [('v170_layered_measurement','FORWARD-METHOD-v167-v170-ROOT-ACCEPTANCE-v1.json'),('v169_flot_preflight','FLOT-v169-ROOT-REVIEW-v1.json'),('v172_flot_source','FLOT-SOURCE-v172-ROOT-REVIEW-v1.json'),('v173_exit_measurement','FORWARD-EXIT-v171-v173-ROOT-REVIEW-v1.json'),('v175_flot_history','FLOT-ACCOUNT-v174-v175-ROOT-REVIEW-v1.json')]:
@@ -1598,6 +1661,8 @@ def main():
       factor_archive=dict(count=len(archive['factors']) if archive else 0,source_date='2026-11-03',
                           note=f"其中500条为30种基础表达式的模板组合，不是538个有效因子。旧US缓存发现拆股阶跃，相关旧条目未获本轮资格认证；原IC和原结论保留。与已验收的{factor_research['unique_new_signals']}个信号分开计数。"),
       source_hashes={**{k:digest(TEAM/v) for k,v in source_paths.items()},**{k:digest(v) for k,v in extra_sources.items()}})
+    payload['filing_event']=filing_event
+    payload['nov18_cost_attribution']=november18_attribution() if diversified['activated'] else []
     OUT.mkdir(exist_ok=True,parents=True);(OUT/'assets').mkdir(exist_ok=True)
     if tip_account_review:render_tip_history_chart(tip_account_review)
     if tip_B_account_review:render_tip_continuation_chart(tip_B_account_review)

@@ -24,6 +24,17 @@
         <article id="hk-usd-activity-update" class="study" hidden><div class="study-head"><h3>03196 · 2024成交活跃度</h3><span class="badge review">执行预筛未通过</span></div><p id="hk-usd-activity-summary"></p><div id="hk-usd-activity-meter" role="img" style="height:14px;border-radius:8px;overflow:hidden;background:#dbe1e8"><span id="hk-usd-activity-positive" style="display:block;height:100%;background:#387b86"></span></div><p id="hk-usd-activity-count" class="caption"></p><p id="hk-usd-activity-limits" class="caption"></p></article>
       </div>
     </section>
+    <section id="filing-event" class="evidence" hidden aria-labelledby="filing-title">
+      <div class="section-heading"><h2 id="filing-title">财报公布后，盈利增长的股票跑赢了吗？</h2><span id="filing-stage" class="badge review"></span></div>
+      <p id="filing-summary"></p><p id="filing-timing" class="caption"></p>
+      <dl id="filing-metrics" class="paper-facts" aria-label="买入组20个交易日平均表现"></dl>
+      <p id="filing-verdict"></p>
+      <p id="filing-equal"></p>
+      <details><summary>查看八次公告与逐次比较</summary>
+        <div class="table-wrap" tabindex="0" aria-label="八次财报事件对照，可横向滚动"><table><caption>日期按纽约时间；EPS同比为每股美元。最后一列为股票减去同池的毛收益差，单位为百分点。</caption><thead><tr><th>公告原件</th><th>EPS同比变化</th><th>信号</th><th>入场参考日</th><th>退出参考日</th><th>股票毛收益</th><th>同池毛收益</th><th>毛收益差</th></tr></thead><tbody id="filing-rows"></tbody></table></div>
+      </details>
+      <p id="filing-next" class="caption"></p>
+    </section>
     <section id="factor-section" hidden aria-labelledby="factor-title"><div class="section-heading"><h2 id="factor-title">已算因子 · 有效性结论</h2><a href="#records" id="archive-link">查看旧因子目录</a></div><p id="factor-summary" class="chart-note"></p><div id="factor-list" class="factor-list"></div><p id="factor-limits" class="caption"></p></section>
     <section id="evidence-section" class="evidence" hidden aria-labelledby="evidence-title"><div class="section-heading"><h2 id="evidence-title">历史与前向分别看</h2><div role="group" aria-label="证据视图" class="segmented"><button id="history-tab" type="button" aria-pressed="true">历史账户曲线</button><button id="paper-tab" type="button" aria-pressed="false">纸面记录</button></div></div>
       <div id="history-view">
@@ -58,6 +69,9 @@
           <p id="diversified-paper-note"></p>
           <dl class="paper-facts"><div><dt>原T0 · 香港时间</dt><dd id="diversified-origin">—</dd></div><div><dt>首个会话 / 来源截至 · 纽约日</dt><dd id="diversified-source">— / —</dd></div><div><dt>实际观察</dt><dd id="diversified-observation">—</dd></div><div><dt>初始意向 · 完成时间为香港时间</dt><dd id="diversified-intent">—</dd></div></dl>
           <p id="diversified-orders" class="caption">实际订单0；纸面证券成交—。</p>
+          <details id="nov18-cost" hidden><summary>11月18日首次建仓，成本和价格各影响了多少？</summary>
+            <div class="table-wrap" tabindex="0" aria-label="首日记账归因，可横向滚动"><table><caption>港币，分项独立取至分。年度再平衡及一次持有的首日交易相同。</caption><thead><tr><th>本金 · 成本</th><th>换汇与折回估值</th><th>开盘至收盘价格变动</th><th>模拟滑点</th><th>买入费用</th><th>账面净变化</th></tr></thead><tbody id="nov18-rows"></tbody></table></div>
+          </details>
           <p class="caption">表格可横向滑动，查看全部金额、三只ETF股数及状态。</p>
           <div class="table-wrap diversified-table" tabindex="0" aria-label="组合8个相关情景，可横向滚动"><table><caption>权益及增减：港币；已交收现金：美元；股数按SGOV / VTI / GLD分别列示</caption><thead><tr><th scope="col">本金 · 成本 · 规则</th><th scope="col">账面权益</th><th scope="col">账面增减</th><th scope="col">已交收现金</th><th scope="col">SGOV股</th><th scope="col">VTI股</th><th scope="col">GLD股</th><th scope="col">状态</th></tr></thead><tbody id="diversified-paper-rows"></tbody></table></div>
           <p class="caption">这8臂共用市场路径，不能当作8条独立策略或把收益相加。权益保留已计启动换汇与费用；账面正额不等于扣完退出成本后的可兑现净利，正式统计推断未启用。</p>

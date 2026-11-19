@@ -124,6 +124,14 @@ export function validateSnapshot(value) {
     throw new Error('研究快照格式不完整，请稍后刷新。')
   }
   if (['done', 'waiting'].includes(value.activity.status) && value.activity.active_at_snapshot) throw new Error('已交付或等待阶段不能显示进行中动画。')
+  if (value.filing_event) {
+    const {sources, result, event_tests: tests} = value.filing_event
+    if (sources.length !== 8 || !sources.every(s => /^https:\/\/www\.sec\.gov\/Archives\//.test(s.official_index)) ||
+        tests !== Number(Boolean(result)) || result && (result.rows.length !== 8 || result.cells !== 8 || result.issuers !== 4 ||
+        result.horizon_sessions !== 20 || result.net_account_hkd !== null || result.real_orders !== 0)) {
+      throw new Error('财报事件来源或验收数据不完整。')
+    }
+  }
   if (value.current_work?.goal_status === 'ACTIVE') {
     if (value.current_work.stable_profitability_proven !== false || !['delivered', 'pending'].includes(value.current_work.candidate_milestone_status)) throw new Error('持续研究目标与候选里程碑必须分列。')
     if (value.stages.every(s => s.status === 'done')) throw new Error('总目标运行中，不能把全部证据阶段显示为完成。')
@@ -326,6 +334,45 @@ if (typeof document !== 'undefined') {
     }
     find('work-note').textContent = data.current_work?.note ?? ''
   }
+  function renderFiling(data) {
+    const events = data.filing_event
+    find('filing-event').hidden = !events
+    if (!events) return
+    const r = events.result
+    const amount = x => Number.isFinite(x) ? (x > 0 ? '+' : '') + x.toFixed(2) : '—'
+    find('filing-stage').textContent = r ? '20日历史小样本' : '八份公告已核实'
+    find('filing-summary').textContent = r
+      ? `4家公司、2个报季，共${r.cells}次公告。每股盈利同比增加时买入，${r.completed_entries}次有可比结果，其中${r.wins_gross_excess}次跑赢同日股票池。`
+      : '已核对4家公司在2015和2019年的8次盈利披露，20日收益诊断待验收。'
+    find('filing-timing').textContent = r?.source_note_zh ?? '8-K收件日后的下一交易日开盘为入场参照。'
+    find('filing-metrics').replaceChildren()
+    find('filing-metrics').hidden = !r
+    if (r) {
+      for (const [title, value] of [['股票减同池 · 毛差', r.mean_excess_pct], ['扣往返0.20%后', r.mean_excess_after_20bp_pct], ['扣往返0.50%后', r.mean_excess_after_50bp_pct], ['全部公告的毛差',r.unfiltered_event_mean_excess_pct]]) {
+        const pair = element('div')
+        pair.append(element('dt', title), element('dd', amount(value) + ' 个百分点'))
+        find('filing-metrics').append(pair)
+      }
+    }
+    find('filing-verdict').textContent = r?.verdict_zh ?? ''
+    const eq = events.equal_opportunity
+    find('filing-equal').textContent = r && eq
+      ? `对八次机会各分配相同金额，跳过时现金收益按零计，每笔扣往返0.50%费用。只买盈利增长的公告，平均收益为${amount(eq.buy_positive_equal_opportunity_pct)}%；每次公告都买为${amount(eq.buy_all_equal_opportunity_pct)}%。筛选少赚了${Math.abs(eq.filter_minus_unfiltered_pp).toFixed(2)}个百分点。此处按事件分别核算，资金重叠及换汇尚未建模。` : ''
+    find('filing-rows').replaceChildren()
+    for (const s of events.sources) {
+      const result = r?.rows.find(v => v.issuer === s.issuer && Number(v.year) === Number(s.year))
+      const tr = element('tr'), td = element('td'), a = element('a', s.issuer + ' · ' + s.year)
+      a.href = s.official_index; a.target = '_blank'; a.rel = 'noopener'; td.append(a); tr.append(td)
+      const pct = v => Number.isFinite(v) ? amount(v) + '%' : '—'
+      for (const value of [amount(Number(s.eps_change)), result ? result.buy ? '买入' : '不买 · 对照' : '待验收',
+        result?.entry ?? '—',result?.exit ?? '—',pct(result?.stock_gross_pct),pct(result?.pool_gross_pct),amount(result?.excess_pct)]) {
+        tr.append(element('td', value))
+      }
+      find('filing-rows').append(tr)
+    }
+    find('filing-next').textContent = r ? '预定扩样覆盖同四家公司2016—2018年的48个财季，先核对当时可得的公告，再与全部公告比较。当前结果只计一次事件检验；现金账户净利和回撤尚未计算。' : ''
+  }
+
   function renderFactors(data) {
     const research = data.factor_research
     find('factor-section').hidden = !research
@@ -585,6 +632,14 @@ if (typeof document !== 'undefined') {
     const intentStatus = p.intent.timely === true ? '已及时固化' : p.intent.timely === false ? '未及时' : '尚无'
     find('diversified-intent').textContent = p.activated ? `${shown(p.intent.date)} · ${intentStatus}；${time(p.intent.completed_utc)}` : '—'
     find('diversified-orders').textContent = `实际订单 ${p.actual_orders}；纸面证券成交 ${shown(p.security_trades)}。`
+    const costs = data.nov18_cost_attribution ?? []
+    find('nov18-cost').hidden = !costs.length
+    find('nov18-rows').replaceChildren()
+    for (const c of costs) {
+      const tr = element('tr')
+      for (const val of [c.capital + ' · ' + c.cost, c.fx, c.move, c.slip, c.fee, c.net]) tr.append(element('td',val))
+      find('nov18-rows').append(tr)
+    }
     find('diversified-paper-rows').replaceChildren()
     for (const arm of p.arms) {
       const row = element('tr'), unknown = arm.status === 'UNKNOWN'
@@ -616,7 +671,7 @@ if (typeof document !== 'undefined') {
       const item = element('li', stage.name, `stage ${stage.status}`)
       item.append(element('small', stage.detail ?? names[stage.status] ?? stage.status)); find('stages').append(item)
     }
-    renderWork(data); renderPortfolio(data); renderFactors(data); renderEvidenceUpdates(data); renderSgovHistory(data); renderTipHistory(data); renderTipContinuation(data); renderCards(data); renderPaper(data); renderRecords()
+    renderWork(data); renderFiling(data); renderPortfolio(data); renderFactors(data); renderEvidenceUpdates(data); renderSgovHistory(data); renderTipHistory(data); renderTipContinuation(data); renderCards(data); renderPaper(data); renderRecords()
     if (selectedEvidenceView === null) selectEvidenceView(data.default_evidence_view === 'paper' ? 'paper' : 'history')
     find('research-note').textContent = data.research_note
     find('baseline-note').textContent = `同为3万初始资金，基础成本月度版历史标记 ${money(data.baseline.monthly_base_net_hkd)} 港元，报价回撤约 ${data.baseline.monthly_base_risk_pct.toFixed(2)}%；被动参考 ${money(data.baseline.passive_base_net_hkd)} 港元、约 ${data.baseline.passive_base_risk_pct.toFixed(2)}%。未证明稳定独立超额收益。`
