@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-19T23:38:15.063779+08:00",
+  "updated_at": "2026-11-19T23:53:44.545847+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
@@ -8958,7 +8958,7 @@
     "milestone_label": "历史候选交付完成（里程碑）",
     "evidence_label": "稳定盈利与持续性尚未证实",
     "task": "T-012",
-    "team_updated_at": "2026-11-19T23:38:14+08:00",
+    "team_updated_at": "2026-11-19T23:53:44+08:00",
     "active_work": {
       "account": false,
       "registration": false,
@@ -9041,6 +9041,26 @@
         "name": "美股 SGOV／VTI／GLD · 调仓门槛",
         "status": "snapshot",
         "task": "月度偏离 5 个百分点才调仓。1 万档 32 次触发却没有调仓；2 万／3 万档压力净额虽为正，均低于买入后持有的同成本对照。固定规则筛退，留存期未跑。"
+      },
+      {
+        "name": "美股 VTI · VIX 期限倒挂月度规则",
+        "status": "snapshot",
+        "task": "108 次决策、7 段目标现金。1 万／2 万／3 万压力净额 +3098.00／+6935.01／+10930.81 港币，回撤约 11.5%，但只保留静持净收益的 58.54%–61.33%，规则筛退。"
+      },
+      {
+        "name": "美股 VIX 期限 · 历史版本与归因",
+        "status": "snapshot",
+        "task": "92／108 次决策的指数值有开盘前日期级记录。9 个目标现金月 VTI 有 6 个上涨，平均原价涨约 2.00%。1 万档日均实际股票比重 35.26%，静持 50.88%。留存未运行。"
+      },
+      {
+        "name": "港股 VHSI · 香港波动率资料",
+        "status": "snapshot",
+        "task": "香港 30／90 日波动率官方配对未核到。已核 2015–2021 年 1725 条恒生价格指数日收，2022–2023 缺 489 个第一方逐日收盘。未计算策略收益。"
+      },
+      {
+        "name": "美股 USMV · 低波宽基分派资料",
+        "status": "snapshot",
+        "task": "从发行人同一基金原表核对 2015–2023 年 37 条分派的除息、登记、支付日期及金额。当前未计算该基金的策略收益。"
       },
       {
         "name": "港股 03081 · 上市份额四周净创设",
@@ -14382,7 +14402,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-19T23:38:16.457182+08:00",
+    "checked_at": "2026-11-19T23:53:45.949852+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -14614,7 +14634,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-19T23:38:15.535002+08:00",
+    "checked_at": "2026-11-19T23:53:45.002996+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -14708,9 +14728,9 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "faf1dbd8ea435643601158a593a8fb59ce46c8a12d201df3bff91cdc8e603d97",
+    "mining_goal": "d8621edb4cc47c72d6f837cceb769b77487dcf5419f6682f1d697713df133d99",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
-    "mining_team": "5b4d59ec521c607971fee7d4fb62c0184ab14eaa1ec6921658e35e3ba8380aea",
+    "mining_team": "c21f2ce0f54b3b39118f7eb271e5d70d1b19542633f784e0f9b63a63c6487323",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
     "fip_original": "9c598341d1b0e59753bc0134509908b4698209cfff0b95c22f973f655b868296",
     "fip_calendar_correction": "33d2d80372b6c433688dbbcabcc49f2a458989a633ed783c0c2fa42d6f824695",
@@ -14836,7 +14856,8 @@
     "fund_flows_and_rates": "518f4c549d0296340cc1447a777948eff89a596e1c42e23f4cea59353d253a60",
     "weekly_fund_creations": "c59420d2742720a022383397936cb9bde77174d98591833b87e6b342e2c35158",
     "gold_flow_historical_coverage": "04fb3182bbe2ef2a8edd13745b640848e90df291e1b69bf8e7e11a1c5b4a3081",
-    "listed_gold_and_cftc_clock": "5a138b33266a8b7121ca0ca46c3f8ed1fafc446b5649deffe3c43dde92d02711"
+    "listed_gold_and_cftc_clock": "5a138b33266a8b7121ca0ca46c3f8ed1fafc446b5649deffe3c43dde92d02711",
+    "vix_curve_vti_historical": "2cb42e3b2c932254b055360cfad0c5ab67610a832c3785948d8c70c45edb3a46"
   },
   "filing_event": {
     "sources": [
