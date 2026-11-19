@@ -5,7 +5,7 @@
   <meta name="description" content="港美个股及普通ETF的小资金研究：新因子有效性、条件历史账户、当前分工与真实日期纸面记录。">
   <title>港美因子与账户研究 · 研究进展</title>
   <link rel="stylesheet" href="progress.css?v=20261118-199-1">
-  <script type="module" src="progress.mjs?v=20261119-251"></script>
+  <script type="module" src="progress.mjs?v=20261119-259"></script>
 </head>
 <body>
   <header class="masthead"><a class="brand" href="../">港股量化 <span>/ 账户研究</span></a><nav aria-label="页面导航"><a href="#factor-section">新因子结论</a><a href="#results-section">全部账户策略</a><a href="../#/validation">验证说明</a><a href="../#/lab/research">因子研究</a><a href="#records">研究记录</a></nav></header>
@@ -45,6 +45,19 @@
       </details>
       <p id="merger-result"></p>
       <p id="merger-links"></p>
+    </section>
+    <section id="ief-study" class="evidence" hidden aria-labelledby="ief-title">
+      <div class="section-heading"><h2 id="ief-title">联储预定降息后持有 IEF</h2><span class="badge review">固定规则筛退</span></div>
+      <p id="ief-verdict"></p>
+      <div class="table-wrap" tabindex="0" aria-label="IEF 三档本金历史账户，表格可横向滚动">
+        <table>
+          <caption>富途日线，30% 分派预扣情景。金额为港币，匹配差额按每个窗口平均。</caption>
+          <thead><tr><th scope="col">本金</th><th scope="col">基础净额</th><th scope="col">压力净额</th><th scope="col">压力回撤</th><th scope="col">压力匹配差额</th></tr></thead>
+          <tbody id="ief-rows"></tbody>
+        </table>
+      </div>
+      <p class="caption">压力情景包含更大的换汇价差、交易滑点和资金到账延迟。账户只使用已交收现金，结果来自历史模拟。</p>
+      <p id="ief-links"></p>
     </section>
     <section id="form4-source" class="evidence" hidden aria-labelledby="form4-title">
       <div class="section-heading"><h2 id="form4-title">内部人买入披露能确认交易场所吗？</h2><span class="badge review">Form 4 来源试点</span></div>
