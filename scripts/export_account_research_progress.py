@@ -20,6 +20,8 @@ MERGER_RECEIPT=MINING/'acceptance/US-CASH-MERGER-v230-v232-ROOT-v1.json'
 CIVITAS_RECEIPT=MINING/'acceptance/US-CASH-MERGER-CIVITAS-NO-OPEN-v1.json'
 MERGER_EXECUTION_CHECKS=MINING/'acceptance/US-MERGER-EXECUTION-CHECKS-v1.json'
 MERGER_REVIEW_RECEIPT=MINING/'acceptance/US-MERGER-v234-v236-ROOT-v1.json'
+MERGER_CLOSEOUT_RECEIPT=MINING/'acceptance/US-MERGER-v242-v244-ROOT-v1.json'
+PDBC_PREFLIGHT_RECEIPT=MINING/'acceptance/PDBC-2015-v245-ROOT-v1.json'
 OUT=ROOT/'portfolio-board/public/research-progress'
 def read(path):return json.loads(path.read_text(encoding='utf-8-sig'))
 def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -84,7 +86,33 @@ def merger_review_projection():
     keys=('proxy_document_classifications_total','proxy_residual_reviewed','remaining_vote_documents_retrieved',
         'remaining_vote_documents_classified','remaining_vote_only_routed','negative_fee_floor_scenarios',
         'near_zero_positive_fee_floor_scenarios','fee_floor_capital_scenarios')
-    return {key:record[key] for key in keys}
+    result={key:record[key] for key in keys}
+    if MERGER_CLOSEOUT_RECEIPT.exists():
+        closeout=read(MERGER_CLOSEOUT_RECEIPT)
+        assert closeout['decision']=='ENUMERATED_VOTES_RECONCILED_EXECUTION_INCOMPLETE' and closeout['pins']
+        for name,expected in closeout['pins'].items():
+            path=(ROOT/name).resolve()
+            assert path.is_relative_to(ROOT) and digest(path)==expected,name
+        assert closeout['portfolio_economic_tests']==0 and closeout['new_qualified_after_v231']==0
+        assert closeout['reviewed_inc_v236']+closeout['remaining_in_v236_queue']==result['remaining_vote_documents_retrieved']
+        result['remaining_vote_documents_classified']=closeout['reviewed_inc_v236']
+        result['remaining_vote_only_routed']=closeout['remaining_in_v236_queue']
+        public_fields=('pacb_exit_quote_observations','pacb_ftc_case','idti_open_display_usd','idti_exchange_notice')
+        result['closeout']={key:closeout[key] for key in public_fields}
+    return result
+
+
+def pdbc_preflight_projection():
+    if not PDBC_PREFLIGHT_RECEIPT.exists():
+        return None
+    receipt=read(PDBC_PREFLIGHT_RECEIPT)
+    assert receipt['decision']=='NO_ADVANCE_UNFILTERED_FULL_EXPOSURE' and receipt['pins']
+    for name,expected in receipt['pins'].items():
+        path=(ROOT/name).resolve()
+        assert path.is_relative_to(ROOT) and digest(path)==expected,name
+    assert receipt['account_backtests']==0
+    assert [row['capital_hkd'] for row in receipt['tiers']]==[10000,20000,30000]
+    return receipt
 
 
 def form4_projection():
@@ -1606,6 +1634,7 @@ def main():
     merger_execution_control=civitas_projection() if merger else None
     merger_cost_control=merger_cost_projection() if merger else None
     merger_review=merger_review_projection() if merger else None
+    pdbc_preflight=pdbc_preflight_projection() if args.focus=='mining' else None
     if args.focus=='mining':
         team=read(MINING/'TEAM.json')
         checking=args.activity in ['preparing','checking']
@@ -1708,8 +1737,21 @@ def main():
             extra_sources['merger_cost_control']=MERGER_EXECUTION_CHECKS
         if merger_review:
             extra_sources['merger_review_progress']=MERGER_REVIEW_RECEIPT
+        if merger_review and 'closeout' in merger_review:
+            extra_sources['merger_vote_closeout']=MERGER_CLOSEOUT_RECEIPT
+            merger_task='试点补查的 122 份投票申报已全部核过，新增合格事件为 0。PacBio 两个退出日期已对照两家行情发布方，仍需核对可执行性与现金到帐。'
+        elif merger_review:
+            merger_task='已完成 125 份代理书分类，并从 122 份补取的投票申报提取正文。继续核对 106 份仅分诊的投票材料及可执行价格。'
+        else:
+            merger_task='正在核对 2019 年第一季度股东批准样例、并购终局和可执行行情。'
         current_work['owners'].append(dict(name='美股现金并购',status='snapshot',
-            task='已完成 125 份代理书分类，并从 122 份补取的投票申报提取正文。继续核对 106 份仅分诊的投票材料及可执行价格。' if merger_review else '正在核对 2019 年第一季度股东批准样例、并购终局和可执行行情。'))
+            task=merger_task))
+    if pdbc_preflight:
+        extra_sources['pdbc_risk_preflight']=PDBC_PREFLIGHT_RECEIPT
+        losses='、'.join(f"{float(row['mark_change_hkd']):,.0f}" for row in pdbc_preflight['tiers'])
+        current_work['owners'].append(dict(name='PDBC 商品 ETF',status='snapshot',
+            task=f'2015 年两个价格端点由富途 OpenD 与 Yahoo 对照。在固定汇率下，1 万、2 万、3 万港币三档的整股市值变化分别约为 {losses} 港币，均低于 −20%。全仓持有未通过风险初筛。'))
+    if merger:
         current_work['owners'].append(dict(name='03086 · 11月19日纸面',status='snapshot',
             task='香港时间09:00前的登记缺失。按11月18日可用资料只读核算，11月19日为非月度复核日，四组均持现金，规则未安排买卖。16:30才取完整日线。'))
     for name,file in [('continuous_goal','GOAL-CONTINUOUS-v2.md'),('restored_goal_receipt','GOAL-RESTORED-RECEIPT-v2.json')]:

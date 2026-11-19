@@ -346,11 +346,14 @@ if (typeof document !== 'undefined') {
     find('merger-source').hidden = !source
     if (!source) return
     const review = data.merger_review
+    const closeout = review?.closeout
     const proxyStatus = review
       ? `${review.proxy_document_classifications_total} 份均已按议案、条款或计划日期分类。补审 ${review.proxy_residual_reviewed} 份未发现新候选。原有 ${source.proxy_vote_candidates} 个候选有批准结果。`
       : `已分类 ${source.proxy_classified} 份，识别 ${source.proxy_vote_candidates} 个有批准结果的固定现金候选。还有 ${source.proxy_open} 份待分类。`
     find('merger-proxy').textContent = `以 2019 年第一季度公开投票结果为试点。代理申报目录覆盖 2018 年第四季度 ${source.q4_proxy} 份、2019 年第一季度 ${source.q1_proxy} 份，共 ${source.proxy_roster} 份，${source.proxy_available} 份原件可读。${proxyStatus}`
-    const voteStatus = review
+    const voteStatus = closeout
+      ? `补查的 ${review.remaining_vote_documents_retrieved} 份均已逐件核对，新增合格事件 0。结论覆盖本轮列出的申报。`
+      : review
       ? `补查的 ${review.remaining_vote_documents_retrieved} 份均已提取投票段落，其中 ${review.remaining_vote_documents_classified} 份已逐件核对，${review.remaining_vote_only_routed} 份仍待确认。`
       : `合并后还有 ${source.vote_unreviewed_accessions} 个待逐件人工核查。`
     find('merger-vote').textContent = `投票关键词筛查命中 merger ${source.vote_merger_docs} 件文档、acquisition ${source.vote_acquisition_docs} 件文档。合并去重后有 ${source.vote_union_docs} 件文档，分属 ${source.vote_union_accessions} 个 SEC 申报编号。两组共同命中 ${source.vote_overlap_accessions} 个申报编号。${voteStatus}`
@@ -361,7 +364,9 @@ if (typeof document !== 'undefined') {
       '完成｜Red Hat、Imperva、athenahealth。',
       '批准后失败｜PacBio 于 2019 年 1 月 24 日获股东批准，2020 年 1 月 2 日宣布终止。',
       '同日终局｜MINDBODY 在同一份 SEC 申报中披露投票结果和收购完成，尚未证实投票结果曾更早公开。',
-      '待核行情｜RHT 的候选开盘报价仍需核对证券身份，终交易日成交量仍需核对。PacBio 的候选入场及终止行情目前各有一个报价来源。ROG 属于样本窗外。'
+      closeout
+        ? `候选报价｜PacBio 的两个退出日期由两个网站核对，开盘日线分别为 ${closeout.pacb_exit_quote_observations.map(row => `${row.date} 的 ${row.open_usd} 美元`).join('、')}。IDTI 次日开盘的 ${closeout.idti_open_display_usd} 美元来自一个报价来源。两者均缺逐笔成交证据。`
+        : '待核行情｜RHT 的候选开盘报价仍需核对证券身份，终交易日成交量仍需核对。PacBio 的候选入场及终止行情目前各有一个报价来源。ROG 属于样本窗外。'
     ]) {
       const item = document.createElement('li')
       item.textContent = detail
@@ -389,6 +394,7 @@ if (typeof document !== 'undefined') {
       ['PacBio 终止申报',source.links.terminated_pacb], ['MINDBODY 投票及完成申报',source.links.mindbody]]
     if (civitas) references.push(['CIVI 纽交所停牌申报',civitas.proof_exchange_source])
     if (cost) references.push(['Imperva 完成公告',cost.offer_link], ['Imperva 日线',cost.quote_link], ['富途标准收费',cost.fee_link])
+    if (closeout) references.push(['PacBio FTC 案卷',closeout.pacb_ftc_case], ['IDTI Nasdaq 停牌公告',closeout.idti_exchange_notice])
     for (const [label, url] of references) {
       if (links.childNodes.length) links.append(' · ')
       const link = document.createElement('a')

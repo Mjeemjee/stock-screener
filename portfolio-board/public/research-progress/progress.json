@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-19T12:54:23.117046+08:00",
+  "updated_at": "2026-11-19T13:19:58.944855+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
@@ -8958,7 +8958,7 @@
     "milestone_label": "历史候选交付完成（里程碑）",
     "evidence_label": "稳定盈利与持续性尚未证实",
     "task": "T-012",
-    "team_updated_at": "2026-11-19T12:45:04.550104+08:00",
+    "team_updated_at": "2026-11-19T13:06:05+08:00",
     "active_work": {
       "account": false,
       "registration": false,
@@ -9060,7 +9060,12 @@
       {
         "name": "美股现金并购",
         "status": "snapshot",
-        "task": "已完成 125 份代理书分类，并从 122 份补取的投票申报提取正文。继续核对 106 份仅分诊的投票材料及可执行价格。"
+        "task": "试点补查的 122 份投票申报已全部核过，新增合格事件为 0。PacBio 两个退出日期已对照两家行情发布方，仍需核对可执行性与现金到帐。"
+      },
+      {
+        "name": "PDBC 商品 ETF",
+        "status": "snapshot",
+        "task": "2015 年两个价格端点由富途 OpenD 与 Yahoo 对照。在固定汇率下，1 万、2 万、3 万港币三档的整股市值变化分别约为 -3,010、-6,020、-9,030 港币，均低于 −20%。全仓持有未通过风险初筛。"
       },
       {
         "name": "03086 · 11月19日纸面",
@@ -14197,7 +14202,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-19T12:54:24.458781+08:00",
+    "checked_at": "2026-11-19T13:20:00.508820+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -14429,7 +14434,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-19T12:54:23.583659+08:00",
+    "checked_at": "2026-11-19T13:19:59.516763+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -14523,9 +14528,9 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "0c7ca5296d8e52e436c1480bd24c5c06dd32494eb5046ec8e2d03d655287549e",
+    "mining_goal": "c1b9efe75b9afb02c0678acbba4cb82f60f4349e8db7861224e32d62355c696c",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
-    "mining_team": "c406f10bcd32cf1da2d5b5bf3b46c9694f1528e024d3a904fa2e22ea586bf470",
+    "mining_team": "8c714f8a1126d31f3d65fe5f887dffaef55e95380b8fd88134c34abfc0277b8b",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
     "fip_original": "9c598341d1b0e59753bc0134509908b4698209cfff0b95c22f973f655b868296",
     "fip_calendar_correction": "33d2d80372b6c433688dbbcabcc49f2a458989a633ed783c0c2fa42d6f824695",
@@ -14541,6 +14546,8 @@
     "merger_civitas_root_acceptance": "f069e855ad059a2015aa523601294c2173892b84396cd8b3c8395393b45304e8",
     "merger_cost_control": "6da6e316af920b4ae0bae41a8f154f15b0df8daffdca70c6e48b10a5fe256059",
     "merger_review_progress": "acc49a00a858c3f5bfa4c5a2b155c83a8302151353585f56088330726c071a3c",
+    "merger_vote_closeout": "ca872055ae1261f65048faade49f62a5ce673b02aaa36032739ed9f1b5e917ac",
+    "pdbc_risk_preflight": "59a74c721ef25cdb6aca7988e84642aef9675c63b97e2c919586dc8cf9df97b8",
     "continuous_goal": "54540eb3e3c9d837cd41b37dae0cbe45a318306b87ab5f6951d184589af7ddff",
     "restored_goal_receipt": "533e3f1709605a5d2dfe70bfb16d724ed5abffe52cf806b5422933305ee72c16",
     "v141_RESULT-v1.json": "4211c36206d0a380ceb82cb5cc18e866bc80064690ed009208f62ec452fb70db",
@@ -14989,11 +14996,28 @@
     "proxy_document_classifications_total": 125,
     "proxy_residual_reviewed": 91,
     "remaining_vote_documents_retrieved": 122,
-    "remaining_vote_documents_classified": 16,
-    "remaining_vote_only_routed": 106,
+    "remaining_vote_documents_classified": 122,
+    "remaining_vote_only_routed": 0,
     "negative_fee_floor_scenarios": 10,
     "near_zero_positive_fee_floor_scenarios": 2,
-    "fee_floor_capital_scenarios": 12
+    "fee_floor_capital_scenarios": 12,
+    "closeout": {
+      "pacb_exit_quote_observations": [
+        {
+          "date": "2019-12-18",
+          "open_usd": "5.06",
+          "displayed_volume": 6338700
+        },
+        {
+          "date": "2020-01-03",
+          "open_usd": "5.15",
+          "displayed_volume": 12272000
+        }
+      ],
+      "pacb_ftc_case": "https://www.ftc.gov/legal-library/browse/cases-proceedings/1910035-illumina-incpacific-biosciences-california-inc-matter",
+      "idti_open_display_usd": "48.35",
+      "idti_exchange_notice": "https://www.nasdaqtrader.com/TraderNews.aspx?id=ECA2019-13"
+    }
   },
   "nov18_cost_attribution": [
     {
