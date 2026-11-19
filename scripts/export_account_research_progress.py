@@ -2441,6 +2441,25 @@ def main():
         if credit_t0.exists():
             activity_text=activity_text.removeprefix(read(credit_t0)['activity_site_summary']+' ')
         activity_text=rotation['activity_site_summary']+' '+activity_text
+    placement_lapse=MINING/'acceptance/HK-PLACING-CANCELLATION-v478-v486-ROOT-v1.json'
+    if args.focus=='mining' and placement_lapse.exists():
+        placement=read(placement_lapse)
+        assert placement['new_paper_accounts']==placement['actual_orders']==0
+        assert all(digest(ROOT/path)==expected for path,expected in placement['pins'].items())
+        extra_sources['hk_placement_lapse']=placement_lapse
+        current_work['owners'][15:15]=[
+            dict(name='港股 · 配售失效公告',status='snapshot',task=placement['source_site_summary']),
+            dict(name='港股配售 · 整手往返成本',status='snapshot',task=placement['cost_site_summary'])]
+        if credit_rotation.exists():
+            activity_text=activity_text.removeprefix(read(credit_rotation)['activity_site_summary']+' ')
+        activity_text=placement['activity_site_summary']+' '+activity_text
+    sgov_nov19=ROOT/'reports/us-sgov-nov19-public-source-recheck-20261120-v488/RESULT-v1.json'
+    if args.focus=='mining' and sgov_nov19.exists():
+        recheck=read(sgov_nov19)
+        assert recheck['verdict']=='UNKNOWN_UNCHANGED' and recheck['original_ledger_writes']==0
+        extra_sources['sgov_nov19_source_recheck']=sgov_nov19
+        current_work['owners'][17:17]=[dict(name='美股 SGOV · 11月19日来源复核',status='snapshot',
+            task='发行人分派记录未变，Nasdaq 尚无19日日线；原T0的UNKNOWN继续保留。')]
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
