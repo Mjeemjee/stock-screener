@@ -2514,6 +2514,20 @@ def main():
         if midland_registration.exists():
             activity_text=activity_text.removeprefix(read(midland_registration)['activity_site_summary']+' ')
         activity_text=usd['activity_site_summary']+' '+activity_text
+    sfc_shorts=MINING/'acceptance/HK-SFC-BREADTH-v521-v526-ROOT-v1.json'
+    if args.focus=='mining' and sfc_shorts.exists():
+        shorts=read(sfc_shorts)
+        assert shorts['new_paper_accounts']==shorts['actual_orders']==0
+        assert all(digest(ROOT/path)==expected for path,expected in shorts['pins'].items())
+        extra_sources['sfc_short_readiness']=sfc_shorts
+        current_work['owners']=[owner for owner in current_work['owners'] if owner['name']!='港股 · 证监会淡仓周报预检']
+        current_work['owners'][15:15]=[
+            dict(name='港股 · 淡仓因子扣费结果',status='snapshot',task=shorts['economic_site_summary']),
+            dict(name='港股 · 淡仓历史整手',status='snapshot',task=shorts['lot_site_summary']),
+            dict(name='港股 · 周报时点及并股',status='snapshot',task=shorts['version_site_summary'])]
+        if us_em_dollar.exists():
+            activity_text=activity_text.removeprefix(read(us_em_dollar)['activity_site_summary']+' ')
+        activity_text=shorts['activity_site_summary']+' '+activity_text
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
