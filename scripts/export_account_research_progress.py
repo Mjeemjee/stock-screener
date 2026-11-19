@@ -2460,6 +2460,19 @@ def main():
         extra_sources['sgov_nov19_source_recheck']=sgov_nov19
         current_work['owners'][17:17]=[dict(name='美股 SGOV · 11月19日来源复核',status='snapshot',
             task='发行人分派记录未变，Nasdaq 尚无19日日线；原T0的UNKNOWN继续保留。')]
+    treasury_frn=MINING/'acceptance/US-TFLO-SGOV-v489-v496-ROOT-v1.json'
+    if args.focus=='mining' and treasury_frn.exists():
+        frn=read(treasury_frn)
+        assert frn['new_paper_accounts']==frn['actual_orders']==0
+        assert all(digest(ROOT/path)==expected for path,expected in frn['pins'].items())
+        extra_sources['us_treasury_frn']=treasury_frn
+        current_work['owners'][15:15]=[
+            dict(name='美股 TFLO／SGOV · 三档持有比较',status='snapshot',task=frn['later_site_summary']),
+            dict(name='美股 TFLO · 较低利率诊断',status='snapshot',task=frn['early_site_summary']),
+            dict(name='港股 ETF · 双柜台成本',status='snapshot',task=frn['hk_site_summary'])]
+        if placement_lapse.exists():
+            activity_text=activity_text.removeprefix(read(placement_lapse)['activity_site_summary']+' ')
+        activity_text=frn['activity_site_summary']+' '+activity_text
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
