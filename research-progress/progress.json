@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-19T10:26:10.034296+08:00",
+  "updated_at": "2026-11-19T10:46:19.020263+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
     "active_at_snapshot": true,
     "focus": "港美持续研究 · 总目标运行中",
-    "text": "总目标运行中，稳定盈利尚未证实；历史候选交付仍只是里程碑。当前已验收11个信号、22个预定期限。Amihud双期限固定排序筛选已独立复核并由root接受，结果与限制见因子区。03196已补上市类KFS与一次公开报价：一手1份；即使港币买卖，分派仍仅付美元且频率由管理人决定。仅补齐部分来源，未算成本后收益或证明可成交。03196的2024年246个会话中，21天有成交记录、225天零成交；预选1月2日买入与12月31日卖出均零量。固定日程执行预筛未通过，不继续计算假定成交后的利润。B固定后段未通过原筛选：主3万压力累计五年模型净W-307.82港币，报价回撤约15.75%，1／5亏损年、27／60负月。本结论只针对2020—2024固定日期、一次持有规则及原成本版本，不代表TIP基金在所有情景下无效。 A段原结果保留；A/B各自起账，不合成为连续账户，不是新增IC因子。TIP固定后段筛退。价格延迟因子固定训练已完成独立复算并由root接受；两期限固定筛选未通过，详见因子区。只新增1个已验收信号与2个预定期限，不代表所有价格延迟机制无效。03086最近实际观察2026-11-18；SGOV最近实际观察2026-11-17；组合已观察1会话，最近2026-11-18。SGOV本次2026-11-18因来源修订冻结，当前估值未知，旧值仅作最近成功记录。三套纸面各自原T0与原本金保持，观察和账面金额随已接受记录接续；系统实际订单0，账面增减不是实际提现，正式统计推断未启用。当前下一步：美股财报披露时点与同比盈利数据可行性核查中；尚未测收益，不增加已验收因子或期限。",
+    "text": "四家公司八份原始公告已核实。20日事件诊断已完成，下方可查看每一例及费用敏感性。 总目标运行中，稳定盈利尚未证实；历史候选交付仍只是里程碑。当前已验收11个信号、22个预定期限。Amihud双期限固定排序筛选已独立复核并由root接受，结果与限制见因子区。03196已补上市类KFS与一次公开报价：一手1份；即使港币买卖，分派仍仅付美元且频率由管理人决定。仅补齐部分来源，未算成本后收益或证明可成交。03196的2024年246个会话中，21天有成交记录、225天零成交；预选1月2日买入与12月31日卖出均零量。固定日程执行预筛未通过，不继续计算假定成交后的利润。B固定后段未通过原筛选：主3万压力累计五年模型净W-307.82港币，报价回撤约15.75%，1／5亏损年、27／60负月。本结论只针对2020—2024固定日期、一次持有规则及原成本版本，不代表TIP基金在所有情景下无效。 A段原结果保留；A/B各自起账，不合成为连续账户，不是新增IC因子。TIP固定后段筛退。价格延迟因子固定训练已完成独立复算并由root接受；两期限固定筛选未通过，详见因子区。只新增1个已验收信号与2个预定期限，不代表所有价格延迟机制无效。03086最近实际观察2026-11-18；SGOV最近实际观察2026-11-17；组合已观察1会话，最近2026-11-18。SGOV本次2026-11-18因来源修订冻结，当前估值未知，旧值仅作最近成功记录。三套纸面各自原T0与原本金保持，观察和账面金额随已接受记录接续；系统实际订单0，账面增减不是实际提现，正式统计推断未启用。",
     "snapshot_only": true,
     "fresh_for_minutes": 15
   },
@@ -27,9 +27,9 @@
       "detail": "保留本次实际原T0"
     },
     {
-      "name": "本轮核验与公开同步",
+      "name": "财报事件核验与同步",
       "status": "active",
-      "detail": "价格延迟因子固定训练已完成独立复算并由root接受；两期限固定筛选未通过，详见因子区。只新增1个已验收信号与2个预定期限，不代表所有价格延迟机制无效。"
+      "detail": "四家公司八份原始公告已核实。20日事件诊断已完成，下方可查看每一例及费用敏感性。"
     },
     {
       "name": "持续前向样本",
@@ -8958,7 +8958,7 @@
     "milestone_label": "历史候选交付完成（里程碑）",
     "evidence_label": "稳定盈利与持续性尚未证实",
     "task": "T-012",
-    "team_updated_at": "2026-11-19T10:22:44.9517912+08:00",
+    "team_updated_at": "2026-11-19T10:42:23.0528887+08:00",
     "active_work": {
       "account": false,
       "registration": false,
@@ -9038,14 +9038,14 @@
         "task": "价格延迟因子固定训练已完成独立复算并由root接受；两期限固定筛选未通过，详见因子区。只新增1个已验收信号与2个预定期限，不代表所有价格延迟机制无效。"
       },
       {
-        "name": "下一候选来源可行性",
-        "status": "active",
-        "task": "美股财报披露时点与同比盈利数据可行性核查中；尚未测收益，不增加已验收因子或期限。"
+        "name": "美股财报事件",
+        "status": "snapshot",
+        "task": "四家公司八份原始公告已核实。20日事件诊断已完成，下方可查看每一例及费用敏感性。"
       },
       {
         "name": "主会话核验与发布",
         "status": "active",
-        "task": "同步TIP固定后段结论、实际日期纸面接续与下一因子审核状态；当前观察日期见纸面区，系统实际订单0。"
+        "task": "同步财报事件检验与三ETF组合的首日成本拆解。"
       },
       {
         "name": "Amihud固定筛选",
@@ -14182,7 +14182,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-19T10:26:11.550886+08:00",
+    "checked_at": "2026-11-19T10:46:20.359785+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -14414,7 +14414,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-19T10:26:10.648908+08:00",
+    "checked_at": "2026-11-19T10:46:19.481257+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -14510,7 +14510,7 @@
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
     "mining_goal": "b0418dc4315f7517b424c3d7cae7f523a6145d83e74b9440a62ccebc80e83fe0",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
-    "mining_team": "3eea03f2dbe4d2ffc5ff6a90e941aa66ab4ab5631378d547c0cce6c8a992fe5a",
+    "mining_team": "9657e4dd7a74804427221fe9e093fb23b1c433b7732c008085471f50a909efbd",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
     "fip_original": "9c598341d1b0e59753bc0134509908b4698209cfff0b95c22f973f655b868296",
     "fip_calendar_correction": "33d2d80372b6c433688dbbcabcc49f2a458989a633ed783c0c2fa42d6f824695",
@@ -14563,6 +14563,9 @@
     "v148_root_review": "93acdfaaf6622e1ad1d0a72a71c14aeb3adb3ed6b5a59885c935fe3666c2828d",
     "v148_classification": "a98f8032c71c96f4e9841378b13154ad8ae7c12658c771a93014178e3d33fa09",
     "v148_source_findings": "111be9d649230a601bddae3ee8c103c67a0a0dac9a91dda6c554d618b0868039",
+    "FILING-SOURCE-v208-v210-ROOT-v1": "8bdf8851716b0c20248315798509d01d7adc47f5f49645efc5905ffa7984b8bb",
+    "FILING-EVENT-v211-ROOT-v1": "d57de0b49b7516fe5ee4b846aa53ea758c9110d4b701ffe57668ff4b68e24819",
+    "FILING-EVENT-v211-EQUAL-OPPORTUNITY": "8b3329adc25cb8b7b38f878f27f4c866f3548718cd33d631c85c835dcc2bb688",
     "v149_root_acceptance": "55eece0cae3b5b37610a79095fec2f7f1036158d5d1e867f34d2f560acae08ef",
     "v149_root_completion": "e0a6c5a6f9564a89550a0f272f9b8ac01e7eb403c915787be583cd5025ca4d21",
     "v170_layered_measurement": "e9db762c72e68afc8df841d2caa77e2d78dc0341cd9920541e17655c650afd5c",
@@ -14598,5 +14601,243 @@
     "sgov_paper_policy": "75e9ba32166823e7b00141e26e2e50ba90a8efc3bdbaf333c1e7d060ada06519",
     "sgov_real_paper_activation": "c09203a9d958455c35c90ac9d58f090cd6b150261eae13de6a41e90b13067044",
     "published_V22_legacy_record_dates": "0eafefa7cb8cf62e1f0b115587cf7ce6af21f7fbedc4ddf8363bb10834b22c6e"
-  }
+  },
+  "filing_event": {
+    "sources": [
+      {
+        "issuer": "ABBV",
+        "year": 2015,
+        "accepted_et": "2015-04-23T07:59:07-04:00",
+        "official_index": "https://www.sec.gov/Archives/edgar/data/1551152/000110465915029533/0001104659-15-029533-index.htm",
+        "eps_change": "0.02"
+      },
+      {
+        "issuer": "ABBV",
+        "year": 2019,
+        "accepted_et": "2019-04-25T07:45:02-04:00",
+        "official_index": "https://www.sec.gov/Archives/edgar/data/1551152/000155115219000012/0001551152-19-000012-index.htm",
+        "eps_change": "-0.09"
+      },
+      {
+        "issuer": "DUK",
+        "year": 2015,
+        "accepted_et": "2015-05-01T07:16:35-04:00",
+        "official_index": "https://www.sec.gov/Archives/edgar/data/1326160/000119312515164160/0001193125-15-164160-index.htm",
+        "eps_change": "1.36"
+      },
+      {
+        "issuer": "DUK",
+        "year": 2019,
+        "accepted_et": "2019-05-09T06:45:16-04:00",
+        "official_index": "https://www.sec.gov/Archives/edgar/data/1326160/000132616019000150/0001326160-19-000150-index.htm",
+        "eps_change": "0.36"
+      },
+      {
+        "issuer": "MA",
+        "year": 2015,
+        "accepted_et": "2015-04-29T08:05:51-04:00",
+        "official_index": "https://www.sec.gov/Archives/edgar/data/1141391/000114139115000027/0001141391-15-000027-index.htm",
+        "eps_change": "0.16"
+      },
+      {
+        "issuer": "MA",
+        "year": 2019,
+        "accepted_et": "2019-04-30T08:02:32-04:00",
+        "official_index": "https://www.sec.gov/Archives/edgar/data/1141391/000114139119000074/0001141391-19-000074-index.htm",
+        "eps_change": "0.39"
+      },
+      {
+        "issuer": "PEP",
+        "year": 2015,
+        "accepted_et": "2015-04-23T07:04:07-04:00",
+        "official_index": "https://www.sec.gov/Archives/edgar/data/77476/000007747615000017/0000077476-15-000017-index.htm",
+        "eps_change": "0.02"
+      },
+      {
+        "issuer": "PEP",
+        "year": 2019,
+        "accepted_et": "2019-04-17T06:05:30-04:00",
+        "official_index": "https://www.sec.gov/Archives/edgar/data/77476/000007747619000039/0000077476-19-000039-index.htm",
+        "eps_change": "0.06"
+      }
+    ],
+    "result": {
+      "cells": 8,
+      "issuers": 4,
+      "horizon_sessions": 20,
+      "positive_signals": 7,
+      "completed_entries": 7,
+      "wins_gross_excess": 6,
+      "mean_stock_gross_pct": 0.9755859245383495,
+      "mean_pool_gross_pct": -0.4592338417936,
+      "mean_excess_pct": 1.4348197663319495,
+      "mean_excess_after_20bp_pct": 1.2348197663319496,
+      "mean_excess_after_50bp_pct": 0.9348197663319495,
+      "nonbuy_cells": 1,
+      "mean_nonbuy_excess_pct": 4.381123479615498,
+      "unique_buy_entry_dates": 6,
+      "unfiltered_event_mean_excess_pct": 1.803107730492393,
+      "by_year": [
+        {
+          "year": 2015,
+          "entries": 4,
+          "mean_excess_pct": 0.22050402886612802
+        },
+        {
+          "year": 2019,
+          "entries": 3,
+          "mean_excess_pct": 3.053907416286378
+        }
+      ],
+      "rows": [
+        {
+          "issuer": "ABBV",
+          "year": 2015,
+          "eps_change": "0.02",
+          "buy": true,
+          "entry": "2015-04-24",
+          "exit": "2015-05-22",
+          "stock_gross_pct": 1.8193127040895662,
+          "pool_gross_pct": 1.0534319653574924,
+          "excess_pct": 0.7658807387320739,
+          "peers": 39
+        },
+        {
+          "issuer": "ABBV",
+          "year": 2019,
+          "eps_change": "-0.09",
+          "buy": false,
+          "entry": "2019-04-26",
+          "exit": "2019-05-24",
+          "stock_gross_pct": 1.7823522028367014,
+          "pool_gross_pct": -2.5987712767787965,
+          "excess_pct": 4.381123479615498,
+          "peers": 39
+        },
+        {
+          "issuer": "DUK",
+          "year": 2015,
+          "eps_change": "1.36",
+          "buy": true,
+          "entry": "2015-05-04",
+          "exit": "2015-06-02",
+          "stock_gross_pct": -1.8934531450577663,
+          "pool_gross_pct": 0.1911175775943455,
+          "excess_pct": -2.0845707226521117,
+          "peers": 39
+        },
+        {
+          "issuer": "DUK",
+          "year": 2019,
+          "eps_change": "0.36",
+          "buy": true,
+          "entry": "2019-05-10",
+          "exit": "2019-06-10",
+          "stock_gross_pct": 1.4286538905564534,
+          "pool_gross_pct": 1.1849824815517367,
+          "excess_pct": 0.24367140900471673,
+          "peers": 39
+        },
+        {
+          "issuer": "MA",
+          "year": 2015,
+          "eps_change": "0.16",
+          "buy": true,
+          "entry": "2015-04-30",
+          "exit": "2015-05-29",
+          "stock_gross_pct": 2.8365650969529086,
+          "pool_gross_pct": 1.14319783854399,
+          "excess_pct": 1.6933672584089186,
+          "peers": 39
+        },
+        {
+          "issuer": "MA",
+          "year": 2019,
+          "eps_change": "0.39",
+          "buy": true,
+          "entry": "2019-05-01",
+          "exit": "2019-05-30",
+          "stock_gross_pct": -0.2471557473519027,
+          "pool_gross_pct": -5.331741432876325,
+          "excess_pct": 5.084585685524422,
+          "peers": 39
+        },
+        {
+          "issuer": "PEP",
+          "year": 2015,
+          "eps_change": "0.02",
+          "buy": true,
+          "entry": "2015-04-24",
+          "exit": "2015-05-22",
+          "stock_gross_pct": 1.5672343537770348,
+          "pool_gross_pct": 1.0598955128014034,
+          "excess_pct": 0.5073388409756314,
+          "peers": 39
+        },
+        {
+          "issuer": "PEP",
+          "year": 2019,
+          "eps_change": "0.06",
+          "buy": true,
+          "entry": "2019-04-18",
+          "exit": "2019-05-17",
+          "stock_gross_pct": 1.3179443188021525,
+          "pool_gross_pct": -2.515520835527843,
+          "excess_pct": 3.8334651543299954,
+          "peers": 39
+        }
+      ],
+      "verdict_zh": "正信号7例，6例跑赢同日对照。唯一不买事件也跑赢4.38个百分点。每笔扣50基点后，2015年平均落后0.28个百分点，2019年领先2.55个百分点。样本只覆盖4家存续大股和两个报季，盈利同比条件的增量价值仍待检验。",
+      "source_note_zh": "8份8-K均于公告日开盘前获SEC接受，按事先规则从下一交易日开盘算起，跳过首次市场反应。每次比较同日另外39只存续大股，分红按毛权益处理。",
+      "net_account_hkd": null,
+      "real_orders": 0
+    },
+    "equal_opportunity": {
+      "round_trip_cost_pct": 0.5,
+      "buy_positive_equal_opportunity_pct": 0.4161376839710558,
+      "buy_all_equal_opportunity_pct": 0.5764317093256435,
+      "filter_minus_unfiltered_pp": -0.16029402535458764
+    },
+    "event_tests": 1,
+    "source_files": 25,
+    "confirmed_first_public_minutes": 0
+  },
+  "nov18_cost_attribution": [
+    {
+      "capital": "20000",
+      "cost": "基础",
+      "fx": "-99.82",
+      "move": "-48.98",
+      "slip": "-8.83",
+      "fee": "-47.07",
+      "net": "-204.70"
+    },
+    {
+      "capital": "20000",
+      "cost": "压力",
+      "fx": "-199.05",
+      "move": "-48.86",
+      "slip": "-17.35",
+      "fee": "-93.29",
+      "net": "-358.54"
+    },
+    {
+      "capital": "30000",
+      "cost": "基础",
+      "fx": "-149.64",
+      "move": "-98.02",
+      "slip": "-14.49",
+      "fee": "-47.38",
+      "net": "-309.54"
+    },
+    {
+      "capital": "30000",
+      "cost": "压力",
+      "fx": "-298.58",
+      "move": "-97.77",
+      "slip": "-28.42",
+      "fee": "-93.60",
+      "net": "-518.37"
+    }
+  ]
 }
