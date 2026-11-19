@@ -2249,6 +2249,7 @@ def main():
         activity_text=cowz_holdout_activity+activity_text.replace(
             'COWZ 半仓筛退，四成预算已在已见历史完成诊断，正在核验 2024 留存来源。 ', '')
     bank_reit=MINING/'acceptance/HK-BANK-REIT-v390-v393-ROOT-v1.json'
+    bank_reit_activity=''
     if args.focus=='mining' and bank_reit.exists():
         h=read(bank_reit)
         assert h['new_paper_accounts']==h['actual_orders']==0
@@ -2260,6 +2261,20 @@ def main():
             dict(name='港股领展 · 供股与除净',status='snapshot',task=h['action_site_summary'])]
         if cowz_holdout_activity:
             activity_text=activity_text.removeprefix(cowz_holdout_activity)
+        bank_reit_activity=h['activity_site_summary']+' '
+        activity_text=bank_reit_activity+activity_text
+    hk_preopen=MINING/'acceptance/HK-PREOPEN-LOT-v396-v401-ROOT-v1.json'
+    if args.focus=='mining' and hk_preopen.exists():
+        h=read(hk_preopen)
+        assert h['new_paper_accounts']==h['actual_orders']==0
+        assert all(digest(ROOT/path)==expected for path,expected in h['pins'].items())
+        extra_sources['hk_preopen_lot_screen']=hk_preopen
+        current_work['owners'][15:15]=[
+            dict(name='港股 · 开盘限价与整手预筛',status='snapshot',task=h['gate_site_summary']),
+            dict(name='港股 · 历史股票池扩样',status='snapshot',task=h['universe_site_summary']),
+            dict(name='港股金融 · 126 日下行风险',status='snapshot',task=h['factor_site_summary'])]
+        if bank_reit_activity:
+            activity_text=activity_text.removeprefix(bank_reit_activity)
         activity_text=h['activity_site_summary']+' '+activity_text
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
