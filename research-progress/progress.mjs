@@ -365,12 +365,20 @@ if (typeof document !== 'undefined') {
       item.textContent = `次日无开盘｜Civitas Solutions（${civitas.symbol}）于 ${civitas.public_shareholder_approval_date} 公布批准结果。纽交所确认股票在 ${civitas.next_scheduled_open} 开盘前已停牌，该信号无法按次日开盘入场。`
       controls.append(item)
     }
-    find('merger-result').textContent = `两条路径合并确认 ${source.firm_vote_cash_candidates} 个有批准结果的固定现金候选，其中 ${source.completed_candidates} 个完成、${source.terminated_candidates} 个终止。样本覆盖和可执行行情仍待核查，收益检验 ${source.return_tests} 次。`
+    const cost = data.merger_cost_control
+    const feeExample = find('merger-cost-control')
+    feeExample.hidden = !cost
+    if (cost) {
+      const limits = cost.tiers.map(row => Number(row.upper_bound_hkd).toFixed(2)).join('、')
+      feeExample.textContent = `17 个已完成案例均核到普通股退市申报。${cost.substantive_exchange_exhibits} 份交易所附件附有事件说明，另 ${cost.placeholder_exhibits} 份附件只有文件标识。Imperva 作为单笔成本示例，次日开盘 ${cost.entry_usd} 美元，对价 ${cost.cash_payoff_usd} 美元。按标准买入最低收费 ${cost.fee_floor_usd} 美元，1 万、2 万、3 万港币三档的净额上限分别为 ${limits} 港币。这里假设没有滑点、换汇差价或其他收费。`
+    }
+    find('merger-result').textContent = `两条路径合并确认 ${source.firm_vote_cash_candidates} 个有批准结果的固定现金候选，其中 ${source.completed_candidates} 个完成、${source.terminated_candidates} 个终止。样本覆盖和可执行行情仍待核查，组合回测 ${source.return_tests} 次。`
     const links = find('merger-links')
     links.replaceChildren()
     const references = [['SEC 申报目录',source.links.index], ['PacBio 批准申报',source.links.approved_pacb],
       ['PacBio 终止申报',source.links.terminated_pacb], ['MINDBODY 投票及完成申报',source.links.mindbody]]
     if (civitas) references.push(['CIVI 纽交所停牌申报',civitas.proof_exchange_source])
+    if (cost) references.push(['Imperva 完成公告',cost.offer_link], ['Imperva 日线',cost.quote_link], ['富途标准收费',cost.fee_link])
     for (const [label, url] of references) {
       if (links.childNodes.length) links.append(' · ')
       const link = document.createElement('a')
