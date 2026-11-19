@@ -2027,6 +2027,14 @@ def main():
                  task='BlackRock 的历史基准覆盖 60 个窗口。2017–2021 年图表指示 55 月持有、5 月持现金，次月第二交易日执行字段有 2 月异常。净总收益基准的身份和发布制度已核，逐日网页历史取值时点仍待证。未做 03115 账户收益回测。'),
             dict(name='美股 VTI＋GLD · 双确认',status='snapshot',
                  task='2021–2023 年开发段压力成本后，1 万／2 万／3 万档净变动分别 −450.72／−85.28／+271.31 港币，三档均落后同参数 VTI 单确认。分派到账为情景，留存期未读，筛退。')]
+    odd_lot_gate=MINING/'acceptance/HK-BENCHMARK-ODD-LOT-v289-v290-ROOT-v1.json'
+    if args.focus=='mining' and odd_lot_gate.exists():
+        o=read(odd_lot_gate)
+        assert o['return_tests']==o['actual_orders']==0
+        assert all(digest(ROOT/path)==expected for path,expected in o['pins'].items())
+        extra_sources['hk_benchmark_odd_lot_gate']=odd_lot_gate
+        current_work['owners'].insert(8,dict(name='港股 03115 · 历史碎股退出',status='snapshot',
+            task='2019 年每手 10 份改为 100 份。按预先固定的规则和两套成本，2020 年 4 月 2 日必要退出时，1 万／2 万／3 万档各余 20／50／80 份碎股。缺历史碎股可执行报价，6 个情景均无法完成账户回放。'))
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
