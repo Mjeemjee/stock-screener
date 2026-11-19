@@ -15,6 +15,7 @@ DIVERSIFIED_RECEIPT=MINING/'paper-continuation-20261118-v179/ROOT-CONTINUATION-v
 FORM4_RECEIPT=MINING/'acceptance/FORM4-v219-v220-ROOT-v1.json'
 FORM4_ANNUAL_RECEIPT=MINING/'acceptance/FORM4-v222-ROOT-v1.json'
 FORM4_AUDIT_RECEIPT=MINING/'acceptance/FORM4-v224-ROOT-v1.json'
+FORM4_FINAL_RECEIPT=MINING/'acceptance/FORM4-v226-v227-ROOT-v1.json'
 OUT=ROOT/'portfolio-board/public/research-progress'
 def read(path):return json.loads(path.read_text(encoding='utf-8-sig'))
 def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -57,6 +58,22 @@ def form4_projection():
             assert audit['explicit_public_market_rows']==audit['actual_return_tests']==0
             result['annual']['attachment_audit']={k:audit[k] for k in (
                 'original_filings_reviewed','rows_reviewed',*categories,'explicit_public_market_rows')}
+            if FORM4_FINAL_RECEIPT.exists():
+                final=read(FORM4_FINAL_RECEIPT)
+                assert final['decision']=='SOURCE_INSUFFICIENT_FOR_STRICT_OPEN_MARKET_EVENT_TEST' and final['pins']
+                assert final['goal_status']=='ACTIVE' and final['stable_profitability_proven'] is False
+                for name,sha in final['pins'].items():
+                    path=(ROOT/name).resolve()
+                    assert path.is_relative_to(ROOT) and digest(path)==sha,name
+                summary=final['site_form4_final']
+                assert summary['candidate_filings']==annual['structure_filings']
+                assert summary['candidate_rows']==annual['structure_rows']
+                assert summary['original_filings_reviewed']+summary['missing_original_filings']==summary['candidate_filings']
+                assert summary['rows_reviewed']+summary['missing_original_rows']==summary['candidate_rows']
+                assert len(set(final['missing_accessions']))==summary['missing_original_filings']
+                assert sum(summary[key] for key in categories)==summary['rows_reviewed']
+                assert summary['explicit_public_market_rows']==summary['actual_return_tests']==0
+                result['annual']['final_review']=summary
     return result
 
 
@@ -1610,6 +1627,9 @@ def main():
                 extra_sources['form4_attachment_audit_root_acceptance']=FORM4_AUDIT_RECEIPT
         form4_task=('固定40股的2018年全年申报结构已核对，正在逐份核查候选原件的交易场所。'
                     if 'annual' in form4 else '四家公司单季来源试点已复核，下一步核对固定40股的全年申报覆盖。')
+        if 'final_review' in form4.get('annual',{}):
+            extra_sources['form4_final_root_acceptance']=FORM4_FINAL_RECEIPT
+            form4_task='固定样本的 Form 4 原件来源核查已收尾。严格公开市场买入证据不足，本轮未做收益检验。'
         current_work['owners'].append(dict(name='美股 Form 4 披露',status='snapshot',task=form4_task))
         current_work['owners'].append(dict(name='03086 · 11月19日纸面',status='snapshot',
             task='香港时间09:00前的登记缺失。按11月18日可用资料只读核算，11月19日为非月度复核日，四组均持现金，规则未安排买卖。16:30才取完整日线。'))

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-19T12:10:26.061369+08:00",
+  "updated_at": "2026-11-19T12:21:05.062816+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
@@ -8958,7 +8958,7 @@
     "milestone_label": "历史候选交付完成（里程碑）",
     "evidence_label": "稳定盈利与持续性尚未证实",
     "task": "T-012",
-    "team_updated_at": "2026-11-19T12:06:08.496058+08:00",
+    "team_updated_at": "2026-11-19T12:12:42.086878+08:00",
     "active_work": {
       "account": false,
       "registration": false,
@@ -9055,7 +9055,7 @@
       {
         "name": "美股 Form 4 披露",
         "status": "snapshot",
-        "task": "固定40股的2018年全年申报结构已核对，正在逐份核查候选原件的交易场所。"
+        "task": "固定样本的 Form 4 原件来源核查已收尾。严格公开市场买入证据不足，本轮未做收益检验。"
       },
       {
         "name": "03086 · 11月19日纸面",
@@ -14192,7 +14192,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-19T12:10:27.797143+08:00",
+    "checked_at": "2026-11-19T12:21:06.344348+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -14424,7 +14424,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-19T12:10:26.748243+08:00",
+    "checked_at": "2026-11-19T12:21:05.562208+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -14518,9 +14518,9 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "b651acc8d59b23de31cda3dddba2dff56da2bcfc5505abb55a9973e7bd4c5750",
+    "mining_goal": "8790f4194796d37b15e3f10d2e2bd393d9e99d11b0e0bcfe8d565e506cd26ccd",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
-    "mining_team": "0ace374a55ab85bfbe0a552277ceecf55bcd512e9b95b0b0ad56f66de665b842",
+    "mining_team": "cce68a0321318f4eaa5229f9695d33e2c6ceb789b17130a5811dec8a3150cc0d",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
     "fip_original": "9c598341d1b0e59753bc0134509908b4698209cfff0b95c22f973f655b868296",
     "fip_calendar_correction": "33d2d80372b6c433688dbbcabcc49f2a458989a633ed783c0c2fa42d6f824695",
@@ -14531,6 +14531,7 @@
     "form4_root_acceptance": "87d4c25c463a681a7cfcfbc2db49cf27ef10ff74bdae27ea579f5c1784acc0ea",
     "form4_annual_root_acceptance": "842c3d49725c019a9f1a88c772d6cc61a00e14b51afb909df2d324c3a93743b5",
     "form4_attachment_audit_root_acceptance": "f2bdafab9e34f1a37a9d0cbfd1e4c7e6a87e71cee76c4668502d75bbd3039c42",
+    "form4_final_root_acceptance": "ca1290d76d4f8a46f888a57a4729ec972a0aa6ed4dcfa2caa877a319633f6004",
     "continuous_goal": "54540eb3e3c9d837cd41b37dae0cbe45a318306b87ab5f6951d184589af7ddff",
     "restored_goal_receipt": "533e3f1709605a5d2dfe70bfb16d724ed5abffe52cf806b5422933305ee72c16",
     "v141_RESULT-v1.json": "4211c36206d0a380ceb82cb5cc18e866bc80064690ed009208f62ec452fb70db",
@@ -14888,6 +14889,20 @@
         "direction_conflict_rows": 1,
         "other_paid_acquisition_rows": 3,
         "explicit_public_market_rows": 0
+      },
+      "final_review": {
+        "candidate_filings": 26,
+        "candidate_rows": 40,
+        "original_filings_reviewed": 19,
+        "rows_reviewed": 32,
+        "missing_original_filings": 7,
+        "missing_original_rows": 8,
+        "explicit_public_market_rows": 0,
+        "automatic_dividend_reinvestment_rows": 12,
+        "prearranged_plan_purchase_rows": 3,
+        "direction_conflict_rows": 1,
+        "other_paid_acquisition_rows": 16,
+        "actual_return_tests": 0
       }
     }
   },
