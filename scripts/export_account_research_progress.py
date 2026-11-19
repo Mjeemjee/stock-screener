@@ -2107,6 +2107,19 @@ def main():
                  task='37 次放量越阈，15 个非重叠的 20 日窗口，毛均 −36.82 基点，一万初始压力摩擦中位 141.24 基点。三档压力净变动 −3446.40／−6864.97／−10301.61 港币，回撤约 50%，固定规则筛退。'),
             dict(name='美股 GLD · 避险状态切换',status='snapshot',
                  task='持有 20 个交易日，共 11 笔，毛均 −93.04 基点，低于 GLD 同长滚动基准 +26.97 基点。三档压力净变动 −1138.96／−1725.64／−2355.40 港币。两条候选均未运行留存。')]
+    flows_rates=MINING/'acceptance/FUND-FLOWS-RATES-v325-v328-ROOT-v1.json'
+    if args.focus=='mining' and flows_rates.exists():
+        q=read(flows_rates)
+        assert q['new_paper_accounts']==q['actual_orders']==0
+        assert all(digest(ROOT/path)==expected for path,expected in q['pins'].items())
+        extra_sources['fund_flows_and_rates']=flows_rates
+        current_work['owners'][15:15]=[
+            dict(name='港股 02823 · 净创设公告',status='snapshot',
+                 task='84 个月实际公告时点已核。发行人历史工作簿与原公告有 34 月余额差异。18 个完整窗口只剩 17 个非重叠，低于预设 18 个，停在来源和次数筛。'),
+            dict(name='美股 IEF · 国债曲线走陡',status='snapshot',
+                 task='8 个非重叠窗口，配对毛差 +61.42 基点，低于一万压力摩擦 88.42 基点。三档压力净变动 −127.55／+281.43／+665.26 港币，漏掉最高毛收益一笔后三档都亏。'),
+            dict(name='美股 FLOT · 半年净息开关',status='snapshot',
+                 task='一万和两万档压力均零持仓。三万档仅一段，净 +248.73 港币，低于静持 +345.19 港币。两条美股候选均筛退，留存未运行。')]
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
