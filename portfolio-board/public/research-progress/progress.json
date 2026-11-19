@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-18T07:51:41.910442+08:00",
-  "market_data_through": "2026-11-17",
+  "updated_at": "2026-11-19T10:26:10.034296+08:00",
+  "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
     "active_at_snapshot": true,
     "focus": "港美持续研究 · 总目标运行中",
-    "text": "总目标运行中，稳定盈利尚未证实；历史候选交付仍只是里程碑。当前已验收10个信号、20个预定期限。Amihud双期限固定排序筛选已独立复核并由root接受，结果与限制见因子区。03196已补上市类KFS与一次公开报价：一手1份；即使港币买卖，分派仍仅付美元且频率由管理人决定。仅补齐部分来源，未算成本后收益或证明可成交。03196的2024年246个会话中，21天有成交记录、225天零成交；预选1月2日买入与12月31日卖出均零量。固定日程执行预筛未通过，不继续计算假定成交后的利润。TIP固定2015—2019一次持有的A段条件历史已独立核对并由root接受；这是五年累计模型结果，B段仅准备、尚未经济检验，不是稳定盈利或新增IC因子。03086、原SGOV和60／20／20组合保持各自原T0、原金额和观察；本轮没有新增到期纸面观察。当前节点仅表示核验与网页同步，正式统计推断未启用。",
+    "text": "总目标运行中，稳定盈利尚未证实；历史候选交付仍只是里程碑。当前已验收11个信号、22个预定期限。Amihud双期限固定排序筛选已独立复核并由root接受，结果与限制见因子区。03196已补上市类KFS与一次公开报价：一手1份；即使港币买卖，分派仍仅付美元且频率由管理人决定。仅补齐部分来源，未算成本后收益或证明可成交。03196的2024年246个会话中，21天有成交记录、225天零成交；预选1月2日买入与12月31日卖出均零量。固定日程执行预筛未通过，不继续计算假定成交后的利润。B固定后段未通过原筛选：主3万压力累计五年模型净W-307.82港币，报价回撤约15.75%，1／5亏损年、27／60负月。本结论只针对2020—2024固定日期、一次持有规则及原成本版本，不代表TIP基金在所有情景下无效。 A段原结果保留；A/B各自起账，不合成为连续账户，不是新增IC因子。TIP固定后段筛退。价格延迟因子固定训练已完成独立复算并由root接受；两期限固定筛选未通过，详见因子区。只新增1个已验收信号与2个预定期限，不代表所有价格延迟机制无效。03086最近实际观察2026-11-18；SGOV最近实际观察2026-11-17；组合已观察1会话，最近2026-11-18。SGOV本次2026-11-18因来源修订冻结，当前估值未知，旧值仅作最近成功记录。三套纸面各自原T0与原本金保持，观察和账面金额随已接受记录接续；系统实际订单0，账面增减不是实际提现，正式统计推断未启用。当前下一步：美股财报披露时点与同比盈利数据可行性核查中；尚未测收益，不增加已验收因子或期限。",
     "snapshot_only": true,
     "fresh_for_minutes": 15
   },
@@ -19,7 +19,7 @@
     {
       "name": "A/B/C条件历史",
       "status": "done",
-      "detail": "条件历史已复核"
+      "detail": "条件历史已复核；TIP B固定后段筛退"
     },
     {
       "name": "组合实际纸面已激活",
@@ -27,14 +27,14 @@
       "detail": "保留本次实际原T0"
     },
     {
-      "name": "TIP历史验收与后段准备",
+      "name": "本轮核验与公开同步",
       "status": "active",
-      "detail": "A条件历史已接受；B尚未经济检验"
+      "detail": "价格延迟因子固定训练已完成独立复算并由root接受；两期限固定筛选未通过，详见因子区。只新增1个已验收信号与2个预定期限，不代表所有价格延迟机制无效。"
     },
     {
       "name": "持续前向样本",
       "status": "pending",
-      "detail": "组合已观察0会话；原两套起点不变"
+      "detail": "组合已观察1会话；原两套起点不变"
     },
     {
       "name": "稳定盈利证据",
@@ -43,6 +43,31 @@
     }
   ],
   "cards": [
+    {
+      "id": "us-tip-history-B",
+      "name": "TIP · 2020—2024固定后段",
+      "status": "closed",
+      "status_label": "B段原筛选未通过",
+      "capital_hkd": 30000,
+      "period": "2020-01-02 — 2024-12-31 · 累计五年",
+      "basis": "独立原本金；原90%预算、整股、税费与FX情景；净W含假设退出储备。",
+      "results": [
+        {
+          "cost": "base",
+          "net_hkd": 254.78,
+          "risk_pct": 15.208086040070501,
+          "cagr_pct": null
+        },
+        {
+          "cost": "pressure",
+          "net_hkd": -307.82,
+          "risk_pct": 15.74608786611501,
+          "cagr_pct": null
+        }
+      ],
+      "conclusion": "B固定后段未通过原筛选：主3万压力累计五年模型净W-307.82港币，报价回撤约15.75%，1／5亏损年、27／60负月。本结论只针对2020—2024固定日期、一次持有规则及原成本版本，不代表TIP基金在所有情景下无效。",
+      "next": "保留固定后段失败与A原结果；不拼接A/B、不调日期或成本救结果。总目标继续，三套纸面原T0与本金不变；最新观察与账面金额见纸面区。"
+    },
     {
       "id": "us-tip-history-A",
       "name": "TIP · 通胀挂钩国债一次持有",
@@ -1043,6 +1068,15 @@
       "category": "recent",
       "conclusion": "20／60日RankIC +0.02145／+0.03640，HAC t 1.065／1.137；前组相对同池毛权益差 +62.50／+198.27bp。正毛差尚不能通过预定排序证据门槛，两个固定期限均筛退；这不是对所有流动性策略的否定。 仅40只当前存续大股便利样本、已见2014—2019历史，非全市场或历史成分。与倒数年度美元成交量秩相关约0.920，属于已有流动性家族；相关性未新增为拒绝门槛。252个日比率须253连续源状态，零成交量视作缺失；毛除息权益不是已到账现金。浮点求和微差未改变排名、分组或IC。重叠组均值、30／60bp算术扣减不是整数股净账户，个人费用、换汇、税及累计挑选偏差仍未解决。 保留原方向、252窗口和失败结果；不补开2020+或改参数救结果。其他候选及原固定纸面继续；本候选净账户和1万—3万适配仍未知。",
       "source_date": "2026-11-18",
+      "source": "固定信号诊断；不是可执行净账户"
+    },
+    {
+      "id": "new-factor-us_peer_price_delay_52w_4lag_skip21",
+      "version": "本批新因子",
+      "name": "美股 · 对同池价格信息的反应滞后",
+      "category": "recent",
+      "conclusion": "20及60日的前组相对同池毛收益分别多8.66及14.32基点，考虑重叠观察后，HAC t仅0.98及1.04。两期限均未通过预定筛选，停止此固定参数的账户验证。 限40只目前存续的大股和已见的2014—2019训练历史。信号与同期R²秩相关约−0.745。分组毛差未计账户费用、换汇或税，无法推出个人净收益。 保留固定训练结果，不改变参数或方向，不打开后段；继续其他机制和已启动的纸面账户。",
+      "source_date": "2026-11-19",
       "source": "固定信号诊断；不是可执行净账户"
     },
     {
@@ -8347,6 +8381,26 @@
       "source_date": "2026-11-17",
       "conclusion": "主3万压力累计模型净W+1,552.11港币、报价DD约5.42%；2亏损年、26负月。1万压力仅+93.18港币，累计分派净现金-8.10USD。不是稳定收入或已提现利润。 2019年度B变化+1,837.19；全期净W − 最佳年度B账面增量=-285.08港币，仅为算术诊断，不是另一次回测。保留A段原式与限制；B段仅准备，未经经济检验。不调费率、窗口或暴露救结果，不新增纸面T0或IC因子。",
       "source": "root接受绑定的作者结果、1258日主账与独立审计；12相关情景不作独立策略样本"
+    },
+    {
+      "id": "tip-B-source-v198-v200",
+      "version": "V198–V200 · TIP B源资格",
+      "name": "TIP · 2020—2024原价与发行人现金独立核对",
+      "category": "recent",
+      "record_type": "conditional_source_qualification",
+      "source_date": "2026-11-18",
+      "conclusion": "B后段1258个实际日期及46正额／14明确零额发行人日期已独立核对并接受。仍是条件历史来源，保留当前归档、单源价格、日历代理和个人到账限制；源资格不证明收益。",
+      "source": "root B源接受及原件pins；相关账户情景，不是新增IC因子或期限"
+    },
+    {
+      "id": "tip-B-history-v201-v202",
+      "version": "V201–V202 · TIP B段固定检验",
+      "name": "TIP · 固定2020—2024一次持有净账户",
+      "category": "recent",
+      "record_type": "conditional_economic_account",
+      "source_date": "2026-11-18",
+      "conclusion": "B固定后段未通过原筛选：主3万压力累计五年模型净W-307.82港币，报价回撤约15.75%，1／5亏损年、27／60负月。本结论只针对2020—2024固定日期、一次持有规则及原成本版本，不代表TIP基金在所有情景下无效。B为独立原本金的2020—2024累计五年相关账户情景；与A各自起账，不能相加或拼成连续账户。净W含假设退出储备，非已实现卖出、实际提现或年度收入。",
+      "source": "root接受绑定原结果、1258行主账和独立审计；12相关情景不作独立策略样本"
     }
   ],
   "ipo_observation": {
@@ -8365,7 +8419,7 @@
   "factor_research": {
     "new_net_account_candidates": 0,
     "scope": "港股和美股个股、普通非杠杆ETF；1万／2万／3万港币分别核验。",
-    "note": "已验收筛选记录：10个信号、20个预定期限。日历修正、对照和模板不增加信号数；IC是排序相关系数，不是收益率。",
+    "note": "已验收筛选记录：11个信号、22个预定期限。日历修正、对照和模板不增加信号数；IC是排序相关系数，不是收益率。",
     "limitations": "各批次股票池、可评价集合和期间不同，不能直接横比IC来断言增量优势。已见历史不是新盲测；批内p校正不覆盖整个研究过程的选择偏差。",
     "items": [
       {
@@ -8830,10 +8884,70 @@
           "blind_computation_before_author_statistics": true,
           "raw_float_difference_cells": 13418
         }
+      },
+      {
+        "id": "us_peer_price_delay_52w_4lag_skip21",
+        "name": "美股 · 对同池价格信息的反应滞后",
+        "status": "rejected",
+        "status_label": "固定训练 · 两期限均筛退",
+        "horizons": [
+          20,
+          60
+        ],
+        "formula": "D = 1 − 同期回归R² / 加入四个滞后期的完整回归R²；52个五交易日区间，跳过最近21个交易日，各股从同池基准中剔除自身。",
+        "diagnostics": [
+          {
+            "horizon": 20,
+            "split": "固定训练 · 毛权益诊断",
+            "period": "2014-06-02 — 2019-12-31",
+            "rank_ic": 0.018882928225794383,
+            "hac_t": 0.9814696193252856,
+            "p_value": 0.6527224181297626,
+            "p_label": "两期限批内p",
+            "top_excess_bp": 8.65824073417354,
+            "measure": "gross_rights"
+          },
+          {
+            "horizon": 60,
+            "split": "固定训练 · 毛权益诊断",
+            "period": "2014-06-02 — 2019-12-31",
+            "rank_ic": 0.03316442036517337,
+            "hac_t": 1.041422911193262,
+            "p_value": 0.5953586275329226,
+            "p_label": "两期限批内p",
+            "top_excess_bp": 14.315502383560865,
+            "measure": "gross_rights"
+          }
+        ],
+        "account_net_hkd": null,
+        "account_max_drawdown_pct": null,
+        "source_date": "2026-11-19",
+        "conclusion": "20及60日的前组相对同池毛收益分别多8.66及14.32基点，考虑重叠观察后，HAC t仅0.98及1.04。两期限均未通过预定筛选，停止此固定参数的账户验证。",
+        "limitation": "限40只目前存续的大股和已见的2014—2019训练历史。信号与同期R²秩相关约−0.745。分组毛差未计账户费用、换汇或税，无法推出个人净收益。",
+        "next": "保留固定训练结果，不改变参数或方向，不打开后段；继续其他机制和已启动的纸面账户。",
+        "independent_review": {
+          "actual_cells_compared": 56280,
+          "top_change_days": 0,
+          "five_group_change_days": 0,
+          "blind_computation_before_author_statistics": false
+        }
       }
     ],
-    "unique_new_signals": 10,
-    "planned_horizon_trials": 20
+    "unique_new_signals": 11,
+    "planned_horizon_trials": 22
+  },
+  "next_factor_progress": {
+    "id": "v204",
+    "state": "root_accepted",
+    "active_at_snapshot": false,
+    "author_result_complete": true,
+    "independent_review_accepted": true,
+    "root_accepted": true,
+    "accepted_signal_increment": 1,
+    "accepted_horizon_increment": 2,
+    "task": "价格延迟因子固定训练已完成独立复算并由root接受；两期限固定筛选未通过，详见因子区。只新增1个已验收信号与2个预定期限，不代表所有价格延迟机制无效。",
+    "new_account_runs": 0,
+    "new_paper_T0": false
   },
   "current_work": {
     "goal_status": "ACTIVE",
@@ -8844,7 +8958,7 @@
     "milestone_label": "历史候选交付完成（里程碑）",
     "evidence_label": "稳定盈利与持续性尚未证实",
     "task": "T-012",
-    "team_updated_at": "2026-11-18T07:35:16.583630+08:00",
+    "team_updated_at": "2026-11-19T10:22:44.9517912+08:00",
     "active_work": {
       "account": false,
       "registration": false,
@@ -8894,8 +9008,8 @@
         "status": "snapshot"
       },
       {
-        "name": "两套固定纸面",
-        "task": "03086与原SGOV保留各自原T0；60／20／20组合已按root接受的实际接续建立原起点；年度再平衡／一次持有与2万／3万、基础／压力共8个相关情景，系统实际订单0。 当前原T0、意向与观察以组合纸面区及该次回执为准；账面增减不是已提现收益，稳定盈利尚未证实。",
+        "name": "三套固定纸面",
+        "task": "03086最近实际观察2026-11-18；SGOV最近实际观察2026-11-17；组合已观察1会话，最近2026-11-18。SGOV本次2026-11-18因来源修订冻结，当前估值未知，旧值仅作最近成功记录。三套纸面各自原T0与原本金保持，观察和账面金额随已接受记录接续；系统实际订单0，账面增减不是实际提现，正式统计推断未启用。",
         "status": "snapshot"
       },
       {
@@ -8916,12 +9030,22 @@
       {
         "name": "下一机制：TIP",
         "status": "snapshot",
-        "task": "TIP A段条件历史已独立核对并由root接受，主3万压力五年累计净W+1,552.11港币。B段仅来源接续准备，尚未经济检验；稳定盈利未证，0新T0。"
+        "task": "B固定后段未通过原筛选：主3万压力累计五年模型净W-307.82港币，报价回撤约15.75%，1／5亏损年、27／60负月。本结论只针对2020—2024固定日期、一次持有规则及原成本版本，不代表TIP基金在所有情景下无效。 A原结果保留；稳定盈利未证，0新T0。"
+      },
+      {
+        "name": "价格延迟因子验收",
+        "status": "snapshot",
+        "task": "价格延迟因子固定训练已完成独立复算并由root接受；两期限固定筛选未通过，详见因子区。只新增1个已验收信号与2个预定期限，不代表所有价格延迟机制无效。"
+      },
+      {
+        "name": "下一候选来源可行性",
+        "status": "active",
+        "task": "美股财报披露时点与同比盈利数据可行性核查中；尚未测收益，不增加已验收因子或期限。"
       },
       {
         "name": "主会话核验与发布",
         "status": "active",
-        "task": "核验并同步因子、来源及TIP条件历史接受；本轮没有新增到期纸面观察、纸面利润或订单。"
+        "task": "同步TIP固定后段结论、实际日期纸面接续与下一因子审核状态；当前观察日期见纸面区，系统实际订单0。"
       },
       {
         "name": "Amihud固定筛选",
@@ -13684,6 +13808,175 @@
     "limitations": "2015与2018为亏损年，主3万压力26／60负月。1万压力累计分派净现金-8.10USD；整体净W为正不等于稳定派息。2019贡献集中，全期净W − 最佳年度B账面增量仅为算术诊断，不是删除该年后的替代回测。单源报价／日历代理、当前发行人归档、真实成交及个人税费／到账未知，报价DD不是未来损失上限。",
     "source_note": "两路金额情景在本批模型分币结果相同，不等于原字面金额全相等；零额Quote0为发行人明确零额的诊断惯例。TIP不是新增IC因子，B段尚未检验，三套纸面原T0不变。"
   },
+  "tip_continuation": {
+    "status": "accepted_rejected_B",
+    "claim_level": "CONDITIONAL_HISTORICAL_MODEL",
+    "period": "2020—2024 · 累计五年",
+    "accepted_at_utc": "2026-11-18T03:42:47.292021+00:00",
+    "receipt_sha256": "967f357cbef385c291b5b12a91395a4eb39482e231ffd678bec265e0ad4cbb8c",
+    "primary_capital_hkd": 30000,
+    "primary_cost": "pressure",
+    "primary_net_W_hkd": "-307.82",
+    "primary_B_hkd": "29751.09",
+    "primary_W_hkd": "29692.18",
+    "primary_K_hkd": "58.91",
+    "primary_original_screen_met": false,
+    "cases": [
+      {
+        "capital_hkd": 10000,
+        "cost": "base",
+        "net_W_hkd": "-192.53",
+        "net_B_hkd": "-171.68",
+        "B_hkd": "9828.32",
+        "W_hkd": "9807.47",
+        "K_hkd": "20.85",
+        "risk_pct": 15.30968525680394,
+        "negative_months": 28,
+        "months": 60,
+        "negative_years": 2,
+        "years": 5,
+        "quantity": 9,
+        "net_distributions_usd": "80.34"
+      },
+      {
+        "capital_hkd": 10000,
+        "cost": "pressure",
+        "net_W_hkd": "-637.37",
+        "net_B_hkd": "-597.63",
+        "B_hkd": "9402.37",
+        "W_hkd": "9362.63",
+        "K_hkd": "39.74",
+        "risk_pct": 16.883557602860453,
+        "negative_months": 28,
+        "months": 60,
+        "negative_years": 2,
+        "years": 5,
+        "quantity": 9,
+        "net_distributions_usd": "34.34"
+      },
+      {
+        "capital_hkd": 20000,
+        "cost": "base",
+        "net_W_hkd": "31.13",
+        "net_B_hkd": "57.66",
+        "B_hkd": "20057.66",
+        "W_hkd": "20031.13",
+        "K_hkd": "26.53",
+        "risk_pct": 15.232977059101202,
+        "negative_months": 27,
+        "months": 60,
+        "negative_years": 1,
+        "years": 5,
+        "quantity": 19,
+        "net_distributions_usd": "220.66"
+      },
+      {
+        "capital_hkd": 20000,
+        "cost": "pressure",
+        "net_W_hkd": "-472.55",
+        "net_B_hkd": "-423.27",
+        "B_hkd": "19576.73",
+        "W_hkd": "19527.45",
+        "K_hkd": "49.28",
+        "risk_pct": 16.02506569710771,
+        "negative_months": 27,
+        "months": 60,
+        "negative_years": 2,
+        "years": 5,
+        "quantity": 19,
+        "net_distributions_usd": "174.66"
+      },
+      {
+        "capital_hkd": 30000,
+        "cost": "base",
+        "net_W_hkd": "254.78",
+        "net_B_hkd": "287.07",
+        "B_hkd": "30287.07",
+        "W_hkd": "30254.78",
+        "K_hkd": "32.29",
+        "risk_pct": 15.208086040070501,
+        "negative_months": 27,
+        "months": 60,
+        "negative_years": 1,
+        "years": 5,
+        "quantity": 29,
+        "net_distributions_usd": "360.98"
+      },
+      {
+        "capital_hkd": 30000,
+        "cost": "pressure",
+        "net_W_hkd": "-307.82",
+        "net_B_hkd": "-248.91",
+        "B_hkd": "29751.09",
+        "W_hkd": "29692.18",
+        "K_hkd": "58.91",
+        "risk_pct": 15.74608786611501,
+        "negative_months": 27,
+        "months": 60,
+        "negative_years": 1,
+        "years": 5,
+        "quantity": 29,
+        "net_distributions_usd": "314.98"
+      }
+    ],
+    "yearly_B_changes": [
+      {
+        "period": "2020",
+        "start_B_or_original_principal_hkd": "30000",
+        "end_B_hkd": "32181.84",
+        "B_change_hkd": "2181.84",
+        "loss": false,
+        "basis": "Continuing marked B; first period includes initial FX/trade cost, no hypothetical monthly sale"
+      },
+      {
+        "period": "2021",
+        "start_B_or_original_principal_hkd": "32181.84",
+        "end_B_hkd": "33246.41",
+        "B_change_hkd": "1064.57",
+        "loss": false,
+        "basis": "Continuing marked B; first period includes initial FX/trade cost, no hypothetical monthly sale"
+      },
+      {
+        "period": "2022",
+        "start_B_or_original_principal_hkd": "33246.41",
+        "end_B_hkd": "29135.49",
+        "B_change_hkd": "-4110.92",
+        "loss": true,
+        "basis": "Continuing marked B; first period includes initial FX/trade cost, no hypothetical monthly sale"
+      },
+      {
+        "period": "2023",
+        "start_B_or_original_principal_hkd": "29135.49",
+        "end_B_hkd": "29694.59",
+        "B_change_hkd": "559.10",
+        "loss": false,
+        "basis": "Continuing marked B; first period includes initial FX/trade cost, no hypothetical monthly sale"
+      },
+      {
+        "period": "2024",
+        "start_B_or_original_principal_hkd": "29694.59",
+        "end_B_hkd": "29751.09",
+        "B_change_hkd": "56.50",
+        "loss": false,
+        "basis": "Continuing marked B; first period includes initial FX/trade cost, no hypothetical monthly sale"
+      }
+    ],
+    "chart": "assets/tip-history-B-v1.png",
+    "nav_points": 1258,
+    "source_amount_scenarios": 2,
+    "related_scenarios": 12,
+    "actual_income_certified": false,
+    "stable_profitability_proven": false,
+    "new_paper_T0": false,
+    "new_factor_trials": 0,
+    "new_horizon_trials": 0,
+    "independent_initial_capital": true,
+    "combined_with_A": false,
+    "conclusion": "B固定后段未通过原筛选：主3万压力累计五年模型净W-307.82港币，报价回撤约15.75%，1／5亏损年、27／60负月。本结论只针对2020—2024固定日期、一次持有规则及原成本版本，不代表TIP基金在所有情景下无效。",
+    "note": "B为独立原本金的2020—2024累计五年相关账户情景；与A各自起账，不能相加或拼成连续账户。净W含假设退出储备，非已实现卖出、实际提现或年度收入。",
+    "limitations": "税、费用、FX及90%事前预算均沿用原研究情景，不是个人实际已认证条件。日历与报价回撤仍是代理，发行人当前归档不证明当时可得；真实成交、个人税费及到账未知。B为按时间后续检验，不声称全新盲样本；稳定盈利仍未证实。",
+    "source_note": "仅投影root接受绑定的原RESULT与1258行主账；曲线为原逐日B账面财富，年度柱为原B增量。12相关情景不当作12个独立策略，不增加IC因子、期限或纸面T0。"
+  },
   "sgov_history": {
     "approved_capital_hkd": [
       20000,
@@ -13884,72 +14177,106 @@
   },
   "sgov_paper": {
     "activated": true,
-    "status": "active_paper",
+    "status": "review_required",
     "packet_version": "v140",
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-18T07:51:42.834582+08:00",
+    "checked_at": "2026-11-19T10:26:11.550886+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
         "capital_hkd": 20000,
         "cost": "base",
-        "status": "ACTIVE",
-        "nav_hkd": 19900.18,
-        "change_hkd": -99.82,
-        "quantity": 0,
+        "status": "UNKNOWN",
+        "nav_hkd": null,
+        "change_hkd": null,
+        "quantity": null,
         "observations": 1,
-        "last_observation": "2026-11-17"
+        "last_observation": "2026-11-17",
+        "last_successful": {
+          "nav_hkd": 19900.18,
+          "change_hkd": -99.82,
+          "quantity": 0,
+          "observation": "2026-11-17"
+        }
       },
       {
         "id": "HKD20000_pressure",
         "capital_hkd": 20000,
         "cost": "pressure",
-        "status": "ACTIVE",
-        "nav_hkd": 19800.94,
-        "change_hkd": -199.06,
-        "quantity": 0,
+        "status": "UNKNOWN",
+        "nav_hkd": null,
+        "change_hkd": null,
+        "quantity": null,
         "observations": 1,
-        "last_observation": "2026-11-17"
+        "last_observation": "2026-11-17",
+        "last_successful": {
+          "nav_hkd": 19800.94,
+          "change_hkd": -199.06,
+          "quantity": 0,
+          "observation": "2026-11-17"
+        }
       },
       {
         "id": "HKD30000_base",
         "capital_hkd": 30000,
         "cost": "base",
-        "status": "ACTIVE",
-        "nav_hkd": 29850.35,
-        "change_hkd": -149.65,
-        "quantity": 0,
+        "status": "UNKNOWN",
+        "nav_hkd": null,
+        "change_hkd": null,
+        "quantity": null,
         "observations": 1,
-        "last_observation": "2026-11-17"
+        "last_observation": "2026-11-17",
+        "last_successful": {
+          "nav_hkd": 29850.35,
+          "change_hkd": -149.65,
+          "quantity": 0,
+          "observation": "2026-11-17"
+        }
       },
       {
         "id": "HKD30000_pressure",
         "capital_hkd": 30000,
         "cost": "pressure",
-        "status": "ACTIVE",
-        "nav_hkd": 29701.42,
-        "change_hkd": -298.58,
-        "quantity": 0,
+        "status": "UNKNOWN",
+        "nav_hkd": null,
+        "change_hkd": null,
+        "quantity": null,
         "observations": 1,
-        "last_observation": "2026-11-17"
+        "last_observation": "2026-11-17",
+        "last_successful": {
+          "nav_hkd": 29701.42,
+          "change_hkd": -298.58,
+          "quantity": 0,
+          "observation": "2026-11-17"
+        }
       }
     ],
     "orders_sent": 0,
-    "note": "SGOV四个独立条件纸面：2万／3万各基础及压力。保持独立T0，不倒填历史。起点建模美元钱包即计双向换汇估值成本，0证券成交也可呈负增减；这不是实际亏损。固定USD/HKD 7.8；基础／压力的每个方向换汇成本25／50bp，预扣税30%及每次分派1／2美元服务费储备均为情景；发行人付款日不等于券商到账日。"
+    "note": "SGOV本次2026-11-18接续因旧报价修订而冻结，当前完整估值未知。原T0保留；最近成功旧估值单列，不能当作本次行情或新增收益。固定USD/HKD 7.8；基础／压力的每个方向换汇成本25／50bp，预扣税30%及每次分派1／2美元服务费储备均为情景；发行人付款日不等于券商到账日。",
+    "valuation_current": false,
+    "latest_attempt": {
+      "status": "UNKNOWN_REVIEW_REQUIRED",
+      "reason": "Previously accepted quote revised: 2026-11-17",
+      "attempt_date": "2026-11-18",
+      "attempt_status": "UNKNOWN_COMPLETE_PROFIT_BLOCKED",
+      "recorded_utc": "2026-11-19T02:05:41.078860+00:00",
+      "root_receipt": "reports/factor-mining-resume-20261117/paper-nov18-20261119/ROOT-CONTINUATION-v1.json",
+      "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
+    }
   },
   "diversified_paper": {
     "activated": true,
     "status": "ACTIVE_PAPER",
-    "status_label": "已建立真实日期纸面起点 · 等待首会话",
+    "status_label": "已观察首次建仓 · 八组纸面情景",
     "activation_utc": "2026-11-17T21:30:49.307301+00:00",
     "first_session": "2026-11-18",
-    "last_observation": null,
-    "observations": 0,
-    "security_trades": 0,
+    "last_observation": "2026-11-18",
+    "observations": 1,
+    "security_trades": 24,
     "actual_orders": 0,
-    "source_through": "2026-11-17",
+    "source_through": "2026-11-18",
     "intent": {
       "date": "2026-11-18",
       "timely": true,
@@ -13961,13 +14288,13 @@
         "capital_hkd": 20000,
         "cost": "base",
         "policy": "annual",
-        "nav_hkd": "19900.18",
-        "net_hkd": "-99.82",
-        "settled_cash_usd": "2557.70",
+        "nav_hkd": "19795.30",
+        "net_hkd": "-204.70",
+        "settled_cash_usd": "334.55",
         "shares": {
-          "US.GLD": 0,
-          "US.SGOV": 0,
-          "US.VTI": 0
+          "US.SGOV": 15,
+          "US.VTI": 1,
+          "US.GLD": 1
         },
         "status": "ACTIVE"
       },
@@ -13976,13 +14303,13 @@
         "capital_hkd": 20000,
         "cost": "base",
         "policy": "once",
-        "nav_hkd": "19900.18",
-        "net_hkd": "-99.82",
-        "settled_cash_usd": "2557.70",
+        "nav_hkd": "19795.30",
+        "net_hkd": "-204.70",
+        "settled_cash_usd": "334.55",
         "shares": {
-          "US.GLD": 0,
-          "US.SGOV": 0,
-          "US.VTI": 0
+          "US.SGOV": 15,
+          "US.VTI": 1,
+          "US.GLD": 1
         },
         "status": "ACTIVE"
       },
@@ -13991,13 +14318,13 @@
         "capital_hkd": 20000,
         "cost": "pressure",
         "policy": "annual",
-        "nav_hkd": "19800.94",
-        "net_hkd": "-199.06",
-        "settled_cash_usd": "2551.34",
+        "nav_hkd": "19641.46",
+        "net_hkd": "-358.54",
+        "settled_cash_usd": "321.12",
         "shares": {
-          "US.GLD": 0,
-          "US.SGOV": 0,
-          "US.VTI": 0
+          "US.SGOV": 15,
+          "US.VTI": 1,
+          "US.GLD": 1
         },
         "status": "ACTIVE"
       },
@@ -14006,13 +14333,13 @@
         "capital_hkd": 20000,
         "cost": "pressure",
         "policy": "once",
-        "nav_hkd": "19800.94",
-        "net_hkd": "-199.06",
-        "settled_cash_usd": "2551.34",
+        "nav_hkd": "19641.46",
+        "net_hkd": "-358.54",
+        "settled_cash_usd": "321.12",
         "shares": {
-          "US.GLD": 0,
-          "US.SGOV": 0,
-          "US.VTI": 0
+          "US.SGOV": 15,
+          "US.VTI": 1,
+          "US.GLD": 1
         },
         "status": "ACTIVE"
       },
@@ -14021,13 +14348,13 @@
         "capital_hkd": 30000,
         "cost": "base",
         "policy": "annual",
-        "nav_hkd": "29850.35",
-        "net_hkd": "-149.65",
-        "settled_cash_usd": "3836.56",
+        "nav_hkd": "29690.46",
+        "net_hkd": "-309.54",
+        "settled_cash_usd": "201.47",
         "shares": {
-          "US.GLD": 0,
-          "US.SGOV": 0,
-          "US.VTI": 0
+          "US.SGOV": 22,
+          "US.VTI": 2,
+          "US.GLD": 2
         },
         "status": "ACTIVE"
       },
@@ -14036,13 +14363,13 @@
         "capital_hkd": 30000,
         "cost": "base",
         "policy": "once",
-        "nav_hkd": "29850.35",
-        "net_hkd": "-149.65",
-        "settled_cash_usd": "3836.56",
+        "nav_hkd": "29690.46",
+        "net_hkd": "-309.54",
+        "settled_cash_usd": "201.47",
         "shares": {
-          "US.GLD": 0,
-          "US.SGOV": 0,
-          "US.VTI": 0
+          "US.SGOV": 22,
+          "US.VTI": 2,
+          "US.GLD": 2
         },
         "status": "ACTIVE"
       },
@@ -14051,13 +14378,13 @@
         "capital_hkd": 30000,
         "cost": "pressure",
         "policy": "annual",
-        "nav_hkd": "29701.42",
-        "net_hkd": "-298.58",
-        "settled_cash_usd": "3827.01",
+        "nav_hkd": "29481.63",
+        "net_hkd": "-518.37",
+        "settled_cash_usd": "184.15",
         "shares": {
-          "US.GLD": 0,
-          "US.SGOV": 0,
-          "US.VTI": 0
+          "US.SGOV": 22,
+          "US.VTI": 2,
+          "US.GLD": 2
         },
         "status": "ACTIVE"
       },
@@ -14066,29 +14393,48 @@
         "capital_hkd": 30000,
         "cost": "pressure",
         "policy": "once",
-        "nav_hkd": "29701.42",
-        "net_hkd": "-298.58",
-        "settled_cash_usd": "3827.01",
+        "nav_hkd": "29481.63",
+        "net_hkd": "-518.37",
+        "settled_cash_usd": "184.15",
         "shares": {
-          "US.GLD": 0,
-          "US.SGOV": 0,
-          "US.VTI": 0
+          "US.SGOV": 22,
+          "US.VTI": 2,
+          "US.GLD": 2
         },
         "status": "ACTIVE"
       }
     ],
-    "note": "香港11月18日05:30收盘资料合格后建立独立纸面起点，首次计划对应纽约11月18日。8个相关情景共用同一配置机制；0观察、0证券成交及0实际订单。初始港币换美元后按原模型折回估值已有负增减，保留每档双向换汇成本；尚非实亏或稳定收入。次日05:30后才可观察首会话，原03086与SGOV起点不变。",
-    "root_acceptance_utc": "2026-11-17T21:41:05.157729+00:00",
-    "root_receipt": "reports/factor-mining-resume-20261117/paper-continuation-20261118-v179/ROOT-CONTINUATION-v1.json",
-    "root_receipt_sha256": "be0e49eb8fa5eec62fadf374632ebddf3d0c3196fa9642d80431a1ed755ad67a"
+    "note": "11月18日首个实际日期，八组情景各按先前登记的计划模拟买入SGOV、VTI和GLD。年度再平衡和一次买入的首日下单规则相同。11月19日按原规则持有，最近一次须提前登记的意向仍是11月18日。净变化含模型费用、滑点与换汇；实盘订单为零。",
+    "next_standing": {
+      "status": "STANDING_HOLD_OR_NO_ACTIVE_PATH",
+      "date": "2026-11-19"
+    },
+    "root_acceptance_utc": "2026-11-19T02:21:04.846839+00:00",
+    "root_receipt": "reports/factor-mining-resume-20261117/paper-nov18-20261119/ROOT-CONTINUATION-v1.json",
+    "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-18T07:51:42.269987+08:00",
+    "checked_at": "2026-11-19T10:26:10.648908+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
     "closed_rounds": 0,
     "open_quantity": 0,
+    "last_observation": "2026-11-18",
+    "source_quote_through": "2026-11-18",
+    "journal_events": 5,
+    "recorded_intents": [
+      {
+        "date": "2026-11-17",
+        "registration_completed_utc": "2026-11-16T13:37:24.963404+00:00",
+        "eligible": true
+      },
+      {
+        "date": "2026-11-18",
+        "registration_completed_utc": "2026-11-17T10:53:18.619496+00:00",
+        "eligible": true
+      }
+    ],
     "modeled_change_hkd": 0.0,
     "orders_sent": 0,
     "primary_account": "monthly-only-base",
@@ -14136,7 +14482,7 @@
   "factor_archive": {
     "count": 538,
     "source_date": "2026-11-03",
-    "note": "其中500条为30种基础表达式的模板组合，不是538个有效因子。旧US缓存发现拆股阶跃，相关旧条目未获本轮资格认证；原IC和原结论保留。与已验收的10个信号分开计数。"
+    "note": "其中500条为30种基础表达式的模板组合，不是538个有效因子。旧US缓存发现拆股阶跃，相关旧条目未获本轮资格认证；原IC和原结论保留。与已验收的11个信号分开计数。"
   },
   "source_hashes": {
     "nasdaq": "bdb900a98001538774d5ef16b95131ce24f52649020990f6194fb39ca330e3a3",
@@ -14162,9 +14508,9 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "d4f20be11bb4c8526ac9db1aa05adfe858637374c72bce20fcf5ca39ddf1b16c",
+    "mining_goal": "b0418dc4315f7517b424c3d7cae7f523a6145d83e74b9440a62ccebc80e83fe0",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
-    "mining_team": "3c2c7b8edc2dfcd07ad9e7b2dfb4bb307a5336833720fd4d9f35f91f4c29bac0",
+    "mining_team": "3eea03f2dbe4d2ffc5ff6a90e941aa66ab4ab5631378d547c0cce6c8a992fe5a",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
     "fip_original": "9c598341d1b0e59753bc0134509908b4698209cfff0b95c22f973f655b868296",
     "fip_calendar_correction": "33d2d80372b6c433688dbbcabcc49f2a458989a633ed783c0c2fa42d6f824695",
@@ -14201,6 +14547,7 @@
     "v164_protocol": "1160b761019073180a924480d46d3db34cf405dde8ef2626a93fbd2b4d1c8aa4",
     "v177_root_review": "666c4498dcc6133eac24cfac5f9c96a3920cfba1d0ba29e09f114024f8abafdb",
     "v186_root_review": "1b985fb0adae2788ef2f3aafe398a65b2d8ed600597717ffe8c193fbc8c8e0ba",
+    "v204_v207_root_review": "922881828fa3231e7207679031fa433cbd90c9af4072524e33fddda39b0d718b",
     "v183_v184_root_review": "129f5929adddb44e409c804dd5bba05e3980c4bce9735d9356e95c85a177994b",
     "v190_v191_root_review": "2242a0d016d23504616429f6ec1400da26c4b3e5c382ae4ad3677403a1718e68",
     "v192_tip_preparation": "65bdd8bcad786b68cc9181aed8e9450e62d45df092b83408d90d55c56d262ec8",
@@ -14209,6 +14556,10 @@
     "tip_accepted_result": "7e77de6b366b89794693152405e306056f43e2d48c1750fe996509f4133e5ddd",
     "tip_accepted_primary_daily": "d01f26c03dbe3152660f9888abee141942c2fbb4376ec3e050487490dd39fff1",
     "tip_B_preparation_protocol": "5af34f431ec6254b264015470b189ea20f969409382a03ecef24e509f78fb6be",
+    "v198_v200_tip_B_source": "9f3afd588b40afa4135ed78605f36e41bdaf8147fe8f14366e93f0db1b291481",
+    "v201_v202_tip_B_account": "967f357cbef385c291b5b12a91395a4eb39482e231ffd678bec265e0ad4cbb8c",
+    "tip_B_accepted_result": "a15df66bd4b96fd4447a4f85db5eb381b1da33a1436e4d5157848f346294223e",
+    "tip_B_accepted_primary_daily": "ab99cfa6ef9cbf9538b0ab010034991578724a3d3718ce1975c7a0a2b9424b6b",
     "v148_root_review": "93acdfaaf6622e1ad1d0a72a71c14aeb3adb3ed6b5a59885c935fe3666c2828d",
     "v148_classification": "a98f8032c71c96f4e9841378b13154ad8ae7c12658c771a93014178e3d33fa09",
     "v148_source_findings": "111be9d649230a601bddae3ee8c103c67a0a0dac9a91dda6c554d618b0868039",
@@ -14221,6 +14572,10 @@
     "v175_flot_history": "0aa3f56a4ba0f75205b9935d6658380a46a0d07fbfcc6b78e2c7d768c2075f46",
     "v176_hk_cash_source_addendum": "2d74ba88b20eaa201bc18c12c96ed0c506cd3d535ce561af9e1a5951256c30cf",
     "v179_actual_paper_continuation": "be0e49eb8fa5eec62fadf374632ebddf3d0c3196fa9642d80431a1ed755ad67a",
+    "latest_actual_paper_continuation": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1",
+    "v204_progress_PROTOCOL-v1.json": "5079abdd193651a4773eff5e6fcf12b72bd8f55716a9c853dd7a07fcff2c6c6a",
+    "v204_progress_RUN-START-v1.json": "1e2acad062ea8fb2267b86026e82c23e321125c20c48e3a81235596852d0729a",
+    "v204_progress_OUTPUT-MANIFEST-v1.json": "16ccd4d1d68ce8cb493a392607ee892ffbe00a577089169ba1ce1db0e8d85cfe",
     "v144_protocol": "869da75804c35510f45265730fe90827599f30f078613d417a815fcaa4714201",
     "v144_conditional_use": "cc6af5ef06a1f60ed2fcc6847ad196f207ee6e735f48809b4f928cc3d9e582b0",
     "v144_A_root_review_v2": "31991e6b5320ef6336a5760d18eea0ddd8ea2f5dbcc20d176618fb39d3468c8c",
@@ -14241,6 +14596,7 @@
     "us_action_panel_qualification": "3a45436972215c87e746c69164b1f4fb436680a99f7a86cf11327aec6a48fb5c",
     "sgov_paper_root_acceptance": "aeda96120d3cefbf1ed63799eb64b5605e6c9ced4e5f317f8c8610ea9e821585",
     "sgov_paper_policy": "75e9ba32166823e7b00141e26e2e50ba90a8efc3bdbaf333c1e7d060ada06519",
-    "sgov_real_paper_activation": "c09203a9d958455c35c90ac9d58f090cd6b150261eae13de6a41e90b13067044"
+    "sgov_real_paper_activation": "c09203a9d958455c35c90ac9d58f090cd6b150261eae13de6a41e90b13067044",
+    "published_V22_legacy_record_dates": "0eafefa7cb8cf62e1f0b115587cf7ce6af21f7fbedc4ddf8363bb10834b22c6e"
   }
 }

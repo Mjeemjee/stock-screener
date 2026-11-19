@@ -54,6 +54,49 @@ export function validateTipHistory(h, cards) {
   }
   return h
 }
+export function validateTipContinuation(h, cards) {
+  const card = cards.find(c => c.id === 'us-tip-history-B')
+  const fail = () => { throw new Error('TIP B必须由root接受，独立后段与固定失败结论不能改作盈利证明。') }
+  if (h === undefined) { if (card) fail(); return h }
+  if (!h || h.new_factor_trials !== 0 || h.new_horizon_trials !== 0 || h.new_paper_T0 !== false) fail()
+  if (h.status === 'awaiting_root_account_acceptance') {
+    if (card || h.chart !== null || h.primary_net_W_hkd !== null || !Array.isArray(h.cases) || h.cases.length) fail()
+    return h
+  }
+  if (h.status !== 'accepted_rejected_B' || h.claim_level !== 'CONDITIONAL_HISTORICAL_MODEL' ||
+      h.primary_original_screen_met !== false || h.actual_income_certified !== false || h.stable_profitability_proven !== false ||
+      h.independent_initial_capital !== true || h.combined_with_A !== false || h.nav_points !== 1258 ||
+      h.source_amount_scenarios !== 2 || h.related_scenarios !== 12 || h.chart !== 'assets/tip-history-B-v1.png' ||
+      !Number.isFinite(Date.parse(h.accepted_at_utc)) || !/^[0-9a-f]{64}$/.test(h.receipt_sha256) ||
+      !Array.isArray(h.cases) || h.cases.length !== 6 || new Set(h.cases.map(c => `${c.capital_hkd}-${c.cost}`)).size !== 6 ||
+      !Array.isArray(h.yearly_B_changes) || h.yearly_B_changes.map(y => y.period).join() !== '2020,2021,2022,2023,2024' ||
+      h.primary_capital_hkd !== 30000 || h.primary_cost !== 'pressure' || !card || card.status !== 'closed') fail()
+  const cents = v => {
+    if (typeof v !== 'string' || !/^-?(?:0|[1-9]\d*)\.\d{2}$/.test(v)) fail()
+    return BigInt(v.replace('.', ''))
+  }
+  for (const c of h.cases) {
+    if (![10000, 20000, 30000].includes(c.capital_hkd) || !['base', 'pressure'].includes(c.cost) ||
+        !Number.isFinite(c.risk_pct) || c.risk_pct < 0 || c.months !== 60 || c.years !== 5 ||
+        !Number.isSafeInteger(c.quantity) || c.quantity < 0 ||
+        !Number.isSafeInteger(c.negative_months) || c.negative_months < 0 || c.negative_months > 60 ||
+        !Number.isSafeInteger(c.negative_years) || c.negative_years < 0 || c.negative_years > 5) fail()
+    const capital = BigInt(c.capital_hkd) * 100n
+    if (cents(c.B_hkd) - cents(c.W_hkd) !== cents(c.K_hkd) || cents(c.W_hkd) - capital !== cents(c.net_W_hkd) ||
+        cents(c.B_hkd) - capital !== cents(c.net_B_hkd)) fail()
+    cents(c.net_distributions_usd)
+  }
+  for (const y of h.yearly_B_changes) cents(y.B_change_hkd)
+  const primary = h.cases.find(c => c.capital_hkd === 30000 && c.cost === 'pressure')
+  for (const [key, field] of [['primary_net_W_hkd', 'net_W_hkd'], ['primary_B_hkd', 'B_hkd'], ['primary_W_hkd', 'W_hkd'], ['primary_K_hkd', 'K_hkd']]) {
+    if (h[key] !== primary[field]) fail()
+  }
+  for (const row of card.results) {
+    const c = h.cases.find(c => c.capital_hkd === 30000 && c.cost === row.cost)
+    if (!c || row.net_hkd !== Number(c.net_W_hkd) || row.risk_pct !== c.risk_pct || row.cagr_pct !== null) fail()
+  }
+  return h
+}
 export function validateDiversifiedPaper(p) {
   const date = v => v === null || typeof v === 'string' && Number.isFinite(Date.parse(v))
   const amount = v => v === null || typeof v === 'string' && /^-?(?:0|[1-9]\d*)\.\d{2}$/.test(v)
@@ -98,6 +141,24 @@ export function validateSnapshot(value) {
     }
   }
   validateTipHistory(value.tip_history, value.cards)
+  validateTipContinuation(value.tip_continuation, value.cards)
+  if (value.next_factor_progress) {
+    const p = value.next_factor_progress
+    if (p.id !== 'v204' || !['preparing', 'preparation_snapshot', 'running_unaccepted', 'incomplete_unaccepted', 'author_complete_pending_review', 'independent_review_pending_root', 'root_accepted'].includes(p.state) ||
+        typeof p.active_at_snapshot !== 'boolean' || typeof p.author_result_complete !== 'boolean' ||
+        typeof p.independent_review_accepted !== 'boolean' || typeof p.root_accepted !== 'boolean' ||
+        p.new_account_runs !== 0 || p.new_paper_T0 !== false || !p.task ||
+        (!p.root_accepted && (p.accepted_signal_increment !== 0 || p.accepted_horizon_increment !== 0)) ||
+        (p.root_accepted && (!p.independent_review_accepted || p.accepted_signal_increment !== 1 || p.accepted_horizon_increment !== 2))) throw new Error('下一因子进度和已验收结果必须分开计数。')
+  }
+  if (value.sgov_paper?.valuation_current === false) {
+    const p = value.sgov_paper
+    if (!p.activated || p.status !== 'review_required' || !p.latest_attempt || p.accounts.length !== 4 ||
+        p.accounts.some(a => a.status !== 'UNKNOWN' || a.nav_hkd !== null || a.change_hkd !== null || a.quantity !== null ||
+          !a.last_successful || !Number.isFinite(a.last_successful.nav_hkd) || !Number.isFinite(a.last_successful.change_hkd) ||
+          !Number.isSafeInteger(a.last_successful.quantity) || a.last_successful.quantity < 0 ||
+          !Number.isFinite(Date.parse(a.last_successful.observation)))) throw new Error('本次SGOV估值失败，最近成功旧值必须与当前未知状态分开。')
+  }
   if (value.ipo_observation) {
     const o=value.ipo_observation
     if (!Number.isSafeInteger(o.count) || o.count<=0 || ![o.up_count,o.broken_count,o.flat_count,o.one_member_max_up_count].every(n=>Number.isSafeInteger(n)&&n>=0&&n<=o.count) ||
@@ -202,7 +263,8 @@ export function validateSnapshot(value) {
       for (const a of p.accounts) {
         if (![20000, 30000].includes(a.capital_hkd) || !['base', 'pressure'].includes(a.cost) ||
             ![a.nav_hkd, a.change_hkd].every(v => v === null || Number.isFinite(v)) ||
-            ![a.quantity, a.observations].every(v => Number.isSafeInteger(v) && v >= 0) ||
+            !(Number.isSafeInteger(a.quantity) && a.quantity >= 0 || p.valuation_current === false && a.status === 'UNKNOWN' && a.quantity === null) ||
+            !Number.isSafeInteger(a.observations) || a.observations < 0 ||
             a.status !== 'ACTIVE' && [a.nav_hkd, a.change_hkd].some(v => v !== null)) throw new Error('SGOV纸面资金或未知状态的收益无效。')
       }
     }
@@ -392,12 +454,14 @@ if (typeof document !== 'undefined') {
   }
   function renderTipHistory(data) {
     const h = data.tip_history, accepted = h?.status === 'accepted_conditional_A'
+    const hasB = data.tip_continuation?.status === 'accepted_rejected_B'
     find('tip-history').hidden = !accepted
     if (!accepted) { find('tip-history-chart').removeAttribute('src'); return }
     find('tip-history-note').textContent = h.note
     find('tip-history-limits').textContent = h.limitations
-    find('tip-history-source').textContent = h.source_note
-    find('tip-history-concentration').textContent = `${h.concentration_formula} = ${exactMoney(h.concentration_without_best_year_W_hkd)} 港币。仅为固定算术诊断，不是删掉2019后的完整回测。${h.B_status}。`
+    find('tip-history-badge').textContent = hasB ? 'A段原条件历史记录' : 'A段条件历史 · 后段未检验'
+    find('tip-history-source').textContent = (hasB ? 'A原验收时的说明（B最新独立结论见上方）：' : '') + h.source_note
+    find('tip-history-concentration').textContent = `${h.concentration_formula} = ${exactMoney(h.concentration_without_best_year_W_hkd)} 港币。仅为固定算术诊断，不是删掉2019后的完整回测。${hasB ? 'A原值保留；B后段已有独立检验，见上方' : h.B_status}。`
     find('tip-history-chart').src = h.chart
     find('tip-history-link').href = h.chart
     find('tip-history-rows').replaceChildren()
@@ -412,12 +476,33 @@ if (typeof document !== 'undefined') {
       find('tip-history-rows').append(tr)
     }
   }
+  function renderTipContinuation(data) {
+    const h = data.tip_continuation, accepted = h?.status === 'accepted_rejected_B'
+    find('tip-continuation').hidden = !accepted
+    if (!accepted) { find('tip-continuation-chart').removeAttribute('src'); return }
+    for (const [id, text] of [['conclusion', h.conclusion], ['note', h.note], ['limits', h.limitations], ['source', h.source_note]]) {
+      find(`tip-continuation-${id}`).textContent = text
+    }
+    find('tip-continuation-chart').src = h.chart
+    find('tip-continuation-link').href = h.chart
+    find('tip-continuation-rows').replaceChildren()
+    for (const capital of [10000, 20000, 30000]) {
+      const base = h.cases.find(c => c.capital_hkd === capital && c.cost === 'base')
+      const pressure = h.cases.find(c => c.capital_hkd === capital && c.cost === 'pressure'), tr = element('tr')
+      for (const text of [new Intl.NumberFormat('zh-HK').format(capital), exactMoney(base.net_W_hkd), exactMoney(pressure.net_W_hkd),
+        `${pressure.risk_pct.toFixed(2)}%`, `${pressure.negative_years}／5`, `${pressure.negative_months}／60`, exactMoney(pressure.net_distributions_usd)]) {
+        tr.append(element('td', text))
+      }
+      find('tip-continuation-rows').append(tr)
+    }
+  }
   function renderCards(data) {
     find('cards').replaceChildren()
     for (const card of data.cards) {
       const article = element('article', undefined, 'study')
       const head = element('div', undefined, 'study-head')
-      head.append(element('h3', card.name), element('span', card.status_label, `badge ${card.status}`))
+      const originalA = card.id === 'us-tip-history-A' && data.tip_continuation?.status === 'accepted_rejected_B'
+      head.append(element('h3', card.name), element('span', originalA ? 'A原验收记录 · 当时后段未检验' : card.status_label, `badge ${card.status}`))
       article.append(head, element('p', `${new Intl.NumberFormat('zh-HK').format(card.capital_hkd)} 港币假设账户 · ${card.period}\n${card.basis}`, 'basis'))
       for (const result of card.results) {
         const row = element('div', undefined, 'result-row'), detail = element('div')
@@ -430,7 +515,7 @@ if (typeof document !== 'undefined') {
         if (typeof result.open_contribution_hkd === 'number') detail.append(element('span', `开放贡献 ${money(result.open_contribution_hkd)} · ${result.open_quantity}份`, 'risk'))
         row.append(detail); article.append(row)
       }
-      article.append(element('p', card.conclusion), element('p', card.next, 'next'))
+      article.append(element('p', card.conclusion), element('p', originalA ? `原验收时下一步：${card.next} 最新B独立检验已在上方展示。` : card.next, 'next'))
       find('cards').append(article)
     }
   }
@@ -455,7 +540,10 @@ if (typeof document !== 'undefined') {
   }
   function renderPaper(data) {
     const names = { 'monthly-only-base': '月度复核 · 基础', 'monthly-only-pressure': '月度复核 · 压力', 'three-month-base': '三月退出 · 基础', 'three-month-pressure': '三月退出 · 压力' }
-    find('paper-note').textContent = `${data.paper.note} 起点：${dateText(data.paper.activation_utc)} HKT；状态核对：${dateText(data.paper.checked_at)} HKT。研究系统下单数 ${data.paper.orders_sent}。`
+    const hk = data.paper, intent = hk.recorded_intents?.at(-1)
+    const observation = hk.last_observation ? `最近实际观察 ${hk.last_observation}；源日线核对至 ${hk.source_quote_through}。` : ''
+    const intentNote = intent ? `最近登记意向 ${intent.date} · ${intent.eligible ? '已及时' : '未及时'}；${hk.recorded_intents.some(i => i.date > hk.last_observation) ? '后续登记以原记录为准' : '未见后续会话预登记，不倒填'}。` : ''
+    find('paper-note').textContent = `${hk.note} 起点：${dateText(hk.activation_utc)} HKT；${observation}${intentNote}状态核对：${dateText(hk.checked_at)} HKT。研究系统下单数 ${hk.orders_sent}。`
     find('paper-rows').replaceChildren()
     for (const account of data.paper.accounts) {
       const row = element('tr')
@@ -464,14 +552,19 @@ if (typeof document !== 'undefined') {
     }
     const sgov = data.sgov_paper
     find('sgov-paper-note').textContent = sgov ? sgov.activated
-      ? `${sgov.note} 起点：${dateText(sgov.activation_utc)} HKT；首个可观察会话 ${sgov.first_session}、源日线核对至 ${sgov.source_quote_through}（均为纽约交易日）。状态核对 ${dateText(sgov.checked_at)} HKT。系统下单数 ${sgov.orders_sent}。`
+      ? `${sgov.note} 起点：${dateText(sgov.activation_utc)} HKT；首个可观察会话 ${sgov.first_session}、最近实际观察 ${sgov.accounts.map(a => a.last_observation).filter(Boolean).sort().at(-1) ?? '尚无'}、源日线核对至 ${sgov.source_quote_through}（均为纽约交易日）。状态核对 ${dateText(sgov.checked_at)} HKT。系统下单数 ${sgov.orders_sent}。`
       : sgov.note : 'SGOV纸面状态尚未随此快照提供。'
     find('sgov-paper-table').hidden = !sgov?.activated
+    find('sgov-last-success-header').hidden = sgov?.valuation_current !== false
     find('sgov-paper-rows').replaceChildren()
     for (const account of sgov?.accounts ?? []) {
       const row = element('tr'), unknown = account.status !== 'ACTIVE'
       for (const value of [`${account.capital_hkd.toLocaleString('zh-HK')} · ${account.cost === 'base' ? '基础' : '压力'}`,
-        unknown ? '无法评估' : money(account.nav_hkd).replace(/^\+/, ''), unknown ? '无法评估' : money(account.change_hkd), account.quantity, account.observations]) row.append(element('td', value))
+        unknown ? '本次未知' : money(account.nav_hkd).replace(/^\+/, ''), unknown ? '本次未知' : money(account.change_hkd), account.quantity ?? '未知', account.observations]) row.append(element('td', value))
+      if (sgov.valuation_current === false) {
+        const old = account.last_successful
+        row.append(element('td', `${old.observation}：${money(old.nav_hkd).replace(/^\+/, '')}／${money(old.change_hkd)}；${old.quantity}份（旧值）`))
+      }
       find('sgov-paper-rows').append(row)
     }
     renderDiversifiedPaper(data)
@@ -523,7 +616,7 @@ if (typeof document !== 'undefined') {
       const item = element('li', stage.name, `stage ${stage.status}`)
       item.append(element('small', stage.detail ?? names[stage.status] ?? stage.status)); find('stages').append(item)
     }
-    renderWork(data); renderPortfolio(data); renderFactors(data); renderEvidenceUpdates(data); renderSgovHistory(data); renderTipHistory(data); renderCards(data); renderPaper(data); renderRecords()
+    renderWork(data); renderPortfolio(data); renderFactors(data); renderEvidenceUpdates(data); renderSgovHistory(data); renderTipHistory(data); renderTipContinuation(data); renderCards(data); renderPaper(data); renderRecords()
     if (selectedEvidenceView === null) selectEvidenceView(data.default_evidence_view === 'paper' ? 'paper' : 'history')
     find('research-note').textContent = data.research_note
     find('baseline-note').textContent = `同为3万初始资金，基础成本月度版历史标记 ${money(data.baseline.monthly_base_net_hkd)} 港元，报价回撤约 ${data.baseline.monthly_base_risk_pct.toFixed(2)}%；被动参考 ${money(data.baseline.passive_base_net_hkd)} 港元、约 ${data.baseline.passive_base_risk_pct.toFixed(2)}%。未证明稳定独立超额收益。`
