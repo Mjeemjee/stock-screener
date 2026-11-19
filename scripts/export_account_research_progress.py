@@ -2035,6 +2035,17 @@ def main():
         extra_sources['hk_benchmark_odd_lot_gate']=odd_lot_gate
         current_work['owners'].insert(8,dict(name='港股 03115 · 历史碎股退出',status='snapshot',
             task='2019 年每手 10 份改为 100 份。按预先固定的规则和两套成本，2020 年 4 月 2 日必要退出时，1 万／2 万／3 万档各余 20／50／80 份碎股。缺历史碎股可执行报价，6 个情景均无法完成账户回放。'))
+    tracker_vol=MINING/'acceptance/HK-TRACKER-VOLATILITY-v293-v296-ROOT-v1.json'
+    if args.focus=='mining' and tracker_vol.exists():
+        tr=read(tracker_vol)
+        assert tr['new_paper_accounts']==tr['orders']==0
+        assert all(digest(ROOT/path)==expected for path,expected in tr['pins'].items())
+        extra_sources['hk_tracker_volatility']=tracker_vol
+        current_work['owners'][9:9]=[
+            dict(name='港股 02800 · 恒指波动策略',status='snapshot',
+                 task='2017–2021 年，1 万港币在 60 个预定开盘都不足一手。2 万／3 万档压力成本后分别 −340.11／−80.22 港币，收盘回撤 22.91%／27.34%，均劣于同档持续持有。固定规则筛退，留存期未运行。'),
+            dict(name='美股 VTI · 单确认对照复核',status='snapshot',
+                 task='六个月规则与旧 SMA200 在 36 月中有 30 月同方向；三年派息总额获发行人年报佐证，逐次派息到账证据未补齐。保持开发期对照，不开新纸面。')]
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
