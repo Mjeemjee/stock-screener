@@ -25,6 +25,7 @@ MERGER_STRESS_RECEIPT=MINING/'acceptance/US-MERGER-v247-v249-ROOT-v1.json'
 PDBC_PREFLIGHT_RECEIPT=MINING/'acceptance/PDBC-2015-v245-ROOT-v1.json'
 IEF_PREFLIGHT_RECEIPT=MINING/'acceptance/IEF-FOMC-v250-v252-ROOT-v1.json'
 IEF_RESULT_RECEIPT=MINING/'acceptance/IEF-ACCOUNT-v257-v258-ROOT-v1.json'
+SOUTHBOUND_RECEIPT=MINING/'acceptance/HK-SOUTHBOUND-v262-v265-ROOT-v1.json'
 OUT=ROOT/'portfolio-board/public/research-progress'
 def read(path):return json.loads(path.read_text(encoding='utf-8-sig'))
 def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -146,6 +147,20 @@ def ief_result_projection():
     assert result['negative_matched_scenarios']==result['scenario_count']==24
     assert result['matched_pairs']==9 and result['forward_observations']==0
     assert [row['capital'] for row in result['base_and_pressure']]==[10000,20000,30000]
+    return result
+
+
+def southbound_projection():
+    if not SOUTHBOUND_RECEIPT.exists():
+        return None
+    receipt=read(SOUTHBOUND_RECEIPT)
+    assert receipt['decision']=='SOURCE_AND_COST_CHECKED_AWAITING_CONTROL' and receipt['pins']
+    for name,expected in receipt['pins'].items():
+        path=(ROOT/name).resolve()
+        assert path.is_relative_to(ROOT) and digest(path)==expected,name
+    result=receipt['site_southbound']
+    assert result['qualified_pairs']==result['return_tests']==0
+    assert [row['code'] for row in result['samples']]==['HK.06603','HK.02661']
     return result
 
 
@@ -1670,6 +1685,7 @@ def main():
     merger_review=merger_review_projection() if merger else None
     merger_stress=merger_stress_projection() if merger else None
     ief_result=ief_result_projection() if args.focus=='mining' else None
+    southbound=southbound_projection() if args.focus=='mining' else None
     pdbc_preflight=pdbc_preflight_projection() if args.focus=='mining' else None
     if args.focus=='mining':
         team=read(MINING/'TEAM.json')
@@ -1909,6 +1925,10 @@ def main():
                {k:v for k,v in row.items() if k!='source_date'}=={k:v for k,v in before.items() if k!='source_date'}:
                 row['source_date']=before['source_date']
         extra_sources['published_V22_legacy_record_dates']=legacy_dates
+    if southbound:
+        extra_sources['hk_southbound_first_eligibility']=SOUTHBOUND_RECEIPT
+        current_work['owners'].insert(0,dict(name='港股通首次开放买入',status='snapshot',
+            task='沪深两案各核到一次调入。已算开盘整手与回本门槛。同批指数对照的行业、规模、成交额及事前资格待核。'))
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
@@ -1939,6 +1959,7 @@ def main():
     payload['merger_review']=merger_review
     payload['merger_stress']=merger_stress
     payload['ief_account']=ief_result
+    payload['southbound']=southbound
     payload['nov18_cost_attribution']=november18_attribution() if diversified['activated'] else []
     OUT.mkdir(exist_ok=True,parents=True);(OUT/'assets').mkdir(exist_ok=True)
     if tip_account_review:render_tip_history_chart(tip_account_review)
