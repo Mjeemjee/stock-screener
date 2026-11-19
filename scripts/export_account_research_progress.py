@@ -2181,10 +2181,23 @@ def main():
         current_work['owners'][15:15]=[
             dict(name='美股 USMV · 低波 ETF 同预算静持',status='snapshot',task=q['account_site_summary']),
             dict(name='美股 USMV · 价格与账户复核',status='snapshot',task=q['audit_site_summary']),
-            dict(name='美股 QUAL · 质量因子来源',status='snapshot',task=q['qual_site_summary'])]
+            dict(name='美股 QUAL · 质量因子来源',status='snapshot',task=q['qual_site_summary'].split('下一步',1)[0])]
         if q.get('hk_site_summary'):
             current_work['owners'].insert(17,dict(name='港股低波 · 上市产品核查',status='snapshot',task=q['hk_site_summary']))
         activity_text='USMV 静持已复算并筛退。接下来核对 QUAL 历史价格的股份单位。 '+activity_text
+    qual_receipt=MINING/'acceptance/QUAL-AND-HK-PIT-v361-v366-ROOT-v1.json'
+    if args.focus=='mining' and qual_receipt.exists():
+        q=read(qual_receipt)
+        assert q['new_paper_accounts']==q['actual_orders']==0
+        assert all(digest(ROOT/path)==expected for path,expected in q['pins'].items())
+        extra_sources['qual_historical_and_hk_point_in_time']=qual_receipt
+        current_work['owners'][15:15]=[
+            dict(name='美股 QUAL · 冻结限价与换汇',status='snapshot',task=q['frozen_site_summary']),
+            dict(name='美股 QUAL · 假定开盘成交',status='snapshot',task=q['control_site_summary']),
+            dict(name='美股 QUAL · 旧单位和独立核算',status='snapshot',task=q['audit_site_summary']),
+            dict(name='港股质量 · 挂牌状态与历史股票池',status='snapshot',task=q['hk_site_summary'])]
+        activity_text='QUAL 历史测试已结案，开始扩充港股质量因子的时点财报与历史股票池。 '+activity_text.replace(
+            'USMV 静持已复算并筛退。接下来核对 QUAL 历史价格的股份单位。 ', '')
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
