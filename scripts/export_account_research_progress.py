@@ -2554,6 +2554,18 @@ def main():
         if repurchase_accounts.exists():
             activity_text=activity_text.removeprefix(read(repurchase_accounts)['activity_site_summary']+' ')
         activity_text=earnings['activity_site_summary']+' '+activity_text
+    holdings_13f=MINING/'acceptance/US-13F-v541-v546-ROOT-v1.json'
+    if args.focus=='mining' and holdings_13f.exists():
+        holdings=read(holdings_13f)
+        assert holdings['new_paper_accounts']==holdings['actual_orders']==0
+        assert all(digest(ROOT/path)==expected for path,expected in holdings['pins'].items())
+        extra_sources['us_13f_rotation']=holdings_13f
+        current_work['owners'][15:15]=[
+            dict(name='美股 · 伯克希尔 13F 扣费',status='snapshot',task=holdings['economic_site_summary']),
+            dict(name='美股 · 13F 原报与证券连续性',status='snapshot',task=holdings['clock_site_summary'])]
+        if gaap_earnings.exists():
+            activity_text=activity_text.removeprefix(read(gaap_earnings)['activity_site_summary']+' ')
+        activity_text=holdings['activity_site_summary']+' '+activity_text
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
