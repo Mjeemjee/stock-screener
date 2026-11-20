@@ -2566,6 +2566,18 @@ def main():
         if gaap_earnings.exists():
             activity_text=activity_text.removeprefix(read(gaap_earnings)['activity_site_summary']+' ')
         activity_text=holdings['activity_site_summary']+' '+activity_text
+    activism_13d=MINING/'acceptance/US-13D-v548-v552-ROOT-v1.json'
+    if args.focus=='mining' and activism_13d.exists():
+        activism=read(activism_13d)
+        assert activism['new_paper_accounts']==activism['actual_orders']==0
+        assert all(digest(ROOT/path)==expected for path,expected in activism['pins'].items())
+        extra_sources['us_13d_activism']=activism_13d
+        current_work['owners'][15:15]=[
+            dict(name='美股 · 13D 公开买入与已提行动',status='snapshot',task=activism['screen_site_summary']),
+            dict(name='美股 · 13D 原报与历史股类',status='snapshot',task=activism['market_site_summary'])]
+        if holdings_13f.exists():
+            activity_text=activity_text.removeprefix(read(holdings_13f)['activity_site_summary']+' ')
+        activity_text=activism['activity_site_summary']+' '+activity_text
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
