@@ -2641,6 +2641,18 @@ def main():
         if hk_monthly_review.exists():
             activity_text=activity_text.removeprefix(read(hk_monthly_review)['activity_site_summary']+' ')
         activity_text=nbs['activity_site_summary']+' '+activity_text
+    payroll_review=MINING/'acceptance/US-PAYROLL-VTI-v589-v593-ROOT-v1.json'
+    if args.focus=='mining' and payroll_review.exists():
+        payroll=read(payroll_review)
+        assert payroll['new_paper_accounts']==payroll['actual_orders']==0
+        assert all(digest(ROOT/path)==expected for path,expected in payroll['pins'].items())
+        extra_sources['us_payroll_vti']=payroll_review
+        current_work['owners'][15:15]=[
+            dict(name='美股 · 非农初值信号扣费',status='snapshot',task=payroll['economic_site_summary']),
+            dict(name='美股 · 非农初值发布时钟',status='snapshot',task=payroll['source_site_summary'])]
+        if nbs_review.exists():
+            activity_text=activity_text.removeprefix(read(nbs_review)['activity_site_summary']+' ')
+        activity_text=payroll['activity_site_summary']+' '+activity_text
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
