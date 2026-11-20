@@ -2617,6 +2617,18 @@ def main():
         if dfan_review.exists():
             activity_text=activity_text.removeprefix(read(dfan_review)['activity_site_summary']+' ')
         activity_text=auction['activity_site_summary']+' '+activity_text
+    hk_monthly_review=MINING/'acceptance/HK-HKMA-AND-NBS-v579-v580-ROOT-v1.json'
+    if args.focus=='mining' and hk_monthly_review.exists():
+        hk_monthly=read(hk_monthly_review)
+        assert hk_monthly['new_paper_accounts']==hk_monthly['actual_orders']==0
+        assert all(digest(ROOT/path)==expected for path,expected in hk_monthly['pins'].items())
+        extra_sources['hk_hkma_and_nbs']=hk_monthly_review
+        current_work['owners'][15:15]=[
+            dict(name='港股 · 银行体系总结余',status='snapshot',task=hk_monthly['hkma_site_summary']),
+            dict(name='港股 · 制造业新订单月报',status='snapshot',task=hk_monthly['nbs_site_summary'])]
+        if auction_review.exists():
+            activity_text=activity_text.removeprefix(read(auction_review)['activity_site_summary']+' ')
+        activity_text=hk_monthly['activity_site_summary']+' '+activity_text
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
