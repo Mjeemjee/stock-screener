@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-19T21:49:40.436158+00:00",
+  "generated_at": "2026-11-20T21:22:17.333837+00:00",
   "definition_hash": "ffac6ed3d6ab96da346e18a8b2e6da7fab8f376a907807291b2b5a3ad63b2fc9",
   "policy": {
     "version": "liq-momentum-forward-v2",
@@ -25,10 +25,10 @@
       "market": "HK",
       "quality": {
         "market": "HK",
-        "session": 20261119,
-        "valid": 187,
+        "session": 20261120,
+        "valid": 113,
         "total": 218,
-        "status": "ready"
+        "status": "insufficient_data"
       },
       "metrics": {
         "due": 0,
@@ -72,7 +72,7 @@
                 "code": "HK.01070",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 16.27
+                "entry_price": 16.09
               },
               {
                 "code": "HK.09858",
@@ -372,7 +372,7 @@
                 "code": "HK.01070",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 16.27
+                "entry_price": 16.09
               },
               {
                 "code": "HK.02099",
@@ -777,7 +777,7 @@
               "code": "HK.01070",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 16.27
+              "entry_price": 16.09
             },
             {
               "code": "HK.09858",
@@ -997,8 +997,8 @@
       "market": "US",
       "quality": {
         "market": "US",
-        "session": 20261119,
-        "valid": 218,
+        "session": 20261120,
+        "valid": 217,
         "total": 259,
         "status": "ready"
       },
@@ -1059,13 +1059,15 @@
               },
               {
                 "code": "US.BNY",
-                "status": "missing_entry",
-                "return_pct": null
+                "status": "pending",
+                "return_pct": null,
+                "entry_price": 149.56
               },
               {
                 "code": "US.SHEL",
-                "status": "missing_entry",
-                "return_pct": null
+                "status": "pending",
+                "return_pct": null,
+                "entry_price": 94.91
               },
               {
                 "code": "US.TGT",
@@ -1089,13 +1091,13 @@
                 "code": "US.AAOI",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 42.94
+                "entry_price": 43.1
               },
               {
                 "code": "US.TEAM",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 134.945
+                "entry_price": 134.91
               },
               {
                 "code": "US.ELV",
@@ -1148,7 +1150,7 @@
                 "code": "US.FTNT",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 135.755
+                "entry_price": 135.76
               },
               {
                 "code": "US.ON",
@@ -1232,7 +1234,7 @@
                 "code": "US.MDLZ",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 65.63
+                "entry_price": 65.5
               },
               {
                 "code": "US.HL",
@@ -1243,7 +1245,7 @@
                 "code": "US.NEM",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 103.665
+                "entry_price": 103.67
               },
               {
                 "code": "US.DDOG",
@@ -1286,7 +1288,7 @@
                 "code": "US.MRNA",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 195.7
+                "entry_price": 196.03
               },
               {
                 "code": "US.DELL",
@@ -1298,25 +1300,25 @@
                 "code": "US.MU",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 740.43
+                "entry_price": 740.33
               },
               {
                 "code": "US.AAOI",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 42.94
+                "entry_price": 43.1
               },
               {
                 "code": "US.LITE",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 573.54
+                "entry_price": 574.685
               },
               {
                 "code": "US.MRVL",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 151.2
+                "entry_price": 151.32
               },
               {
                 "code": "US.HPE",
@@ -1328,13 +1330,13 @@
                 "code": "US.STX",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 546.93
+                "entry_price": 546.9
               },
               {
                 "code": "US.INTC",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 57.55
+                "entry_price": 57.5
               },
               {
                 "code": "US.OKTA",
@@ -1352,13 +1354,13 @@
                 "code": "US.AMD",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 543.476
+                "entry_price": 542.17
               },
               {
                 "code": "US.WDC",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 307.51
+                "entry_price": 306.17
               },
               {
                 "code": "US.MPC",
@@ -1382,13 +1384,13 @@
                 "code": "US.FTNT",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 135.755
+                "entry_price": 135.76
               },
               {
                 "code": "US.TER",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 243.14
+                "entry_price": 245.66
               },
               {
                 "code": "US.PBR",
@@ -1423,7 +1425,7 @@
                 "code": "US.CRWD",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 246.745
+                "entry_price": 246.89
               },
               {
                 "code": "US.TGT",
@@ -1435,7 +1437,7 @@
                 "code": "US.NBIS",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 111.73
+                "entry_price": 111.59
               },
               {
                 "code": "US.ADI",
@@ -1447,13 +1449,13 @@
                 "code": "US.LRCX",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 220.955
+                "entry_price": 220.96
               },
               {
                 "code": "US.AMAT",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 367.295
+                "entry_price": 367.31
               },
               {
                 "code": "US.PANW",
@@ -1519,7 +1521,7 @@
                 "code": "US.MCHP",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 61.385
+                "entry_price": 61.39
               },
               {
                 "code": "US.DDOG",
@@ -1531,7 +1533,7 @@
                 "code": "US.XOM",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 161.325
+                "entry_price": 161.33
               }
             ],
             "return_pct": null
@@ -1556,7 +1558,7 @@
                 "code": "US.KR",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 68.575
+                "entry_price": 68.58
               },
               {
                 "code": "US.PNC",
@@ -1588,8 +1590,9 @@
               },
               {
                 "code": "US.BNY",
-                "status": "missing_entry",
-                "return_pct": null
+                "status": "pending",
+                "return_pct": null,
+                "entry_price": 149.56
               },
               {
                 "code": "US.PDD",
@@ -1635,7 +1638,7 @@
                 "code": "US.ZS",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 202.0
+                "entry_price": 202.67
               },
               {
                 "code": "US.AZN",
@@ -1645,8 +1648,9 @@
               },
               {
                 "code": "US.SHEL",
-                "status": "missing_entry",
-                "return_pct": null
+                "status": "pending",
+                "return_pct": null,
+                "entry_price": 94.91
               },
               {
                 "code": "US.PGR",
@@ -1658,7 +1662,7 @@
                 "code": "US.MDLZ",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 65.63
+                "entry_price": 65.5
               },
               {
                 "code": "US.DVN",
@@ -1670,7 +1674,7 @@
                 "code": "US.SAP",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 206.215
+                "entry_price": 206.22
               },
               {
                 "code": "US.PBR",
@@ -1681,7 +1685,7 @@
                 "code": "US.ICE",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 172.195
+                "entry_price": 172.2
               },
               {
                 "code": "US.UAL",
@@ -1705,13 +1709,13 @@
                 "code": "US.PYPL",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 57.725
+                "entry_price": 57.815
               },
               {
                 "code": "US.WULF",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 12.64
+                "entry_price": 12.6
               },
               {
                 "code": "US.SLB",
@@ -1741,7 +1745,7 @@
                 "code": "US.TEAM",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 134.945
+                "entry_price": 134.91
               },
               {
                 "code": "US.BX",
@@ -1753,7 +1757,7 @@
                 "code": "US.ASTS",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 27.705
+                "entry_price": 27.62
               },
               {
                 "code": "US.CMG",
@@ -1783,7 +1787,7 @@
                 "code": "US.GM",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 83.3
+                "entry_price": 82.78
               }
             ],
             "return_pct": null
@@ -1825,13 +1829,15 @@
             },
             {
               "code": "US.BNY",
-              "status": "missing_entry",
-              "return_pct": null
+              "status": "pending",
+              "return_pct": null,
+              "entry_price": 149.56
             },
             {
               "code": "US.SHEL",
-              "status": "missing_entry",
-              "return_pct": null
+              "status": "pending",
+              "return_pct": null,
+              "entry_price": 94.91
             },
             {
               "code": "US.TGT",
@@ -1855,13 +1861,13 @@
               "code": "US.AAOI",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 42.94
+              "entry_price": 43.1
             },
             {
               "code": "US.TEAM",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 134.945
+              "entry_price": 134.91
             },
             {
               "code": "US.ELV",
@@ -1914,7 +1920,7 @@
               "code": "US.FTNT",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 135.755
+              "entry_price": 135.76
             },
             {
               "code": "US.ON",
@@ -1998,7 +2004,7 @@
               "code": "US.MDLZ",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 65.63
+              "entry_price": 65.5
             },
             {
               "code": "US.HL",
@@ -2009,7 +2015,7 @@
               "code": "US.NEM",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 103.665
+              "entry_price": 103.67
             },
             {
               "code": "US.DDOG",
@@ -2063,15 +2069,16 @@
             {
               "code": "US.RVMD",
               "status": "matured",
-              "return_pct": -19.721846,
+              "return_pct": -19.470977,
               "entry_price": 198.71,
-              "exit_price": 160.0
+              "exit_price": 160.5
             },
             {
               "code": "US.TSEM",
-              "status": "missing_exit",
-              "return_pct": null,
-              "entry_price": 188.47
+              "status": "matured",
+              "return_pct": -27.103932,
+              "entry_price": 188.47,
+              "exit_price": 137.8
             },
             {
               "code": "US.TTMI",
@@ -2134,9 +2141,9 @@
             {
               "code": "US.FTNT",
               "status": "matured",
-              "return_pct": -18.597254,
+              "return_pct": -18.594256,
               "entry_price": 166.27,
-              "exit_price": 135.755
+              "exit_price": 135.76
             },
             {
               "code": "US.SLB",
@@ -2195,16 +2202,16 @@
             {
               "code": "US.REGN",
               "status": "matured",
-              "return_pct": 17.117812,
+              "return_pct": 17.11843,
               "entry_price": 806.74,
-              "exit_price": 947.675
+              "exit_price": 947.68
             },
             {
               "code": "US.WULF",
               "status": "matured",
-              "return_pct": -0.770576,
+              "return_pct": -1.084594,
               "entry_price": 12.7,
-              "exit_price": 12.64
+              "exit_price": 12.6
             },
             {
               "code": "US.EQIX",
@@ -2237,9 +2244,9 @@
             {
               "code": "US.NEM",
               "status": "matured",
-              "return_pct": -11.918808,
+              "return_pct": -11.91456,
               "entry_price": 117.34,
-              "exit_price": 103.665
+              "exit_price": 103.67
             },
             {
               "code": "US.PWR",
@@ -2286,9 +2293,9 @@
             {
               "code": "US.TER",
               "status": "matured",
-              "return_pct": -29.847584,
+              "return_pct": -29.120497,
               "entry_price": 345.55,
-              "exit_price": 243.14
+              "exit_price": 245.66
             },
             {
               "code": "US.HLT",
@@ -2328,9 +2335,9 @@
             {
               "code": "US.AAOI",
               "status": "matured",
-              "return_pct": -47.094201,
+              "return_pct": -46.897067,
               "entry_price": 80.92,
-              "exit_price": 42.94
+              "exit_price": 43.1
             },
             {
               "code": "US.CMI",
@@ -2369,37 +2376,37 @@
             {
               "code": "US.MRNA",
               "status": "matured",
-              "return_pct": -19.441049,
+              "return_pct": -19.305206,
               "entry_price": 242.2,
-              "exit_price": 195.7
+              "exit_price": 196.03
             },
             {
               "code": "US.LITE",
               "status": "matured",
-              "return_pct": -33.750961,
+              "return_pct": -33.618703,
               "entry_price": 863.14,
-              "exit_price": 573.54
+              "exit_price": 574.685
             },
             {
               "code": "US.MU",
               "status": "matured",
-              "return_pct": -20.084435,
+              "return_pct": -20.095228,
               "entry_price": 923.74,
-              "exit_price": 740.43
+              "exit_price": 740.33
             },
             {
               "code": "US.STX",
               "status": "matured",
-              "return_pct": -23.008589,
+              "return_pct": -23.012812,
               "entry_price": 708.25,
-              "exit_price": 546.93
+              "exit_price": 546.9
             },
             {
               "code": "US.WDC",
               "status": "matured",
-              "return_pct": -19.371768,
+              "return_pct": -19.723112,
               "entry_price": 380.25,
-              "exit_price": 307.51
+              "exit_price": 306.17
             },
             {
               "code": "US.DELL",
@@ -2411,43 +2418,44 @@
             {
               "code": "US.RVMD",
               "status": "matured",
-              "return_pct": -19.721846,
+              "return_pct": -19.470977,
               "entry_price": 198.71,
-              "exit_price": 160.0
+              "exit_price": 160.5
             },
             {
               "code": "US.INTC",
               "status": "matured",
-              "return_pct": -38.587597,
+              "return_pct": -38.640952,
               "entry_price": 93.43,
-              "exit_price": 57.55
+              "exit_price": 57.5
             },
             {
               "code": "US.AAOI",
               "status": "matured",
-              "return_pct": -47.094201,
+              "return_pct": -46.897067,
               "entry_price": 80.92,
-              "exit_price": 42.94
+              "exit_price": 43.1
             },
             {
               "code": "US.TSEM",
-              "status": "missing_exit",
-              "return_pct": null,
-              "entry_price": 188.47
+              "status": "matured",
+              "return_pct": -27.103932,
+              "entry_price": 188.47,
+              "exit_price": 137.8
             },
             {
               "code": "US.MRVL",
               "status": "matured",
-              "return_pct": -38.968794,
+              "return_pct": -38.920356,
               "entry_price": 247.0,
-              "exit_price": 151.2
+              "exit_price": 151.32
             },
             {
               "code": "US.TER",
               "status": "matured",
-              "return_pct": -29.847584,
+              "return_pct": -29.120497,
               "entry_price": 345.55,
-              "exit_price": 243.14
+              "exit_price": 245.66
             },
             {
               "code": "US.HPE",
@@ -2466,9 +2474,9 @@
             {
               "code": "US.AMD",
               "status": "matured",
-              "return_pct": -0.747712,
+              "return_pct": -0.986221,
               "entry_price": 545.93,
-              "exit_price": 543.476
+              "exit_price": 542.17
             },
             {
               "code": "US.COHR",
@@ -2506,9 +2514,9 @@
             {
               "code": "US.NBIS",
               "status": "matured",
-              "return_pct": -36.872202,
+              "return_pct": -36.951303,
               "entry_price": 176.46,
-              "exit_price": 111.73
+              "exit_price": 111.59
             },
             {
               "code": "US.TTMI",
@@ -2540,16 +2548,16 @@
             {
               "code": "US.LRCX",
               "status": "matured",
-              "return_pct": -18.681016,
+              "return_pct": -18.679176,
               "entry_price": 270.9,
-              "exit_price": 220.955
+              "exit_price": 220.96
             },
             {
               "code": "US.AMAT",
               "status": "matured",
-              "return_pct": -10.823406,
-              "entry_price": 410.64,
-              "exit_price": 367.295
+              "return_pct": -10.685348,
+              "entry_price": 410.022,
+              "exit_price": 367.31
             },
             {
               "code": "US.NTRA",
@@ -2568,16 +2576,16 @@
             {
               "code": "US.FTNT",
               "status": "matured",
-              "return_pct": -18.597254,
+              "return_pct": -18.594256,
               "entry_price": 166.27,
-              "exit_price": 135.755
+              "exit_price": 135.76
             },
             {
               "code": "US.CRWD",
               "status": "matured",
-              "return_pct": 6.546786,
+              "return_pct": 6.609398,
               "entry_price": 230.89,
-              "exit_price": 246.745
+              "exit_price": 246.89
             },
             {
               "code": "US.FIX",
@@ -2691,9 +2699,9 @@
             {
               "code": "US.ICE",
               "status": "matured",
-              "return_pct": 8.575252,
+              "return_pct": 8.578405,
               "entry_price": 158.12,
-              "exit_price": 172.195
+              "exit_price": 172.2
             },
             {
               "code": "US.BP",
@@ -2712,22 +2720,23 @@
             {
               "code": "US.KMB",
               "status": "matured",
-              "return_pct": -2.016296,
+              "return_pct": -1.250222,
               "entry_price": 108.02,
-              "exit_price": 106.16
+              "exit_price": 106.99
             },
             {
               "code": "US.RVMD",
               "status": "matured",
-              "return_pct": -19.721846,
+              "return_pct": -19.470977,
               "entry_price": 198.71,
-              "exit_price": 160.0
+              "exit_price": 160.5
             },
             {
               "code": "US.RKT",
-              "status": "missing_exit",
-              "return_pct": null,
-              "entry_price": 11.45
+              "status": "matured",
+              "return_pct": 16.418778,
+              "entry_price": 11.45,
+              "exit_price": 13.37
             },
             {
               "code": "US.DVN",
@@ -2739,15 +2748,16 @@
             {
               "code": "US.SAP",
               "status": "matured",
-              "return_pct": -11.215925,
+              "return_pct": -11.213773,
               "entry_price": 231.57,
-              "exit_price": 206.215
+              "exit_price": 206.22
             },
             {
               "code": "US.TSEM",
-              "status": "missing_exit",
-              "return_pct": null,
-              "entry_price": 188.47
+              "status": "matured",
+              "return_pct": -27.103932,
+              "entry_price": 188.47,
+              "exit_price": 137.8
             },
             {
               "code": "US.AZN",
@@ -2758,16 +2768,17 @@
             },
             {
               "code": "US.SE",
-              "status": "missing_exit",
-              "return_pct": null,
-              "entry_price": 79.96
+              "status": "matured",
+              "return_pct": -14.164846,
+              "entry_price": 79.96,
+              "exit_price": 68.84
             },
             {
               "code": "US.KR",
               "status": "matured",
-              "return_pct": 8.010526,
+              "return_pct": 8.018402,
               "entry_price": 63.299,
-              "exit_price": 68.575
+              "exit_price": 68.58
             },
             {
               "code": "US.UAL",
@@ -2793,9 +2804,9 @@
             {
               "code": "US.WULF",
               "status": "matured",
-              "return_pct": -0.770576,
+              "return_pct": -1.084594,
               "entry_price": 12.7,
-              "exit_price": 12.64
+              "exit_price": 12.6
             },
             {
               "code": "US.EQIX",
@@ -2834,9 +2845,9 @@
             {
               "code": "US.TEAM",
               "status": "matured",
-              "return_pct": -39.168616,
+              "return_pct": -39.184394,
               "entry_price": 221.17,
-              "exit_price": 134.945
+              "exit_price": 134.91
             },
             {
               "code": "US.MMM",
@@ -2862,8 +2873,8 @@
             {
               "code": "US.KKR",
               "status": "matured",
-              "return_pct": 3.747412,
-              "entry_price": 90.66,
+              "return_pct": 3.964148,
+              "entry_price": 90.471,
               "exit_price": 94.34
             },
             {
@@ -2883,9 +2894,9 @@
             {
               "code": "US.REGN",
               "status": "matured",
-              "return_pct": 17.117812,
+              "return_pct": 17.11843,
               "entry_price": 806.74,
-              "exit_price": 947.675
+              "exit_price": 947.68
             },
             {
               "code": "US.MO",
@@ -2966,15 +2977,16 @@
           {
             "code": "US.RVMD",
             "status": "matured",
-            "return_pct": -19.962321,
+            "return_pct": -19.712204,
             "entry_price": 198.71,
-            "exit_price": 160.0
+            "exit_price": 160.5
           },
           {
             "code": "US.TSEM",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 188.47
+            "status": "matured",
+            "return_pct": -27.322294,
+            "entry_price": 188.47,
+            "exit_price": 137.8
           },
           {
             "code": "US.TTMI",
@@ -3037,9 +3049,9 @@
           {
             "code": "US.FTNT",
             "status": "matured",
-            "return_pct": -18.841098,
+            "return_pct": -18.838109,
             "entry_price": 166.27,
-            "exit_price": 135.755
+            "exit_price": 135.76
           },
           {
             "code": "US.SLB",
@@ -3098,16 +3110,16 @@
           {
             "code": "US.REGN",
             "status": "matured",
-            "return_pct": 16.766983,
+            "return_pct": 16.767599,
             "entry_price": 806.74,
-            "exit_price": 947.675
+            "exit_price": 947.68
           },
           {
             "code": "US.WULF",
             "status": "matured",
-            "return_pct": -1.06782,
+            "return_pct": -1.380897,
             "entry_price": 12.7,
-            "exit_price": 12.64
+            "exit_price": 12.6
           },
           {
             "code": "US.EQIX",
@@ -3140,9 +3152,9 @@
           {
             "code": "US.NEM",
             "status": "matured",
-            "return_pct": -12.182657,
+            "return_pct": -12.178421,
             "entry_price": 117.34,
-            "exit_price": 103.665
+            "exit_price": 103.67
           },
           {
             "code": "US.PWR",
@@ -3189,9 +3201,9 @@
           {
             "code": "US.TER",
             "status": "matured",
-            "return_pct": -30.057727,
+            "return_pct": -29.332818,
             "entry_price": 345.55,
-            "exit_price": 243.14
+            "exit_price": 245.66
           },
           {
             "code": "US.HLT",
@@ -3231,9 +3243,9 @@
           {
             "code": "US.AAOI",
             "status": "matured",
-            "return_pct": -47.252681,
+            "return_pct": -47.056138,
             "entry_price": 80.92,
-            "exit_price": 42.94
+            "exit_price": 43.1
           },
           {
             "code": "US.CMI",
@@ -3288,7 +3300,7 @@
               "code": "HK.01070",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 16.27
+              "entry_price": 16.09
             },
             {
               "code": "HK.09858",
@@ -3588,7 +3600,7 @@
               "code": "HK.01070",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 16.27
+              "entry_price": 16.09
             },
             {
               "code": "HK.02099",
@@ -3993,7 +4005,7 @@
             "code": "HK.01070",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 16.27
+            "entry_price": 16.09
           },
           {
             "code": "HK.09858",
@@ -4251,13 +4263,15 @@
             },
             {
               "code": "US.BNY",
-              "status": "missing_entry",
-              "return_pct": null
+              "status": "pending",
+              "return_pct": null,
+              "entry_price": 149.56
             },
             {
               "code": "US.SHEL",
-              "status": "missing_entry",
-              "return_pct": null
+              "status": "pending",
+              "return_pct": null,
+              "entry_price": 94.91
             },
             {
               "code": "US.TGT",
@@ -4281,13 +4295,13 @@
               "code": "US.AAOI",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 42.94
+              "entry_price": 43.1
             },
             {
               "code": "US.TEAM",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 134.945
+              "entry_price": 134.91
             },
             {
               "code": "US.ELV",
@@ -4340,7 +4354,7 @@
               "code": "US.FTNT",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 135.755
+              "entry_price": 135.76
             },
             {
               "code": "US.ON",
@@ -4424,7 +4438,7 @@
               "code": "US.MDLZ",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 65.63
+              "entry_price": 65.5
             },
             {
               "code": "US.HL",
@@ -4435,7 +4449,7 @@
               "code": "US.NEM",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 103.665
+              "entry_price": 103.67
             },
             {
               "code": "US.DDOG",
@@ -4478,7 +4492,7 @@
               "code": "US.MRNA",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 195.7
+              "entry_price": 196.03
             },
             {
               "code": "US.DELL",
@@ -4490,25 +4504,25 @@
               "code": "US.MU",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 740.43
+              "entry_price": 740.33
             },
             {
               "code": "US.AAOI",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 42.94
+              "entry_price": 43.1
             },
             {
               "code": "US.LITE",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 573.54
+              "entry_price": 574.685
             },
             {
               "code": "US.MRVL",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 151.2
+              "entry_price": 151.32
             },
             {
               "code": "US.HPE",
@@ -4520,13 +4534,13 @@
               "code": "US.STX",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 546.93
+              "entry_price": 546.9
             },
             {
               "code": "US.INTC",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 57.55
+              "entry_price": 57.5
             },
             {
               "code": "US.OKTA",
@@ -4544,13 +4558,13 @@
               "code": "US.AMD",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 543.476
+              "entry_price": 542.17
             },
             {
               "code": "US.WDC",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 307.51
+              "entry_price": 306.17
             },
             {
               "code": "US.MPC",
@@ -4574,13 +4588,13 @@
               "code": "US.FTNT",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 135.755
+              "entry_price": 135.76
             },
             {
               "code": "US.TER",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 243.14
+              "entry_price": 245.66
             },
             {
               "code": "US.PBR",
@@ -4615,7 +4629,7 @@
               "code": "US.CRWD",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 246.745
+              "entry_price": 246.89
             },
             {
               "code": "US.TGT",
@@ -4627,7 +4641,7 @@
               "code": "US.NBIS",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 111.73
+              "entry_price": 111.59
             },
             {
               "code": "US.ADI",
@@ -4639,13 +4653,13 @@
               "code": "US.LRCX",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 220.955
+              "entry_price": 220.96
             },
             {
               "code": "US.AMAT",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 367.295
+              "entry_price": 367.31
             },
             {
               "code": "US.PANW",
@@ -4711,7 +4725,7 @@
               "code": "US.MCHP",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 61.385
+              "entry_price": 61.39
             },
             {
               "code": "US.DDOG",
@@ -4723,7 +4737,7 @@
               "code": "US.XOM",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 161.325
+              "entry_price": 161.33
             }
           ],
           "return_pct": null
@@ -4748,7 +4762,7 @@
               "code": "US.KR",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 68.575
+              "entry_price": 68.58
             },
             {
               "code": "US.PNC",
@@ -4780,8 +4794,9 @@
             },
             {
               "code": "US.BNY",
-              "status": "missing_entry",
-              "return_pct": null
+              "status": "pending",
+              "return_pct": null,
+              "entry_price": 149.56
             },
             {
               "code": "US.PDD",
@@ -4827,7 +4842,7 @@
               "code": "US.ZS",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 202.0
+              "entry_price": 202.67
             },
             {
               "code": "US.AZN",
@@ -4837,8 +4852,9 @@
             },
             {
               "code": "US.SHEL",
-              "status": "missing_entry",
-              "return_pct": null
+              "status": "pending",
+              "return_pct": null,
+              "entry_price": 94.91
             },
             {
               "code": "US.PGR",
@@ -4850,7 +4866,7 @@
               "code": "US.MDLZ",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 65.63
+              "entry_price": 65.5
             },
             {
               "code": "US.DVN",
@@ -4862,7 +4878,7 @@
               "code": "US.SAP",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 206.215
+              "entry_price": 206.22
             },
             {
               "code": "US.PBR",
@@ -4873,7 +4889,7 @@
               "code": "US.ICE",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 172.195
+              "entry_price": 172.2
             },
             {
               "code": "US.UAL",
@@ -4897,13 +4913,13 @@
               "code": "US.PYPL",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 57.725
+              "entry_price": 57.815
             },
             {
               "code": "US.WULF",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 12.64
+              "entry_price": 12.6
             },
             {
               "code": "US.SLB",
@@ -4933,7 +4949,7 @@
               "code": "US.TEAM",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 134.945
+              "entry_price": 134.91
             },
             {
               "code": "US.BX",
@@ -4945,7 +4961,7 @@
               "code": "US.ASTS",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 27.705
+              "entry_price": 27.62
             },
             {
               "code": "US.CMG",
@@ -4975,7 +4991,7 @@
               "code": "US.GM",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 83.3
+              "entry_price": 82.78
             }
           ],
           "return_pct": null
@@ -5017,13 +5033,15 @@
           },
           {
             "code": "US.BNY",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 149.56
           },
           {
             "code": "US.SHEL",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 94.91
           },
           {
             "code": "US.TGT",
@@ -5047,13 +5065,13 @@
             "code": "US.AAOI",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 42.94
+            "entry_price": 43.1
           },
           {
             "code": "US.TEAM",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 134.945
+            "entry_price": 134.91
           },
           {
             "code": "US.ELV",
@@ -5106,7 +5124,7 @@
             "code": "US.FTNT",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 135.755
+            "entry_price": 135.76
           },
           {
             "code": "US.ON",
@@ -5190,7 +5208,7 @@
             "code": "US.MDLZ",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 65.63
+            "entry_price": 65.5
           },
           {
             "code": "US.HL",
@@ -5201,7 +5219,7 @@
             "code": "US.NEM",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 103.665
+            "entry_price": 103.67
           },
           {
             "code": "US.DDOG",
