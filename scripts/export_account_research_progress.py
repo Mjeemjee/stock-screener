@@ -2666,6 +2666,18 @@ def main():
         if payroll_review.exists():
             activity_text=activity_text.removeprefix(read(payroll_review)['activity_site_summary']+' ')
         activity_text=h8['activity_site_summary']+' '+activity_text
+    eia_review=MINING/'acceptance/US-EIA-XLE-v603-v608-ROOT-v1.json'
+    if args.focus=='mining' and eia_review.exists():
+        eia=read(eia_review)
+        assert eia['new_paper_accounts']==eia['actual_orders']==0
+        assert all(digest(ROOT/path)==expected for path,expected in eia['pins'].items())
+        extra_sources['us_eia_xle']=eia_review
+        current_work['owners'][15:15]=[
+            dict(name='美股 · EIA 原油库存与 XLE',status='snapshot',task=eia['economic_site_summary']),
+            dict(name='美股 · EIA 原始库存报告',status='snapshot',task=eia['source_site_summary'])]
+        if h8_review.exists():
+            activity_text=activity_text.removeprefix(read(h8_review)['activity_site_summary']+' ')
+        activity_text=eia['activity_site_summary']+' '+activity_text
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
