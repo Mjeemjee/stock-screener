@@ -2861,6 +2861,17 @@ def main():
                     dict(name='港股 · 锁定期变更',status='snapshot',task=batch['exception_site_summary'])]
             current_work['owners']=owners+current_work.get('owners',[])
             activity_text=batch['activity_site_summary']+' '+activity_text.removeprefix(cornerstone['activity_site_summary']+' ')
+            qualified_review=MINING/'acceptance/HK-CORNERSTONE-QUALIFIED-v686-v689-ROOT-v1.json'
+            if qualified_review.exists():
+                qualified=read(qualified_review)
+                assert qualified['actual_orders']==qualified['new_paper_accounts']==0 and not qualified['returns_computed']
+                assert all(digest(ROOT/path)==expected for path,expected in qualified['pins'].items())
+                extra_sources['hk_cornerstone_qualified']=qualified_review
+                owners=[dict(name='港股 · 解禁时钟与停牌',status='snapshot',task=qualified['clock_site_summary']),
+                        dict(name='港股 · 盈富基金同日对照',status='snapshot',task=qualified['benchmark_site_summary']),
+                        dict(name='港股 · 解禁扣费账本',status='snapshot',task=qualified['ledger_site_summary'])]
+                current_work['owners']=owners+current_work.get('owners',[])
+                activity_text=qualified['activity_site_summary']+' '+activity_text.removeprefix(batch['activity_site_summary']+' ')
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
