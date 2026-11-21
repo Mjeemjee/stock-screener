@@ -2919,6 +2919,18 @@ def main():
                                         dict(name='美股 · KRE 回撤与段界',status='snapshot',task=fdic['risk_site_summary'])]
                                 current_work['owners']=owners+current_work.get('owners',[])
                                 activity_text=fdic['activity_site_summary']+' '+activity_text.removeprefix(itb['activity_site_summary']+' ')
+                                mgm_review=MINING/'acceptance/HK-MACAO-DSEC-MGM-DEVELOPMENT-v716-v719-ROOT-v1.json'
+                                if mgm_review.exists():
+                                    mgm=read(mgm_review)
+                                    assert mgm['actual_orders']==mgm['new_paper_accounts']==0 and not mgm['holdout_prices_read']
+                                    assert mgm['decision']=='HOLD_DEVELOPMENT_INSUFFICIENT_ROUNDS' and not mgm['stable_profitability_proven']
+                                    assert all(digest(ROOT/path)==expected for path,expected in mgm['pins'].items())
+                                    extra_sources['hk_macao_dsec_mgm_development']=mgm_review
+                                    owners=[dict(name='港股 · 澳门留宿游客与02282',status='snapshot',task=mgm['clock_site_summary']),
+                                            dict(name='港股 · 02282 扣费与静持',status='snapshot',task=mgm['pnl_site_summary']),
+                                            dict(name='港股 · 02282 回撤与收益集中',status='snapshot',task=mgm['risk_site_summary'])]
+                                    current_work['owners']=owners+current_work.get('owners',[])
+                                    activity_text=mgm['activity_site_summary']+' '+activity_text.removeprefix(fdic['activity_site_summary']+' ')
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
