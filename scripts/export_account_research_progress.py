@@ -3021,6 +3021,18 @@ def main():
                                                                         dict(name='美股 · XLI 执行顺延与静持',status='snapshot',task=xli['sensitivity_site_summary'])]
                                                                 current_work['owners']=owners+current_work.get('owners',[])
                                                                 activity_text=xli['activity_site_summary']+' '+activity_text.removeprefix(dar['activity_site_summary']+' ')
+                                                                bidu_review=MINING/'acceptance/HK-BAIDU-ADR-PARITY-DEVELOPMENT-v762-v765-ROOT-v1.json'
+                                                                if bidu_review.exists():
+                                                                    bidu=read(bidu_review)
+                                                                    assert bidu['actual_orders']==bidu['new_paper_accounts']==0
+                                                                    assert bidu['decision']=='NO_FILL_DEVELOPMENT_AT_FIXED_PARITY_LIMIT' and not bidu['stable_profitability_proven']
+                                                                    assert all(digest(ROOT/path)==expected for path,expected in bidu['pins'].items())
+                                                                    extra_sources['hk_baidu_adr_parity_development']=bidu_review
+                                                                    owners=[dict(name='港股 · 百度 ADS 股比与时钟',status='snapshot',task=bidu['source_site_summary']),
+                                                                            dict(name='港股 · 百度开盘限价与整手',status='snapshot',task=bidu['pnl_site_summary']),
+                                                                            dict(name='港股 · 百度汇率与静持参照',status='snapshot',task=bidu['sensitivity_site_summary'])]
+                                                                    current_work['owners']=owners+current_work.get('owners',[])
+                                                                    activity_text=bidu['activity_site_summary']+' '+activity_text.removeprefix(xli['activity_site_summary']+' ')
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
