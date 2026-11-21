@@ -3009,6 +3009,18 @@ def main():
                                                                 assert all(digest(ROOT/path)==expected for path,expected in gap['pins'].items())
                                                                 extra_sources['diversified_paper_nov20_source_timeout']=diversified_gap
                                                                 current_work['owners'].insert(3,dict(name='美股 · 60／20／20 纸面来源',status='snapshot',task=gap['source_site_summary']))
+                                                            xli_review=MINING/'acceptance/US-DURABLE-CORE-XLI-DEVELOPMENT-v757-v760-ROOT-v1.json'
+                                                            if xli_review.exists():
+                                                                xli=read(xli_review)
+                                                                assert xli['actual_orders']==xli['new_paper_accounts']==0
+                                                                assert xli['decision']=='M3_CORE_ORDERS_XLI_DEVELOPMENT_REJECTED' and not xli['stable_profitability_proven']
+                                                                assert all(digest(ROOT/path)==expected for path,expected in xli['pins'].items())
+                                                                extra_sources['us_durable_core_xli_development']=xli_review
+                                                                owners=[dict(name='美股 · 核心资本品订单初值',status='snapshot',task=xli['source_site_summary']),
+                                                                        dict(name='美股 · XLI 月度信号与扣费',status='snapshot',task=xli['pnl_site_summary']),
+                                                                        dict(name='美股 · XLI 执行顺延与静持',status='snapshot',task=xli['sensitivity_site_summary'])]
+                                                                current_work['owners']=owners+current_work.get('owners',[])
+                                                                activity_text=xli['activity_site_summary']+' '+activity_text.removeprefix(dar['activity_site_summary']+' ')
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
