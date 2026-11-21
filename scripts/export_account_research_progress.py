@@ -2713,6 +2713,19 @@ def main():
                 owner['task']=first['paper_site_summary']
         current_work['owners'][15:15]=[
             dict(name='港股 · 03086 纸面取证',status='snapshot',task=first['hk_gap_site_summary'])]
+    hyg_review=MINING/'acceptance/US-HYG-DISCOUNT-v622-v628-ROOT-v1.json'
+    if args.focus=='mining' and hyg_review.exists():
+        hyg=read(hyg_review)
+        assert hyg['new_paper_accounts']==hyg['actual_orders']==0
+        assert all(digest(ROOT/path)==expected for path,expected in hyg['pins'].items())
+        extra_sources['us_hyg_discount']=hyg_review
+        current_work['owners'][15:15]=[
+            dict(name='美股 · HYG 净值折价',status='snapshot',task=hyg['economic_site_summary']),
+            dict(name='美股 · HYG 净值披露时点',status='snapshot',task=hyg['source_site_summary']),
+            dict(name='美股 · HYG 美元留存',status='snapshot',task=hyg['wallet_site_summary'])]
+        if link_review.exists():
+            activity_text=activity_text.removeprefix(read(link_review)['activity_site_summary']+' ')
+        activity_text=hyg['activity_site_summary']+' '+activity_text
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
