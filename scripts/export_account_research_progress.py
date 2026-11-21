@@ -2752,6 +2752,19 @@ def main():
         if credit_relative_review.exists():
             activity_text=activity_text.removeprefix(credit_relative['activity_site_summary']+' ')
         activity_text=hk_income['activity_site_summary']+' '+activity_text
+    hk_rate_review=MINING/'acceptance/HK-02819-YIELD-v638-v642-ROOT-v1.json'
+    if args.focus=='mining' and hk_rate_review.exists():
+        hk_rate=read(hk_rate_review)
+        assert hk_rate['new_paper_accounts']==hk_rate['actual_orders']==0
+        assert all(digest(ROOT/path)==expected for path,expected in hk_rate['pins'].items())
+        extra_sources['hk_02819_yield_trend']=hk_rate_review
+        current_work['owners'][15:15]=[
+            dict(name='港股 · 02819 利率趋势',status='snapshot',task=hk_rate['economic_site_summary']),
+            dict(name='港股 · 五年期利率接续',status='snapshot',task=hk_rate['source_site_summary']),
+            dict(name='港股 · 02819 整手与卖出',status='snapshot',task=hk_rate['timing_site_summary'])]
+        if hk_income_review.exists():
+            activity_text=activity_text.removeprefix(hk_income['activity_site_summary']+' ')
+        activity_text=hk_rate['activity_site_summary']+' '+activity_text
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
