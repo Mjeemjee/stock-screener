@@ -2838,6 +2838,18 @@ def main():
         current_work['owners']=owners+current_work.get('owners',[])
         activity_text=activity_text.removeprefix(bond_daily['activity_site_summary']+' ')
         activity_text=concentration['activity_site_summary']+' '+activity_text
+    cornerstone_review=MINING/'acceptance/HK-CORNERSTONE-UNLOCK-v676-v679-ROOT-v1.json'
+    if args.focus=='mining' and cornerstone_review.exists():
+        cornerstone=read(cornerstone_review)
+        assert cornerstone['actual_orders']==cornerstone['new_paper_accounts']==0 and not cornerstone['returns_computed']
+        assert all(digest(ROOT/path)==expected for path,expected in cornerstone['pins'].items())
+        extra_sources['hk_cornerstone_unlock']=cornerstone_review
+        owners=[dict(name='港股 · 基石锁定期到期',status='snapshot',task=cornerstone['universe_site_summary']),
+                dict(name='港股 · 配发条款与可售日期',status='snapshot',task=cornerstone['clock_site_summary']),
+                dict(name='港股 · 解禁后整手预算',status='snapshot',task=cornerstone['lot_site_summary'])]
+        current_work['owners']=owners+current_work.get('owners',[])
+        activity_text=activity_text.removeprefix(concentration['activity_site_summary']+' ')
+        activity_text=cornerstone['activity_site_summary']+' '+activity_text
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
