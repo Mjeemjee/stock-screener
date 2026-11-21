@@ -2778,6 +2778,19 @@ def main():
         if hk_rate_review.exists():
             activity_text=activity_text.removeprefix(hk_rate['activity_site_summary']+' ')
         activity_text=regional['activity_site_summary']+' '+activity_text
+    fomc_overnight_review=MINING/'acceptance/US-VTI-FOMC-OVERNIGHT-v649-v652-ROOT-v1.json'
+    if args.focus=='mining' and fomc_overnight_review.exists():
+        fomc_overnight=read(fomc_overnight_review)
+        assert fomc_overnight['new_paper_accounts']==fomc_overnight['actual_orders']==0
+        assert all(digest(ROOT/path)==expected for path,expected in fomc_overnight['pins'].items())
+        extra_sources['us_vti_fomc_overnight']=fomc_overnight_review
+        current_work['owners'][15:15]=[
+            dict(name='美股 · FOMC 公布前隔夜',status='snapshot',task=fomc_overnight['economic_site_summary']),
+            dict(name='美股 · FOMC 提前排程',status='snapshot',task=fomc_overnight['source_site_summary']),
+            dict(name='美股 · 隔夜成本与成交',status='snapshot',task=fomc_overnight['timing_site_summary'])]
+        if regional_review.exists():
+            activity_text=activity_text.removeprefix(regional['activity_site_summary']+' ')
+        activity_text=fomc_overnight['activity_site_summary']+' '+activity_text
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
