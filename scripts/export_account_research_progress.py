@@ -3072,14 +3072,29 @@ def main():
                                                                             assert all(digest(ROOT/path)==expected for path,expected in dealer['pins'].items())
                                                                             extra_sources['us_ief_dealer_auction_development']=dealer_review
                                                                             current_work['owners'].insert(0,dict(name='美股 · IEF 拍卖承接比例',status='snapshot',task=dealer['site_summary']))
-    claims_review=MINING/'acceptance/US-VTI-INITIAL-CLAIMS-v779-v780-ROOT-v1.json'
-    if args.focus=='mining' and claims_review.exists():
-        claims=read(claims_review)
-        assert claims['decision'] in {'SOURCE_AND_RULE_QUALIFIED','DEVELOPMENT_REJECT','DEVELOPMENT_ELIGIBLE'}
-        assert claims['actual_orders']==claims['new_paper_accounts']==0 and not claims['later_returns_computed']
-        assert all(digest(ROOT/path)==expected for path,expected in claims['pins'].items())
-        extra_sources['us_vti_initial_claims_monthly']=claims_review
-        current_work['owners'].insert(0,dict(name='美股 · 初请失业金与 VTI',status='snapshot',task=claims['site_summary']))
+    if args.focus=='mining':
+        recent_reviews=(
+            ('US-VTI-INITIAL-CLAIMS-v779-v780-ROOT-v1.json','us_vti_initial_claims_monthly','美股 · 初请失业金与 VTI'),
+            ('US-VTI-SKEW-v781-v783-ROOT-v1.json','us_vti_skew_daily','美股 · SKEW 日度风控与 VTI'),
+        )
+        for filename,source_key,title in recent_reviews:
+            review_path=MINING/'acceptance'/filename
+            if not review_path.exists():
+                continue
+            review=read(review_path)
+            assert review['decision'] in {'SOURCE_AND_RULE_QUALIFIED','DEVELOPMENT_REJECT','DEVELOPMENT_ELIGIBLE'}
+            assert review['actual_orders']==review['new_paper_accounts']==0 and not review['later_returns_computed']
+            assert all(digest(ROOT/path)==expected for path,expected in review['pins'].items())
+            extra_sources[source_key]=review_path
+            current_work['owners'].insert(0,dict(name=title,status='snapshot',task=review['site_summary']))
+        skew_holdout_path=MINING/'acceptance/US-VTI-SKEW-HOLDOUT-v784-ROOT-v1.json'
+        if skew_holdout_path.exists():
+            skew_holdout=read(skew_holdout_path)
+            assert skew_holdout['decision']=='HOLDOUT_REJECT' and not skew_holdout['qualified_capitals']
+            assert skew_holdout['actual_orders']==skew_holdout['new_paper_accounts']==0
+            assert all(digest(ROOT/path)==expected for path,expected in skew_holdout['pins'].items())
+            extra_sources['us_vti_skew_holdout']=skew_holdout_path
+            current_work['owners'].insert(0,dict(name='美股 · SKEW 后段核验',status='snapshot',task=skew_holdout['site_summary']))
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
