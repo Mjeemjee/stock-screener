@@ -3135,6 +3135,14 @@ def main():
             assert all(digest(ROOT/path)==expected for path,expected in spx_expiry['pins'].items())
             extra_sources['us_vti_standard_spx_expiry']=spx_expiry_path
             current_work['owners'].insert(0,dict(name='美股 · SPX 到期后 VTI 反弹',status='snapshot',task=spx_expiry['site_summary']))
+        hk_bond_portfolio_path=MINING/'acceptance/HK-03110-BOND-EXECUTION-v796-v800-ROOT-v1.json'
+        if hk_bond_portfolio_path.exists():
+            hk_bond_portfolio=read(hk_bond_portfolio_path)
+            assert hk_bond_portfolio['decision']=='EXECUTION_REJECT' and not hk_bond_portfolio['qualified_capitals_hkd']
+            assert hk_bond_portfolio['actual_orders']==hk_bond_portfolio['new_paper_accounts']==0
+            assert all(digest(ROOT/path)==expected for path,expected in hk_bond_portfolio['pins'].items())
+            extra_sources['hk_03110_bond_execution']=hk_bond_portfolio_path
+            current_work['owners'].insert(0,dict(name='港股 · 小资金股债组合',status='snapshot',task=hk_bond_portfolio['site_summary']))
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,

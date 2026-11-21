@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-21T23:58:44.171400+08:00",
+  "updated_at": "2026-11-22T00:20:04.996962+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "waiting",
@@ -8958,7 +8958,7 @@
     "milestone_label": "历史候选交付完成（里程碑）",
     "evidence_label": "稳定盈利与持续性尚未证实",
     "task": "T-012",
-    "team_updated_at": "2026-11-21 23:58 HKT",
+    "team_updated_at": "2026-11-22 00:19 HKT",
     "active_work": {
       "account": false,
       "registration": false,
@@ -8967,6 +8967,11 @@
     "source_status": "LIMITED_GROSS_RIGHTS_DIAGNOSTIC_DATA_ONLY",
     "scope": "港美个股及普通非杠杆ETF；持续研究与原03086／SGOV纸面并行。",
     "owners": [
+      {
+        "name": "港股 · 小资金股债组合",
+        "status": "snapshot",
+        "task": "03110 配两只不同的港币柜台债券 ETF，三档均在执行资格止步。02817四个固定入场日三源零量；02829四日有双源正量开盘，但2022年最后五个允许卖出的会话三源均零量。补第三源后490个估值日前收齐全，仍无合格退出，不列模型收益。"
+      },
       {
         "name": "美股 · SPX 到期后 VTI 反弹",
         "status": "snapshot",
@@ -15352,7 +15357,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-21T23:58:50.034286+08:00",
+    "checked_at": "2026-11-22T00:20:10.831917+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -15584,7 +15589,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-21T23:58:46.273605+08:00",
+    "checked_at": "2026-11-22T00:20:07.618864+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -15680,7 +15685,7 @@
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
     "mining_goal": "68eb98410cb442ebeb4d18765365ed8fcc5789c0852ea7dc6cc0d94ee7b809ab",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
-    "mining_team": "fe6d5afa5deaea6ab11389912dacdd25bda71ea0ab1a21f579bbeffc65a786ae",
+    "mining_team": "462db31082d8ea08da9c996e52b302365996da91a9c9b09851ae4ac1b5dca79b",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
     "fip_original": "9c598341d1b0e59753bc0134509908b4698209cfff0b95c22f973f655b868296",
     "fip_calendar_correction": "33d2d80372b6c433688dbbcabcc49f2a458989a633ed783c0c2fa42d6f824695",
@@ -15887,7 +15892,8 @@
     "paper_overlap_recovery_v787": "fcaddc0fef82c3f03760f5d28299a0b4d31780818e3cd48b4e510f21afabea94",
     "hk_03110_cash_spread": "ebce7abcbebba9c2d8bad6e8e6d8b3be8d41921a1a62c55983135e2f0a2b0477",
     "us_vti_fed_reserves": "1fd030a75876df903d0d71a4f898745b27b0877a0979e74653d88cca52692ecd",
-    "us_vti_standard_spx_expiry": "e80c1da8f42c31ca95266850019d3ad37aee7ba925634d4cc299eb7021c820c8"
+    "us_vti_standard_spx_expiry": "e80c1da8f42c31ca95266850019d3ad37aee7ba925634d4cc299eb7021c820c8",
+    "hk_03110_bond_execution": "52b1f2a28ed2c5e7942af30274dfe1504d02a1530db100f8fc0c9f17e7be1161"
   },
   "filing_event": {
     "sources": [
