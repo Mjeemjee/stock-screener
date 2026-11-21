@@ -2931,6 +2931,18 @@ def main():
                                             dict(name='港股 · 02282 回撤与收益集中',status='snapshot',task=mgm['risk_site_summary'])]
                                     current_work['owners']=owners+current_work.get('owners',[])
                                     activity_text=mgm['activity_site_summary']+' '+activity_text.removeprefix(fdic['activity_site_summary']+' ')
+                                    cathay_review=MINING/'acceptance/HK-CATHAY-CARGO-00293-DEVELOPMENT-v723-v726-ROOT-v1.json'
+                                    if cathay_review.exists():
+                                        cathay=read(cathay_review)
+                                        assert cathay['actual_orders']==cathay['new_paper_accounts']==0 and not cathay['holdout_account_prices_used']
+                                        assert cathay['decision']=='REJECT_LOT_AND_DEVELOPMENT_RISK' and not cathay['stable_profitability_proven']
+                                        assert all(digest(ROOT/path)==expected for path,expected in cathay['pins'].items())
+                                        extra_sources['hk_cathay_cargo_00293_development']=cathay_review
+                                        owners=[dict(name='港股 · 国泰货运载运率与00293',status='snapshot',task=cathay['clock_site_summary']),
+                                                dict(name='港股 · 00293 整手与扣费',status='snapshot',task=cathay['pnl_site_summary']),
+                                                dict(name='港股 · 00293 供股与回撤',status='snapshot',task=cathay['risk_site_summary'])]
+                                        current_work['owners']=owners+current_work.get('owners',[])
+                                        activity_text=cathay['activity_site_summary']+' '+activity_text.removeprefix(mgm['activity_site_summary']+' ')
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
