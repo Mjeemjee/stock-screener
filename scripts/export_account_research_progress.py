@@ -2804,6 +2804,17 @@ def main():
         if fomc_overnight_review.exists():
             activity_text=activity_text.removeprefix(fomc_overnight['activity_site_summary']+' ')
         activity_text=stock_bond['activity_site_summary']+' '+activity_text
+    stock_bond_plan_review=MINING/'acceptance/US-DGRO-VGSH-FORWARD-PLAN-v664-ROOT-v1.json'
+    if args.focus=='mining' and stock_bond_plan_review.exists():
+        bond_plan=read(stock_bond_plan_review)
+        assert bond_plan['actual_orders']==bond_plan['forward_fills']==bond_plan['preopen_intents']==0
+        assert all(digest(ROOT/path)==expected for path,expected in bond_plan['pins'].items())
+        extra_sources['us_dgro_vgsh_forward_plan']=stock_bond_plan_review
+        owners=[dict(name='美股 · DGRO／VGSH 纸面准备',status='snapshot',task=bond_plan['paper_site_summary']),
+                dict(name='美股 · 股债入场证据演练',status='snapshot',task=bond_plan['clock_site_summary'])]
+        current_work['owners']=owners+current_work.get('owners',[])
+        activity_text=activity_text.removeprefix(stock_bond['activity_site_summary']+' ')
+        activity_text=bond_plan['activity_site_summary']+' '+activity_text
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
