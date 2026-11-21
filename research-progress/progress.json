@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-21T22:47:23.922690+08:00",
+  "updated_at": "2026-11-21T23:05:25.790904+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "waiting",
@@ -8958,7 +8958,7 @@
     "milestone_label": "历史候选交付完成（里程碑）",
     "evidence_label": "稳定盈利与持续性尚未证实",
     "task": "T-012",
-    "team_updated_at": "2026-11-21 22:47 HKT",
+    "team_updated_at": "2026-11-21 23:05 HKT",
     "active_work": {
       "account": false,
       "registration": false,
@@ -8967,6 +8967,11 @@
     "source_status": "LIMITED_GROSS_RIGHTS_DIAGNOSTIC_DATA_ONLY",
     "scope": "港美个股及普通非杠杆ETF；持续研究与原03086／SGOV纸面并行。",
     "owners": [
+      {
+        "name": "纸面 · 三资产续采",
+        "status": "snapshot",
+        "task": "已离线修复SGOV／VTI／GLD续采窗口，原合格包起点为11月13日。下次香港11月24日05:30后目标11／23，覆盖待补11／19、20、23。缺日或旧报价冲突拒绝接账，原3事件不变，真实新数据待取。"
+      },
       {
         "name": "港股 · 03152 港币利率门槛",
         "status": "snapshot",
@@ -15332,7 +15337,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-21T22:47:28.150858+08:00",
+    "checked_at": "2026-11-21T23:05:31.603856+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -15564,7 +15569,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-21T22:47:25.419400+08:00",
+    "checked_at": "2026-11-21T23:05:27.941407+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -15660,7 +15665,7 @@
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
     "mining_goal": "68eb98410cb442ebeb4d18765365ed8fcc5789c0852ea7dc6cc0d94ee7b809ab",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
-    "mining_team": "5796ba1146dcc0e6c3b2e226db16188f9d7375819a1a61827e1588cb1c55dcfe",
+    "mining_team": "e3a866657f7d30c6e6f0feb89e0334f86f6088a5911ef4f1fa54e7d2b0ef2957",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
     "fip_original": "9c598341d1b0e59753bc0134509908b4698209cfff0b95c22f973f655b868296",
     "fip_calendar_correction": "33d2d80372b6c433688dbbcabcc49f2a458989a633ed783c0c2fa42d6f824695",
@@ -15863,7 +15868,8 @@
     "us_vti_initial_claims_monthly": "1a34f061c611bf6625b7635834c1c529a38513f779362d9ebb79dd46cf5bc9d9",
     "us_vti_skew_daily": "b38ab509bd254364eed1e53324e9bc2a95cbf186734ab284618ec4af6c8fc783",
     "us_vti_skew_holdout": "0b0829799313ee685fc7f5c034f8dc4fb11c0507c4f62ed054cf2ccb13a316e2",
-    "hk_03152_hibor_hurdle": "6bc2d01fe3af89fbc1382ac75470c8b55d4e4e11206e34817685b99d1e6a6767"
+    "hk_03152_hibor_hurdle": "6bc2d01fe3af89fbc1382ac75470c8b55d4e4e11206e34817685b99d1e6a6767",
+    "paper_overlap_recovery_v787": "fcaddc0fef82c3f03760f5d28299a0b4d31780818e3cd48b4e510f21afabea94"
   },
   "filing_event": {
     "sources": [
