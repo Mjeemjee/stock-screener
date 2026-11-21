@@ -2739,6 +2739,19 @@ def main():
         if hyg_review.exists():
             activity_text=activity_text.removeprefix(hyg['activity_site_summary']+' ')
         activity_text=credit_relative['activity_site_summary']+' '+activity_text
+    hk_income_review=MINING/'acceptance/HK-03110-INCOME-v633-v636-ROOT-v1.json'
+    if args.focus=='mining' and hk_income_review.exists():
+        hk_income=read(hk_income_review)
+        assert hk_income['new_paper_accounts']==hk_income['actual_orders']==0
+        assert all(digest(ROOT/path)==expected for path,expected in hk_income['pins'].items())
+        extra_sources['hk_03110_income']=hk_income_review
+        current_work['owners'][15:15]=[
+            dict(name='港股 · 03110 高息 ETF',status='snapshot',task=hk_income['economic_site_summary']),
+            dict(name='港股 · 03110 分派与整手',status='snapshot',task=hk_income['source_site_summary']),
+            dict(name='港股 · 03110 开盘持有参照',status='snapshot',task=hk_income['timing_site_summary'])]
+        if credit_relative_review.exists():
+            activity_text=activity_text.removeprefix(credit_relative['activity_site_summary']+' ')
+        activity_text=hk_income['activity_site_summary']+' '+activity_text
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
