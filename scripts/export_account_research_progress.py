@@ -2943,6 +2943,18 @@ def main():
                                                 dict(name='港股 · 00293 供股与回撤',status='snapshot',task=cathay['risk_site_summary'])]
                                         current_work['owners']=owners+current_work.get('owners',[])
                                         activity_text=cathay['activity_site_summary']+' '+activity_text.removeprefix(mgm['activity_site_summary']+' ')
+                                        csx_review=MINING/'acceptance/US-AAR-CSX-DEVELOPMENT-v728-v733-ROOT-v1.json'
+                                        if csx_review.exists():
+                                            csx=read(csx_review)
+                                            assert csx['actual_orders']==csx['new_paper_accounts']==0 and not csx['holdout_prices_read']
+                                            assert csx['decision']=='HOLD_DEVELOPMENT_INSUFFICIENT_DEPTH' and not csx['stable_profitability_proven']
+                                            assert all(digest(ROOT/path)==expected for path,expected in csx['pins'].items())
+                                            extra_sources['us_aar_csx_development']=csx_review
+                                            owners=[dict(name='美股 · AAR 联运周报与CSX',status='snapshot',task=csx['clock_site_summary']),
+                                                    dict(name='美股 · CSX 扣费与静持',status='snapshot',task=csx['pnl_site_summary']),
+                                                    dict(name='美股 · CSX 回撤与成交深度',status='snapshot',task=csx['risk_site_summary'])]
+                                            current_work['owners']=owners+current_work.get('owners',[])
+                                            activity_text=csx['activity_site_summary']+' '+activity_text.removeprefix(cathay['activity_site_summary']+' ')
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
