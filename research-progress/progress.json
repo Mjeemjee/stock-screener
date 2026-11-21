@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-21T21:52:10.019690+08:00",
+  "updated_at": "2026-11-21T22:09:41.644257+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "waiting",
@@ -8958,7 +8958,7 @@
     "milestone_label": "历史候选交付完成（里程碑）",
     "evidence_label": "稳定盈利与持续性尚未证实",
     "task": "T-012",
-    "team_updated_at": "2026-11-21 21:52 HKT",
+    "team_updated_at": "2026-11-21 22:09 HKT",
     "active_work": {
       "account": false,
       "registration": false,
@@ -8967,6 +8967,11 @@
     "source_status": "LIMITED_GROSS_RIGHTS_DIAGNOSTIC_DATA_ONLY",
     "scope": "港美个股及普通非杠杆ETF；持续研究与原03086／SGOV纸面并行。",
     "owners": [
+      {
+        "name": "美股 · 初请失业金与 VTI",
+        "status": "snapshot",
+        "task": "2017–2025 核齐107份月末初请原报，1月官方停发。三档开发压力成本后净亏220.50／316.06／546.19港元，各2轮。2020-04-01减仓晚于3月23日低点，回撤与静持相同。双源及独立复核一致，后段收益未计算。"
+      },
       {
         "name": "美股 · IEF 拍卖承接比例",
         "status": "snapshot",
@@ -15312,7 +15317,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-21T21:52:13.374311+08:00",
+    "checked_at": "2026-11-21T22:09:47.397012+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -15544,7 +15549,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-21T21:52:11.112470+08:00",
+    "checked_at": "2026-11-21T22:09:43.227296+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -15640,7 +15645,7 @@
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
     "mining_goal": "68eb98410cb442ebeb4d18765365ed8fcc5789c0852ea7dc6cc0d94ee7b809ab",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
-    "mining_team": "f9f9213cbc7b406f900747c884d3e0bd4ef8b11713d152fe0de1a91789f2e9ef",
+    "mining_team": "fc5802ce3893a75ba9a095d988acc7f6eb5f90690ec6c5117755445c82fd84a1",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
     "fip_original": "9c598341d1b0e59753bc0134509908b4698209cfff0b95c22f973f655b868296",
     "fip_calendar_correction": "33d2d80372b6c433688dbbcabcc49f2a458989a633ed783c0c2fa42d6f824695",
@@ -15839,7 +15844,8 @@
     "hk_ccb_ah_development": "091020326d40b74e09532750074588c7e08bdfac8f8ce558bea08d38004cb076",
     "hk_ccb_ah_holdout": "6700cb602ed56a3b7bde8a5b2b80f4b3a861ff6adaa6e9af7d52b5b7680feb0d",
     "hk_ccb_ah_month_end_cutoff": "dfc89ac71c1c73583979fa56e7ef19e184310de0a68b8887e82364f972c3770e",
-    "us_ief_dealer_auction_development": "e6005992c01c1d8dbcd92cbeb7dae005dc888fea6bda0d5999d90b1040e4448e"
+    "us_ief_dealer_auction_development": "e6005992c01c1d8dbcd92cbeb7dae005dc888fea6bda0d5999d90b1040e4448e",
+    "us_vti_initial_claims_monthly": "1a34f061c611bf6625b7635834c1c529a38513f779362d9ebb79dd46cf5bc9d9"
   },
   "filing_event": {
     "sources": [
