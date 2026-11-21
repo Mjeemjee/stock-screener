@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-21T21:41:06.694910+08:00",
+  "updated_at": "2026-11-21T21:52:10.019690+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "waiting",
@@ -8958,7 +8958,7 @@
     "milestone_label": "历史候选交付完成（里程碑）",
     "evidence_label": "稳定盈利与持续性尚未证实",
     "task": "T-012",
-    "team_updated_at": "2026-11-21 21:40 HKT",
+    "team_updated_at": "2026-11-21 21:52 HKT",
     "active_work": {
       "account": false,
       "registration": false,
@@ -8967,6 +8967,11 @@
     "source_status": "LIMITED_GROSS_RIGHTS_DIAGNOSTIC_DATA_ONLY",
     "scope": "港美个股及普通非杠杆ETF；持续研究与原03086／SGOV纸面并行。",
     "owners": [
+      {
+        "name": "美股 · IEF 拍卖承接比例",
+        "status": "snapshot",
+        "task": "2018–2021 共48场，触发15场。1万／2万／3万港元账户各15轮，压力成本后三档净亏907／875／822港元，同期半额静持均净正。三档均止于开发，后段收益未计算。"
+      },
       {
         "name": "港股 · 建行真实月末观察",
         "status": "snapshot",
@@ -15307,7 +15312,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-21T21:41:11.275741+08:00",
+    "checked_at": "2026-11-21T21:52:13.374311+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -15539,7 +15544,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-21T21:41:08.095546+08:00",
+    "checked_at": "2026-11-21T21:52:11.112470+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -15635,7 +15640,7 @@
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
     "mining_goal": "68eb98410cb442ebeb4d18765365ed8fcc5789c0852ea7dc6cc0d94ee7b809ab",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
-    "mining_team": "f91f333f8350d66fa84923002ae77b6278f1c090785bdf897ea7bac00693dee3",
+    "mining_team": "f9f9213cbc7b406f900747c884d3e0bd4ef8b11713d152fe0de1a91789f2e9ef",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
     "fip_original": "9c598341d1b0e59753bc0134509908b4698209cfff0b95c22f973f655b868296",
     "fip_calendar_correction": "33d2d80372b6c433688dbbcabcc49f2a458989a633ed783c0c2fa42d6f824695",
@@ -15833,7 +15838,8 @@
     "hk_baidu_adr_parity_development": "6e164531a24f4cdf873040b717a51f41b948a1f18760acc03838ee5c954fab80",
     "hk_ccb_ah_development": "091020326d40b74e09532750074588c7e08bdfac8f8ce558bea08d38004cb076",
     "hk_ccb_ah_holdout": "6700cb602ed56a3b7bde8a5b2b80f4b3a861ff6adaa6e9af7d52b5b7680feb0d",
-    "hk_ccb_ah_month_end_cutoff": "dfc89ac71c1c73583979fa56e7ef19e184310de0a68b8887e82364f972c3770e"
+    "hk_ccb_ah_month_end_cutoff": "dfc89ac71c1c73583979fa56e7ef19e184310de0a68b8887e82364f972c3770e",
+    "us_ief_dealer_auction_development": "e6005992c01c1d8dbcd92cbeb7dae005dc888fea6bda0d5999d90b1040e4448e"
   },
   "filing_event": {
     "sources": [
