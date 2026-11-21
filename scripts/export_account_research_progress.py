@@ -3033,6 +3033,25 @@ def main():
                                                                             dict(name='港股 · 百度汇率与静持参照',status='snapshot',task=bidu['sensitivity_site_summary'])]
                                                                     current_work['owners']=owners+current_work.get('owners',[])
                                                                     activity_text=bidu['activity_site_summary']+' '+activity_text.removeprefix(xli['activity_site_summary']+' ')
+                                                                    ccb_development=MINING/'acceptance/HK-CCB-AH-DEVELOPMENT-v767-v770-ROOT-v1.json'
+                                                                    ccb_holdout=MINING/'acceptance/HK-CCB-AH-HOLDOUT-v771-v774-ROOT-v1.json'
+                                                                    if ccb_development.exists() and ccb_holdout.exists():
+                                                                        ccb_develop=read(ccb_development)
+                                                                        ccb=read(ccb_holdout)
+                                                                        assert ccb_develop['decision']=='CCB_AH_DEVELOPMENT_ELIGIBLE_20K_30K'
+                                                                        assert ccb['decision']=='CCB_AH_HOLDOUT_NET_POSITIVE_SPARSE_EVIDENCE'
+                                                                        for evidence in (ccb_develop,ccb):
+                                                                            assert evidence['actual_orders']==evidence['new_paper_accounts']==0
+                                                                            assert not evidence['stable_profitability_proven']
+                                                                            assert all(digest(ROOT/path)==expected for path,expected in evidence['pins'].items())
+                                                                        extra_sources['hk_ccb_ah_development']=ccb_development
+                                                                        extra_sources['hk_ccb_ah_holdout']=ccb_holdout
+                                                                        owners=[dict(name='港股 · 建行 A／H 月末与除息',status='snapshot',task=ccb_develop['source_site_summary']),
+                                                                                dict(name='港股 · 建行三档开发',status='snapshot',task=ccb_develop['pnl_site_summary']),
+                                                                                dict(name='港股 · 建行两档样本外',status='snapshot',task=ccb['pnl_site_summary']),
+                                                                                dict(name='港股 · 建行样本覆盖与静持',status='snapshot',task=ccb['sensitivity_site_summary'])]
+                                                                        current_work['owners']=owners+current_work.get('owners',[])
+                                                                        activity_text=ccb['activity_site_summary']+' '+activity_text.removeprefix(bidu['activity_site_summary']+' ')
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
