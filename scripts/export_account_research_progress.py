@@ -2826,6 +2826,18 @@ def main():
         current_work['owners']=owners+[owner for owner in current_work.get('owners',[]) if owner['name']!='美股 · 股债入场证据演练']
         activity_text=activity_text.removeprefix(bond_plan['activity_site_summary']+' ')
         activity_text=bond_daily['activity_site_summary']+' '+activity_text
+    concentration_review=MINING/'acceptance/US-IVV-CONCENTRATION-v672-v674-ROOT-v1.json'
+    if args.focus=='mining' and concentration_review.exists():
+        concentration=read(concentration_review)
+        assert concentration['actual_orders']==concentration['new_paper_accounts']==0
+        assert all(digest(ROOT/path)==expected for path,expected in concentration['pins'].items())
+        extra_sources['us_ivv_concentration']=concentration_review
+        owners=[dict(name='美股 · 季度集中度轮动',status='snapshot',task=concentration['economic_site_summary']),
+                dict(name='美股 · 季报权重与整股',status='snapshot',task=concentration['source_site_summary']),
+                dict(name='美股 · 低仓位静持比较',status='snapshot',task=concentration['risk_site_summary'])]
+        current_work['owners']=owners+current_work.get('owners',[])
+        activity_text=activity_text.removeprefix(bond_daily['activity_site_summary']+' ')
+        activity_text=concentration['activity_site_summary']+' '+activity_text
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
