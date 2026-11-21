@@ -2690,6 +2690,29 @@ def main():
         if eia_review.exists():
             activity_text=activity_text.removeprefix(read(eia_review)['activity_site_summary']+' ')
         activity_text=g19['activity_site_summary']+' '+activity_text
+    link_review=MINING/'acceptance/HK-RETAIL-LINK-v615-v618-ROOT-v1.json'
+    if args.focus=='mining' and link_review.exists():
+        link=read(link_review)
+        assert link['new_paper_accounts']==link['actual_orders']==0
+        assert all(digest(ROOT/path)==expected for path,expected in link['pins'].items())
+        extra_sources['hk_retail_link']=link_review
+        current_work['owners'][15:15]=[
+            dict(name='港股 · 零售销货量与领展',status='snapshot',task=link['economic_site_summary']),
+            dict(name='港股 · 销货量初值与领展整手',status='snapshot',task=link['source_site_summary'])]
+        if g19_review.exists():
+            activity_text=activity_text.removeprefix(read(g19_review)['activity_site_summary']+' ')
+        activity_text=link['activity_site_summary']+' '+activity_text
+    credit_first=MINING/'acceptance/US-VCSH-VGSH-FIRST-PAPER-v620-ROOT-v1.json'
+    if args.focus=='mining' and credit_first.exists():
+        first=read(credit_first)
+        assert first['new_paper_accounts']==first['actual_orders']==0
+        assert all(digest(ROOT/path)==expected for path,expected in first['pins'].items())
+        extra_sources['us_vcsh_first_paper']=credit_first
+        for owner in current_work['owners']:
+            if owner['name']=='VCSH／VGSH · 真实日期纸面':
+                owner['task']=first['paper_site_summary']
+        current_work['owners'][15:15]=[
+            dict(name='港股 · 03086 纸面取证',status='snapshot',task=first['hk_gap_site_summary'])]
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
