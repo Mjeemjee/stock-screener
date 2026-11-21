@@ -3052,6 +3052,18 @@ def main():
                                                                                 dict(name='港股 · 建行样本覆盖与静持',status='snapshot',task=ccb['sensitivity_site_summary'])]
                                                                         current_work['owners']=owners+current_work.get('owners',[])
                                                                         activity_text=ccb['activity_site_summary']+' '+activity_text.removeprefix(bidu['activity_site_summary']+' ')
+                                                                        cutoff_path=MINING/'hk-ccb-ah-forward-prep-20261121-v776/THRESHOLD-v1.json'
+                                                                        if cutoff_path.exists():
+                                                                            cutoff=read(cutoff_path)
+                                                                            assert cutoff['status']=='REFERENCE_CUTOFF_FROZEN_MONTH_END_UNOBSERVED'
+                                                                            assert len(cutoff['warmup'])==12 and cutoff['current_month_decision'] is None
+                                                                            assert cutoff['new_paper_accounts']==cutoff['actual_orders']==0
+                                                                            assert all(digest(ROOT/path)==expected for path,expected in cutoff['pins'].items())
+                                                                            extra_sources['hk_ccb_ah_month_end_cutoff']=cutoff_path
+                                                                            cutoff_pct=float(cutoff['strict_upper_cutoff'])
+                                                                            detail=(f"{cutoff['reference_month']}比率阈值 {cutoff_pct:.4%}，按此前12个合格月末计算。"
+                                                                                    '等待两地月末合格收盘、同日官方汇率和除息核验，目前无信号或新增纸面账。')
+                                                                            current_work['owners'].insert(0,dict(name='港股 · 建行真实月末观察',status='snapshot',task=detail))
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,

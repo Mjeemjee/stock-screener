@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-21T21:29:34.446634+08:00",
+  "updated_at": "2026-11-21T21:41:06.694910+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
-    "status": "checking",
-    "active_at_snapshot": true,
+    "status": "waiting",
+    "active_at_snapshot": false,
     "focus": "港美持续研究 · 总目标运行中",
     "text": "建行样本外两档压力均净正、各仅2轮、逊静持。未新开纸面账，先核下一月输入。 四家公司48份新增财报已核实并独立复算。下方对比只买盈利增长和每次公告都买，保留首批八次结果。 总目标运行中，稳定盈利尚未证实；历史候选交付仍只是里程碑。当前已验收11个信号、22个预定期限。Amihud双期限固定排序筛选已独立复核并由root接受，结果与限制见因子区。03196已补上市类KFS与一次公开报价：一手1份；即使港币买卖，分派仍仅付美元且频率由管理人决定。仅补齐部分来源，未算成本后收益或证明可成交。03196的2024年246个会话中，21天有成交记录、225天零成交；预选1月2日买入与12月31日卖出均零量。固定日程执行预筛未通过，不继续计算假定成交后的利润。B固定后段未通过原筛选：主3万压力累计五年模型净W-307.82港币，报价回撤约15.75%，1／5亏损年、27／60负月。本结论只针对2020—2024固定日期、一次持有规则及原成本版本，不代表TIP基金在所有情景下无效。 A段原结果保留；A/B各自起账，不合成为连续账户，不是新增IC因子。TIP固定后段筛退。价格延迟因子固定训练已完成独立复算并由root接受；两期限固定筛选未通过，详见因子区。只新增1个已验收信号与2个预定期限，不代表所有价格延迟机制无效。03086最近实际观察2026-11-18；SGOV最近实际观察2026-11-17；组合已观察1会话，最近2026-11-18。SGOV本次2026-11-18因来源修订冻结，当前估值未知，旧值仅作最近成功记录。三套纸面各自原T0与原本金保持，观察和账面金额随已接受记录接续；系统实际订单0，账面增减不是实际提现，正式统计推断未启用。",
     "snapshot_only": true,
@@ -28,7 +28,7 @@
     },
     {
       "name": "财报事件核验与同步",
-      "status": "active",
+      "status": "pending",
       "detail": "四家公司48份新增财报已核实并独立复算。下方对比只买盈利增长和每次公告都买，保留首批八次结果。"
     },
     {
@@ -8958,15 +8958,20 @@
     "milestone_label": "历史候选交付完成（里程碑）",
     "evidence_label": "稳定盈利与持续性尚未证实",
     "task": "T-012",
-    "team_updated_at": "2026-11-21 21:29 HKT",
+    "team_updated_at": "2026-11-21 21:40 HKT",
     "active_work": {
       "account": false,
       "registration": false,
-      "review": true
+      "review": false
     },
     "source_status": "LIMITED_GROSS_RIGHTS_DIAGNOSTIC_DATA_ONLY",
     "scope": "港美个股及普通非杠杆ETF；持续研究与原03086／SGOV纸面并行。",
     "owners": [
+      {
+        "name": "港股 · 建行真实月末观察",
+        "status": "snapshot",
+        "task": "2026-11比率阈值 72.1762%，按此前12个合格月末计算。等待两地月末合格收盘、同日官方汇率和除息核验，目前无信号或新增纸面账。"
+      },
       {
         "name": "港股 · 建行 A／H 月末与除息",
         "status": "snapshot",
@@ -10139,7 +10144,7 @@
       },
       {
         "name": "主会话核验与发布",
-        "status": "active",
+        "status": "snapshot",
         "task": "同步48份财报的同机会比较；跟踪原有纸面账户。"
       },
       {
@@ -15302,7 +15307,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-21T21:29:40.240720+08:00",
+    "checked_at": "2026-11-21T21:41:11.275741+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -15534,7 +15539,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-21T21:29:36.562660+08:00",
+    "checked_at": "2026-11-21T21:41:08.095546+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -15630,7 +15635,7 @@
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
     "mining_goal": "68eb98410cb442ebeb4d18765365ed8fcc5789c0852ea7dc6cc0d94ee7b809ab",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
-    "mining_team": "80844a60899c4c7fffbc3111d0aef64dc1d02cbbaf67034550b5a4bac528d2eb",
+    "mining_team": "f91f333f8350d66fa84923002ae77b6278f1c090785bdf897ea7bac00693dee3",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
     "fip_original": "9c598341d1b0e59753bc0134509908b4698209cfff0b95c22f973f655b868296",
     "fip_calendar_correction": "33d2d80372b6c433688dbbcabcc49f2a458989a633ed783c0c2fa42d6f824695",
@@ -15827,7 +15832,8 @@
     "us_durable_core_xli_development": "f988e724cfee34330aea05695f90e2a87dcb2ff12c4c0b165ffb4e5c4b319c45",
     "hk_baidu_adr_parity_development": "6e164531a24f4cdf873040b717a51f41b948a1f18760acc03838ee5c954fab80",
     "hk_ccb_ah_development": "091020326d40b74e09532750074588c7e08bdfac8f8ce558bea08d38004cb076",
-    "hk_ccb_ah_holdout": "6700cb602ed56a3b7bde8a5b2b80f4b3a861ff6adaa6e9af7d52b5b7680feb0d"
+    "hk_ccb_ah_holdout": "6700cb602ed56a3b7bde8a5b2b80f4b3a861ff6adaa6e9af7d52b5b7680feb0d",
+    "hk_ccb_ah_month_end_cutoff": "dfc89ac71c1c73583979fa56e7ef19e184310de0a68b8887e82364f972c3770e"
   },
   "filing_event": {
     "sources": [
