@@ -2978,6 +2978,18 @@ def main():
                                                             dict(name='美股 · EQT 样本外执行与静持',status='snapshot',task=holdout['risk_site_summary'])]
                                                     current_work['owners']=owners+current_work.get('owners',[])
                                                     activity_text=holdout['activity_site_summary']+' '+activity_text.removeprefix(eqt['activity_site_summary']+' ')
+                                                    rvd_development=MINING/'acceptance/HK-RVD-OFFICE-02778-DEVELOPMENT-v745-v748-ROOT-v1.json'
+                                                    if rvd_development.exists():
+                                                        rvd=read(rvd_development)
+                                                        assert rvd['actual_orders']==rvd['new_paper_accounts']==0
+                                                        assert rvd['decision']=='NO_DEVELOPMENT_PASS' and not rvd['stable_profitability_proven']
+                                                        assert all(digest(ROOT/path)==expected for path,expected in rvd['pins'].items())
+                                                        extra_sources['hk_rvd_office_02778_development']=rvd_development
+                                                        owners=[dict(name='港股 · 甲级写字楼租金与02778',status='snapshot',task=rvd['clock_site_summary']),
+                                                                dict(name='港股 · 02778 整手与扣费',status='snapshot',task=rvd['pnl_site_summary']),
+                                                                dict(name='港股 · 02778 成交覆盖与漏单',status='snapshot',task=rvd['risk_site_summary'])]
+                                                        current_work['owners']=owners+current_work.get('owners',[])
+                                                        activity_text=rvd['activity_site_summary']+' '+activity_text.removeprefix(holdout['activity_site_summary']+' ')
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
