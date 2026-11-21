@@ -2955,6 +2955,29 @@ def main():
                                                     dict(name='美股 · CSX 回撤与成交深度',status='snapshot',task=csx['risk_site_summary'])]
                                             current_work['owners']=owners+current_work.get('owners',[])
                                             activity_text=csx['activity_site_summary']+' '+activity_text.removeprefix(cathay['activity_site_summary']+' ')
+                                            eqt_review=MINING/'acceptance/US-EIA-GAS-EQT-DEVELOPMENT-v735-v739-ROOT-v1.json'
+                                            if eqt_review.exists():
+                                                eqt=read(eqt_review)
+                                                assert eqt['actual_orders']==eqt['new_paper_accounts']==0 and not eqt['stable_profitability_proven']
+                                                assert eqt['decision']=='THREE_TIERS_TESTED_ONLY_30K_DEVELOPMENT_PASS_FRAGILE'
+                                                assert all(digest(ROOT/path)==expected for path,expected in eqt['pins'].items())
+                                                extra_sources['us_eia_gas_eqt_development']=eqt_review
+                                                owners=[dict(name='美股 · EIA 同期库存与EQT',status='snapshot',task=eqt['clock_site_summary']),
+                                                        dict(name='美股 · EQT 三档四日扣费',status='snapshot',task=eqt['pnl_site_summary']),
+                                                        dict(name='美股 · EQT 回撤与漏单',status='snapshot',task=eqt['risk_site_summary'])]
+                                                current_work['owners']=owners+current_work.get('owners',[])
+                                                activity_text=eqt['activity_site_summary']+' '+activity_text.removeprefix(csx['activity_site_summary']+' ')
+                                                eqt_holdout=MINING/'acceptance/US-EIA-GAS-EQT-HOLDOUT-v740-v744-ROOT-v1.json'
+                                                if eqt_holdout.exists():
+                                                    holdout=read(eqt_holdout)
+                                                    assert holdout['actual_orders']==holdout['new_paper_accounts']==0
+                                                    assert holdout['decision']=='REJECT_FIXED_HOLDOUT_NET' and not holdout['stable_profitability_proven']
+                                                    assert all(digest(ROOT/path)==expected for path,expected in holdout['pins'].items())
+                                                    extra_sources['us_eia_gas_eqt_holdout']=eqt_holdout
+                                                    owners=[dict(name='美股 · EQT 四日样本外',status='snapshot',task=holdout['pnl_site_summary']),
+                                                            dict(name='美股 · EQT 样本外执行与静持',status='snapshot',task=holdout['risk_site_summary'])]
+                                                    current_work['owners']=owners+current_work.get('owners',[])
+                                                    activity_text=holdout['activity_site_summary']+' '+activity_text.removeprefix(eqt['activity_site_summary']+' ')
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
