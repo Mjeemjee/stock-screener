@@ -2895,6 +2895,18 @@ def main():
                                 dict(name='美股 · USDA 玉米因子取源',status='snapshot',task=closure['us_site_summary'])]
                         current_work['owners']=owners+current_work.get('owners',[])
                         activity_text=closure['activity_site_summary']+' '+activity_text.removeprefix(historical['activity_site_summary']+' ')
+                        itb_review=MINING/'acceptance/US-FHFA-ITB-DEVELOPMENT-v705-v709-ROOT-v1.json'
+                        if itb_review.exists():
+                            itb=read(itb_review)
+                            assert itb['actual_orders']==itb['new_paper_accounts']==0 and not itb['holdout_prices_read']
+                            assert itb['decision']=='REJECT_DEVELOPMENT_RISK_AND_STATIC_CONTROL' and not itb['stable_profitability_proven']
+                            assert all(digest(ROOT/path)==expected for path,expected in itb['pins'].items())
+                            extra_sources['us_fhfa_itb_development']=itb_review
+                            owners=[dict(name='美股 · FHFA 房价首报与ITB',status='snapshot',task=itb['clock_site_summary']),
+                                    dict(name='美股 · ITB 扣费与静持',status='snapshot',task=itb['pnl_site_summary']),
+                                    dict(name='美股 · ITB 回撤和收益集中',status='snapshot',task=itb['risk_site_summary'])]
+                            current_work['owners']=owners+current_work.get('owners',[])
+                            activity_text=itb['activity_site_summary']+' '+activity_text.removeprefix(closure['activity_site_summary']+' ')
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
