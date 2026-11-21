@@ -2884,6 +2884,17 @@ def main():
                             dict(name='港股 · 解禁对照与阶段决定',status='snapshot',task=historical['control_site_summary'])]
                     current_work['owners']=owners+current_work.get('owners',[])
                     activity_text=historical['activity_site_summary']+' '+activity_text.removeprefix(qualified['activity_site_summary']+' ')
+                    closure_review=MINING/'acceptance/HK-CORNERSTONE-CONTROLS-CGN-v698-v700-ROOT-v1.json'
+                    if closure_review.exists():
+                        closure=read(closure_review)
+                        assert closure['actual_orders']==closure['new_paper_accounts']==0 and not closure['stable_profitability_proven']
+                        assert all(digest(ROOT/path)==expected for path,expected in closure['pins'].items())
+                        extra_sources['hk_cornerstone_controls_cgn']=closure_review
+                        owners=[dict(name='港股 · 解禁前窗与低组',status='snapshot',task=closure['cornerstone_site_summary']),
+                                dict(name='港股 · 中广核季度上网电量',status='snapshot',task=closure['cgn_site_summary']),
+                                dict(name='美股 · USDA 玉米因子取源',status='snapshot',task=closure['us_site_summary'])]
+                        current_work['owners']=owners+current_work.get('owners',[])
+                        activity_text=closure['activity_site_summary']+' '+activity_text.removeprefix(historical['activity_site_summary']+' ')
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
