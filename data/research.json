@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-20T21:20:44.084032+00:00",
+  "generated_at": "2026-11-21T20:18:02.961342+00:00",
   "policy": {
     "version": "factor-study-v1",
     "pool_size": 40,
@@ -447,14 +447,12 @@
     {
       "market": "US",
       "session": 20261120,
-      "valid": 39,
+      "valid": 40,
       "total": 40,
-      "coverage": 0.975,
-      "missing": {
-        "US.AVGO": "缺少连续有效行情或成交量为零"
-      },
+      "coverage": 1.0,
+      "missing": {},
       "status": "ready",
-      "already_frozen": false
+      "already_frozen": true
     },
     {
       "market": "HK",
@@ -464,7 +462,7 @@
       "coverage": 1.0,
       "missing": {},
       "status": "ready",
-      "already_frozen": false
+      "already_frozen": true
     }
   ],
   "programs": [
@@ -539,18 +537,18 @@
       "last_checkpoint": 0,
       "metrics": {
         "due": 14,
-        "paired": 13,
-        "coverage": 0.9285714285714286,
+        "paired": 14,
+        "coverage": 1.0,
         "signal_rate": 0.35714285714285715,
-        "independent": 3,
-        "mean_delta_pp": 2.3883259999999997,
+        "independent": 4,
+        "mean_delta_pp": 1.7124036428571423,
         "lower_delta_pp": null,
-        "mean_return_pct": -0.28022630769230766,
-        "mean_excess_pp": 0.14046200000000006,
-        "stress_excess_pp": 0.049131605163342126,
-        "worst_period_pct": -8.069023,
-        "rank_ic": 0.05232684410672513,
-        "pearson_ic": 0.08215874030995769,
+        "mean_return_pct": -1.4759926428571428,
+        "mean_excess_pp": -0.6479210714285714,
+        "stress_excess_pp": -0.75048253279571,
+        "worst_period_pct": -17.020955,
+        "rank_ic": 0.057191501784352936,
+        "pearson_ic": 0.08750285201908067,
         "novelty": 0.4475662744710446
       },
       "historical": {
@@ -708,18 +706,18 @@
       "last_checkpoint": 0,
       "metrics": {
         "due": 14,
-        "paired": 13,
-        "coverage": 0.9285714285714286,
+        "paired": 14,
+        "coverage": 1.0,
         "signal_rate": 0.35714285714285715,
-        "independent": 3,
-        "mean_delta_pp": 2.322721846153846,
+        "independent": 4,
+        "mean_delta_pp": 2.373817714285714,
         "lower_delta_pp": null,
-        "mean_return_pct": -0.3458304615384616,
-        "mean_excess_pp": 0.07485784615384614,
-        "stress_excess_pp": -0.016276022939126007,
+        "mean_return_pct": -0.8145785714285714,
+        "mean_excess_pp": 0.013492999999999977,
+        "stress_excess_pp": -0.09104976796066191,
         "worst_period_pct": -8.622954,
-        "rank_ic": 0.1398148698804033,
-        "pearson_ic": 0.17576184139874632,
+        "rank_ic": 0.14289299132736094,
+        "pearson_ic": 0.17841209647183284,
         "novelty": 0.5395375671664404
       },
       "historical": {
@@ -894,18 +892,18 @@
       "last_checkpoint": 0,
       "metrics": {
         "due": 14,
-        "paired": 13,
-        "coverage": 0.9285714285714286,
+        "paired": 14,
+        "coverage": 1.0,
         "signal_rate": 0.7857142857142857,
-        "independent": 3,
-        "mean_delta_pp": 2.449720076923077,
+        "independent": 4,
+        "mean_delta_pp": 1.762165214285714,
         "lower_delta_pp": null,
-        "mean_return_pct": -0.21883223076923075,
-        "mean_excess_pp": 0.20185607692307703,
-        "stress_excess_pp": -0.02791300358214773,
-        "worst_period_pct": -12.035108,
-        "rank_ic": 0.1250151201554829,
-        "pearson_ic": 0.10234995027868211,
+        "mean_return_pct": -1.4262310714285715,
+        "mean_excess_pp": -0.5981594999999998,
+        "stress_excess_pp": -0.8292494809790937,
+        "worst_period_pct": -17.122416,
+        "rank_ic": 0.12966962231570361,
+        "pearson_ic": 0.1055190594787213,
         "novelty": 0.3828255103657724
       },
       "historical": {
@@ -1050,15 +1048,15 @@
       "last_checkpoint": 0,
       "metrics": {
         "due": 18,
-        "paired": 17,
-        "coverage": 0.9444444444444444,
+        "paired": 18,
+        "coverage": 1.0,
         "signal_rate": 0.3888888888888889,
         "independent": 4,
-        "mean_delta_pp": 1.1183425294117646,
+        "mean_delta_pp": 1.5307398888888888,
         "lower_delta_pp": null,
-        "mean_return_pct": 0.32459288235294115,
-        "mean_excess_pp": 0.05062611764705873,
-        "stress_excess_pp": -0.07369119189918213,
+        "mean_return_pct": 0.3065599444444444,
+        "mean_excess_pp": 0.3711873333333332,
+        "stress_excess_pp": 0.25377654098410574,
         "worst_period_pct": -2.390748,
         "rank_ic": 0.1493999658816215,
         "pearson_ic": 0.1374287251904658,
@@ -1219,15 +1217,15 @@
       "last_checkpoint": 0,
       "metrics": {
         "due": 18,
-        "paired": 17,
-        "coverage": 0.9444444444444444,
+        "paired": 18,
+        "coverage": 1.0,
         "signal_rate": 0.3888888888888889,
         "independent": 4,
-        "mean_delta_pp": 1.2712023529411764,
+        "mean_delta_pp": 1.6751075000000002,
         "lower_delta_pp": null,
-        "mean_return_pct": 0.477452705882353,
-        "mean_excess_pp": 0.20348594117647056,
-        "stress_excess_pp": 0.07871071163299366,
+        "mean_return_pct": 0.45092755555555564,
+        "mean_excess_pp": 0.5155549444444445,
+        "stress_excess_pp": 0.3977116720978273,
         "worst_period_pct": -3.593962,
         "rank_ic": 0.18320234664632962,
         "pearson_ic": 0.19716432484700042,
@@ -1405,15 +1403,15 @@
       "last_checkpoint": 0,
       "metrics": {
         "due": 18,
-        "paired": 17,
-        "coverage": 0.9444444444444444,
+        "paired": 18,
+        "coverage": 1.0,
         "signal_rate": 0.7777777777777778,
         "independent": 4,
-        "mean_delta_pp": -0.9453951764705882,
+        "mean_delta_pp": -0.8702291111111111,
         "lower_delta_pp": null,
-        "mean_return_pct": -1.7391448235294118,
-        "mean_excess_pp": -2.013111588235294,
-        "stress_excess_pp": -2.2369712568624633,
+        "mean_return_pct": -2.0944090555555555,
+        "mean_excess_pp": -2.0297816666666666,
+        "stress_excess_pp": -2.256492862602,
         "worst_period_pct": -10.343125,
         "rank_ic": -0.07888294824285808,
         "pearson_ic": -0.09883902540409926,
@@ -56106,24 +56104,24 @@
           {
             "code": "US.AMD",
             "status": "matured",
-            "return_pct": -17.021834,
+            "return_pct": -17.020955,
             "entry_price": 566.79,
-            "exit_price": 471.725
+            "exit_price": 471.73
           }
         ],
         "known_count": 1,
-        "return_pct": -17.021834
+        "return_pct": -17.020955
       },
       "parent": {
         "count": 39,
-        "complete": false,
+        "complete": true,
         "holdings": [
           {
             "code": "US.AAPL",
             "status": "matured",
-            "return_pct": -1.71863,
+            "return_pct": -1.717238,
             "entry_price": 357.96,
-            "exit_price": 352.865
+            "exit_price": 352.87
           },
           {
             "code": "US.AMAT",
@@ -56135,9 +56133,9 @@
           {
             "code": "US.AMD",
             "status": "matured",
-            "return_pct": -17.021834,
+            "return_pct": -17.020955,
             "entry_price": 566.79,
-            "exit_price": 471.725
+            "exit_price": 471.73
           },
           {
             "code": "US.AMZN",
@@ -56155,9 +56153,10 @@
           },
           {
             "code": "US.AVGO",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 356.54
+            "status": "matured",
+            "return_pct": -4.082989,
+            "entry_price": 356.54,
+            "exit_price": 343.01
           },
           {
             "code": "US.BAC",
@@ -56197,16 +56196,16 @@
           {
             "code": "US.GOOGL",
             "status": "matured",
-            "return_pct": -9.717423,
+            "return_pct": -9.671353,
             "entry_price": 302.98,
-            "exit_price": 274.36
+            "exit_price": 274.5
           },
           {
             "code": "US.INTC",
             "status": "matured",
-            "return_pct": -10.818556,
+            "return_pct": -10.736376,
             "entry_price": 60.66,
-            "exit_price": 54.26
+            "exit_price": 54.31
           },
           {
             "code": "US.JPM",
@@ -56260,9 +56259,9 @@
           {
             "code": "US.MRVL",
             "status": "matured",
-            "return_pct": -18.015506,
+            "return_pct": -18.012421,
             "entry_price": 161.6,
-            "exit_price": 132.885
+            "exit_price": 132.89
           },
           {
             "code": "US.MSFT",
@@ -56309,9 +56308,9 @@
           {
             "code": "US.ORCL",
             "status": "matured",
-            "return_pct": -15.176422,
+            "return_pct": -15.172512,
             "entry_price": 127.5,
-            "exit_price": 108.475
+            "exit_price": 108.48
           },
           {
             "code": "US.PANW",
@@ -56351,9 +56350,9 @@
           {
             "code": "US.TSLA",
             "status": "matured",
-            "return_pct": -8.057312,
+            "return_pct": -8.056071,
             "entry_price": 401.68,
-            "exit_price": 370.425
+            "exit_price": 370.43
           },
           {
             "code": "US.TSM",
@@ -56372,9 +56371,9 @@
           {
             "code": "US.V",
             "status": "matured",
-            "return_pct": -5.033128,
+            "return_pct": -5.031951,
             "entry_price": 423.67,
-            "exit_price": 403.555
+            "exit_price": 403.56
           },
           {
             "code": "US.WDC",
@@ -56391,19 +56390,19 @@
             "exit_price": 80.7
           }
         ],
-        "known_count": 38,
-        "return_pct": null
+        "known_count": 39,
+        "return_pct": -9.946368
       },
       "pool": {
         "count": 39,
-        "complete": false,
+        "complete": true,
         "holdings": [
           {
             "code": "US.AAPL",
             "status": "matured",
-            "return_pct": -1.71863,
+            "return_pct": -1.717238,
             "entry_price": 357.96,
-            "exit_price": 352.865
+            "exit_price": 352.87
           },
           {
             "code": "US.AMAT",
@@ -56415,9 +56414,9 @@
           {
             "code": "US.AMD",
             "status": "matured",
-            "return_pct": -17.021834,
+            "return_pct": -17.020955,
             "entry_price": 566.79,
-            "exit_price": 471.725
+            "exit_price": 471.73
           },
           {
             "code": "US.AMZN",
@@ -56435,9 +56434,10 @@
           },
           {
             "code": "US.AVGO",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 356.54
+            "status": "matured",
+            "return_pct": -4.082989,
+            "entry_price": 356.54,
+            "exit_price": 343.01
           },
           {
             "code": "US.BAC",
@@ -56477,16 +56477,16 @@
           {
             "code": "US.GOOGL",
             "status": "matured",
-            "return_pct": -9.717423,
+            "return_pct": -9.671353,
             "entry_price": 302.98,
-            "exit_price": 274.36
+            "exit_price": 274.5
           },
           {
             "code": "US.INTC",
             "status": "matured",
-            "return_pct": -10.818556,
+            "return_pct": -10.736376,
             "entry_price": 60.66,
-            "exit_price": 54.26
+            "exit_price": 54.31
           },
           {
             "code": "US.JPM",
@@ -56540,9 +56540,9 @@
           {
             "code": "US.MRVL",
             "status": "matured",
-            "return_pct": -18.015506,
+            "return_pct": -18.012421,
             "entry_price": 161.6,
-            "exit_price": 132.885
+            "exit_price": 132.89
           },
           {
             "code": "US.MSFT",
@@ -56589,9 +56589,9 @@
           {
             "code": "US.ORCL",
             "status": "matured",
-            "return_pct": -15.176422,
+            "return_pct": -15.172512,
             "entry_price": 127.5,
-            "exit_price": 108.475
+            "exit_price": 108.48
           },
           {
             "code": "US.PANW",
@@ -56631,9 +56631,9 @@
           {
             "code": "US.TSLA",
             "status": "matured",
-            "return_pct": -8.057312,
+            "return_pct": -8.056071,
             "entry_price": 401.68,
-            "exit_price": 370.425
+            "exit_price": 370.43
           },
           {
             "code": "US.TSM",
@@ -56652,9 +56652,9 @@
           {
             "code": "US.V",
             "status": "matured",
-            "return_pct": -5.033128,
+            "return_pct": -5.031951,
             "entry_price": 423.67,
-            "exit_price": 403.555
+            "exit_price": 403.56
           },
           {
             "code": "US.WDC",
@@ -56671,14 +56671,14 @@
             "exit_price": 80.7
           }
         ],
-        "known_count": 38,
-        "return_pct": null
+        "known_count": 39,
+        "return_pct": -9.946368
       },
       "benchmark_pct": -6.124054,
-      "rank_ic": -0.17530229276115927,
-      "pearson_ic": -0.21952740904280071,
+      "rank_ic": -0.10719708527437016,
+      "pearson_ic": -0.14470984511507892,
       "novelty_max": 0.11591415266248228,
-      "q5_q1_pp": -5.457495857142858
+      "q5_q1_pp": -3.58619214285714
     },
     {
       "trial_id": "factor_54a2f22c16f0de4c",
@@ -57271,7 +57271,7 @@
         "known_count": 40,
         "return_pct": -8.541495
       },
-      "benchmark_pct": null,
+      "benchmark_pct": -5.820728,
       "rank_ic": 0.5743503168160273,
       "pearson_ic": 0.5198773087819029,
       "novelty_max": 0.746246950647401,
@@ -57288,20 +57288,21 @@
       "due": true,
       "branch": {
         "count": 3,
-        "complete": false,
+        "complete": true,
         "holdings": [
           {
             "code": "US.AMD",
             "status": "matured",
-            "return_pct": -17.021834,
+            "return_pct": -17.020955,
             "entry_price": 566.79,
-            "exit_price": 471.725
+            "exit_price": 471.73
           },
           {
             "code": "US.AVGO",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 356.54
+            "status": "matured",
+            "return_pct": -4.082989,
+            "entry_price": 356.54,
+            "exit_price": 343.01
           },
           {
             "code": "US.COST",
@@ -57311,19 +57312,19 @@
             "exit_price": 1102.04
           }
         ],
-        "known_count": 2,
-        "return_pct": null
+        "known_count": 3,
+        "return_pct": -6.908304
       },
       "parent": {
         "count": 39,
-        "complete": false,
+        "complete": true,
         "holdings": [
           {
             "code": "US.AAPL",
             "status": "matured",
-            "return_pct": -1.71863,
+            "return_pct": -1.717238,
             "entry_price": 357.96,
-            "exit_price": 352.865
+            "exit_price": 352.87
           },
           {
             "code": "US.AMAT",
@@ -57335,9 +57336,9 @@
           {
             "code": "US.AMD",
             "status": "matured",
-            "return_pct": -17.021834,
+            "return_pct": -17.020955,
             "entry_price": 566.79,
-            "exit_price": 471.725
+            "exit_price": 471.73
           },
           {
             "code": "US.AMZN",
@@ -57355,9 +57356,10 @@
           },
           {
             "code": "US.AVGO",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 356.54
+            "status": "matured",
+            "return_pct": -4.082989,
+            "entry_price": 356.54,
+            "exit_price": 343.01
           },
           {
             "code": "US.BAC",
@@ -57397,16 +57399,16 @@
           {
             "code": "US.GOOGL",
             "status": "matured",
-            "return_pct": -9.717423,
+            "return_pct": -9.671353,
             "entry_price": 302.98,
-            "exit_price": 274.36
+            "exit_price": 274.5
           },
           {
             "code": "US.INTC",
             "status": "matured",
-            "return_pct": -10.818556,
+            "return_pct": -10.736376,
             "entry_price": 60.66,
-            "exit_price": 54.26
+            "exit_price": 54.31
           },
           {
             "code": "US.JPM",
@@ -57460,9 +57462,9 @@
           {
             "code": "US.MRVL",
             "status": "matured",
-            "return_pct": -18.015506,
+            "return_pct": -18.012421,
             "entry_price": 161.6,
-            "exit_price": 132.885
+            "exit_price": 132.89
           },
           {
             "code": "US.MSFT",
@@ -57509,9 +57511,9 @@
           {
             "code": "US.ORCL",
             "status": "matured",
-            "return_pct": -15.176422,
+            "return_pct": -15.172512,
             "entry_price": 127.5,
-            "exit_price": 108.475
+            "exit_price": 108.48
           },
           {
             "code": "US.PANW",
@@ -57551,9 +57553,9 @@
           {
             "code": "US.TSLA",
             "status": "matured",
-            "return_pct": -8.057312,
+            "return_pct": -8.056071,
             "entry_price": 401.68,
-            "exit_price": 370.425
+            "exit_price": 370.43
           },
           {
             "code": "US.TSM",
@@ -57572,9 +57574,9 @@
           {
             "code": "US.V",
             "status": "matured",
-            "return_pct": -5.033128,
+            "return_pct": -5.031951,
             "entry_price": 423.67,
-            "exit_price": 403.555
+            "exit_price": 403.56
           },
           {
             "code": "US.WDC",
@@ -57591,19 +57593,19 @@
             "exit_price": 80.7
           }
         ],
-        "known_count": 38,
-        "return_pct": null
+        "known_count": 39,
+        "return_pct": -9.946368
       },
       "pool": {
         "count": 39,
-        "complete": false,
+        "complete": true,
         "holdings": [
           {
             "code": "US.AAPL",
             "status": "matured",
-            "return_pct": -1.71863,
+            "return_pct": -1.717238,
             "entry_price": 357.96,
-            "exit_price": 352.865
+            "exit_price": 352.87
           },
           {
             "code": "US.AMAT",
@@ -57615,9 +57617,9 @@
           {
             "code": "US.AMD",
             "status": "matured",
-            "return_pct": -17.021834,
+            "return_pct": -17.020955,
             "entry_price": 566.79,
-            "exit_price": 471.725
+            "exit_price": 471.73
           },
           {
             "code": "US.AMZN",
@@ -57635,9 +57637,10 @@
           },
           {
             "code": "US.AVGO",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 356.54
+            "status": "matured",
+            "return_pct": -4.082989,
+            "entry_price": 356.54,
+            "exit_price": 343.01
           },
           {
             "code": "US.BAC",
@@ -57677,16 +57680,16 @@
           {
             "code": "US.GOOGL",
             "status": "matured",
-            "return_pct": -9.717423,
+            "return_pct": -9.671353,
             "entry_price": 302.98,
-            "exit_price": 274.36
+            "exit_price": 274.5
           },
           {
             "code": "US.INTC",
             "status": "matured",
-            "return_pct": -10.818556,
+            "return_pct": -10.736376,
             "entry_price": 60.66,
-            "exit_price": 54.26
+            "exit_price": 54.31
           },
           {
             "code": "US.JPM",
@@ -57740,9 +57743,9 @@
           {
             "code": "US.MRVL",
             "status": "matured",
-            "return_pct": -18.015506,
+            "return_pct": -18.012421,
             "entry_price": 161.6,
-            "exit_price": 132.885
+            "exit_price": 132.89
           },
           {
             "code": "US.MSFT",
@@ -57789,9 +57792,9 @@
           {
             "code": "US.ORCL",
             "status": "matured",
-            "return_pct": -15.176422,
+            "return_pct": -15.172512,
             "entry_price": 127.5,
-            "exit_price": 108.475
+            "exit_price": 108.48
           },
           {
             "code": "US.PANW",
@@ -57831,9 +57834,9 @@
           {
             "code": "US.TSLA",
             "status": "matured",
-            "return_pct": -8.057312,
+            "return_pct": -8.056071,
             "entry_price": 401.68,
-            "exit_price": 370.425
+            "exit_price": 370.43
           },
           {
             "code": "US.TSM",
@@ -57852,9 +57855,9 @@
           {
             "code": "US.V",
             "status": "matured",
-            "return_pct": -5.033128,
+            "return_pct": -5.031951,
             "entry_price": 423.67,
-            "exit_price": 403.555
+            "exit_price": 403.56
           },
           {
             "code": "US.WDC",
@@ -57871,14 +57874,14 @@
             "exit_price": 80.7
           }
         ],
-        "known_count": 38,
-        "return_pct": null
+        "known_count": 39,
+        "return_pct": -9.946368
       },
       "benchmark_pct": -6.124054,
-      "rank_ic": 0.16107676338603397,
-      "pearson_ic": 0.11729854110914469,
+      "rank_ic": 0.2041704636434416,
+      "pearson_ic": 0.15440211213235583,
       "novelty_max": 0.5218667746507389,
-      "q5_q1_pp": 1.3910865714285716
+      "q5_q1_pp": 1.8076137142857132
     },
     {
       "trial_id": "factor_9d65144e54b1fb7f",
@@ -58471,7 +58474,7 @@
         "known_count": 40,
         "return_pct": -8.541495
       },
-      "benchmark_pct": null,
+      "benchmark_pct": -5.820728,
       "rank_ic": 0.6170372482357094,
       "pearson_ic": 0.5858586735661265,
       "novelty_max": 0.7028992306248829,
@@ -58524,14 +58527,14 @@
       },
       "parent": {
         "count": 39,
-        "complete": false,
+        "complete": true,
         "holdings": [
           {
             "code": "US.AAPL",
             "status": "matured",
-            "return_pct": -1.71863,
+            "return_pct": -1.717238,
             "entry_price": 357.96,
-            "exit_price": 352.865
+            "exit_price": 352.87
           },
           {
             "code": "US.AMAT",
@@ -58543,9 +58546,9 @@
           {
             "code": "US.AMD",
             "status": "matured",
-            "return_pct": -17.021834,
+            "return_pct": -17.020955,
             "entry_price": 566.79,
-            "exit_price": 471.725
+            "exit_price": 471.73
           },
           {
             "code": "US.AMZN",
@@ -58563,9 +58566,10 @@
           },
           {
             "code": "US.AVGO",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 356.54
+            "status": "matured",
+            "return_pct": -4.082989,
+            "entry_price": 356.54,
+            "exit_price": 343.01
           },
           {
             "code": "US.BAC",
@@ -58605,16 +58609,16 @@
           {
             "code": "US.GOOGL",
             "status": "matured",
-            "return_pct": -9.717423,
+            "return_pct": -9.671353,
             "entry_price": 302.98,
-            "exit_price": 274.36
+            "exit_price": 274.5
           },
           {
             "code": "US.INTC",
             "status": "matured",
-            "return_pct": -10.818556,
+            "return_pct": -10.736376,
             "entry_price": 60.66,
-            "exit_price": 54.26
+            "exit_price": 54.31
           },
           {
             "code": "US.JPM",
@@ -58668,9 +58672,9 @@
           {
             "code": "US.MRVL",
             "status": "matured",
-            "return_pct": -18.015506,
+            "return_pct": -18.012421,
             "entry_price": 161.6,
-            "exit_price": 132.885
+            "exit_price": 132.89
           },
           {
             "code": "US.MSFT",
@@ -58717,9 +58721,9 @@
           {
             "code": "US.ORCL",
             "status": "matured",
-            "return_pct": -15.176422,
+            "return_pct": -15.172512,
             "entry_price": 127.5,
-            "exit_price": 108.475
+            "exit_price": 108.48
           },
           {
             "code": "US.PANW",
@@ -58759,9 +58763,9 @@
           {
             "code": "US.TSLA",
             "status": "matured",
-            "return_pct": -8.057312,
+            "return_pct": -8.056071,
             "entry_price": 401.68,
-            "exit_price": 370.425
+            "exit_price": 370.43
           },
           {
             "code": "US.TSM",
@@ -58780,9 +58784,9 @@
           {
             "code": "US.V",
             "status": "matured",
-            "return_pct": -5.033128,
+            "return_pct": -5.031951,
             "entry_price": 423.67,
-            "exit_price": 403.555
+            "exit_price": 403.56
           },
           {
             "code": "US.WDC",
@@ -58799,19 +58803,19 @@
             "exit_price": 80.7
           }
         ],
-        "known_count": 38,
-        "return_pct": null
+        "known_count": 39,
+        "return_pct": -9.946368
       },
       "pool": {
         "count": 39,
-        "complete": false,
+        "complete": true,
         "holdings": [
           {
             "code": "US.AAPL",
             "status": "matured",
-            "return_pct": -1.71863,
+            "return_pct": -1.717238,
             "entry_price": 357.96,
-            "exit_price": 352.865
+            "exit_price": 352.87
           },
           {
             "code": "US.AMAT",
@@ -58823,9 +58827,9 @@
           {
             "code": "US.AMD",
             "status": "matured",
-            "return_pct": -17.021834,
+            "return_pct": -17.020955,
             "entry_price": 566.79,
-            "exit_price": 471.725
+            "exit_price": 471.73
           },
           {
             "code": "US.AMZN",
@@ -58843,9 +58847,10 @@
           },
           {
             "code": "US.AVGO",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 356.54
+            "status": "matured",
+            "return_pct": -4.082989,
+            "entry_price": 356.54,
+            "exit_price": 343.01
           },
           {
             "code": "US.BAC",
@@ -58885,16 +58890,16 @@
           {
             "code": "US.GOOGL",
             "status": "matured",
-            "return_pct": -9.717423,
+            "return_pct": -9.671353,
             "entry_price": 302.98,
-            "exit_price": 274.36
+            "exit_price": 274.5
           },
           {
             "code": "US.INTC",
             "status": "matured",
-            "return_pct": -10.818556,
+            "return_pct": -10.736376,
             "entry_price": 60.66,
-            "exit_price": 54.26
+            "exit_price": 54.31
           },
           {
             "code": "US.JPM",
@@ -58948,9 +58953,9 @@
           {
             "code": "US.MRVL",
             "status": "matured",
-            "return_pct": -18.015506,
+            "return_pct": -18.012421,
             "entry_price": 161.6,
-            "exit_price": 132.885
+            "exit_price": 132.89
           },
           {
             "code": "US.MSFT",
@@ -58997,9 +59002,9 @@
           {
             "code": "US.ORCL",
             "status": "matured",
-            "return_pct": -15.176422,
+            "return_pct": -15.172512,
             "entry_price": 127.5,
-            "exit_price": 108.475
+            "exit_price": 108.48
           },
           {
             "code": "US.PANW",
@@ -59039,9 +59044,9 @@
           {
             "code": "US.TSLA",
             "status": "matured",
-            "return_pct": -8.057312,
+            "return_pct": -8.056071,
             "entry_price": 401.68,
-            "exit_price": 370.425
+            "exit_price": 370.43
           },
           {
             "code": "US.TSM",
@@ -59060,9 +59065,9 @@
           {
             "code": "US.V",
             "status": "matured",
-            "return_pct": -5.033128,
+            "return_pct": -5.031951,
             "entry_price": 423.67,
-            "exit_price": 403.555
+            "exit_price": 403.56
           },
           {
             "code": "US.WDC",
@@ -59079,14 +59084,14 @@
             "exit_price": 80.7
           }
         ],
-        "known_count": 38,
-        "return_pct": null
+        "known_count": 39,
+        "return_pct": -9.946368
       },
       "benchmark_pct": -6.124054,
-      "rank_ic": -0.5286714848902483,
-      "pearson_ic": -0.5297321575770063,
+      "rank_ic": -0.4635084546471587,
+      "pearson_ic": -0.4853646287764576,
       "novelty_max": 0.4923061348451102,
-      "q5_q1_pp": -11.851366428571428
+      "q5_q1_pp": -11.046688714285715
     },
     {
       "trial_id": "factor_db7969eafdce83f7",
@@ -59695,7 +59700,7 @@
         "known_count": 40,
         "return_pct": -8.541495
       },
-      "benchmark_pct": null,
+      "benchmark_pct": -5.820728,
       "rank_ic": 0.11530162354898686,
       "pearson_ic": 0.07616142450548542,
       "novelty_max": 0.6743291424282227,
@@ -72324,7 +72329,7 @@
             "code": "US.AAPL",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 352.865
+            "entry_price": 352.87
           },
           {
             "code": "US.AMAT",
@@ -72336,7 +72341,7 @@
             "code": "US.AMD",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 471.725
+            "entry_price": 471.73
           },
           {
             "code": "US.AMZN",
@@ -72352,8 +72357,9 @@
           },
           {
             "code": "US.AVGO",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 343.01
           },
           {
             "code": "US.BAC",
@@ -72395,13 +72401,13 @@
             "code": "US.GOOGL",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 274.36
+            "entry_price": 274.5
           },
           {
             "code": "US.INTC",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 54.26
+            "entry_price": 54.31
           },
           {
             "code": "US.JPM",
@@ -72449,7 +72455,7 @@
             "code": "US.MRVL",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 132.885
+            "entry_price": 132.89
           },
           {
             "code": "US.MSFT",
@@ -72491,7 +72497,7 @@
             "code": "US.ORCL",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 108.475
+            "entry_price": 108.48
           },
           {
             "code": "US.PANW",
@@ -72527,7 +72533,7 @@
             "code": "US.TSLA",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 370.425
+            "entry_price": 370.43
           },
           {
             "code": "US.TSM",
@@ -72545,7 +72551,7 @@
             "code": "US.V",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 403.555
+            "entry_price": 403.56
           },
           {
             "code": "US.WDC",
@@ -72571,7 +72577,7 @@
             "code": "US.AAPL",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 352.865
+            "entry_price": 352.87
           },
           {
             "code": "US.AMAT",
@@ -72583,7 +72589,7 @@
             "code": "US.AMD",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 471.725
+            "entry_price": 471.73
           },
           {
             "code": "US.AMZN",
@@ -72599,8 +72605,9 @@
           },
           {
             "code": "US.AVGO",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 343.01
           },
           {
             "code": "US.BAC",
@@ -72642,13 +72649,13 @@
             "code": "US.GOOGL",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 274.36
+            "entry_price": 274.5
           },
           {
             "code": "US.INTC",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 54.26
+            "entry_price": 54.31
           },
           {
             "code": "US.JPM",
@@ -72696,7 +72703,7 @@
             "code": "US.MRVL",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 132.885
+            "entry_price": 132.89
           },
           {
             "code": "US.MSFT",
@@ -72738,7 +72745,7 @@
             "code": "US.ORCL",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 108.475
+            "entry_price": 108.48
           },
           {
             "code": "US.PANW",
@@ -72774,7 +72781,7 @@
             "code": "US.TSLA",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 370.425
+            "entry_price": 370.43
           },
           {
             "code": "US.TSM",
@@ -72792,7 +72799,7 @@
             "code": "US.V",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 403.555
+            "entry_price": 403.56
           },
           {
             "code": "US.WDC",
@@ -73354,7 +73361,7 @@
             "code": "US.AAPL",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 352.865
+            "entry_price": 352.87
           },
           {
             "code": "US.AMAT",
@@ -73366,7 +73373,7 @@
             "code": "US.AMD",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 471.725
+            "entry_price": 471.73
           },
           {
             "code": "US.AMZN",
@@ -73382,8 +73389,9 @@
           },
           {
             "code": "US.AVGO",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 343.01
           },
           {
             "code": "US.BAC",
@@ -73425,13 +73433,13 @@
             "code": "US.GOOGL",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 274.36
+            "entry_price": 274.5
           },
           {
             "code": "US.INTC",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 54.26
+            "entry_price": 54.31
           },
           {
             "code": "US.JPM",
@@ -73479,7 +73487,7 @@
             "code": "US.MRVL",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 132.885
+            "entry_price": 132.89
           },
           {
             "code": "US.MSFT",
@@ -73521,7 +73529,7 @@
             "code": "US.ORCL",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 108.475
+            "entry_price": 108.48
           },
           {
             "code": "US.PANW",
@@ -73557,7 +73565,7 @@
             "code": "US.TSLA",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 370.425
+            "entry_price": 370.43
           },
           {
             "code": "US.TSM",
@@ -73575,7 +73583,7 @@
             "code": "US.V",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 403.555
+            "entry_price": 403.56
           },
           {
             "code": "US.WDC",
@@ -73601,7 +73609,7 @@
             "code": "US.AAPL",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 352.865
+            "entry_price": 352.87
           },
           {
             "code": "US.AMAT",
@@ -73613,7 +73621,7 @@
             "code": "US.AMD",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 471.725
+            "entry_price": 471.73
           },
           {
             "code": "US.AMZN",
@@ -73629,8 +73637,9 @@
           },
           {
             "code": "US.AVGO",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 343.01
           },
           {
             "code": "US.BAC",
@@ -73672,13 +73681,13 @@
             "code": "US.GOOGL",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 274.36
+            "entry_price": 274.5
           },
           {
             "code": "US.INTC",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 54.26
+            "entry_price": 54.31
           },
           {
             "code": "US.JPM",
@@ -73726,7 +73735,7 @@
             "code": "US.MRVL",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 132.885
+            "entry_price": 132.89
           },
           {
             "code": "US.MSFT",
@@ -73768,7 +73777,7 @@
             "code": "US.ORCL",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 108.475
+            "entry_price": 108.48
           },
           {
             "code": "US.PANW",
@@ -73804,7 +73813,7 @@
             "code": "US.TSLA",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 370.425
+            "entry_price": 370.43
           },
           {
             "code": "US.TSM",
@@ -73822,7 +73831,7 @@
             "code": "US.V",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 403.555
+            "entry_price": 403.56
           },
           {
             "code": "US.WDC",
@@ -74392,7 +74401,7 @@
             "code": "US.AAPL",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 352.865
+            "entry_price": 352.87
           },
           {
             "code": "US.AMAT",
@@ -74404,7 +74413,7 @@
             "code": "US.AMD",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 471.725
+            "entry_price": 471.73
           },
           {
             "code": "US.AMZN",
@@ -74420,8 +74429,9 @@
           },
           {
             "code": "US.AVGO",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 343.01
           },
           {
             "code": "US.BAC",
@@ -74463,13 +74473,13 @@
             "code": "US.GOOGL",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 274.36
+            "entry_price": 274.5
           },
           {
             "code": "US.INTC",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 54.26
+            "entry_price": 54.31
           },
           {
             "code": "US.JPM",
@@ -74517,7 +74527,7 @@
             "code": "US.MRVL",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 132.885
+            "entry_price": 132.89
           },
           {
             "code": "US.MSFT",
@@ -74559,7 +74569,7 @@
             "code": "US.ORCL",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 108.475
+            "entry_price": 108.48
           },
           {
             "code": "US.PANW",
@@ -74595,7 +74605,7 @@
             "code": "US.TSLA",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 370.425
+            "entry_price": 370.43
           },
           {
             "code": "US.TSM",
@@ -74613,7 +74623,7 @@
             "code": "US.V",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 403.555
+            "entry_price": 403.56
           },
           {
             "code": "US.WDC",
@@ -74639,7 +74649,7 @@
             "code": "US.AAPL",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 352.865
+            "entry_price": 352.87
           },
           {
             "code": "US.AMAT",
@@ -74651,7 +74661,7 @@
             "code": "US.AMD",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 471.725
+            "entry_price": 471.73
           },
           {
             "code": "US.AMZN",
@@ -74667,8 +74677,9 @@
           },
           {
             "code": "US.AVGO",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 343.01
           },
           {
             "code": "US.BAC",
@@ -74710,13 +74721,13 @@
             "code": "US.GOOGL",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 274.36
+            "entry_price": 274.5
           },
           {
             "code": "US.INTC",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 54.26
+            "entry_price": 54.31
           },
           {
             "code": "US.JPM",
@@ -74764,7 +74775,7 @@
             "code": "US.MRVL",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 132.885
+            "entry_price": 132.89
           },
           {
             "code": "US.MSFT",
@@ -74806,7 +74817,7 @@
             "code": "US.ORCL",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 108.475
+            "entry_price": 108.48
           },
           {
             "code": "US.PANW",
@@ -74842,7 +74853,7 @@
             "code": "US.TSLA",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 370.425
+            "entry_price": 370.43
           },
           {
             "code": "US.TSM",
@@ -74860,7 +74871,7 @@
             "code": "US.V",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 403.555
+            "entry_price": 403.56
           },
           {
             "code": "US.WDC",
@@ -78101,7 +78112,7 @@
     "provider": "DeepSeek",
     "model": "deepseek-flash",
     "connection": "verified",
-    "checked_at": "2026-11-20T21:21:28.149553+00:00",
+    "checked_at": "2026-11-21T20:18:05.956290+00:00",
     "max_calls": 6,
     "calls": [],
     "mode": "owner_review",
@@ -78110,14 +78121,14 @@
   "research_review": {
     "version": "research-review-v1",
     "mode": "read_only",
-    "source_generated_at": "2026-11-20T21:20:44.084032+00:00",
+    "source_generated_at": "2026-11-21T20:18:02.961342+00:00",
     "source_engine_version": "db7b29ce2b1976ad815c320dd80b11c4486dadabf2b6a6c81551b7bf91847db7",
     "source_policy_hash": "e46354853226b1044c026ba30ad08a8070d42c89e9533beb1321230268df34ab",
     "programs": [
       {
         "program_id": "factor_17ae34abae7e544a",
         "definition_hash": "f78e43e47b61338b5321375539134d221215c65e1eff69fc8d89665b44531f57",
-        "evidence_hash": "4036ed43ffbb7a2dc6597d3de905d7bc64e2a9a32e163f613513581feb313e80",
+        "evidence_hash": "e0b9b4df74d9d1976bb26fee6875b2687ee867508d0542b79b38627f2a9b22a4",
         "card": {
           "origin": "legacy",
           "hypothesis": "突破伴随相对放量和高位收盘，可能减少突破后回落。",
@@ -78136,21 +78147,21 @@
           "total": 20,
           "pending": 6,
           "due": 14,
-          "paired": 13,
-          "missing": 1,
+          "paired": 14,
+          "missing": 0,
           "duplicate": false,
-          "independent": 3,
+          "independent": 4,
           "wins": 3,
-          "losses": 1,
+          "losses": 2,
           "flat": 9,
           "beat_parent": 10,
           "beat_benchmark": 8,
           "cash": 9,
-          "mean_return_pct": -0.28022630769230766,
-          "mean_delta_pp": 2.388326,
-          "mean_excess_pp": 0.14046200000000003,
-          "stress_excess_pp": 0.04913160516334211,
-          "worst_period_pct": -8.069023
+          "mean_return_pct": -1.4759926428571428,
+          "mean_delta_pp": 1.712403642857143,
+          "mean_excess_pp": -0.6479210714285714,
+          "stress_excess_pp": -0.75048253279571,
+          "worst_period_pct": -17.020955
         },
         "checks": [
           {
@@ -78163,42 +78174,42 @@
             "id": "coverage",
             "label": "到期成绩是否齐全",
             "status": "pass",
-            "detail": "到期 14 期，缺少完整配对 1 期；缺价不补零、不重新分配。"
+            "detail": "到期 14 期，缺少完整配对 0 期；缺价不补零、不重新分配。"
           },
           {
             "id": "sample",
             "label": "完整样本是否够首个关卡",
             "status": "pending",
-            "detail": "完整配对 13 期，首个固定关卡 20 期。"
+            "detail": "完整配对 14 期，首个固定关卡 20 期。"
           },
           {
             "id": "independent",
             "label": "是否经历足够多的不重叠时段",
             "status": "fail",
-            "detail": "按原协议不重叠计数为 3，要求至少 6；这不是完全独立的统计证明。"
+            "detail": "按原协议不重叠计数为 4，要求至少 6；这不是完全独立的统计证明。"
           },
           {
             "id": "mean_delta_pp",
             "label": "是否优于同期研究池等权",
             "status": "pass",
-            "detail": "平均差额 2.39 个百分点；不代表未来保证。"
+            "detail": "平均差额 1.71 个百分点；不代表未来保证。"
           },
           {
             "id": "mean_excess_pp",
             "label": "是否优于同期指数",
-            "status": "pass",
-            "detail": "平均差额 0.14 个百分点；不代表未来保证。"
+            "status": "fail",
+            "detail": "平均差额 -0.65 个百分点；不代表未来保证。"
           },
           {
             "id": "stress_excess_pp",
             "label": "成本加大后是否仍优于指数",
-            "status": "pass",
-            "detail": "平均差额 0.05 个百分点；不代表未来保证。"
+            "status": "fail",
+            "detail": "平均差额 -0.75 个百分点；不代表未来保证。"
           },
           {
             "id": "risk",
             "label": "最差一期是否守住原底线",
-            "status": "pass",
+            "status": "fail",
             "detail": "原底线 -10%；最差一期不是账户最大回撤。"
           },
           {
@@ -78214,7 +78225,7 @@
       {
         "program_id": "factor_6651b9e80063d61f",
         "definition_hash": "7ef7439909467b75c7c8a2494c4c3e35f21ed82fcf6a209c36aa711a772ae99e",
-        "evidence_hash": "551712091ef8b2e80bd434b4a0869db1ee97097094507d644398e1a5c2bf6499",
+        "evidence_hash": "959b43aef4b49444d4ba0b90b8e0bb98b193ec5a51b7948c81a4a734e887a4e5",
         "card": {
           "origin": "legacy",
           "hypothesis": "短期波动收窄后出现突破，可能包含不同于平稳趋势的信息。",
@@ -78233,20 +78244,20 @@
           "total": 20,
           "pending": 6,
           "due": 14,
-          "paired": 13,
-          "missing": 1,
+          "paired": 14,
+          "missing": 0,
           "duplicate": false,
-          "independent": 3,
+          "independent": 4,
           "wins": 2,
-          "losses": 2,
+          "losses": 3,
           "flat": 9,
-          "beat_parent": 10,
+          "beat_parent": 11,
           "beat_benchmark": 9,
           "cash": 9,
-          "mean_return_pct": -0.3458304615384616,
-          "mean_delta_pp": 2.322721846153846,
-          "mean_excess_pp": 0.07485784615384622,
-          "stress_excess_pp": -0.01627602293912596,
+          "mean_return_pct": -0.8145785714285714,
+          "mean_delta_pp": 2.3738177142857144,
+          "mean_excess_pp": 0.013493000000000057,
+          "stress_excess_pp": -0.09104976796066187,
           "worst_period_pct": -8.622954
         },
         "checks": [
@@ -78260,37 +78271,37 @@
             "id": "coverage",
             "label": "到期成绩是否齐全",
             "status": "pass",
-            "detail": "到期 14 期，缺少完整配对 1 期；缺价不补零、不重新分配。"
+            "detail": "到期 14 期，缺少完整配对 0 期；缺价不补零、不重新分配。"
           },
           {
             "id": "sample",
             "label": "完整样本是否够首个关卡",
             "status": "pending",
-            "detail": "完整配对 13 期，首个固定关卡 20 期。"
+            "detail": "完整配对 14 期，首个固定关卡 20 期。"
           },
           {
             "id": "independent",
             "label": "是否经历足够多的不重叠时段",
             "status": "fail",
-            "detail": "按原协议不重叠计数为 3，要求至少 6；这不是完全独立的统计证明。"
+            "detail": "按原协议不重叠计数为 4，要求至少 6；这不是完全独立的统计证明。"
           },
           {
             "id": "mean_delta_pp",
             "label": "是否优于同期研究池等权",
             "status": "pass",
-            "detail": "平均差额 2.32 个百分点；不代表未来保证。"
+            "detail": "平均差额 2.37 个百分点；不代表未来保证。"
           },
           {
             "id": "mean_excess_pp",
             "label": "是否优于同期指数",
             "status": "pass",
-            "detail": "平均差额 0.07 个百分点；不代表未来保证。"
+            "detail": "平均差额 0.01 个百分点；不代表未来保证。"
           },
           {
             "id": "stress_excess_pp",
             "label": "成本加大后是否仍优于指数",
             "status": "fail",
-            "detail": "平均差额 -0.02 个百分点；不代表未来保证。"
+            "detail": "平均差额 -0.09 个百分点；不代表未来保证。"
           },
           {
             "id": "risk",
@@ -78311,7 +78322,7 @@
       {
         "program_id": "factor_c37d333402b59ec1",
         "definition_hash": "3f725506ff114c479f1da2492fefdbef9b5dc40e92384c21de75a529b39ca41e",
-        "evidence_hash": "5aa65b1cf99716838581ac21347382ebe4eca16291f82afcf876c0d2e4a02558",
+        "evidence_hash": "363e5df246dbdb1d0c2052cb10d09689d6d0ee9b27840e0c912e2299e7faece9",
         "card": {
           "origin": "legacy",
           "hypothesis": "短期急跌后出现日内修复和量能变化，可能有五日反转效应。",
@@ -78330,21 +78341,21 @@
           "total": 20,
           "pending": 6,
           "due": 14,
-          "paired": 13,
-          "missing": 1,
+          "paired": 14,
+          "missing": 0,
           "duplicate": false,
-          "independent": 3,
+          "independent": 4,
           "wins": 5,
-          "losses": 5,
+          "losses": 6,
           "flat": 3,
           "beat_parent": 9,
           "beat_benchmark": 6,
           "cash": 3,
-          "mean_return_pct": -0.21883223076923075,
-          "mean_delta_pp": 2.449720076923077,
-          "mean_excess_pp": 0.20185607692307692,
-          "stress_excess_pp": -0.027913003582147718,
-          "worst_period_pct": -12.035108
+          "mean_return_pct": -1.4262310714285715,
+          "mean_delta_pp": 1.762165214285714,
+          "mean_excess_pp": -0.5981595000000001,
+          "stress_excess_pp": -0.8292494809790937,
+          "worst_period_pct": -17.122416
         },
         "checks": [
           {
@@ -78357,37 +78368,37 @@
             "id": "coverage",
             "label": "到期成绩是否齐全",
             "status": "pass",
-            "detail": "到期 14 期，缺少完整配对 1 期；缺价不补零、不重新分配。"
+            "detail": "到期 14 期，缺少完整配对 0 期；缺价不补零、不重新分配。"
           },
           {
             "id": "sample",
             "label": "完整样本是否够首个关卡",
             "status": "pending",
-            "detail": "完整配对 13 期，首个固定关卡 20 期。"
+            "detail": "完整配对 14 期，首个固定关卡 20 期。"
           },
           {
             "id": "independent",
             "label": "是否经历足够多的不重叠时段",
             "status": "fail",
-            "detail": "按原协议不重叠计数为 3，要求至少 6；这不是完全独立的统计证明。"
+            "detail": "按原协议不重叠计数为 4，要求至少 6；这不是完全独立的统计证明。"
           },
           {
             "id": "mean_delta_pp",
             "label": "是否优于同期研究池等权",
             "status": "pass",
-            "detail": "平均差额 2.45 个百分点；不代表未来保证。"
+            "detail": "平均差额 1.76 个百分点；不代表未来保证。"
           },
           {
             "id": "mean_excess_pp",
             "label": "是否优于同期指数",
-            "status": "pass",
-            "detail": "平均差额 0.20 个百分点；不代表未来保证。"
+            "status": "fail",
+            "detail": "平均差额 -0.60 个百分点；不代表未来保证。"
           },
           {
             "id": "stress_excess_pp",
             "label": "成本加大后是否仍优于指数",
             "status": "fail",
-            "detail": "平均差额 -0.03 个百分点；不代表未来保证。"
+            "detail": "平均差额 -0.83 个百分点；不代表未来保证。"
           },
           {
             "id": "risk",
@@ -78408,7 +78419,7 @@
       {
         "program_id": "factor_9d65144e54b1fb7f",
         "definition_hash": "d2914b0d11f44de4b66f0afb66d8bf84c36747947222f43cb5beeae6ad084fbc",
-        "evidence_hash": "8c420da1146f4a0ece7acb4f3c48030a2357b445daec08b14ec46b63624974e5",
+        "evidence_hash": "9df3545f1e1c2ae5f9aa5643d45485366fe02e9b4ef0835d22abe6890bd471fb",
         "card": {
           "origin": "legacy",
           "hypothesis": "突破伴随相对放量和高位收盘，可能减少突破后回落。",
@@ -78427,20 +78438,20 @@
           "total": 24,
           "pending": 6,
           "due": 18,
-          "paired": 17,
-          "missing": 1,
+          "paired": 18,
+          "missing": 0,
           "duplicate": false,
           "independent": 4,
           "wins": 5,
           "losses": 2,
-          "flat": 10,
-          "beat_parent": 10,
-          "beat_benchmark": 7,
-          "cash": 10,
-          "mean_return_pct": 0.3245928823529412,
-          "mean_delta_pp": 1.1183425294117646,
-          "mean_excess_pp": 0.050626117647058766,
-          "stress_excess_pp": -0.07369119189918213,
+          "flat": 11,
+          "beat_parent": 11,
+          "beat_benchmark": 8,
+          "cash": 11,
+          "mean_return_pct": 0.30655994444444445,
+          "mean_delta_pp": 1.530739888888889,
+          "mean_excess_pp": 0.37118733333333326,
+          "stress_excess_pp": 0.2537765409841058,
           "worst_period_pct": -2.390748
         },
         "checks": [
@@ -78454,13 +78465,13 @@
             "id": "coverage",
             "label": "到期成绩是否齐全",
             "status": "pass",
-            "detail": "到期 18 期，缺少完整配对 1 期；缺价不补零、不重新分配。"
+            "detail": "到期 18 期，缺少完整配对 0 期；缺价不补零、不重新分配。"
           },
           {
             "id": "sample",
             "label": "完整样本是否够首个关卡",
             "status": "pending",
-            "detail": "完整配对 17 期，首个固定关卡 20 期。"
+            "detail": "完整配对 18 期，首个固定关卡 20 期。"
           },
           {
             "id": "independent",
@@ -78472,19 +78483,19 @@
             "id": "mean_delta_pp",
             "label": "是否优于同期研究池等权",
             "status": "pass",
-            "detail": "平均差额 1.12 个百分点；不代表未来保证。"
+            "detail": "平均差额 1.53 个百分点；不代表未来保证。"
           },
           {
             "id": "mean_excess_pp",
             "label": "是否优于同期指数",
             "status": "pass",
-            "detail": "平均差额 0.05 个百分点；不代表未来保证。"
+            "detail": "平均差额 0.37 个百分点；不代表未来保证。"
           },
           {
             "id": "stress_excess_pp",
             "label": "成本加大后是否仍优于指数",
-            "status": "fail",
-            "detail": "平均差额 -0.07 个百分点；不代表未来保证。"
+            "status": "pass",
+            "detail": "平均差额 0.25 个百分点；不代表未来保证。"
           },
           {
             "id": "risk",
@@ -78505,7 +78516,7 @@
       {
         "program_id": "factor_54a2f22c16f0de4c",
         "definition_hash": "944806671555fddbf8db298743720978cc2d573fba91fde5e424c1bde20394ff",
-        "evidence_hash": "0c2f276ac63c94717f8c3b76198e09a06a1359110b2fc08d17db3701e5f791d9",
+        "evidence_hash": "0da43addb3573f4b74c50c6353de20904108afa2d1495104b871a539f602bc9b",
         "card": {
           "origin": "legacy",
           "hypothesis": "短期波动收窄后出现突破，可能包含不同于平稳趋势的信息。",
@@ -78524,20 +78535,20 @@
           "total": 24,
           "pending": 6,
           "due": 18,
-          "paired": 17,
-          "missing": 1,
+          "paired": 18,
+          "missing": 0,
           "duplicate": false,
           "independent": 4,
           "wins": 3,
           "losses": 4,
-          "flat": 10,
-          "beat_parent": 11,
-          "beat_benchmark": 9,
-          "cash": 10,
-          "mean_return_pct": 0.477452705882353,
-          "mean_delta_pp": 1.2712023529411764,
-          "mean_excess_pp": 0.20348594117647056,
-          "stress_excess_pp": 0.07871071163299369,
+          "flat": 11,
+          "beat_parent": 12,
+          "beat_benchmark": 10,
+          "cash": 11,
+          "mean_return_pct": 0.45092755555555564,
+          "mean_delta_pp": 1.6751075000000002,
+          "mean_excess_pp": 0.5155549444444445,
+          "stress_excess_pp": 0.3977116720978274,
           "worst_period_pct": -3.593962
         },
         "checks": [
@@ -78551,13 +78562,13 @@
             "id": "coverage",
             "label": "到期成绩是否齐全",
             "status": "pass",
-            "detail": "到期 18 期，缺少完整配对 1 期；缺价不补零、不重新分配。"
+            "detail": "到期 18 期，缺少完整配对 0 期；缺价不补零、不重新分配。"
           },
           {
             "id": "sample",
             "label": "完整样本是否够首个关卡",
             "status": "pending",
-            "detail": "完整配对 17 期，首个固定关卡 20 期。"
+            "detail": "完整配对 18 期，首个固定关卡 20 期。"
           },
           {
             "id": "independent",
@@ -78569,19 +78580,19 @@
             "id": "mean_delta_pp",
             "label": "是否优于同期研究池等权",
             "status": "pass",
-            "detail": "平均差额 1.27 个百分点；不代表未来保证。"
+            "detail": "平均差额 1.68 个百分点；不代表未来保证。"
           },
           {
             "id": "mean_excess_pp",
             "label": "是否优于同期指数",
             "status": "pass",
-            "detail": "平均差额 0.20 个百分点；不代表未来保证。"
+            "detail": "平均差额 0.52 个百分点；不代表未来保证。"
           },
           {
             "id": "stress_excess_pp",
             "label": "成本加大后是否仍优于指数",
             "status": "pass",
-            "detail": "平均差额 0.08 个百分点；不代表未来保证。"
+            "detail": "平均差额 0.40 个百分点；不代表未来保证。"
           },
           {
             "id": "risk",
@@ -78602,7 +78613,7 @@
       {
         "program_id": "factor_db7969eafdce83f7",
         "definition_hash": "232b17591543c03a5c38f2250fd645909c0cadec9052f54ed38fd8509d49200f",
-        "evidence_hash": "214b641aba6f2a7897c6ba9c16dbbe71a2d0330a80d6217ec14209961b973d8d",
+        "evidence_hash": "0780a781516d6da88883cc6a4d004dd8defbf853a21071c0e77ad550e32f12ba",
         "card": {
           "origin": "legacy",
           "hypothesis": "短期急跌后出现日内修复和量能变化，可能有五日反转效应。",
@@ -78621,20 +78632,20 @@
           "total": 24,
           "pending": 6,
           "due": 18,
-          "paired": 17,
-          "missing": 1,
+          "paired": 18,
+          "missing": 0,
           "duplicate": false,
           "independent": 4,
           "wins": 5,
-          "losses": 8,
+          "losses": 9,
           "flat": 4,
-          "beat_parent": 6,
+          "beat_parent": 7,
           "beat_benchmark": 5,
           "cash": 4,
-          "mean_return_pct": -1.7391448235294118,
-          "mean_delta_pp": -0.9453951764705882,
-          "mean_excess_pp": -2.013111588235294,
-          "stress_excess_pp": -2.2369712568624633,
+          "mean_return_pct": -2.0944090555555555,
+          "mean_delta_pp": -0.8702291111111111,
+          "mean_excess_pp": -2.0297816666666666,
+          "stress_excess_pp": -2.256492862602,
           "worst_period_pct": -10.343125
         },
         "checks": [
@@ -78648,13 +78659,13 @@
             "id": "coverage",
             "label": "到期成绩是否齐全",
             "status": "pass",
-            "detail": "到期 18 期，缺少完整配对 1 期；缺价不补零、不重新分配。"
+            "detail": "到期 18 期，缺少完整配对 0 期；缺价不补零、不重新分配。"
           },
           {
             "id": "sample",
             "label": "完整样本是否够首个关卡",
             "status": "pending",
-            "detail": "完整配对 17 期，首个固定关卡 20 期。"
+            "detail": "完整配对 18 期，首个固定关卡 20 期。"
           },
           {
             "id": "independent",
@@ -78666,19 +78677,19 @@
             "id": "mean_delta_pp",
             "label": "是否优于同期研究池等权",
             "status": "fail",
-            "detail": "平均差额 -0.95 个百分点；不代表未来保证。"
+            "detail": "平均差额 -0.87 个百分点；不代表未来保证。"
           },
           {
             "id": "mean_excess_pp",
             "label": "是否优于同期指数",
             "status": "fail",
-            "detail": "平均差额 -2.01 个百分点；不代表未来保证。"
+            "detail": "平均差额 -2.03 个百分点；不代表未来保证。"
           },
           {
             "id": "stress_excess_pp",
             "label": "成本加大后是否仍优于指数",
             "status": "fail",
-            "detail": "平均差额 -2.24 个百分点；不代表未来保证。"
+            "detail": "平均差额 -2.26 个百分点；不代表未来保证。"
           },
           {
             "id": "risk",

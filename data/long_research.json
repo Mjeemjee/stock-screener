@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-20T21:22:17.333837+00:00",
+  "generated_at": "2026-11-21T20:18:55.480345+00:00",
   "definition_hash": "ffac6ed3d6ab96da346e18a8b2e6da7fab8f376a907807291b2b5a3ad63b2fc9",
   "policy": {
     "version": "liq-momentum-forward-v2",
@@ -26,9 +26,9 @@
       "quality": {
         "market": "HK",
         "session": 20261120,
-        "valid": 113,
+        "valid": 196,
         "total": 218,
-        "status": "insufficient_data"
+        "status": "ready"
       },
       "metrics": {
         "due": 0,
@@ -678,7 +678,7 @@
                 "code": "HK.06881",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 6.734
+                "entry_price": 6.905
               },
               {
                 "code": "HK.01766",
@@ -998,7 +998,7 @@
       "quality": {
         "market": "US",
         "session": 20261120,
-        "valid": 217,
+        "valid": 220,
         "total": 259,
         "status": "ready"
       },
@@ -1126,7 +1126,7 @@
                 "code": "US.NTRA",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 294.745
+                "entry_price": 296.33
               },
               {
                 "code": "US.BMY",
@@ -1407,7 +1407,7 @@
                 "code": "US.NTRA",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 294.745
+                "entry_price": 296.33
               },
               {
                 "code": "US.HUM",
@@ -1896,7 +1896,7 @@
               "code": "US.NTRA",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 294.745
+              "entry_price": 296.33
             },
             {
               "code": "US.BMY",
@@ -2182,9 +2182,9 @@
             {
               "code": "US.NTRA",
               "status": "matured",
-              "return_pct": -27.412783,
+              "return_pct": -27.022443,
               "entry_price": 404.84,
-              "exit_price": 294.745
+              "exit_price": 296.33
             },
             {
               "code": "US.ILMN",
@@ -2202,9 +2202,9 @@
             {
               "code": "US.REGN",
               "status": "matured",
-              "return_pct": 17.11843,
-              "entry_price": 806.74,
-              "exit_price": 947.68
+              "return_pct": 17.118359,
+              "entry_price": 805.919,
+              "exit_price": 946.715
             },
             {
               "code": "US.WULF",
@@ -2342,9 +2342,9 @@
             {
               "code": "US.CMI",
               "status": "matured",
-              "return_pct": -20.691494,
-              "entry_price": 545.0,
-              "exit_price": 433.53
+              "return_pct": -20.691366,
+              "entry_price": 542.153,
+              "exit_price": 431.266
             },
             {
               "code": "US.COP",
@@ -2562,9 +2562,9 @@
             {
               "code": "US.NTRA",
               "status": "matured",
-              "return_pct": -27.412783,
+              "return_pct": -27.022443,
               "entry_price": 404.84,
-              "exit_price": 294.745
+              "exit_price": 296.33
             },
             {
               "code": "US.PSX",
@@ -2894,9 +2894,9 @@
             {
               "code": "US.REGN",
               "status": "matured",
-              "return_pct": 17.11843,
-              "entry_price": 806.74,
-              "exit_price": 947.68
+              "return_pct": 17.118359,
+              "entry_price": 805.919,
+              "exit_price": 946.715
             },
             {
               "code": "US.MO",
@@ -3090,9 +3090,9 @@
           {
             "code": "US.NTRA",
             "status": "matured",
-            "return_pct": -27.630219,
+            "return_pct": -27.241049,
             "entry_price": 404.84,
-            "exit_price": 294.745
+            "exit_price": 296.33
           },
           {
             "code": "US.ILMN",
@@ -3110,9 +3110,9 @@
           {
             "code": "US.REGN",
             "status": "matured",
-            "return_pct": 16.767599,
-            "entry_price": 806.74,
-            "exit_price": 947.68
+            "return_pct": 16.767529,
+            "entry_price": 805.919,
+            "exit_price": 946.715
           },
           {
             "code": "US.WULF",
@@ -3250,9 +3250,9 @@
           {
             "code": "US.CMI",
             "status": "matured",
-            "return_pct": -20.929064,
-            "entry_price": 545.0,
-            "exit_price": 433.53
+            "return_pct": -20.928936,
+            "entry_price": 542.153,
+            "exit_price": 431.266
           },
           {
             "code": "US.COP",
@@ -3906,7 +3906,7 @@
               "code": "HK.06881",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 6.734
+              "entry_price": 6.905
             },
             {
               "code": "HK.01766",
@@ -4330,7 +4330,7 @@
               "code": "US.NTRA",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 294.745
+              "entry_price": 296.33
             },
             {
               "code": "US.BMY",
@@ -4611,7 +4611,7 @@
               "code": "US.NTRA",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 294.745
+              "entry_price": 296.33
             },
             {
               "code": "US.HUM",
@@ -5100,7 +5100,7 @@
             "code": "US.NTRA",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 294.745
+            "entry_price": 296.33
           },
           {
             "code": "US.BMY",
