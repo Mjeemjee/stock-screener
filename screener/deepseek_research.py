@@ -1,10 +1,11 @@
 """Bounded external proposal assistant; never changes the evaluation engine."""
 import argparse
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timezone
 import json
 import os
 from pathlib import Path
 import time
+from zoneinfo import ZoneInfo
 
 import requests
 
@@ -133,7 +134,10 @@ def generate(directory, state, now, key):
     prior = records(directory)
     if len(prior) >= MAX_CALLS or len(state["programs"]) >= research.policy()["max_programs"]:
         return
-    if prior and now - max(research.instant(r["at"]) for _, r in prior) < timedelta(days=7):
+    # The daily scan can drift in UTC; manual reruns share the same Hong Kong date.
+    zone = ZoneInfo("Asia/Hong_Kong")
+    today = research.instant(now.isoformat()).astimezone(zone).date()
+    if any(research.instant(r["at"]).astimezone(zone).date() >= today for _, r in prior):
         return
     used = {r["parent_id"] for _, r in prior}
     existing = []

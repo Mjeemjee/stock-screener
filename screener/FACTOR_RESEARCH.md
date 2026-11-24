@@ -59,8 +59,11 @@ All input strings are treated as data. No tools, external browsing or generated
 code execution are enabled. Only assistant final JSON is parsed; reasoning text,
 authorization headers and provider error bodies are never stored or published.
 
-Calls are limited to six lifetime rounds, at most one round per seven days and one
-round per parent. Each round has at most two HTTP attempts, 24KB context and 4,096
+Calls are limited to six lifetime rounds, at most one reservation per Hong Kong
+calendar date across all parents and one round per parent. A new date alone does
+not trigger inference: a previously unused parent still needs 20 complete paired
+cohorts. This changes proposal timing only; the separate automatic formula search
+keeps its seven-day interval. Each round has at most two HTTP attempts, 24KB context and 4,096
 output tokens including thinking. Reservations are sealed before network access;
 interrupted/failed rounds still consume quota. This bounds requests/tokens, not a
 guaranteed currency bill if provider prices change. Publish/review workflows only
