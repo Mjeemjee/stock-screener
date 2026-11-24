@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-24T01:06:19+00:00",
+  "generated_at": "2026-11-24T23:13:24+00:00",
   "policy": {
     "version": "lab-v1",
     "horizon": 5,
@@ -78,7 +78,7 @@
         "min_median_turnover_20d": 78000000,
         "use_median_liquidity": false
       },
-      "matured": 14,
+      "matured": 15,
       "supported": true
     },
     {
@@ -98,7 +98,7 @@
         "min_market_val": 10000000000,
         "require_profitable": true
       },
-      "matured": 15,
+      "matured": 16,
       "supported": true
     },
     {
@@ -118,7 +118,7 @@
         "min_market_val": 78000000000,
         "require_profitable": true
       },
-      "matured": 15,
+      "matured": 16,
       "supported": true
     },
     {
@@ -142,7 +142,7 @@
         "min_market_val": 39000000000.0,
         "market_value_field": "hk_market_val"
       },
-      "matured": 15,
+      "matured": 16,
       "supported": true
     }
   ],
@@ -186,9 +186,9 @@
       "assessments": [],
       "definition_hash": "1676a1f96dcaad5ebb37c1997a3b6a6e75afbb9454677ec3b93c4675c27e161a",
       "metrics": {
-        "due": 2,
+        "due": 3,
         "paired": 1,
-        "coverage": 0.5,
+        "coverage": 0.3333333333333333,
         "signal_rate": 1.0,
         "independent": 1,
         "mean_delta_pp": 0.37961899999999993,
@@ -238,9 +238,9 @@
       "assessments": [],
       "definition_hash": "1f8d73ec7210a7a6c38eb39856206402cef5dad4dbf5d1397efb5fdafe9858fd",
       "metrics": {
-        "due": 2,
+        "due": 3,
         "paired": 1,
-        "coverage": 0.5,
+        "coverage": 0.3333333333333333,
         "signal_rate": 1.0,
         "independent": 1,
         "mean_delta_pp": -0.548073,
@@ -282,17 +282,17 @@
       "assessments": [],
       "definition_hash": "d3d18b223c5d87cb82689cc071af14c537c5c3240e75bc51a5c0915d7ec641ff",
       "metrics": {
-        "due": 2,
-        "paired": 1,
-        "coverage": 0.5,
+        "due": 3,
+        "paired": 2,
+        "coverage": 0.6666666666666666,
         "signal_rate": 1.0,
         "independent": 1,
         "mean_delta_pp": 0.0,
         "lower_delta_pp": null,
-        "mean_return_pct": -7.404142,
-        "mean_excess_pp": -1.2800880000000001,
-        "stress_excess_pp": -1.5574604934800753,
-        "worst_period_pct": -7.404142
+        "mean_return_pct": -6.7345175,
+        "mean_excess_pp": -1.7655785,
+        "stress_excess_pp": -2.044956799176199,
+        "worst_period_pct": -7.404126
       }
     },
     {
@@ -326,12 +326,12 @@
       "assessments": [],
       "definition_hash": "f721461cbd14afc7413fc1e04005e31926263d4c97bbd29eafd89ef37f161978",
       "metrics": {
-        "due": 2,
+        "due": 3,
         "paired": 1,
-        "coverage": 0.5,
+        "coverage": 0.3333333333333333,
         "signal_rate": 1.0,
         "independent": 1,
-        "mean_delta_pp": -2.1254039999999996,
+        "mean_delta_pp": -2.12542,
         "lower_delta_pp": null,
         "mean_return_pct": -9.529546,
         "mean_excess_pp": -3.4054919999999997,
@@ -370,16 +370,16 @@
       "assessments": [],
       "definition_hash": "851efd9ad5e53864a40afd8f55222cdb54102acffd0064e8dbcc57b554a6274a",
       "metrics": {
-        "due": 2,
-        "paired": 1,
-        "coverage": 0.5,
+        "due": 3,
+        "paired": 2,
+        "coverage": 0.6666666666666666,
         "signal_rate": 1.0,
         "independent": 1,
-        "mean_delta_pp": -0.6218769999999996,
+        "mean_delta_pp": -0.3109384999999998,
         "lower_delta_pp": null,
-        "mean_return_pct": -10.955254,
-        "mean_excess_pp": -5.134526,
-        "stress_excess_pp": -5.401261224310846,
+        "mean_return_pct": -10.3058455,
+        "mean_excess_pp": -4.146848,
+        "stress_excess_pp": -4.415528422412574,
         "worst_period_pct": -10.955254
       }
     },
@@ -414,16 +414,16 @@
       "assessments": [],
       "definition_hash": "49b351a1fbf542d364bfb1672aa6eab45838a86ed3da44b41e3d32e6f6217314",
       "metrics": {
-        "due": 2,
-        "paired": 1,
-        "coverage": 0.5,
+        "due": 3,
+        "paired": 2,
+        "coverage": 0.6666666666666666,
         "signal_rate": 1.0,
         "independent": 1,
-        "mean_delta_pp": 1.55349,
+        "mean_delta_pp": 1.7010230000000002,
         "lower_delta_pp": null,
-        "mean_return_pct": -8.779887,
-        "mean_excess_pp": -2.9591590000000005,
-        "stress_excess_pp": -3.2324103256879253,
+        "mean_return_pct": -8.293884,
+        "mean_excess_pp": -2.1348865000000004,
+        "stress_excess_pp": -2.4095937098606797,
         "worst_period_pct": -8.779887
       }
     }
@@ -611,9 +611,9 @@
           {
             "code": "US.SGI",
             "status": "matured",
-            "return_pct": -3.013925,
-            "entry_price": 61.34,
-            "exit_price": 59.67
+            "return_pct": -3.013763,
+            "entry_price": 61.16,
+            "exit_price": 59.495
           },
           {
             "code": "US.FIS",
@@ -659,7 +659,7 @@
           }
         ],
         "known_count": 10,
-        "return_pct": -7.404142
+        "return_pct": -7.404126
       },
       "benchmark_pct": -6.124054
     },
@@ -1349,9 +1349,9 @@
           {
             "code": "US.SGI",
             "status": "matured",
-            "return_pct": -3.013925,
-            "entry_price": 61.34,
-            "exit_price": 59.67
+            "return_pct": -3.013763,
+            "entry_price": 61.16,
+            "exit_price": 59.495
           },
           {
             "code": "US.FIS",
@@ -1397,7 +1397,7 @@
           }
         ],
         "known_count": 10,
-        "return_pct": -7.404142
+        "return_pct": -7.404126
       },
       "parent": {
         "count": 10,
@@ -1427,9 +1427,9 @@
           {
             "code": "US.SGI",
             "status": "matured",
-            "return_pct": -3.013925,
-            "entry_price": 61.34,
-            "exit_price": 59.67
+            "return_pct": -3.013763,
+            "entry_price": 61.16,
+            "exit_price": 59.495
           },
           {
             "code": "US.FIS",
@@ -1475,7 +1475,7 @@
           }
         ],
         "known_count": 10,
-        "return_pct": -7.404142
+        "return_pct": -7.404126
       },
       "benchmark_pct": -6.124054
     },
@@ -1493,51 +1493,59 @@
         "holdings": [
           {
             "code": "US.NFLX",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 62.89
+            "status": "matured",
+            "return_pct": -7.179817,
+            "entry_price": 62.89,
+            "exit_price": 58.55
           },
           {
             "code": "US.CMI",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 442.914
+            "status": "matured",
+            "return_pct": -4.257729,
+            "entry_price": 442.914,
+            "exit_price": 425.33
           },
           {
             "code": "US.MELI",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 1484.0
+            "status": "matured",
+            "return_pct": -4.939249,
+            "entry_price": 1484.0,
+            "exit_price": 1414.94
           },
           {
             "code": "US.BABA",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 92.23
+            "status": "matured",
+            "return_pct": -5.023512,
+            "entry_price": 92.23,
+            "exit_price": 87.86
           },
           {
             "code": "US.BA",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 170.22
+            "status": "matured",
+            "return_pct": -6.28556,
+            "entry_price": 170.22,
+            "exit_price": 160.0
           },
           {
             "code": "US.VALE",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 10.83
+            "status": "matured",
+            "return_pct": -9.413442,
+            "entry_price": 10.83,
+            "exit_price": 9.84
           },
           {
             "code": "US.PKX",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 49.14
+            "status": "matured",
+            "return_pct": -4.296496,
+            "entry_price": 49.14,
+            "exit_price": 47.17
           },
           {
             "code": "US.SRE",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 80.47
+            "status": "matured",
+            "return_pct": -4.735087,
+            "entry_price": 80.47,
+            "exit_price": 76.89
           },
           {
             "code": "US.SE",
@@ -1547,81 +1555,92 @@
           },
           {
             "code": "US.KGC",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 20.457
+            "status": "matured",
+            "return_pct": -9.349936,
+            "entry_price": 20.457,
+            "exit_price": 18.6
           }
         ],
-        "known_count": 0,
+        "known_count": 9,
         "return_pct": null
       },
       "parent": {
         "count": 10,
-        "complete": false,
+        "complete": true,
         "holdings": [
           {
             "code": "US.SGI",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 60.93
+            "status": "matured",
+            "return_pct": -2.6316,
+            "entry_price": 60.751,
+            "exit_price": 59.33
           },
           {
             "code": "US.NFLX",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 62.89
+            "status": "matured",
+            "return_pct": -7.179817,
+            "entry_price": 62.89,
+            "exit_price": 58.55
           },
           {
             "code": "US.CMI",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 442.914
+            "status": "matured",
+            "return_pct": -4.257729,
+            "entry_price": 442.914,
+            "exit_price": 425.33
           },
           {
             "code": "US.MELI",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 1484.0
+            "status": "matured",
+            "return_pct": -4.939249,
+            "entry_price": 1484.0,
+            "exit_price": 1414.94
           },
           {
             "code": "US.NLY",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 17.68
+            "status": "matured",
+            "return_pct": -3.795833,
+            "entry_price": 17.68,
+            "exit_price": 17.06
           },
           {
             "code": "US.BABA",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 92.23
+            "status": "matured",
+            "return_pct": -5.023512,
+            "entry_price": 92.23,
+            "exit_price": 87.86
           },
           {
             "code": "US.AGNC",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 8.22
+            "status": "matured",
+            "return_pct": -4.544704,
+            "entry_price": 8.22,
+            "exit_price": 7.87
           },
           {
             "code": "US.FSLR",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 168.9
+            "status": "matured",
+            "return_pct": -12.57764,
+            "entry_price": 168.9,
+            "exit_price": 148.1
           },
           {
             "code": "US.BA",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 170.22
+            "status": "matured",
+            "return_pct": -6.28556,
+            "entry_price": 170.22,
+            "exit_price": 160.0
           },
           {
             "code": "US.VALE",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 10.83
+            "status": "matured",
+            "return_pct": -9.413442,
+            "entry_price": 10.83,
+            "exit_price": 9.84
           }
         ],
-        "known_count": 0,
-        "return_pct": null
+        "known_count": 10,
+        "return_pct": -6.064909
       },
       "benchmark_pct": -3.813824
     },
@@ -1789,7 +1808,7 @@
         "known_count": 10,
         "return_pct": -9.656437
       },
-      "benchmark_pct": null
+      "benchmark_pct": -6.497267
     },
     {
       "trial_id": "lab_a4e604408db11dc0",
@@ -1805,27 +1824,31 @@
         "holdings": [
           {
             "code": "US.ADT",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 9.91
+            "status": "matured",
+            "return_pct": -0.601368,
+            "entry_price": 9.91,
+            "exit_price": 9.88
           },
           {
             "code": "US.FCN",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 205.17
+            "status": "matured",
+            "return_pct": -1.990624,
+            "entry_price": 205.17,
+            "exit_price": 201.69
           },
           {
             "code": "US.CROX",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 163.72
+            "status": "matured",
+            "return_pct": -3.837662,
+            "entry_price": 163.72,
+            "exit_price": 157.91
           },
           {
             "code": "US.EW",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 107.0
+            "status": "matured",
+            "return_pct": -3.216022,
+            "entry_price": 107.0,
+            "exit_price": 103.87
           },
           {
             "code": "US.TFX",
@@ -1841,9 +1864,10 @@
           },
           {
             "code": "US.WCN",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 194.26
+            "status": "matured",
+            "return_pct": -9.527462,
+            "entry_price": 194.26,
+            "exit_price": 176.28
           },
           {
             "code": "US.VLTO",
@@ -1853,18 +1877,20 @@
           },
           {
             "code": "US.AIZ",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 325.34
+            "status": "matured",
+            "return_pct": -2.613248,
+            "entry_price": 325.34,
+            "exit_price": 317.79
           },
           {
             "code": "US.IBN",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 34.52
+            "status": "matured",
+            "return_pct": -0.126259,
+            "entry_price": 34.52,
+            "exit_price": 34.58
           }
         ],
-        "known_count": 0,
+        "known_count": 7,
         "return_pct": null
       },
       "parent": {
@@ -1873,27 +1899,31 @@
         "holdings": [
           {
             "code": "US.ADT",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 9.91
+            "status": "matured",
+            "return_pct": -0.601368,
+            "entry_price": 9.91,
+            "exit_price": 9.88
           },
           {
             "code": "US.FCN",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 205.17
+            "status": "matured",
+            "return_pct": -1.990624,
+            "entry_price": 205.17,
+            "exit_price": 201.69
           },
           {
             "code": "US.GKOS",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 245.43
+            "status": "matured",
+            "return_pct": 0.009182,
+            "entry_price": 245.43,
+            "exit_price": 246.19
           },
           {
             "code": "US.CROX",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 163.72
+            "status": "matured",
+            "return_pct": -3.837662,
+            "entry_price": 163.72,
+            "exit_price": 157.91
           },
           {
             "code": "US.PCOR",
@@ -1903,15 +1933,17 @@
           },
           {
             "code": "US.EW",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 107.0
+            "status": "matured",
+            "return_pct": -3.216022,
+            "entry_price": 107.0,
+            "exit_price": 103.87
           },
           {
             "code": "US.ALLE",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 191.91
+            "status": "matured",
+            "return_pct": -3.172478,
+            "entry_price": 191.91,
+            "exit_price": 186.38
           },
           {
             "code": "US.TFX",
@@ -1927,12 +1959,13 @@
           },
           {
             "code": "US.WCN",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 194.26
+            "status": "matured",
+            "return_pct": -9.527462,
+            "entry_price": 194.26,
+            "exit_price": 176.28
           }
         ],
-        "known_count": 0,
+        "known_count": 7,
         "return_pct": null
       },
       "benchmark_pct": -3.813824
@@ -2101,7 +2134,7 @@
         "known_count": 10,
         "return_pct": -9.656437
       },
-      "benchmark_pct": null
+      "benchmark_pct": -6.497267
     },
     {
       "trial_id": "lab_b96b5f12f9eced9c",
@@ -2117,27 +2150,31 @@
         "holdings": [
           {
             "code": "US.ADT",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 9.91
+            "status": "matured",
+            "return_pct": -0.601368,
+            "entry_price": 9.91,
+            "exit_price": 9.88
           },
           {
             "code": "US.FCN",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 205.17
+            "status": "matured",
+            "return_pct": -1.990624,
+            "entry_price": 205.17,
+            "exit_price": 201.69
           },
           {
             "code": "US.GKOS",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 245.43
+            "status": "matured",
+            "return_pct": 0.009182,
+            "entry_price": 245.43,
+            "exit_price": 246.19
           },
           {
             "code": "US.CROX",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 163.72
+            "status": "matured",
+            "return_pct": -3.837662,
+            "entry_price": 163.72,
+            "exit_price": 157.91
           },
           {
             "code": "US.PCOR",
@@ -2147,15 +2184,17 @@
           },
           {
             "code": "US.EW",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 107.0
+            "status": "matured",
+            "return_pct": -3.216022,
+            "entry_price": 107.0,
+            "exit_price": 103.87
           },
           {
             "code": "US.ALLE",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 191.91
+            "status": "matured",
+            "return_pct": -3.172478,
+            "entry_price": 191.91,
+            "exit_price": 186.38
           },
           {
             "code": "US.TFX",
@@ -2171,12 +2210,13 @@
           },
           {
             "code": "US.WCN",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 194.26
+            "status": "matured",
+            "return_pct": -9.527462,
+            "entry_price": 194.26,
+            "exit_price": 176.28
           }
         ],
-        "known_count": 0,
+        "known_count": 7,
         "return_pct": null
       },
       "parent": {
@@ -2185,27 +2225,31 @@
         "holdings": [
           {
             "code": "US.ADT",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 9.91
+            "status": "matured",
+            "return_pct": -0.601368,
+            "entry_price": 9.91,
+            "exit_price": 9.88
           },
           {
             "code": "US.FCN",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 205.17
+            "status": "matured",
+            "return_pct": -1.990624,
+            "entry_price": 205.17,
+            "exit_price": 201.69
           },
           {
             "code": "US.GKOS",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 245.43
+            "status": "matured",
+            "return_pct": 0.009182,
+            "entry_price": 245.43,
+            "exit_price": 246.19
           },
           {
             "code": "US.CROX",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 163.72
+            "status": "matured",
+            "return_pct": -3.837662,
+            "entry_price": 163.72,
+            "exit_price": 157.91
           },
           {
             "code": "US.PCOR",
@@ -2215,15 +2259,17 @@
           },
           {
             "code": "US.EW",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 107.0
+            "status": "matured",
+            "return_pct": -3.216022,
+            "entry_price": 107.0,
+            "exit_price": 103.87
           },
           {
             "code": "US.ALLE",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 191.91
+            "status": "matured",
+            "return_pct": -3.172478,
+            "entry_price": 191.91,
+            "exit_price": 186.38
           },
           {
             "code": "US.TFX",
@@ -2239,12 +2285,13 @@
           },
           {
             "code": "US.WCN",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 194.26
+            "status": "matured",
+            "return_pct": -9.527462,
+            "entry_price": 194.26,
+            "exit_price": 176.28
           }
         ],
-        "known_count": 0,
+        "known_count": 7,
         "return_pct": null
       },
       "benchmark_pct": -3.813824
@@ -2259,139 +2306,159 @@
       "due": true,
       "branch": {
         "count": 10,
-        "complete": false,
+        "complete": true,
         "holdings": [
           {
             "code": "US.SGI",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 60.93
+            "status": "matured",
+            "return_pct": -2.6316,
+            "entry_price": 60.751,
+            "exit_price": 59.33
           },
           {
             "code": "US.NFLX",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 62.89
+            "status": "matured",
+            "return_pct": -7.179817,
+            "entry_price": 62.89,
+            "exit_price": 58.55
           },
           {
             "code": "US.CMI",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 442.914
+            "status": "matured",
+            "return_pct": -4.257729,
+            "entry_price": 442.914,
+            "exit_price": 425.33
           },
           {
             "code": "US.MELI",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 1484.0
+            "status": "matured",
+            "return_pct": -4.939249,
+            "entry_price": 1484.0,
+            "exit_price": 1414.94
           },
           {
             "code": "US.NLY",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 17.68
+            "status": "matured",
+            "return_pct": -3.795833,
+            "entry_price": 17.68,
+            "exit_price": 17.06
           },
           {
             "code": "US.BABA",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 92.23
+            "status": "matured",
+            "return_pct": -5.023512,
+            "entry_price": 92.23,
+            "exit_price": 87.86
           },
           {
             "code": "US.AGNC",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 8.22
+            "status": "matured",
+            "return_pct": -4.544704,
+            "entry_price": 8.22,
+            "exit_price": 7.87
           },
           {
             "code": "US.FSLR",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 168.9
+            "status": "matured",
+            "return_pct": -12.57764,
+            "entry_price": 168.9,
+            "exit_price": 148.1
           },
           {
             "code": "US.BA",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 170.22
+            "status": "matured",
+            "return_pct": -6.28556,
+            "entry_price": 170.22,
+            "exit_price": 160.0
           },
           {
             "code": "US.VALE",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 10.83
+            "status": "matured",
+            "return_pct": -9.413442,
+            "entry_price": 10.83,
+            "exit_price": 9.84
           }
         ],
-        "known_count": 0,
-        "return_pct": null
+        "known_count": 10,
+        "return_pct": -6.064909
       },
       "parent": {
         "count": 10,
-        "complete": false,
+        "complete": true,
         "holdings": [
           {
             "code": "US.SGI",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 60.93
+            "status": "matured",
+            "return_pct": -2.6316,
+            "entry_price": 60.751,
+            "exit_price": 59.33
           },
           {
             "code": "US.NFLX",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 62.89
+            "status": "matured",
+            "return_pct": -7.179817,
+            "entry_price": 62.89,
+            "exit_price": 58.55
           },
           {
             "code": "US.CMI",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 442.914
+            "status": "matured",
+            "return_pct": -4.257729,
+            "entry_price": 442.914,
+            "exit_price": 425.33
           },
           {
             "code": "US.MELI",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 1484.0
+            "status": "matured",
+            "return_pct": -4.939249,
+            "entry_price": 1484.0,
+            "exit_price": 1414.94
           },
           {
             "code": "US.NLY",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 17.68
+            "status": "matured",
+            "return_pct": -3.795833,
+            "entry_price": 17.68,
+            "exit_price": 17.06
           },
           {
             "code": "US.BABA",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 92.23
+            "status": "matured",
+            "return_pct": -5.023512,
+            "entry_price": 92.23,
+            "exit_price": 87.86
           },
           {
             "code": "US.AGNC",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 8.22
+            "status": "matured",
+            "return_pct": -4.544704,
+            "entry_price": 8.22,
+            "exit_price": 7.87
           },
           {
             "code": "US.FSLR",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 168.9
+            "status": "matured",
+            "return_pct": -12.57764,
+            "entry_price": 168.9,
+            "exit_price": 148.1
           },
           {
             "code": "US.BA",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 170.22
+            "status": "matured",
+            "return_pct": -6.28556,
+            "entry_price": 170.22,
+            "exit_price": 160.0
           },
           {
             "code": "US.VALE",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 10.83
+            "status": "matured",
+            "return_pct": -9.413442,
+            "entry_price": 10.83,
+            "exit_price": 9.84
           }
         ],
-        "known_count": 0,
-        "return_pct": null
+        "known_count": 10,
+        "return_pct": -6.064909
       },
       "benchmark_pct": -3.813824
     },
@@ -2402,73 +2469,82 @@
       "frozen_at": "2026-11-16T23:03:26+00:00",
       "entry_date": 20261117,
       "exit_date": 20261124,
-      "due": false,
+      "due": true,
       "branch": {
         "count": 10,
         "complete": false,
         "holdings": [
           {
             "code": "US.VALE",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 10.54
+            "status": "matured",
+            "return_pct": -8.529094,
+            "entry_price": 10.54,
+            "exit_price": 9.67
           },
           {
             "code": "US.BABA",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 88.16
+            "status": "matured",
+            "return_pct": -5.060654,
+            "entry_price": 88.16,
+            "exit_price": 83.95
           },
           {
             "code": "US.BA",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 165.0
+            "status": "matured",
+            "return_pct": -2.190838,
+            "entry_price": 165.0,
+            "exit_price": 161.87
           },
           {
             "code": "US.CMI",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 433.762
+            "status": "matured",
+            "return_pct": -3.416784,
+            "entry_price": 433.762,
+            "exit_price": 420.2
           },
           {
             "code": "US.SE",
-            "status": "pending",
+            "status": "missing_exit",
             "return_pct": null,
             "entry_price": 70.93
           },
           {
             "code": "US.NFLX",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 60.56
+            "status": "matured",
+            "return_pct": -4.695195,
+            "entry_price": 60.56,
+            "exit_price": 57.89
           },
           {
             "code": "US.MELI",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 1456.23
+            "status": "matured",
+            "return_pct": -3.29283,
+            "entry_price": 1456.23,
+            "exit_price": 1412.51
           },
           {
             "code": "US.CCJ",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 65.81
+            "status": "matured",
+            "return_pct": -8.798556,
+            "entry_price": 65.81,
+            "exit_price": 60.2
           },
           {
             "code": "US.KGC",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 20.018
+            "status": "matured",
+            "return_pct": -10.674015,
+            "entry_price": 20.018,
+            "exit_price": 17.935
           },
           {
             "code": "US.SKHY",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 123.49
+            "status": "matured",
+            "return_pct": -4.07152,
+            "entry_price": 123.49,
+            "exit_price": 118.818
           }
         ],
-        "known_count": 0,
+        "known_count": 9,
         "return_pct": null
       },
       "parent": {
@@ -2477,69 +2553,78 @@
         "holdings": [
           {
             "code": "US.VALE",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 10.54
+            "status": "matured",
+            "return_pct": -8.529094,
+            "entry_price": 10.54,
+            "exit_price": 9.67
           },
           {
             "code": "US.BABA",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 88.16
+            "status": "matured",
+            "return_pct": -5.060654,
+            "entry_price": 88.16,
+            "exit_price": 83.95
           },
           {
             "code": "US.FSLR",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 163.62
+            "status": "matured",
+            "return_pct": -11.724703,
+            "entry_price": 163.62,
+            "exit_price": 144.87
           },
           {
             "code": "US.BA",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 165.0
+            "status": "matured",
+            "return_pct": -2.190838,
+            "entry_price": 165.0,
+            "exit_price": 161.87
           },
           {
             "code": "US.CMI",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 433.762
+            "status": "matured",
+            "return_pct": -3.416784,
+            "entry_price": 433.762,
+            "exit_price": 420.2
           },
           {
             "code": "US.SE",
-            "status": "pending",
+            "status": "missing_exit",
             "return_pct": null,
             "entry_price": 70.93
           },
           {
             "code": "US.PKX",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 48.11
+            "status": "matured",
+            "return_pct": -3.221555,
+            "entry_price": 48.11,
+            "exit_price": 46.7
           },
           {
             "code": "US.NFLX",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 60.56
+            "status": "matured",
+            "return_pct": -4.695195,
+            "entry_price": 60.56,
+            "exit_price": 57.89
           },
           {
             "code": "US.MELI",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 1456.23
+            "status": "matured",
+            "return_pct": -3.29283,
+            "entry_price": 1456.23,
+            "exit_price": 1412.51
           },
           {
             "code": "US.CCJ",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 65.81
+            "status": "matured",
+            "return_pct": -8.798556,
+            "entry_price": 65.81,
+            "exit_price": 60.2
           }
         ],
-        "known_count": 0,
+        "known_count": 9,
         "return_pct": null
       },
-      "benchmark_pct": null
+      "benchmark_pct": -3.220744
     },
     {
       "trial_id": "lab_a1f4114a4660a2fe",
@@ -2548,142 +2633,162 @@
       "frozen_at": "2026-11-16T23:03:26+00:00",
       "entry_date": 20261117,
       "exit_date": 20261124,
-      "due": false,
+      "due": true,
       "branch": {
         "count": 10,
-        "complete": false,
+        "complete": true,
         "holdings": [
           {
             "code": "HK.01024",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 25.0
+            "status": "matured",
+            "return_pct": -17.368268,
+            "entry_price": 25.0,
+            "exit_price": 20.72
           },
           {
             "code": "HK.01211",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 64.5
+            "status": "matured",
+            "return_pct": -4.936781,
+            "entry_price": 64.5,
+            "exit_price": 61.5
           },
           {
             "code": "HK.09988",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 87.2
+            "status": "matured",
+            "return_pct": -0.985563,
+            "entry_price": 87.2,
+            "exit_price": 86.6
           },
           {
             "code": "HK.02899",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 25.38
+            "status": "matured",
+            "return_pct": -4.306425,
+            "entry_price": 25.38,
+            "exit_price": 24.36
           },
           {
             "code": "HK.01208",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 6.15
+            "status": "matured",
+            "return_pct": -1.272238,
+            "entry_price": 6.15,
+            "exit_price": 6.09
           },
           {
             "code": "HK.09888",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 72.8
+            "status": "matured",
+            "return_pct": -11.529546,
+            "entry_price": 72.8,
+            "exit_price": 64.6
           },
           {
             "code": "HK.00175",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 13.41
+            "status": "matured",
+            "return_pct": -0.894333,
+            "entry_price": 13.41,
+            "exit_price": 13.33
           },
           {
             "code": "HK.02628",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 22.84
+            "status": "matured",
+            "return_pct": -4.839326,
+            "entry_price": 22.84,
+            "exit_price": 21.8
           },
           {
             "code": "HK.00700",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 386.6
+            "status": "matured",
+            "return_pct": -9.22256,
+            "entry_price": 386.6,
+            "exit_price": 352.0
           },
           {
             "code": "HK.00762",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 5.39
+            "status": "matured",
+            "return_pct": -1.779335,
+            "entry_price": 5.39,
+            "exit_price": 5.31
           }
         ],
-        "known_count": 0,
-        "return_pct": null
+        "known_count": 10,
+        "return_pct": -5.713437
       },
       "parent": {
         "count": 10,
-        "complete": false,
+        "complete": true,
         "holdings": [
           {
             "code": "HK.01024",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 25.0
+            "status": "matured",
+            "return_pct": -17.368268,
+            "entry_price": 25.0,
+            "exit_price": 20.72
           },
           {
             "code": "HK.01211",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 64.5
+            "status": "matured",
+            "return_pct": -4.936781,
+            "entry_price": 64.5,
+            "exit_price": 61.5
           },
           {
             "code": "HK.09988",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 87.2
+            "status": "matured",
+            "return_pct": -0.985563,
+            "entry_price": 87.2,
+            "exit_price": 86.6
           },
           {
             "code": "HK.02899",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 25.38
+            "status": "matured",
+            "return_pct": -4.306425,
+            "entry_price": 25.38,
+            "exit_price": 24.36
           },
           {
             "code": "HK.01208",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 6.15
+            "status": "matured",
+            "return_pct": -1.272238,
+            "entry_price": 6.15,
+            "exit_price": 6.09
           },
           {
             "code": "HK.09888",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 72.8
+            "status": "matured",
+            "return_pct": -11.529546,
+            "entry_price": 72.8,
+            "exit_price": 64.6
           },
           {
             "code": "HK.00175",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 13.41
+            "status": "matured",
+            "return_pct": -0.894333,
+            "entry_price": 13.41,
+            "exit_price": 13.33
           },
           {
             "code": "HK.02628",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 22.84
+            "status": "matured",
+            "return_pct": -4.839326,
+            "entry_price": 22.84,
+            "exit_price": 21.8
           },
           {
             "code": "HK.00700",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 386.6
+            "status": "matured",
+            "return_pct": -9.22256,
+            "entry_price": 386.6,
+            "exit_price": 352.0
           },
           {
             "code": "HK.00762",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 5.39
+            "status": "matured",
+            "return_pct": -1.779335,
+            "entry_price": 5.39,
+            "exit_price": 5.31
           }
         ],
-        "known_count": 0,
-        "return_pct": null
+        "known_count": 10,
+        "return_pct": -5.713437
       },
       "benchmark_pct": null
     },
@@ -2694,73 +2799,80 @@
       "frozen_at": "2026-11-16T23:03:26+00:00",
       "entry_date": 20261117,
       "exit_date": 20261124,
-      "due": false,
+      "due": true,
       "branch": {
         "count": 10,
         "complete": false,
         "holdings": [
           {
             "code": "US.ADT",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 9.92
+            "status": "matured",
+            "return_pct": -0.50056,
+            "entry_price": 9.92,
+            "exit_price": 9.9
           },
           {
             "code": "US.FCN",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 203.65
+            "status": "matured",
+            "return_pct": 1.311127,
+            "entry_price": 203.65,
+            "exit_price": 206.94
           },
           {
             "code": "US.XERS",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 16.83
+            "status": "matured",
+            "return_pct": 4.380387,
+            "entry_price": 16.83,
+            "exit_price": 17.62
           },
           {
             "code": "US.TFX",
-            "status": "pending",
+            "status": "missing_exit",
             "return_pct": null,
             "entry_price": 155.7
           },
           {
             "code": "US.FWONA",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 105.6
+            "status": "matured",
+            "return_pct": -4.751138,
+            "entry_price": 105.6,
+            "exit_price": 100.885
           },
           {
             "code": "US.WCN",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 194.68
+            "status": "matured",
+            "return_pct": -5.651254,
+            "entry_price": 194.68,
+            "exit_price": 184.23
           },
           {
             "code": "US.SIGI",
-            "status": "pending",
+            "status": "missing_exit",
             "return_pct": null,
             "entry_price": 102.68
           },
           {
             "code": "US.AIZ",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 321.38
+            "status": "matured",
+            "return_pct": -0.805219,
+            "entry_price": 321.38,
+            "exit_price": 319.75
           },
           {
             "code": "US.RLI",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 70.48
+            "status": "matured",
+            "return_pct": 0.690664,
+            "entry_price": 70.48,
+            "exit_price": 71.18
           },
           {
             "code": "US.VLTO",
-            "status": "pending",
+            "status": "missing_exit",
             "return_pct": null,
             "entry_price": 118.89
           }
         ],
-        "known_count": 0,
+        "known_count": 7,
         "return_pct": null
       },
       "parent": {
@@ -2769,69 +2881,76 @@
         "holdings": [
           {
             "code": "US.ADT",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 9.92
+            "status": "matured",
+            "return_pct": -0.50056,
+            "entry_price": 9.92,
+            "exit_price": 9.9
           },
           {
             "code": "US.FCN",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 203.65
+            "status": "matured",
+            "return_pct": 1.311127,
+            "entry_price": 203.65,
+            "exit_price": 206.94
           },
           {
             "code": "US.XERS",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 16.83
+            "status": "matured",
+            "return_pct": 4.380387,
+            "entry_price": 16.83,
+            "exit_price": 17.62
           },
           {
             "code": "US.TNL",
-            "status": "pending",
+            "status": "missing_exit",
             "return_pct": null,
             "entry_price": 78.34
           },
           {
             "code": "US.TFX",
-            "status": "pending",
+            "status": "missing_exit",
             "return_pct": null,
             "entry_price": 155.7
           },
           {
             "code": "US.FWONA",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 105.6
+            "status": "matured",
+            "return_pct": -4.751138,
+            "entry_price": 105.6,
+            "exit_price": 100.885
           },
           {
             "code": "US.WCN",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 194.68
+            "status": "matured",
+            "return_pct": -5.651254,
+            "entry_price": 194.68,
+            "exit_price": 184.23
           },
           {
             "code": "US.MSI",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 530.7
+            "status": "matured",
+            "return_pct": -0.62268,
+            "entry_price": 530.7,
+            "exit_price": 528.98
           },
           {
             "code": "US.SIGI",
-            "status": "pending",
+            "status": "missing_exit",
             "return_pct": null,
             "entry_price": 102.68
           },
           {
             "code": "US.EXPO",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 87.56
+            "status": "matured",
+            "return_pct": 2.455989,
+            "entry_price": 87.56,
+            "exit_price": 89.98
           }
         ],
-        "known_count": 0,
+        "known_count": 7,
         "return_pct": null
       },
-      "benchmark_pct": null
+      "benchmark_pct": -3.220744
     },
     {
       "trial_id": "lab_b18054a20289abfd",
@@ -2840,142 +2959,162 @@
       "frozen_at": "2026-11-16T23:03:26+00:00",
       "entry_date": 20261117,
       "exit_date": 20261124,
-      "due": false,
+      "due": true,
       "branch": {
         "count": 10,
-        "complete": false,
+        "complete": true,
         "holdings": [
           {
             "code": "HK.01211",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 64.5
+            "status": "matured",
+            "return_pct": -4.936781,
+            "entry_price": 64.5,
+            "exit_price": 61.5
           },
           {
             "code": "HK.09988",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 87.2
+            "status": "matured",
+            "return_pct": -0.985563,
+            "entry_price": 87.2,
+            "exit_price": 86.6
           },
           {
             "code": "HK.02899",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 25.38
+            "status": "matured",
+            "return_pct": -4.306425,
+            "entry_price": 25.38,
+            "exit_price": 24.36
           },
           {
             "code": "HK.09888",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 72.8
+            "status": "matured",
+            "return_pct": -11.529546,
+            "entry_price": 72.8,
+            "exit_price": 64.6
           },
           {
             "code": "HK.00175",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 13.41
+            "status": "matured",
+            "return_pct": -0.894333,
+            "entry_price": 13.41,
+            "exit_price": 13.33
           },
           {
             "code": "HK.02628",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 22.84
+            "status": "matured",
+            "return_pct": -4.839326,
+            "entry_price": 22.84,
+            "exit_price": 21.8
           },
           {
             "code": "HK.00700",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 386.6
+            "status": "matured",
+            "return_pct": -9.22256,
+            "entry_price": 386.6,
+            "exit_price": 352.0
           },
           {
             "code": "HK.00762",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 5.39
+            "status": "matured",
+            "return_pct": -1.779335,
+            "entry_price": 5.39,
+            "exit_price": 5.31
           },
           {
             "code": "HK.01378",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 18.9
+            "status": "matured",
+            "return_pct": -8.423291,
+            "entry_price": 18.9,
+            "exit_price": 17.36
           },
           {
             "code": "HK.00388",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 377.8
+            "status": "matured",
+            "return_pct": -5.630279,
+            "entry_price": 377.8,
+            "exit_price": 357.6
           }
         ],
-        "known_count": 0,
-        "return_pct": null
+        "known_count": 10,
+        "return_pct": -5.254744
       },
       "parent": {
         "count": 10,
-        "complete": false,
+        "complete": true,
         "holdings": [
           {
             "code": "HK.01024",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 25.0
+            "status": "matured",
+            "return_pct": -17.368268,
+            "entry_price": 25.0,
+            "exit_price": 20.72
           },
           {
             "code": "HK.01211",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 64.5
+            "status": "matured",
+            "return_pct": -4.936781,
+            "entry_price": 64.5,
+            "exit_price": 61.5
           },
           {
             "code": "HK.09988",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 87.2
+            "status": "matured",
+            "return_pct": -0.985563,
+            "entry_price": 87.2,
+            "exit_price": 86.6
           },
           {
             "code": "HK.02899",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 25.38
+            "status": "matured",
+            "return_pct": -4.306425,
+            "entry_price": 25.38,
+            "exit_price": 24.36
           },
           {
             "code": "HK.01208",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 6.15
+            "status": "matured",
+            "return_pct": -1.272238,
+            "entry_price": 6.15,
+            "exit_price": 6.09
           },
           {
             "code": "HK.09888",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 72.8
+            "status": "matured",
+            "return_pct": -11.529546,
+            "entry_price": 72.8,
+            "exit_price": 64.6
           },
           {
             "code": "HK.00175",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 13.41
+            "status": "matured",
+            "return_pct": -0.894333,
+            "entry_price": 13.41,
+            "exit_price": 13.33
           },
           {
             "code": "HK.02628",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 22.84
+            "status": "matured",
+            "return_pct": -4.839326,
+            "entry_price": 22.84,
+            "exit_price": 21.8
           },
           {
             "code": "HK.00700",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 386.6
+            "status": "matured",
+            "return_pct": -9.22256,
+            "entry_price": 386.6,
+            "exit_price": 352.0
           },
           {
             "code": "HK.00762",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 5.39
+            "status": "matured",
+            "return_pct": -1.779335,
+            "entry_price": 5.39,
+            "exit_price": 5.31
           }
         ],
-        "known_count": 0,
-        "return_pct": null
+        "known_count": 10,
+        "return_pct": -5.713437
       },
       "benchmark_pct": null
     },
@@ -2986,73 +3125,80 @@
       "frozen_at": "2026-11-16T23:03:26+00:00",
       "entry_date": 20261117,
       "exit_date": 20261124,
-      "due": false,
+      "due": true,
       "branch": {
         "count": 10,
         "complete": false,
         "holdings": [
           {
             "code": "US.ADT",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 9.92
+            "status": "matured",
+            "return_pct": -0.50056,
+            "entry_price": 9.92,
+            "exit_price": 9.9
           },
           {
             "code": "US.FCN",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 203.65
+            "status": "matured",
+            "return_pct": 1.311127,
+            "entry_price": 203.65,
+            "exit_price": 206.94
           },
           {
             "code": "US.XERS",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 16.83
+            "status": "matured",
+            "return_pct": 4.380387,
+            "entry_price": 16.83,
+            "exit_price": 17.62
           },
           {
             "code": "US.TNL",
-            "status": "pending",
+            "status": "missing_exit",
             "return_pct": null,
             "entry_price": 78.34
           },
           {
             "code": "US.TFX",
-            "status": "pending",
+            "status": "missing_exit",
             "return_pct": null,
             "entry_price": 155.7
           },
           {
             "code": "US.FWONA",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 105.6
+            "status": "matured",
+            "return_pct": -4.751138,
+            "entry_price": 105.6,
+            "exit_price": 100.885
           },
           {
             "code": "US.WCN",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 194.68
+            "status": "matured",
+            "return_pct": -5.651254,
+            "entry_price": 194.68,
+            "exit_price": 184.23
           },
           {
             "code": "US.MSI",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 530.7
+            "status": "matured",
+            "return_pct": -0.62268,
+            "entry_price": 530.7,
+            "exit_price": 528.98
           },
           {
             "code": "US.SIGI",
-            "status": "pending",
+            "status": "missing_exit",
             "return_pct": null,
             "entry_price": 102.68
           },
           {
             "code": "US.EXPO",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 87.56
+            "status": "matured",
+            "return_pct": 2.455989,
+            "entry_price": 87.56,
+            "exit_price": 89.98
           }
         ],
-        "known_count": 0,
+        "known_count": 7,
         "return_pct": null
       },
       "parent": {
@@ -3061,69 +3207,76 @@
         "holdings": [
           {
             "code": "US.ADT",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 9.92
+            "status": "matured",
+            "return_pct": -0.50056,
+            "entry_price": 9.92,
+            "exit_price": 9.9
           },
           {
             "code": "US.FCN",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 203.65
+            "status": "matured",
+            "return_pct": 1.311127,
+            "entry_price": 203.65,
+            "exit_price": 206.94
           },
           {
             "code": "US.XERS",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 16.83
+            "status": "matured",
+            "return_pct": 4.380387,
+            "entry_price": 16.83,
+            "exit_price": 17.62
           },
           {
             "code": "US.TNL",
-            "status": "pending",
+            "status": "missing_exit",
             "return_pct": null,
             "entry_price": 78.34
           },
           {
             "code": "US.TFX",
-            "status": "pending",
+            "status": "missing_exit",
             "return_pct": null,
             "entry_price": 155.7
           },
           {
             "code": "US.FWONA",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 105.6
+            "status": "matured",
+            "return_pct": -4.751138,
+            "entry_price": 105.6,
+            "exit_price": 100.885
           },
           {
             "code": "US.WCN",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 194.68
+            "status": "matured",
+            "return_pct": -5.651254,
+            "entry_price": 194.68,
+            "exit_price": 184.23
           },
           {
             "code": "US.MSI",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 530.7
+            "status": "matured",
+            "return_pct": -0.62268,
+            "entry_price": 530.7,
+            "exit_price": 528.98
           },
           {
             "code": "US.SIGI",
-            "status": "pending",
+            "status": "missing_exit",
             "return_pct": null,
             "entry_price": 102.68
           },
           {
             "code": "US.EXPO",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 87.56
+            "status": "matured",
+            "return_pct": 2.455989,
+            "entry_price": 87.56,
+            "exit_price": 89.98
           }
         ],
-        "known_count": 0,
+        "known_count": 7,
         "return_pct": null
       },
-      "benchmark_pct": null
+      "benchmark_pct": -3.220744
     },
     {
       "trial_id": "lab_c418a17b0f2dadb5",
@@ -3132,73 +3285,82 @@
       "frozen_at": "2026-11-16T23:03:26+00:00",
       "entry_date": 20261117,
       "exit_date": 20261124,
-      "due": false,
+      "due": true,
       "branch": {
         "count": 10,
         "complete": false,
         "holdings": [
           {
             "code": "US.VALE",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 10.54
+            "status": "matured",
+            "return_pct": -8.529094,
+            "entry_price": 10.54,
+            "exit_price": 9.67
           },
           {
             "code": "US.BABA",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 88.16
+            "status": "matured",
+            "return_pct": -5.060654,
+            "entry_price": 88.16,
+            "exit_price": 83.95
           },
           {
             "code": "US.FSLR",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 163.62
+            "status": "matured",
+            "return_pct": -11.724703,
+            "entry_price": 163.62,
+            "exit_price": 144.87
           },
           {
             "code": "US.BA",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 165.0
+            "status": "matured",
+            "return_pct": -2.190838,
+            "entry_price": 165.0,
+            "exit_price": 161.87
           },
           {
             "code": "US.CMI",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 433.762
+            "status": "matured",
+            "return_pct": -3.416784,
+            "entry_price": 433.762,
+            "exit_price": 420.2
           },
           {
             "code": "US.SE",
-            "status": "pending",
+            "status": "missing_exit",
             "return_pct": null,
             "entry_price": 70.93
           },
           {
             "code": "US.PKX",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 48.11
+            "status": "matured",
+            "return_pct": -3.221555,
+            "entry_price": 48.11,
+            "exit_price": 46.7
           },
           {
             "code": "US.NFLX",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 60.56
+            "status": "matured",
+            "return_pct": -4.695195,
+            "entry_price": 60.56,
+            "exit_price": 57.89
           },
           {
             "code": "US.MELI",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 1456.23
+            "status": "matured",
+            "return_pct": -3.29283,
+            "entry_price": 1456.23,
+            "exit_price": 1412.51
           },
           {
             "code": "US.CCJ",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 65.81
+            "status": "matured",
+            "return_pct": -8.798556,
+            "entry_price": 65.81,
+            "exit_price": 60.2
           }
         ],
-        "known_count": 0,
+        "known_count": 9,
         "return_pct": null
       },
       "parent": {
@@ -3207,69 +3369,78 @@
         "holdings": [
           {
             "code": "US.VALE",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 10.54
+            "status": "matured",
+            "return_pct": -8.529094,
+            "entry_price": 10.54,
+            "exit_price": 9.67
           },
           {
             "code": "US.BABA",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 88.16
+            "status": "matured",
+            "return_pct": -5.060654,
+            "entry_price": 88.16,
+            "exit_price": 83.95
           },
           {
             "code": "US.FSLR",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 163.62
+            "status": "matured",
+            "return_pct": -11.724703,
+            "entry_price": 163.62,
+            "exit_price": 144.87
           },
           {
             "code": "US.BA",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 165.0
+            "status": "matured",
+            "return_pct": -2.190838,
+            "entry_price": 165.0,
+            "exit_price": 161.87
           },
           {
             "code": "US.CMI",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 433.762
+            "status": "matured",
+            "return_pct": -3.416784,
+            "entry_price": 433.762,
+            "exit_price": 420.2
           },
           {
             "code": "US.SE",
-            "status": "pending",
+            "status": "missing_exit",
             "return_pct": null,
             "entry_price": 70.93
           },
           {
             "code": "US.PKX",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 48.11
+            "status": "matured",
+            "return_pct": -3.221555,
+            "entry_price": 48.11,
+            "exit_price": 46.7
           },
           {
             "code": "US.NFLX",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 60.56
+            "status": "matured",
+            "return_pct": -4.695195,
+            "entry_price": 60.56,
+            "exit_price": 57.89
           },
           {
             "code": "US.MELI",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 1456.23
+            "status": "matured",
+            "return_pct": -3.29283,
+            "entry_price": 1456.23,
+            "exit_price": 1412.51
           },
           {
             "code": "US.CCJ",
-            "status": "pending",
-            "return_pct": null,
-            "entry_price": 65.81
+            "status": "matured",
+            "return_pct": -8.798556,
+            "entry_price": 65.81,
+            "exit_price": 60.2
           }
         ],
-        "known_count": 0,
+        "known_count": 9,
         "return_pct": null
       },
-      "benchmark_pct": null
+      "benchmark_pct": -3.220744
     },
     {
       "trial_id": "lab_350f0c5662a0850d",
@@ -3373,7 +3544,7 @@
             "code": "US.SGI",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 57.9
+            "entry_price": 57.73
           },
           {
             "code": "US.BA",
@@ -4035,7 +4206,7 @@
             "code": "US.SGI",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 57.9
+            "entry_price": 57.73
           },
           {
             "code": "US.BA",
@@ -4103,7 +4274,7 @@
             "code": "US.SGI",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 57.9
+            "entry_price": 57.73
           },
           {
             "code": "US.BA",
@@ -5835,33 +6006,39 @@
         "holdings": [
           {
             "code": "US.BABA",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 87.86
           },
           {
             "code": "US.CCJ",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 63.43
           },
           {
             "code": "US.BA",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 160.0
           },
           {
             "code": "US.SRE",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 76.89
           },
           {
             "code": "US.UBER",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 65.2
           },
           {
             "code": "US.NFLX",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 58.55
           },
           {
             "code": "US.ITUB",
@@ -5870,18 +6047,21 @@
           },
           {
             "code": "US.EXE",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 80.8
           },
           {
             "code": "US.BIDU",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 66.72
           },
           {
             "code": "US.HBAN",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 14.72
           }
         ],
         "known_count": 0,
@@ -5898,38 +6078,45 @@
           },
           {
             "code": "US.BABA",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 87.86
           },
           {
             "code": "US.CCJ",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 63.43
           },
           {
             "code": "US.BA",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 160.0
           },
           {
             "code": "US.SRE",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 76.89
           },
           {
             "code": "US.UBER",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 65.2
           },
           {
             "code": "US.ALNY",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 149.69
           },
           {
             "code": "US.NFLX",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 58.55
           },
           {
             "code": "US.ITUB",
@@ -5938,8 +6125,9 @@
           },
           {
             "code": "US.EXE",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 80.8
           }
         ],
         "known_count": 0,
@@ -6107,13 +6295,15 @@
         "holdings": [
           {
             "code": "US.XERS",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 17.0
           },
           {
             "code": "US.IBN",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 34.58
           },
           {
             "code": "US.IPAR",
@@ -6122,8 +6312,9 @@
           },
           {
             "code": "US.BRZE",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 46.45
           },
           {
             "code": "US.SIGI",
@@ -6137,13 +6328,15 @@
           },
           {
             "code": "US.BIP",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 44.0
           },
           {
             "code": "US.RLI",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 70.5
           },
           {
             "code": "US.WTRG",
@@ -6152,8 +6345,9 @@
           },
           {
             "code": "US.COST",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 1090.14
           }
         ],
         "known_count": 0,
@@ -6165,23 +6359,27 @@
         "holdings": [
           {
             "code": "US.XERS",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 17.0
           },
           {
             "code": "US.FCN",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 201.69
           },
           {
             "code": "US.EXPO",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 89.41
           },
           {
             "code": "US.IBN",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 34.58
           },
           {
             "code": "US.IPAR",
@@ -6190,8 +6388,9 @@
           },
           {
             "code": "US.BRZE",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 46.45
           },
           {
             "code": "US.SIGI",
@@ -6205,13 +6404,15 @@
           },
           {
             "code": "US.BIP",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 44.0
           },
           {
             "code": "US.RLI",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 70.5
           }
         ],
         "known_count": 0,
@@ -6379,23 +6580,27 @@
         "holdings": [
           {
             "code": "US.XERS",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 17.0
           },
           {
             "code": "US.FCN",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 201.69
           },
           {
             "code": "US.EXPO",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 89.41
           },
           {
             "code": "US.IBN",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 34.58
           },
           {
             "code": "US.IPAR",
@@ -6404,8 +6609,9 @@
           },
           {
             "code": "US.BRZE",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 46.45
           },
           {
             "code": "US.SIGI",
@@ -6419,13 +6625,15 @@
           },
           {
             "code": "US.BIP",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 44.0
           },
           {
             "code": "US.RLI",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 70.5
           }
         ],
         "known_count": 0,
@@ -6437,23 +6645,27 @@
         "holdings": [
           {
             "code": "US.XERS",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 17.0
           },
           {
             "code": "US.FCN",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 201.69
           },
           {
             "code": "US.EXPO",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 89.41
           },
           {
             "code": "US.IBN",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 34.58
           },
           {
             "code": "US.IPAR",
@@ -6462,8 +6674,9 @@
           },
           {
             "code": "US.BRZE",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 46.45
           },
           {
             "code": "US.SIGI",
@@ -6477,13 +6690,15 @@
           },
           {
             "code": "US.BIP",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 44.0
           },
           {
             "code": "US.RLI",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 70.5
           }
         ],
         "known_count": 0,
@@ -6510,38 +6725,45 @@
           },
           {
             "code": "US.BABA",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 87.86
           },
           {
             "code": "US.CCJ",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 63.43
           },
           {
             "code": "US.BA",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 160.0
           },
           {
             "code": "US.SRE",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 76.89
           },
           {
             "code": "US.UBER",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 65.2
           },
           {
             "code": "US.ALNY",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 149.69
           },
           {
             "code": "US.NFLX",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 58.55
           },
           {
             "code": "US.ITUB",
@@ -6550,8 +6772,9 @@
           },
           {
             "code": "US.EXE",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 80.8
           }
         ],
         "known_count": 0,
@@ -6568,38 +6791,45 @@
           },
           {
             "code": "US.BABA",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 87.86
           },
           {
             "code": "US.CCJ",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 63.43
           },
           {
             "code": "US.BA",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 160.0
           },
           {
             "code": "US.SRE",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 76.89
           },
           {
             "code": "US.UBER",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 65.2
           },
           {
             "code": "US.ALNY",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 149.69
           },
           {
             "code": "US.NFLX",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 58.55
           },
           {
             "code": "US.ITUB",
@@ -6608,8 +6838,9 @@
           },
           {
             "code": "US.EXE",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 80.8
           }
         ],
         "known_count": 0,
@@ -6632,52 +6863,61 @@
           {
             "code": "US.EXE",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 81.15
           },
           {
             "code": "US.BKNG",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 144.93
           },
           {
             "code": "US.UBER",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 63.5
           },
           {
             "code": "US.EQT",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 48.59
           },
           {
             "code": "US.SRE",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 77.52
           },
           {
             "code": "US.NFLX",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 57.89
           },
           {
             "code": "US.ITUB",
-            "status": "pending",
+            "status": "missing_entry",
             "return_pct": null
           },
           {
             "code": "US.TPL",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 256.5
           },
           {
             "code": "US.PLD",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 124.54
           },
           {
             "code": "US.HBAN",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 14.65
           }
         ],
         "known_count": 0,
@@ -6690,52 +6930,61 @@
           {
             "code": "US.EXE",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 81.15
           },
           {
             "code": "US.BKNG",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 144.93
           },
           {
             "code": "US.UBER",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 63.5
           },
           {
             "code": "US.MAA",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 112.69
           },
           {
             "code": "US.EQT",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 48.59
           },
           {
             "code": "US.SRE",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 77.52
           },
           {
             "code": "US.NFLX",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 57.89
           },
           {
             "code": "US.ITUB",
-            "status": "pending",
+            "status": "missing_entry",
             "return_pct": null
           },
           {
             "code": "US.TPL",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 256.5
           },
           {
             "code": "US.PLD",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 124.54
           }
         ],
         "known_count": 0,
@@ -6758,52 +7007,62 @@
           {
             "code": "HK.00688",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 10.92
           },
           {
             "code": "HK.00388",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 357.6
           },
           {
             "code": "HK.01378",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 17.36
           },
           {
             "code": "HK.00175",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 13.33
           },
           {
             "code": "HK.01211",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 61.5
           },
           {
             "code": "HK.02628",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 21.8
           },
           {
             "code": "HK.00762",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 5.31
           },
           {
             "code": "HK.00700",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 352.0
           },
           {
             "code": "HK.01928",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 10.42
           },
           {
             "code": "HK.09888",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 64.6
           }
         ],
         "known_count": 0,
@@ -6816,52 +7075,62 @@
           {
             "code": "HK.00688",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 10.92
           },
           {
             "code": "HK.00388",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 357.6
           },
           {
             "code": "HK.01378",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 17.36
           },
           {
             "code": "HK.00175",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 13.33
           },
           {
             "code": "HK.01211",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 61.5
           },
           {
             "code": "HK.02628",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 21.8
           },
           {
             "code": "HK.00762",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 5.31
           },
           {
             "code": "HK.00700",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 352.0
           },
           {
             "code": "HK.01928",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 10.42
           },
           {
             "code": "HK.09888",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 64.6
           }
         ],
         "known_count": 0,
@@ -6884,52 +7153,60 @@
           {
             "code": "US.XERS",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 17.62
           },
           {
             "code": "US.AXGN",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 58.47
           },
           {
             "code": "US.VCEL",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 60.088
           },
           {
             "code": "US.ADT",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 9.9
           },
           {
             "code": "US.FCN",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 206.94
           },
           {
             "code": "US.TNL",
-            "status": "pending",
+            "status": "missing_entry",
             "return_pct": null
           },
           {
             "code": "US.EXPO",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 89.98
           },
           {
             "code": "US.PLMR",
-            "status": "pending",
+            "status": "missing_entry",
             "return_pct": null
           },
           {
             "code": "US.JAN",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 32.3
           },
           {
             "code": "US.LH",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 370.38
           }
         ],
         "known_count": 0,
@@ -6942,52 +7219,60 @@
           {
             "code": "US.XERS",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 17.62
           },
           {
             "code": "US.AXGN",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 58.47
           },
           {
             "code": "US.VCEL",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 60.088
           },
           {
             "code": "US.ADT",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 9.9
           },
           {
             "code": "US.FCN",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 206.94
           },
           {
             "code": "US.GKOS",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 250.0
           },
           {
             "code": "US.TFX",
-            "status": "pending",
+            "status": "missing_entry",
             "return_pct": null
           },
           {
             "code": "US.EW",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 104.93
           },
           {
             "code": "US.TNL",
-            "status": "pending",
+            "status": "missing_entry",
             "return_pct": null
           },
           {
             "code": "US.EXPO",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 89.98
           }
         ],
         "known_count": 0,
@@ -7010,52 +7295,62 @@
           {
             "code": "HK.00688",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 10.92
           },
           {
             "code": "HK.00388",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 357.6
           },
           {
             "code": "HK.01378",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 17.36
           },
           {
             "code": "HK.00175",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 13.33
           },
           {
             "code": "HK.01211",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 61.5
           },
           {
             "code": "HK.02628",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 21.8
           },
           {
             "code": "HK.00762",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 5.31
           },
           {
             "code": "HK.00700",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 352.0
           },
           {
             "code": "HK.09888",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 64.6
           },
           {
             "code": "HK.02318",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 50.0
           }
         ],
         "known_count": 0,
@@ -7068,52 +7363,62 @@
           {
             "code": "HK.00688",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 10.92
           },
           {
             "code": "HK.00388",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 357.6
           },
           {
             "code": "HK.01378",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 17.36
           },
           {
             "code": "HK.00175",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 13.33
           },
           {
             "code": "HK.01211",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 61.5
           },
           {
             "code": "HK.02628",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 21.8
           },
           {
             "code": "HK.00762",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 5.31
           },
           {
             "code": "HK.00700",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 352.0
           },
           {
             "code": "HK.01928",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 10.42
           },
           {
             "code": "HK.09888",
             "status": "pending",
-            "return_pct": null
+            "return_pct": null,
+            "entry_price": 64.6
           }
         ],
         "known_count": 0,
@@ -7136,6 +7441,544 @@
           {
             "code": "US.XERS",
             "status": "pending",
+            "return_pct": null,
+            "entry_price": 17.62
+          },
+          {
+            "code": "US.AXGN",
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 58.47
+          },
+          {
+            "code": "US.VCEL",
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 60.088
+          },
+          {
+            "code": "US.ADT",
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 9.9
+          },
+          {
+            "code": "US.FCN",
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 206.94
+          },
+          {
+            "code": "US.GKOS",
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 250.0
+          },
+          {
+            "code": "US.TFX",
+            "status": "missing_entry",
+            "return_pct": null
+          },
+          {
+            "code": "US.EW",
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 104.93
+          },
+          {
+            "code": "US.TNL",
+            "status": "missing_entry",
+            "return_pct": null
+          },
+          {
+            "code": "US.EXPO",
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 89.98
+          }
+        ],
+        "known_count": 0,
+        "return_pct": null
+      },
+      "parent": {
+        "count": 10,
+        "complete": false,
+        "holdings": [
+          {
+            "code": "US.XERS",
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 17.62
+          },
+          {
+            "code": "US.AXGN",
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 58.47
+          },
+          {
+            "code": "US.VCEL",
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 60.088
+          },
+          {
+            "code": "US.ADT",
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 9.9
+          },
+          {
+            "code": "US.FCN",
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 206.94
+          },
+          {
+            "code": "US.GKOS",
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 250.0
+          },
+          {
+            "code": "US.TFX",
+            "status": "missing_entry",
+            "return_pct": null
+          },
+          {
+            "code": "US.EW",
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 104.93
+          },
+          {
+            "code": "US.TNL",
+            "status": "missing_entry",
+            "return_pct": null
+          },
+          {
+            "code": "US.EXPO",
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 89.98
+          }
+        ],
+        "known_count": 0,
+        "return_pct": null
+      },
+      "benchmark_pct": null
+    },
+    {
+      "trial_id": "lab_c418a17b0f2dadb5",
+      "snapshot_id": "85b31206fdc3cc3a230047ed",
+      "definition_hash": "d3d18b223c5d87cb82689cc071af14c537c5c3240e75bc51a5c0915d7ec641ff",
+      "frozen_at": "2026-11-24T01:05:47+00:00",
+      "entry_date": 20261124,
+      "exit_date": 20261202,
+      "due": false,
+      "branch": {
+        "count": 10,
+        "complete": false,
+        "holdings": [
+          {
+            "code": "US.EXE",
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 81.15
+          },
+          {
+            "code": "US.BKNG",
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 144.93
+          },
+          {
+            "code": "US.UBER",
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 63.5
+          },
+          {
+            "code": "US.MAA",
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 112.69
+          },
+          {
+            "code": "US.EQT",
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 48.59
+          },
+          {
+            "code": "US.SRE",
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 77.52
+          },
+          {
+            "code": "US.NFLX",
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 57.89
+          },
+          {
+            "code": "US.ITUB",
+            "status": "missing_entry",
+            "return_pct": null
+          },
+          {
+            "code": "US.TPL",
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 256.5
+          },
+          {
+            "code": "US.PLD",
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 124.54
+          }
+        ],
+        "known_count": 0,
+        "return_pct": null
+      },
+      "parent": {
+        "count": 10,
+        "complete": false,
+        "holdings": [
+          {
+            "code": "US.EXE",
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 81.15
+          },
+          {
+            "code": "US.BKNG",
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 144.93
+          },
+          {
+            "code": "US.UBER",
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 63.5
+          },
+          {
+            "code": "US.MAA",
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 112.69
+          },
+          {
+            "code": "US.EQT",
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 48.59
+          },
+          {
+            "code": "US.SRE",
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 77.52
+          },
+          {
+            "code": "US.NFLX",
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 57.89
+          },
+          {
+            "code": "US.ITUB",
+            "status": "missing_entry",
+            "return_pct": null
+          },
+          {
+            "code": "US.TPL",
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 256.5
+          },
+          {
+            "code": "US.PLD",
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 124.54
+          }
+        ],
+        "known_count": 0,
+        "return_pct": null
+      },
+      "benchmark_pct": null
+    },
+    {
+      "trial_id": "lab_350f0c5662a0850d",
+      "snapshot_id": "466fd6b25f50e14730ed0194",
+      "definition_hash": "f721461cbd14afc7413fc1e04005e31926263d4c97bbd29eafd89ef37f161978",
+      "frozen_at": "2026-11-24T23:12:46+00:00",
+      "entry_date": 20261125,
+      "exit_date": 20261203,
+      "due": false,
+      "branch": {
+        "count": 10,
+        "complete": false,
+        "holdings": [
+          {
+            "code": "US.VALE",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.CLS",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.NTES",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.BKNG",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.EXE",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.UBER",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.BIDU",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.ITUB",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.CCJ",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.CMI",
+            "status": "pending",
+            "return_pct": null
+          }
+        ],
+        "known_count": 0,
+        "return_pct": null
+      },
+      "parent": {
+        "count": 10,
+        "complete": false,
+        "holdings": [
+          {
+            "code": "US.BG",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.VALE",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.CLS",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.CRCL",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.NTES",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.BKNG",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.EXE",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.UBER",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.PAAS",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.TPL",
+            "status": "pending",
+            "return_pct": null
+          }
+        ],
+        "known_count": 0,
+        "return_pct": null
+      },
+      "benchmark_pct": null
+    },
+    {
+      "trial_id": "lab_a1f4114a4660a2fe",
+      "snapshot_id": "466fd6b25f50e14730ed0194",
+      "definition_hash": "851efd9ad5e53864a40afd8f55222cdb54102acffd0064e8dbcc57b554a6274a",
+      "frozen_at": "2026-11-24T23:12:46+00:00",
+      "entry_date": 20261125,
+      "exit_date": 20261202,
+      "due": false,
+      "branch": {
+        "count": 10,
+        "complete": false,
+        "holdings": [
+          {
+            "code": "HK.01928",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01211",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01378",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00688",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00388",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00762",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.09888",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00700",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00175",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02628",
+            "status": "pending",
+            "return_pct": null
+          }
+        ],
+        "known_count": 0,
+        "return_pct": null
+      },
+      "parent": {
+        "count": 10,
+        "complete": false,
+        "holdings": [
+          {
+            "code": "HK.01928",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01211",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01378",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00688",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00388",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00762",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.09888",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00700",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00175",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02628",
+            "status": "pending",
+            "return_pct": null
+          }
+        ],
+        "known_count": 0,
+        "return_pct": null
+      },
+      "benchmark_pct": null
+    },
+    {
+      "trial_id": "lab_a4e604408db11dc0",
+      "snapshot_id": "466fd6b25f50e14730ed0194",
+      "definition_hash": "1676a1f96dcaad5ebb37c1997a3b6a6e75afbb9454677ec3b93c4675c27e161a",
+      "frozen_at": "2026-11-24T23:12:46+00:00",
+      "entry_date": 20261125,
+      "exit_date": 20261203,
+      "due": false,
+      "branch": {
+        "count": 10,
+        "complete": false,
+        "holdings": [
+          {
+            "code": "US.XERS",
+            "status": "pending",
             "return_pct": null
           },
           {
@@ -7150,6 +7993,11 @@
           },
           {
             "code": "US.ADT",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.VRDN",
             "status": "pending",
             "return_pct": null
           },
@@ -7174,12 +8022,7 @@
             "return_pct": null
           },
           {
-            "code": "US.TNL",
-            "status": "pending",
-            "return_pct": null
-          },
-          {
-            "code": "US.EXPO",
+            "code": "US.IBN",
             "status": "pending",
             "return_pct": null
           }
@@ -7212,7 +8055,17 @@
             "return_pct": null
           },
           {
+            "code": "US.VRDN",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
             "code": "US.FCN",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.RYTM",
             "status": "pending",
             "return_pct": null
           },
@@ -7227,17 +8080,7 @@
             "return_pct": null
           },
           {
-            "code": "US.EW",
-            "status": "pending",
-            "return_pct": null
-          },
-          {
-            "code": "US.TNL",
-            "status": "pending",
-            "return_pct": null
-          },
-          {
-            "code": "US.EXPO",
+            "code": "US.GRDN",
             "status": "pending",
             "return_pct": null
           }
@@ -7248,11 +8091,11 @@
       "benchmark_pct": null
     },
     {
-      "trial_id": "lab_c418a17b0f2dadb5",
-      "snapshot_id": "85b31206fdc3cc3a230047ed",
-      "definition_hash": "d3d18b223c5d87cb82689cc071af14c537c5c3240e75bc51a5c0915d7ec641ff",
-      "frozen_at": "2026-11-24T01:05:47+00:00",
-      "entry_date": 20261124,
+      "trial_id": "lab_b18054a20289abfd",
+      "snapshot_id": "466fd6b25f50e14730ed0194",
+      "definition_hash": "49b351a1fbf542d364bfb1672aa6eab45838a86ed3da44b41e3d32e6f6217314",
+      "frozen_at": "2026-11-24T23:12:46+00:00",
+      "entry_date": 20261125,
       "exit_date": 20261202,
       "due": false,
       "branch": {
@@ -7260,52 +8103,52 @@
         "complete": false,
         "holdings": [
           {
-            "code": "US.EXE",
+            "code": "HK.01211",
             "status": "pending",
             "return_pct": null
           },
           {
-            "code": "US.BKNG",
+            "code": "HK.01378",
             "status": "pending",
             "return_pct": null
           },
           {
-            "code": "US.UBER",
+            "code": "HK.00388",
             "status": "pending",
             "return_pct": null
           },
           {
-            "code": "US.MAA",
+            "code": "HK.00762",
             "status": "pending",
             "return_pct": null
           },
           {
-            "code": "US.EQT",
+            "code": "HK.09888",
             "status": "pending",
             "return_pct": null
           },
           {
-            "code": "US.SRE",
+            "code": "HK.00700",
             "status": "pending",
             "return_pct": null
           },
           {
-            "code": "US.NFLX",
+            "code": "HK.00175",
             "status": "pending",
             "return_pct": null
           },
           {
-            "code": "US.ITUB",
+            "code": "HK.02628",
             "status": "pending",
             "return_pct": null
           },
           {
-            "code": "US.TPL",
+            "code": "HK.09988",
             "status": "pending",
             "return_pct": null
           },
           {
-            "code": "US.PLD",
+            "code": "HK.09999",
             "status": "pending",
             "return_pct": null
           }
@@ -7318,7 +8161,221 @@
         "complete": false,
         "holdings": [
           {
-            "code": "US.EXE",
+            "code": "HK.01928",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01211",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.01378",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00688",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00388",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00762",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.09888",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00700",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.00175",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "HK.02628",
+            "status": "pending",
+            "return_pct": null
+          }
+        ],
+        "known_count": 0,
+        "return_pct": null
+      },
+      "benchmark_pct": null
+    },
+    {
+      "trial_id": "lab_b96b5f12f9eced9c",
+      "snapshot_id": "466fd6b25f50e14730ed0194",
+      "definition_hash": "1f8d73ec7210a7a6c38eb39856206402cef5dad4dbf5d1397efb5fdafe9858fd",
+      "frozen_at": "2026-11-24T23:12:46+00:00",
+      "entry_date": 20261125,
+      "exit_date": 20261203,
+      "due": false,
+      "branch": {
+        "count": 10,
+        "complete": false,
+        "holdings": [
+          {
+            "code": "US.XERS",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.AXGN",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.VCEL",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.ADT",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.VRDN",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.FCN",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.RYTM",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.GKOS",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.TFX",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.GRDN",
+            "status": "pending",
+            "return_pct": null
+          }
+        ],
+        "known_count": 0,
+        "return_pct": null
+      },
+      "parent": {
+        "count": 10,
+        "complete": false,
+        "holdings": [
+          {
+            "code": "US.XERS",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.AXGN",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.VCEL",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.ADT",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.VRDN",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.FCN",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.RYTM",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.GKOS",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.TFX",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.GRDN",
+            "status": "pending",
+            "return_pct": null
+          }
+        ],
+        "known_count": 0,
+        "return_pct": null
+      },
+      "benchmark_pct": null
+    },
+    {
+      "trial_id": "lab_c418a17b0f2dadb5",
+      "snapshot_id": "466fd6b25f50e14730ed0194",
+      "definition_hash": "d3d18b223c5d87cb82689cc071af14c537c5c3240e75bc51a5c0915d7ec641ff",
+      "frozen_at": "2026-11-24T23:12:46+00:00",
+      "entry_date": 20261125,
+      "exit_date": 20261203,
+      "due": false,
+      "branch": {
+        "count": 10,
+        "complete": false,
+        "holdings": [
+          {
+            "code": "US.BG",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.VALE",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.CLS",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.CRCL",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.NTES",
             "status": "pending",
             "return_pct": null
           },
@@ -7328,32 +8385,17 @@
             "return_pct": null
           },
           {
+            "code": "US.EXE",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
             "code": "US.UBER",
             "status": "pending",
             "return_pct": null
           },
           {
-            "code": "US.MAA",
-            "status": "pending",
-            "return_pct": null
-          },
-          {
-            "code": "US.EQT",
-            "status": "pending",
-            "return_pct": null
-          },
-          {
-            "code": "US.SRE",
-            "status": "pending",
-            "return_pct": null
-          },
-          {
-            "code": "US.NFLX",
-            "status": "pending",
-            "return_pct": null
-          },
-          {
-            "code": "US.ITUB",
+            "code": "US.PAAS",
             "status": "pending",
             "return_pct": null
           },
@@ -7361,9 +8403,62 @@
             "code": "US.TPL",
             "status": "pending",
             "return_pct": null
+          }
+        ],
+        "known_count": 0,
+        "return_pct": null
+      },
+      "parent": {
+        "count": 10,
+        "complete": false,
+        "holdings": [
+          {
+            "code": "US.BG",
+            "status": "pending",
+            "return_pct": null
           },
           {
-            "code": "US.PLD",
+            "code": "US.VALE",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.CLS",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.CRCL",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.NTES",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.BKNG",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.EXE",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.UBER",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.PAAS",
+            "status": "pending",
+            "return_pct": null
+          },
+          {
+            "code": "US.TPL",
             "status": "pending",
             "return_pct": null
           }
