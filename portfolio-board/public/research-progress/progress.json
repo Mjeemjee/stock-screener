@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-25T11:41:37.588498+08:00",
+  "updated_at": "2026-11-25T11:48:19.258695+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
@@ -8970,7 +8970,7 @@
       {
         "name": "美股 · 首次重组节省披露",
         "status": "snapshot",
-        "task": "重组预选 8 份已核公开时序和公告前行情。7 只单源可查，1 只退市历史暂缺；另有公告早于归档、成本口径和流动性问题。未回测。"
+        "task": "40 份优先重组申报正文均已初筛，补查 24 份，新列 6 份核首次披露。三项美国同业均部分匹配，未回测。"
       },
       {
         "name": "美股 · 炼油价差与 VLO",
@@ -15417,7 +15417,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-25T11:41:39.257387+08:00",
+    "checked_at": "2026-11-25T11:48:20.674516+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -15649,7 +15649,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-25T11:41:38.217077+08:00",
+    "checked_at": "2026-11-25T11:48:19.774274+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -15743,7 +15743,7 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "08c8ecc1db1dd6d12944ca9fb828028f3e580ac655b779cac1055c71254fadc7",
+    "mining_goal": "a18a130a2ce6f64a6eda13def22d2db59e4b2f171a28a767a886e4d5eb397c8e",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
     "mining_team": "92dc002703c46e4556b3320fc151cd944138cbe235eaf4d1b4b87cb86bd5f8e7",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
@@ -15977,7 +15977,8 @@
     "us_refiner_crack_development": "dfcd1ec22f6b47d4b5687701bff0b6e00cb2e38424ea401006c9ab10dc97743c",
     "us_restructuring_body_screen": "4fe4c7ef89d2c73b4a9a17dd19b17a4c82c06b0cc4d617a9e9b469fa6e395c0f",
     "us_restructuring_edgar_metadata": "bb8f062f9eff02de15807ae639e81d2bf62ea03a95bbd9e167df33b071a7c50b",
-    "us_restructuring_prior_screen": "8a90ce77090269edf2c5a33df4f55e792a033e364fb24fe460b557a79d260491"
+    "us_restructuring_prior_screen": "8a90ce77090269edf2c5a33df4f55e792a033e364fb24fe460b557a79d260491",
+    "us_restructuring_priority_complete": "e71482ac6275f9150f905160f9f870c8085cf2a487d451562e8f905f2a87cf07"
   },
   "filing_event": {
     "sources": [
