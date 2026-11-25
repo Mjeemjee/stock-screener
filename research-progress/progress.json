@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-25T14:53:29.512322+08:00",
+  "updated_at": "2026-11-25T14:59:05.179346+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
@@ -8968,6 +8968,11 @@
     "scope": "港美个股及普通非杠杆ETF；持续研究与原03086／SGOV纸面并行。",
     "owners": [
       {
+        "name": "美股 · 标普期货净空拥挤",
+        "status": "snapshot",
+        "task": "CFTC标普E-mini净空拥挤反向择时。开发段毛收益−6.35%，同期SGOV +1.63%，预测方向也失败。已淘汰。"
+      },
+      {
         "name": "美股 · 铜与黄金相对走势择时",
         "status": "snapshot",
         "task": "铜期货基金对黄金动量择时工业股。开发段24/24胜SGOV；后段0/24，少赚约449–1,212港元。已淘汰。"
@@ -15482,7 +15487,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-25T14:53:30.710776+08:00",
+    "checked_at": "2026-11-25T14:59:06.411279+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -15714,7 +15719,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-25T14:53:29.941231+08:00",
+    "checked_at": "2026-11-25T14:59:05.637228+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -15808,7 +15813,7 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "4363e8a9620e1bb2e7f05643c709546c0708b5196c1a10b6d8700a1d5de971d7",
+    "mining_goal": "550bdd4b7d8940514aee868c6f9ef3dad19307f8548b6b7dac433666b4c86f06",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
     "mining_team": "92dc002703c46e4556b3320fc151cd944138cbe235eaf4d1b4b87cb86bd5f8e7",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
@@ -16064,7 +16069,8 @@
     "us_vti_sgov_cash_replacement": "b70fc33c21091d35f17a42a4ca26f3ed5dc01f56c825ebe2a82144784841ca0b",
     "us_sgov_fee_cash_benchmark": "591a63af2774bc05ec23ce8d95e1d3e67245b664363e6173d90b8e7bf9ef443d",
     "hk_09096_usd_cash": "1e2956859cc6672ca8d1358bcd44cb8e6e9fdd1911934032a1c6f1649c93a682",
-    "us_cper_gld_xli": "6216e6571ff145d5ff5a1b77c2ba772af2341bb2630aa8bb1aaa105580e36304"
+    "us_cper_gld_xli": "6216e6571ff145d5ff5a1b77c2ba772af2341bb2630aa8bb1aaa105580e36304",
+    "us_cftc_es_crowding": "c24c524c17404d967954232e85b4ba270007a293a2b79aa01d4f9598d0416dc2"
   },
   "filing_event": {
     "sources": [
