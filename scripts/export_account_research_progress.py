@@ -3307,6 +3307,14 @@ def main():
                                     assert all(digest(sloos_path.parent.parent/name)==expected for name,expected in sloos['pins'].items())
                                     extra_sources['us_sloos_kre_development']=sloos_path
                                     current_work['owners'].insert(0,dict(name='美股 · 小企业信贷调查与 KRE',status='snapshot',task=sloos['site_summary']))
+                                    forex_path=sloos_path.parent.parent/'hk-hkma-liquidity-20261125-v815/DEVELOPMENT-GATE-v1.json'
+                                    if forex_path.exists():
+                                        forex=read(forex_path)
+                                        assert forex['episodes']==24 and forex['accounts']==108
+                                        assert not forex['holdout_returns_computed'] and not forex['qualifying_capitals']
+                                        assert all(digest(forex_path.parent.parent/name)==expected for name,expected in forex['pins'].items())
+                                        extra_sources['hk_forex_liquidity_development']=forex_path
+                                        current_work['owners'].insert(0,dict(name='港股 · 港元流动性与 02800',status='snapshot',task=forex['site_summary']))
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
