@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-25T12:41:15.535165+08:00",
+  "updated_at": "2026-11-25T12:50:55.867311+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
@@ -8968,6 +8968,11 @@
     "scope": "港美个股及普通非杠杆ETF；持续研究与原03086／SGOV纸面并行。",
     "owners": [
       {
+        "name": "美股 · 小企业信贷调查与 KRE",
+        "status": "snapshot",
+        "task": "信贷调查20期匹配原件。KRE三档压力净赚501／1,515／2,511港币，均低于同期静持及不筛选季频对照，漏首场或去最大回合均转亏，开发筛退。港元流动性源预检1974日，首发待查。"
+      },
+      {
         "name": "美股 · 单户住宅许可与 ITB",
         "status": "snapshot",
         "task": "66份建筑许可首发相符。ITB三档压力成本后净赚3,230／7,070／10,830港币，均低于同期静持，已见回撤21.8%–22.2%，开发筛退。重组线补齐57日FINRA场外量，MRIN两渠道量价对照，Knoll一月原价仍缺。"
@@ -15422,7 +15427,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-25T12:41:16.868842+08:00",
+    "checked_at": "2026-11-25T12:50:57.185237+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -15654,7 +15659,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-25T12:41:16.031170+08:00",
+    "checked_at": "2026-11-25T12:50:56.356188+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -15748,7 +15753,7 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "8f95b9fd0986967c47cdb441de0d5b8c9fda60e78f4047f7d4335eafa06bbbb8",
+    "mining_goal": "71ef766cea08addcd9cd0eb76384a54e529a838851606d59b14d8b6bf8dc53f3",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
     "mining_team": "92dc002703c46e4556b3320fc151cd944138cbe235eaf4d1b4b87cb86bd5f8e7",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
@@ -15990,7 +15995,8 @@
     "us_restructuring_other_items": "1dc0ff8c71946eccc1c2aa00ad10e28bd48d880a4b2b60a166bf3186500a5a79",
     "us_restructuring_pre_event_next_wave": "15e89bc618b5bed2e5a05a15c9b53e13a3260622aecc1b009bd7dc62bef1c6b6",
     "us_restructuring_alternate_quotes": "58fb075f959950a506a16840a9f08c767fecb91644aaf52474deefefd664c6a2",
-    "us_census_permits_itb_development": "ae3bb0d8af62f1e92939e90453b2c7f15f7a89a06181d774a71b9ac30c63d18b"
+    "us_census_permits_itb_development": "ae3bb0d8af62f1e92939e90453b2c7f15f7a89a06181d774a71b9ac30c63d18b",
+    "us_sloos_kre_development": "48561d13048528c4d2c74df092548fb1f10af4dcd6aa9f9953b02a4e2b0896fd"
   },
   "filing_event": {
     "sources": [
