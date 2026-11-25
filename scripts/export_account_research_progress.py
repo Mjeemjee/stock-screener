@@ -3388,6 +3388,14 @@ def main():
                                                         assert all(digest(balanced.parent/name)==expected for name,expected in balanced_test['pins'].items())
                                                         extra_sources['us_vti_ief_rebalance_holdout']=balanced
                                                         current_work['owners'].insert(0,dict(name='美股 · VTI 与 IEF 年度再平衡',status='snapshot',task=balanced_test['site_summary']))
+                                                    treasury=form4_path.parent.parent/'us-vti-sgov-cash-replacement-20261125-v822/RESEARCH-GATE-v1.json'
+                                                    if treasury.exists():
+                                                        carry_test=read(treasury)
+                                                        assert (carry_test['development_pairs'],carry_test['later_pairs'],carry_test['negative_low_yield_capital_count'])==(24,24,3)
+                                                        assert carry_test['all_stock_legs_equal'] and not carry_test['promoted']
+                                                        assert all(digest(treasury.parent/name)==expected for name,expected in carry_test['pins'].items())
+                                                        extra_sources['us_vti_sgov_cash_replacement']=treasury
+                                                        current_work['owners'].insert(0,dict(name='美股 · VTI 与 SGOV 现金替代',status='snapshot',task=carry_test['site_summary']))
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
