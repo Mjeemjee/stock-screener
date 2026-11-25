@@ -3211,6 +3211,18 @@ def main():
                 assert all(digest(ROOT/path)==expected for path,expected in delayed['pins'].items())
                 extra_sources['us_rail_dwell_delayed']=rail_delayed
                 current_work['owners'][0]['task']='铁路延迟诊断：28日正常压力仅三万档略胜同业静持，56日各情景未过。无本金晋级，留存未评分。'
+        hurricane=MINING/'us-hurricane-retail-20261125-v809/PREFLIGHT-v1.json'
+        if hurricane.exists():
+            probe=read(hurricane)
+            assert len(probe['advisories'])==4 and not probe['returns_computed']
+            extra_sources.update(us_hurricane_retail=hurricane, us_hurricane_retail_filing_clocks=hurricane.with_name('DISCLOSURE-CLOCKS-v1.json'))
+            current_work['owners'].insert(0,dict(name='美股 · 飓风预警与家装门店',status='snapshot',task='四份原始警报时钟可读，2024佛州两家门店份额差约0.45个百分点，低于预检门槛。未评分。'))
+            hurricane_gate=hurricane.with_name('2024-EXPOSURE-GATE-v1.json')
+            if hurricane_gate.exists():
+                gate=read(hurricane_gate)
+                assert len(gate['warning_events_checked'])==5 and gate['qualifying_count']==0 and not gate['returns_computed']
+                extra_sources['us_hurricane_retail_exposure_gate']=hurricane_gate
+                current_work['owners'][0]['task']='2024抽核五条本土原始警报，同业门店份额差均不足1个百分点；旧年门店表时点欠齐，当前规则筛退。'
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
