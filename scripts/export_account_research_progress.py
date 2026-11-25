@@ -3332,9 +3332,14 @@ def main():
                                                 current_work['owners'].insert(0,dict(name='美股 · 职位空缺与 IWM',status='snapshot',task=jolts['site_summary']))
                                                 form4_path=jolts_path.parent.parent/'us-form4-cluster-20261125-v818/SOURCE-GATE-v1.json'
                                                 if form4_path.exists():
+                                                    followup=form4_path.with_name('SOURCE-GATE-v2.json')
+                                                    if followup.exists():
+                                                        form4_path=followup
                                                     cluster_sources=read(form4_path)
                                                     assert cluster_sources['form4_pairs_with_timestamps']==178 and cluster_sources['forms_checked']==356
                                                     assert cluster_sources['strict_source_pairs']==5 and not cluster_sources['returns_computed']
+                                                    if form4_path==followup:
+                                                        assert cluster_sources['strict_2018_pairs']==3 and cluster_sources['entry_anchors_2019']==4
                                                     assert all(digest(form4_path.parent/name)==expected for name,expected in cluster_sources['pins'].items())
                                                     extra_sources['us_form4_cluster_sources']=form4_path
                                                     current_work['owners'].insert(0,dict(name='美股 · Form 4 多人买入',status='snapshot',task=cluster_sources['site_summary']))
