@@ -3410,6 +3410,13 @@ def main():
                                                             assert all(digest(cash_usd.parent/name)==expected for name,expected in usd_cash_review['pins'].items())
                                                             extra_sources['hk_09096_usd_cash']=cash_usd
                                                             current_work['owners'].insert(0,dict(name='港股 · 09096 美元现金对照',status='snapshot',task=usd_cash_review['site_summary']))
+                                                            copper=cash_usd.parent.parent/'us-cper-gld-xli-20261125-v825/RESEARCH-GATE-v1.json'
+                                                            if copper.exists():
+                                                                copper_review=read(copper)
+                                                                assert (copper_review['validation_cash_wins'],copper_review['validation_cases'])==(0,24)
+                                                                assert all(digest(copper.parent/name)==expected for name,expected in copper_review['pins'].items())
+                                                                extra_sources['us_cper_gld_xli']=copper
+                                                                current_work['owners'].insert(0,dict(name='美股 · 铜与黄金相对走势择时',status='snapshot',task=copper_review['site_summary']))
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
