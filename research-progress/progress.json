@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-22T00:20:04.996962+08:00",
+  "updated_at": "2026-11-25T10:53:04.960741+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
-    "status": "waiting",
-    "active_at_snapshot": false,
+    "status": "checking",
+    "active_at_snapshot": true,
     "focus": "港美持续研究 · 总目标运行中",
     "text": "建行样本外两档压力均净正、各仅2轮、逊静持。未新开纸面账，先核下一月输入。 四家公司48份新增财报已核实并独立复算。下方对比只买盈利增长和每次公告都买，保留首批八次结果。 总目标运行中，稳定盈利尚未证实；历史候选交付仍只是里程碑。当前已验收11个信号、22个预定期限。Amihud双期限固定排序筛选已独立复核并由root接受，结果与限制见因子区。03196已补上市类KFS与一次公开报价：一手1份；即使港币买卖，分派仍仅付美元且频率由管理人决定。仅补齐部分来源，未算成本后收益或证明可成交。03196的2024年246个会话中，21天有成交记录、225天零成交；预选1月2日买入与12月31日卖出均零量。固定日程执行预筛未通过，不继续计算假定成交后的利润。B固定后段未通过原筛选：主3万压力累计五年模型净W-307.82港币，报价回撤约15.75%，1／5亏损年、27／60负月。本结论只针对2020—2024固定日期、一次持有规则及原成本版本，不代表TIP基金在所有情景下无效。 A段原结果保留；A/B各自起账，不合成为连续账户，不是新增IC因子。TIP固定后段筛退。价格延迟因子固定训练已完成独立复算并由root接受；两期限固定筛选未通过，详见因子区。只新增1个已验收信号与2个预定期限，不代表所有价格延迟机制无效。03086最近实际观察2026-11-18；SGOV最近实际观察2026-11-17；组合已观察1会话，最近2026-11-18。SGOV本次2026-11-18因来源修订冻结，当前估值未知，旧值仅作最近成功记录。三套纸面各自原T0与原本金保持，观察和账面金额随已接受记录接续；系统实际订单0，账面增减不是实际提现，正式统计推断未启用。",
     "snapshot_only": true,
@@ -28,7 +28,7 @@
     },
     {
       "name": "财报事件核验与同步",
-      "status": "pending",
+      "status": "active",
       "detail": "四家公司48份新增财报已核实并独立复算。下方对比只买盈利增长和每次公告都买，保留首批八次结果。"
     },
     {
@@ -8958,15 +8958,50 @@
     "milestone_label": "历史候选交付完成（里程碑）",
     "evidence_label": "稳定盈利与持续性尚未证实",
     "task": "T-012",
-    "team_updated_at": "2026-11-22 00:19 HKT",
+    "team_updated_at": "2026-11-22 00:22 HKT",
     "active_work": {
       "account": false,
       "registration": false,
-      "review": false
+      "review": true
     },
     "source_status": "LIMITED_GROSS_RIGHTS_DIAGNOSTIC_DATA_ONLY",
     "scope": "港美个股及普通非杠杆ETF；持续研究与原03086／SGOV纸面并行。",
     "owners": [
+      {
+        "name": "美股 · 东部铁路同业",
+        "status": "snapshot",
+        "task": "铁路延迟诊断：28日正常压力仅三万档略胜同业静持，56日各情景未过。无本金晋级，留存未评分。"
+      },
+      {
+        "name": "纸面 · 11月24日双报价通过",
+        "status": "snapshot",
+        "task": "VCSH／VGSH双源价已通过，发行人时点仍未合格，原账续至11月23日。"
+      },
+      {
+        "name": "港股 · 新股稳价结束",
+        "status": "snapshot",
+        "task": "185宗开发候选已筛，10个价格和流动性组合无严格同业对照。仅1对属同一汽车技术链，策略暂停收益回放。"
+      },
+      {
+        "name": "纸面 · 11月24日源复核",
+        "status": "snapshot",
+        "task": "债券替代查询缺正式收盘，发行人日期仍是11月23日，原账保留缺口。"
+      },
+      {
+        "name": "美股 · 消费板块相对强弱",
+        "status": "snapshot",
+        "task": "三档正常压力留存净额355／1366／2378港元，均落后同预算静持，且去最佳一轮均转负。筛退。"
+      },
+      {
+        "name": "纸面 · VCSH／VGSH",
+        "status": "snapshot",
+        "task": "11月23日新增四笔模型成交，累计八笔、实际订单零。11月24日因第二行情源与发行人时点未过验证留为缺口。"
+      },
+      {
+        "name": "港美 · 短国债执行成本",
+        "status": "snapshot",
+        "task": "优先对照可归因收益。2025年同窗压力成本，03440的1／2／3万净额126.78／540.95／850.79港元。1万低于03152；2／3万略高于SGOV零预扣情景，保留为成本候选。50份整手、资本派付、服务费、换汇与漏首均单列。前向仍待证。"
+      },
       {
         "name": "港股 · 小资金股债组合",
         "status": "snapshot",
@@ -10194,7 +10229,7 @@
       },
       {
         "name": "主会话核验与发布",
-        "status": "snapshot",
+        "status": "active",
         "task": "同步48份财报的同机会比较；跟踪原有纸面账户。"
       },
       {
@@ -15357,7 +15392,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-22T00:20:10.831917+08:00",
+    "checked_at": "2026-11-25T10:53:06.434486+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -15589,7 +15624,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-22T00:20:07.618864+08:00",
+    "checked_at": "2026-11-25T10:53:05.535277+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -15683,9 +15718,9 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "68eb98410cb442ebeb4d18765365ed8fcc5789c0852ea7dc6cc0d94ee7b809ab",
+    "mining_goal": "6ae42855384780a1fb6f0f3ea9bd3c03561c0df04de0c086dce391b2e50f223e",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
-    "mining_team": "462db31082d8ea08da9c996e52b302365996da91a9c9b09851ae4ac1b5dca79b",
+    "mining_team": "92dc002703c46e4556b3320fc151cd944138cbe235eaf4d1b4b87cb86bd5f8e7",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
     "fip_original": "9c598341d1b0e59753bc0134509908b4698209cfff0b95c22f973f655b868296",
     "fip_calendar_correction": "33d2d80372b6c433688dbbcabcc49f2a458989a633ed783c0c2fa42d6f824695",
@@ -15893,7 +15928,21 @@
     "hk_03110_cash_spread": "ebce7abcbebba9c2d8bad6e8e6d8b3be8d41921a1a62c55983135e2f0a2b0477",
     "us_vti_fed_reserves": "1fd030a75876df903d0d71a4f898745b27b0877a0979e74653d88cca52692ecd",
     "us_vti_standard_spx_expiry": "e80c1da8f42c31ca95266850019d3ad37aee7ba925634d4cc299eb7021c820c8",
-    "hk_03110_bond_execution": "52b1f2a28ed2c5e7942af30274dfe1504d02a1530db100f8fc0c9f17e7be1161"
+    "hk_03110_bond_execution": "52b1f2a28ed2c5e7942af30274dfe1504d02a1530db100f8fc0c9f17e7be1161",
+    "hk_us_tbill_carrier": "488ef5906beeafbc9c4e959672298e928e77afef69e56ac921c9c4c042a2f8e0",
+    "consumer_relative_development": "a61641842e828ed8abb706b012470709bd41d9cd4e61dd1d74947530dba68183",
+    "vcsh_nov23": "284e637aa96b8e0dd08fe730b5890d7a406f4c690fb0b56de153846f549e8030",
+    "vcsh_nov24_gap": "6f056722eeab9af75a0a9dff116e38c27209c811beb5ec7adaf5432868c1ef40",
+    "consumer_relative_holdout": "6c3f74c536c3864ece20e068caa746db5144ec61acee207907701b89bcb64f52",
+    "hk_ipo_stabilization": "799a2541a55855bf58055c48a153378e0ef32403936208441b9d626f8b4d2653",
+    "vcsh_recovery_nov24": "1299f29df613219814f0f3cbdec7289c9dfe5c1120bfd7a09210651c7c7d77be",
+    "hk_ipo_stabilization_overlap": "0a24def63df03ead97238459db1244001de0d62444985c5f783501f9a1f9860a",
+    "hk_ipo_stabilization_sector_review": "9e4ec1ff6f595087e35fd1ed26970c5b6d854efe542f149c4a3a753f133a90b7",
+    "us_rail_dwell": "7127dc8da984f8e850c9dd56b00386b224c750841ebfde5c7501259d8bf20c52",
+    "vcsh_nov24_verified_quotes": "0de294db60135d58a8530b4cabccef4085728a99a0a847ae98cbb0c812ae403f",
+    "us_rail_dwell_clock": "7b85fd02656a054b3cd5d616dad7800fc4ff05875bf1b5e1a476ada3ccc791ac",
+    "us_rail_dividend_readiness": "d696d56785b347e1363a7b97b8f7b57041c5ab7a47ecebc31d7c4fc1f791a5e2",
+    "us_rail_dwell_delayed": "39c77b45b1599a2689f44deda14702057d659153577a3b711c1860254d165287"
   },
   "filing_event": {
     "sources": [
