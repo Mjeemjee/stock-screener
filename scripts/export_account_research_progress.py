@@ -3269,6 +3269,14 @@ def main():
                     assert all(digest(completed_screen.with_name(name))==expected for name,expected in completed['pins'].items())
                     extra_sources['us_restructuring_priority_complete']=completed_screen
                     current_work['owners'][0]['task']=completed['site_summary']
+                    clocks_path=completed_screen.with_name('NOMINATED-CLOCKS-v1.json')
+                    if clocks_path.exists():
+                        clocks=read(clocks_path)
+                        multi_path=clocks_path.with_name('MULTI-ITEM-REVIEW-v1.json')
+                        assert len(clocks['events'])==clocks['events_checked']==6 and not clocks['returns_computed']
+                        assert len(read(multi_path)['body_checks'])==clocks['multi_item_bodies_screened']==16
+                        extra_sources.update(us_restructuring_nominated_clocks=clocks_path, us_restructuring_multi_item=multi_path)
+                        current_work['owners'][0]['task']=clocks['site_summary']
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
