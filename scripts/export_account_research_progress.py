@@ -3143,6 +3143,74 @@ def main():
             assert all(digest(ROOT/path)==expected for path,expected in hk_bond_portfolio['pins'].items())
             extra_sources['hk_03110_bond_execution']=hk_bond_portfolio_path
             current_work['owners'].insert(0,dict(name='港股 · 小资金股债组合',status='snapshot',task=hk_bond_portfolio['site_summary']))
+        tbill_carrier_path=MINING/'acceptance/HK-US-TBILL-CARRIER-v804-ROOT-v1.json'
+        if tbill_carrier_path.exists():
+            tbill_carrier=read(tbill_carrier_path)
+            assert tbill_carrier['decision']=='KEEP_COST_CANDIDATE_20000_AND_30000'
+            assert tbill_carrier['actual_orders']==tbill_carrier['new_paper_accounts']==0
+            assert all(digest(ROOT/path)==expected for path,expected in tbill_carrier['pins'].items())
+            extra_sources['hk_us_tbill_carrier']=tbill_carrier_path
+            current_work['owners'].insert(0,dict(name='港美 · 短国债执行成本',status='snapshot',task=tbill_carrier['site_summary']))
+        consumer_path=MINING/'us-consumer-relative-20261125-v805/RESULT-v1.json'
+        bond_observation=MINING/'us-short-credit-forward-20261120-v459/live/events/000004-body.json'
+        bond_gap=MINING/'us-short-credit-forward-20261120-v459/live/events/000005-body.json'
+        if all(path.exists() for path in (consumer_path,bond_observation,bond_gap)):
+            consumer=read(consumer_path)
+            assert consumer['decision']=='CHECK_CASH_ACCOUNTS' and not consumer['holdout_scored']
+            extra_sources.update(consumer_relative_development=consumer_path, vcsh_nov23=bond_observation, vcsh_nov24_gap=bond_gap)
+            current_work['owners'][0:0]=[
+                dict(name='美股 · 消费板块相对强弱',status='snapshot',task='14个开发季度毛收益方向通过初筛，下一步核三档整股及压力费；未打开留存期。'),
+                dict(name='纸面 · VCSH／VGSH',status='snapshot',task='11月23日新增四笔模型成交，累计八笔、实际订单零。11月24日因第二行情源与发行人时点未过验证留为缺口。'),
+            ]
+            holdout_path=consumer_path.with_name('HOLDOUT-ACCOUNTS-v1.json')
+            if holdout_path.exists():
+                holdout=read(holdout_path)
+                assert holdout['stage']=='holdout' and not holdout['advance_capitals'] and holdout['actual_orders']==0
+                assert all(digest(ROOT/path)==expected for path,expected in holdout['pins'].items())
+                extra_sources['consumer_relative_holdout']=holdout_path
+                current_work['owners'][0]['task']='三档正常压力留存净额355／1366／2378港元，均落后同预算静持，且去最佳一轮均转负。筛退。'
+        stabilization_path=MINING/'hk-ipo-stabilization-20261125-v807/PROTOCOL.md'
+        bond_recovery=MINING/'us-bond-source-recovery-20261125-v806/RESULT-v1.json'
+        if stabilization_path.exists() and bond_recovery.exists():
+            recovery=read(bond_recovery)
+            assert not recovery['issuer_eligible'] and recovery['new_observations']==recovery['actual_orders']==0
+            assert all(digest(ROOT/path)==expected for path,expected in recovery['pins'].items())
+            extra_sources.update(hk_ipo_stabilization=stabilization_path, vcsh_recovery_nov24=bond_recovery)
+            current_work['owners'][0:0]=[
+                dict(name='港股 · 新股稳价结束',status='snapshot',task='已核三个实际市场买入标签与一手金额，待全批公告及对照资格。未评分。'),
+                dict(name='纸面 · 11月24日源复核',status='snapshot',task='债券替代查询缺正式收盘，发行人日期仍是11月23日，原账保留缺口。'),
+            ]
+            stabilization_overlap=stabilization_path.with_name('OVERLAP-v4.json')
+            if stabilization_overlap.exists():
+                overlap=read(stabilization_overlap)
+                assert not overlap['scored_returns'] and not overlap['holdout_payoffs_opened']
+                extra_sources['hk_ipo_stabilization_overlap']=stabilization_overlap
+                extra_sources['hk_ipo_stabilization_sector_review']=stabilization_path.with_name('FINDINGS.md')
+                current_work['owners'][0]['task']='185宗开发候选已筛，10个价格和流动性组合无严格同业对照。仅1对属同一汽车技术链，策略暂停收益回放。'
+        rail_path=MINING/'us-rail-dwell-20261125-v808/SOURCE-COVERAGE-v1.json'
+        quote24=MINING/'us-short-credit-forward-20261120-v459/captures/20261125T023708739603Z/evidence.json'
+        if rail_path.exists() and quote24.exists():
+            rail=read(rail_path)
+            assert not rail['scored_returns'] and rail['paired_weeks']==432
+            assert read(quote24)['eligible'] is True
+            extra_sources.update(us_rail_dwell=rail_path, vcsh_nov24_verified_quotes=quote24)
+            current_work['owners'][0:0]=[
+                dict(name='美股 · 东部铁路同业',status='snapshot',task='432周同口径数据、431周双边原件目录，三档整股预检通过；待首发时点、未跑收益。'),
+                dict(name='纸面 · 11月24日双报价通过',status='snapshot',task='VCSH／VGSH双源价已通过，发行人时点仍未合格，原账续至11月23日。'),
+            ]
+            rail_clock=rail_path.with_name('WEEKLY-CLOCK-PREFLIGHT-v1.json')
+            if rail_clock.exists():
+                clock_detail=read(rail_clock)
+                assert not clock_detail['returns_computed'] and clock_detail['first_public_versions_verified']==0
+                extra_sources.update(us_rail_dwell_clock=rail_clock, us_rail_dividend_readiness=rail_path.with_name('DIVIDEND-READINESS-v1.json'))
+                current_work['owners'][0]['task']='7份原件与汇总一致，2019一份链接失效。抽查无法证实历史首发时点。CSX三十笔分派双源一致，未测收益。'
+            rail_delayed=rail_path.with_name('DEVELOPMENT-DELAYED-v1.json')
+            if rail_delayed.exists():
+                delayed=read(rail_delayed)
+                assert not delayed['qualifying_capitals'] and not delayed['holdout_scored']
+                assert all(digest(ROOT/path)==expected for path,expected in delayed['pins'].items())
+                extra_sources['us_rail_dwell_delayed']=rail_delayed
+                current_work['owners'][0]['task']='铁路延迟诊断：28日正常压力仅三万档略胜同业静持，56日各情景未过。无本金晋级，留存未评分。'
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
