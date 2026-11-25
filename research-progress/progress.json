@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-25T14:25:38.065481+08:00",
+  "updated_at": "2026-11-25T14:32:22.560772+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
@@ -8968,6 +8968,11 @@
     "scope": "港美个股及普通非杠杆ETF；持续研究与原03086／SGOV纸面并行。",
     "owners": [
       {
+        "name": "美股 · VTI 与 SGOV 现金替代",
+        "status": "snapshot",
+        "task": "40% VTI加SGOV检验：同股数同费用对比现金，2021–22三档均拖累，2023–25压力30%预扣增量−85／+528／+1065港币；1万档在0%情景变正。未作为新纸面候选。"
+      },
+      {
         "name": "美股 · VTI 与 IEF 年度再平衡",
         "status": "snapshot",
         "task": "VTI／IEF 年度40／40／20配置，留存1／2／3万压力净正470／2785／5373港币；三档收益与回撤均落后同股票预算的VTI加现金。加回固定分派费仍落后，未晋级。"
@@ -15462,7 +15467,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-25T14:25:39.311123+08:00",
+    "checked_at": "2026-11-25T14:32:23.790543+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -15694,7 +15699,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-25T14:25:38.519542+08:00",
+    "checked_at": "2026-11-25T14:32:23.018234+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -15788,7 +15793,7 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "8070393b6b2a7d16906afa5ec0b74d06255206d8901b5573f5a0e691e8826a4e",
+    "mining_goal": "cd0d3f317035858ae49aba9ba9f350ac72b772399aa4b66e6eb4d21de4026d9f",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
     "mining_team": "92dc002703c46e4556b3320fc151cd944138cbe235eaf4d1b4b87cb86bd5f8e7",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
@@ -16040,7 +16045,8 @@
     "us_form4_cluster_h1": "84809c5aa9a6cbc0c7dcf5f59a8cd79ea23fdd6732cf45708c8c3e0d23a42caa",
     "us_breakeven_tip_development": "79021ced9156a3e0f3ed427cb865ecb25a7b25d3ee1ba7ab31cd53b964a278d5",
     "us_broad_dollar_gld_development": "ecbc5ae89757188b5f071fa24bf26bb0dd96f0822d82fd1048a63aa58be43caf",
-    "us_vti_ief_rebalance_holdout": "9ecde48bd06248b4d0559971573164ce353ed054cce1d2410dfb4eeab99d3e98"
+    "us_vti_ief_rebalance_holdout": "9ecde48bd06248b4d0559971573164ce353ed054cce1d2410dfb4eeab99d3e98",
+    "us_vti_sgov_cash_replacement": "b70fc33c21091d35f17a42a4ca26f3ed5dc01f56c825ebe2a82144784841ca0b"
   },
   "filing_event": {
     "sources": [
