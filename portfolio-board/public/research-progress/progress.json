@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-25T13:25:04.806694+08:00",
+  "updated_at": "2026-11-25T13:39:15.056858+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
@@ -8968,6 +8968,11 @@
     "scope": "港美个股及普通非杠杆ETF；持续研究与原03086／SGOV纸面并行。",
     "owners": [
       {
+        "name": "美股 · Form 4 多人买入",
+        "status": "snapshot",
+        "task": "Form 4 已核178组356份原件。扩查2019下半年，5组两份均明示公开市场买入，另1组待拆交易行。历史原价与退市身份仍待查，未回测。"
+      },
+      {
         "name": "美股 · 职位空缺与 IWM",
         "status": "snapshot",
         "task": "IWM职位空缺信号开发三档压力净赚1,825／4,569／7,177港币，固定留存转亏1,487／3,035／4,762港币，回撤19.8%／22.3%／23.5%，筛退。下一项Form 4原始买入代码5,943行待核。"
@@ -15442,7 +15447,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-25T13:25:06.596959+08:00",
+    "checked_at": "2026-11-25T13:39:17.037712+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -15674,7 +15679,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-25T13:25:05.472400+08:00",
+    "checked_at": "2026-11-25T13:39:15.900172+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -15768,7 +15773,7 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "4f03fd01f420c01b396a21d04e0f304fc2dffe55dfb1d5f0c97271cfb2937b46",
+    "mining_goal": "1b824bc07603536b767557beb77be5284be3e9a585f93d3f76ccac2d445a9972",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
     "mining_team": "92dc002703c46e4556b3320fc151cd944138cbe235eaf4d1b4b87cb86bd5f8e7",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
@@ -16014,7 +16019,8 @@
     "us_sloos_kre_development": "48561d13048528c4d2c74df092548fb1f10af4dcd6aa9f9953b02a4e2b0896fd",
     "hk_forex_liquidity_development": "c45cf890fc464f3c15caf7c93e44d17ce8245d63d136a71b7d0565d7253fafac",
     "hk_efb_tender_development": "089351d87c265ab57c9068c4b32b1aa28072b6f2d14e609d52a36fc2cde76c44",
-    "us_jolts_iwm": "571095f775613e5e7adad03d1e16ee2bb7fc837d50180560794df2289ca73aac"
+    "us_jolts_iwm": "571095f775613e5e7adad03d1e16ee2bb7fc837d50180560794df2289ca73aac",
+    "us_form4_cluster_sources": "b6b2b2ae6fb1f148383532e0235d2f26986cd9b729eec19c22456cfac6ebf0f2"
   },
   "filing_event": {
     "sources": [
