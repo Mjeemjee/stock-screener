@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-25T11:19:05.489881+08:00",
+  "updated_at": "2026-11-25T11:27:14.313690+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
@@ -8968,6 +8968,11 @@
     "scope": "港美个股及普通非杠杆ETF；持续研究与原03086／SGOV纸面并行。",
     "owners": [
       {
+        "name": "美股 · 炼油价差与 VLO",
+        "status": "snapshot",
+        "task": "EIA 当期原件开发 48 期。三档压力净亏 820／750／1,260 港元，回撤约 42%–44%，筛退。第二行情源仅覆盖 40 个重叠日，留存未测。"
+      },
+      {
         "name": "纸面 · SGOV 现金补核",
         "status": "snapshot",
         "task": "SGOV 原账四臂复放一致，11/18 当时行情支持四臂现金、零成交。补核保留原始封存，不计为及时新增策略样本。"
@@ -15407,7 +15412,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-25T11:19:06.968287+08:00",
+    "checked_at": "2026-11-25T11:27:16.552069+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -15639,7 +15644,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-25T11:19:06.040813+08:00",
+    "checked_at": "2026-11-25T11:27:15.211390+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -15733,7 +15738,7 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "3ac14cd185859b2df95049251039cf8ca79354995884991d762b879ae6498e89",
+    "mining_goal": "a6b5f026dc68c95d7d5e1c92873361482be567829211c2f2e90dd304112910c8",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
     "mining_team": "92dc002703c46e4556b3320fc151cd944138cbe235eaf4d1b4b87cb86bd5f8e7",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
@@ -15963,7 +15968,8 @@
     "us_hurricane_retail_exposure_gate": "70f4447a8c809ece1792a5fce5a0696c200355711de3a9602d9f3534d627f69f",
     "us_hurricane_insurance_exposure_gate": "1c5eb4880be84d88aac7b2164e5291ae92d0eb52182492ef3057400fef39751e",
     "sgov_nov18_cash_recovery": "2cbe861223bc120ebfe4d9a2d2f3220741060a29447a4a54839c1631b30576ce",
-    "sgov_nov18_cash_recovery_seal": "3a49add471f587047d6dc0ac309755f7e2589a2ef6b700b9c1e0b282752c0540"
+    "sgov_nov18_cash_recovery_seal": "3a49add471f587047d6dc0ac309755f7e2589a2ef6b700b9c1e0b282752c0540",
+    "us_refiner_crack_development": "dfcd1ec22f6b47d4b5687701bff0b6e00cb2e38424ea401006c9ab10dc97743c"
   },
   "filing_event": {
     "sources": [
