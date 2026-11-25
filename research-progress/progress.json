@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-25T13:56:15.498729+08:00",
+  "updated_at": "2026-11-25T14:03:03.005242+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
@@ -8970,7 +8970,7 @@
       {
         "name": "美股 · Form 4 多人买入",
         "status": "snapshot",
-        "task": "Form 4 排除1宗股息再投。7宗隔离20日试算扣费后6宗正，OAS及AKBA贡献约87%。按前收加1%预设开盘限价仅2宗报价达标，AKBA占试算净额约94%；继续扩样，未进入纸面。"
+        "task": "Form 4 上半年扩样核32份原件，ADMP与NVTR两宗入选。ADMP按压力滑点首场高于限价，延迟交易三档均亏；NVTR缺原开盘，保留未评分。该版本未晋级。"
       },
       {
         "name": "美股 · 职位空缺与 IWM",
@@ -15447,7 +15447,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-25T13:56:17.251661+08:00",
+    "checked_at": "2026-11-25T14:03:04.816452+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -15679,7 +15679,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-25T13:56:16.139831+08:00",
+    "checked_at": "2026-11-25T14:03:03.681809+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -15773,7 +15773,7 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "3dc6326b183d7f3adac4a154bf74992fd405efefdf9b53af6d79bad6237c708e",
+    "mining_goal": "aab775d53993fdf63bac3ca220c949d130ed763006c86269c24fd2deae2cb323",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
     "mining_team": "92dc002703c46e4556b3320fc151cd944138cbe235eaf4d1b4b87cb86bd5f8e7",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
@@ -16021,7 +16021,8 @@
     "hk_efb_tender_development": "089351d87c265ab57c9068c4b32b1aa28072b6f2d14e609d52a36fc2cde76c44",
     "us_jolts_iwm": "571095f775613e5e7adad03d1e16ee2bb7fc837d50180560794df2289ca73aac",
     "us_form4_cluster_sources": "cc633a079251f405549c4e9153d47b639be198ce2d4e3d5cf59334d6589d958d",
-    "us_form4_cluster_development": "c2aadfec5c6f366790ce4a4d7f20c34d487372bb47e03d12d9ded9ee899b19da"
+    "us_form4_cluster_development": "c2aadfec5c6f366790ce4a4d7f20c34d487372bb47e03d12d9ded9ee899b19da",
+    "us_form4_cluster_h1": "84809c5aa9a6cbc0c7dcf5f59a8cd79ea23fdd6732cf45708c8c3e0d23a42caa"
   },
   "filing_event": {
     "sources": [
