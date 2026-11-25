@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-25T11:09:10.182098+08:00",
+  "updated_at": "2026-11-25T11:14:05.953472+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
@@ -8968,6 +8968,11 @@
     "scope": "港美个股及普通非杠杆ETF；持续研究与原03086／SGOV纸面并行。",
     "owners": [
       {
+        "name": "美股 · 飓风与住宅保险",
+        "status": "snapshot",
+        "task": "2024五个预警中，仅三次佛州事件可按毛承保额排序（58.3%／26.5%）。再保险后没有可比的事件级净风险排序，本轮未回测。"
+      },
+      {
         "name": "美股 · 飓风预警与家装门店",
         "status": "snapshot",
         "task": "2024抽核五条本土原始警报，同业门店份额差均不足1个百分点；旧年门店表时点欠齐，当前规则筛退。"
@@ -15397,7 +15402,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-25T11:09:15.065079+08:00",
+    "checked_at": "2026-11-25T11:14:07.456526+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -15629,7 +15634,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-25T11:09:11.600541+08:00",
+    "checked_at": "2026-11-25T11:14:06.546325+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -15950,7 +15955,8 @@
     "us_rail_dwell_delayed": "39c77b45b1599a2689f44deda14702057d659153577a3b711c1860254d165287",
     "us_hurricane_retail": "ea66bc0d270670b679c822c32b1f70c9c97b002cb4fd30802d6396772a4bd125",
     "us_hurricane_retail_filing_clocks": "0407480f650ba2555cc7ad8fb836263fbac6d701554e5ecd5b4ade38c056bbaa",
-    "us_hurricane_retail_exposure_gate": "70f4447a8c809ece1792a5fce5a0696c200355711de3a9602d9f3534d627f69f"
+    "us_hurricane_retail_exposure_gate": "70f4447a8c809ece1792a5fce5a0696c200355711de3a9602d9f3534d627f69f",
+    "us_hurricane_insurance_exposure_gate": "1c5eb4880be84d88aac7b2164e5291ae92d0eb52182492ef3057400fef39751e"
   },
   "filing_event": {
     "sources": [
