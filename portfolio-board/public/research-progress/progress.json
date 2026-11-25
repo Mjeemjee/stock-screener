@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-25T12:59:17.619895+08:00",
+  "updated_at": "2026-11-25T13:09:10.103678+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
@@ -8968,6 +8968,11 @@
     "scope": "港美个股及普通非杠杆ETF；持续研究与原03086／SGOV纸面并行。",
     "owners": [
       {
+        "name": "港股 · 91天短票与 02800",
+        "status": "snapshot",
+        "task": "91天票据418期原公告已核。02800月度规则1万港币20次信号均买不到整手，2万／3万压力净亏3,917／4,648港币、回撤21.4%／23.4%，开发筛退。独立复算72个压力情景。"
+      },
+      {
         "name": "港股 · 港元流动性与 02800",
         "status": "snapshot",
         "task": "港元流动性核96页和24波次。02800投入1万港币六次均买不到整手，2万／3万压力净亏1,060／1,820港币，开发筛退。下一项91天外汇基金票据已取418期，逐期核投标日。"
@@ -15432,7 +15437,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-25T12:59:18.827626+08:00",
+    "checked_at": "2026-11-25T13:09:11.887181+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -15664,7 +15669,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-25T12:59:18.064194+08:00",
+    "checked_at": "2026-11-25T13:09:10.762887+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -16002,7 +16007,8 @@
     "us_restructuring_alternate_quotes": "58fb075f959950a506a16840a9f08c767fecb91644aaf52474deefefd664c6a2",
     "us_census_permits_itb_development": "ae3bb0d8af62f1e92939e90453b2c7f15f7a89a06181d774a71b9ac30c63d18b",
     "us_sloos_kre_development": "48561d13048528c4d2c74df092548fb1f10af4dcd6aa9f9953b02a4e2b0896fd",
-    "hk_forex_liquidity_development": "c45cf890fc464f3c15caf7c93e44d17ce8245d63d136a71b7d0565d7253fafac"
+    "hk_forex_liquidity_development": "c45cf890fc464f3c15caf7c93e44d17ce8245d63d136a71b7d0565d7253fafac",
+    "hk_efb_tender_development": "089351d87c265ab57c9068c4b32b1aa28072b6f2d14e609d52a36fc2cde76c44"
   },
   "filing_event": {
     "sources": [
