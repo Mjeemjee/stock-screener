@@ -3248,6 +3248,14 @@ def main():
             assert not diagnostic['diagnostic_gate_capitals'] and not diagnostic['paper_activated']
             extra_sources['us_refiner_crack_development']=crack
             current_work['owners'].insert(0,dict(name='美股 · 炼油价差与 VLO',status='snapshot',task='EIA 当期原件开发 48 期。三档压力净亏 820／750／1,260 港元，回撤约 42%–44%，筛退。第二行情源仅覆盖 40 个重叠日，留存未测。'))
+        restructuring=MINING/'us-restructuring-savings-20261125-v812/BODY-SCREEN-v1.json'
+        if restructuring.exists():
+            screen=read(restructuring)
+            metadata=restructuring.with_name('DEVELOPMENT-METADATA-v2.json')
+            assert screen['metadata_counts']==read(metadata)['counts'] and not screen['returns_computed']
+            assert len(screen['body_nominations'])==8 and not screen['first_disclosure_verification_completed']
+            extra_sources.update(us_restructuring_body_screen=restructuring, us_restructuring_edgar_metadata=metadata)
+            current_work['owners'].insert(0,dict(name='美股 · 首次重组节省披露',status='snapshot',task=screen['site_summary']))
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
