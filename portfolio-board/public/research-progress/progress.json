@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-25T13:45:00.686734+08:00",
+  "updated_at": "2026-11-25T13:47:31.508349+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
@@ -8970,7 +8970,7 @@
       {
         "name": "美股 · Form 4 多人买入",
         "status": "snapshot",
-        "task": "Form 4 复用2018年四季缓存，原件新增3组，与2019下半年合计8组公开市场买入。2019五组已找到4组次日开盘，旧OAS须用破产前旧证券，开盘仍缺。未回测。"
+        "task": "Form 4 共8组原件明示公开市场买入。2019五组都有次日开盘线索，旧OAS的3.18美元来自历史别名映射。2018三组仅KIDS直接返回报价，另两组原代码无报价。未回测。"
       },
       {
         "name": "美股 · 职位空缺与 IWM",
@@ -15447,7 +15447,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-25T13:45:02.463293+08:00",
+    "checked_at": "2026-11-25T13:47:33.557079+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -15679,7 +15679,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-25T13:45:01.341021+08:00",
+    "checked_at": "2026-11-25T13:47:32.238153+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -16020,7 +16020,7 @@
     "hk_forex_liquidity_development": "c45cf890fc464f3c15caf7c93e44d17ce8245d63d136a71b7d0565d7253fafac",
     "hk_efb_tender_development": "089351d87c265ab57c9068c4b32b1aa28072b6f2d14e609d52a36fc2cde76c44",
     "us_jolts_iwm": "571095f775613e5e7adad03d1e16ee2bb7fc837d50180560794df2289ca73aac",
-    "us_form4_cluster_sources": "b6099ebec520ab41111583d8ea90d7155f05feb5fe51c9cc26465671c67033c0"
+    "us_form4_cluster_sources": "cc633a079251f405549c4e9153d47b639be198ce2d4e3d5cf59334d6589d958d"
   },
   "filing_event": {
     "sources": [
