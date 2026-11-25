@@ -3277,6 +3277,20 @@ def main():
                         assert len(read(multi_path)['body_checks'])==clocks['multi_item_bodies_screened']==16
                         extra_sources.update(us_restructuring_nominated_clocks=clocks_path, us_restructuring_multi_item=multi_path)
                         current_work['owners'][0]['task']=clocks['site_summary']
+                        gate_path=clocks_path.with_name('HISTORICAL-EXECUTION-GATE-v1.json')
+                        if gate_path.exists():
+                            gate=read(gate_path)
+                            other_path=gate_path.with_name('OTHER-ITEMS-v1.json')
+                            quotes_path=gate_path.with_name('PRE-EVENT-NEXT-WAVE-v1.json')
+                            alternate_path=gate_path.with_name('ALTERNATE-PRE-EVENT-COVERAGE-v1.json')
+                            assert gate['new_body_checks']==len(read(other_path)['body_checks'])
+                            assert gate['multi_item_bodies_screened']==gate['new_body_checks']+clocks['multi_item_bodies_screened']
+                            assert gate['event_quotes_probed']==len(read(quotes_path)['rows']) and not gate['returns_computed']
+                            recovered=[row for row in read(alternate_path)['coverage'] if row['rows']]
+                            assert gate['event_quotes_with_rows_after_alternate']==gate['event_quotes_with_rows']+len(recovered)
+                            assert all(digest(alternate_path.parent/row['file'])==row['sha256'] for row in recovered)
+                            extra_sources.update(us_restructuring_execution_gate=gate_path, us_restructuring_other_items=other_path, us_restructuring_pre_event_next_wave=quotes_path, us_restructuring_alternate_quotes=alternate_path)
+                            current_work['owners'][0]['task']=gate['site_summary']
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
