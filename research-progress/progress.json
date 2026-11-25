@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-25T10:53:04.960741+08:00",
+  "updated_at": "2026-11-25T11:09:10.182098+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
@@ -8968,6 +8968,11 @@
     "scope": "港美个股及普通非杠杆ETF；持续研究与原03086／SGOV纸面并行。",
     "owners": [
       {
+        "name": "美股 · 飓风预警与家装门店",
+        "status": "snapshot",
+        "task": "2024抽核五条本土原始警报，同业门店份额差均不足1个百分点；旧年门店表时点欠齐，当前规则筛退。"
+      },
+      {
         "name": "美股 · 东部铁路同业",
         "status": "snapshot",
         "task": "铁路延迟诊断：28日正常压力仅三万档略胜同业静持，56日各情景未过。无本金晋级，留存未评分。"
@@ -15392,7 +15397,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-25T10:53:06.434486+08:00",
+    "checked_at": "2026-11-25T11:09:15.065079+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -15624,7 +15629,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-25T10:53:05.535277+08:00",
+    "checked_at": "2026-11-25T11:09:11.600541+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -15718,7 +15723,7 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "6ae42855384780a1fb6f0f3ea9bd3c03561c0df04de0c086dce391b2e50f223e",
+    "mining_goal": "25c5ba7668cf70b815c6d776f47e3009c65cc0f0627a0636c8c899c94561c48a",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
     "mining_team": "92dc002703c46e4556b3320fc151cd944138cbe235eaf4d1b4b87cb86bd5f8e7",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
@@ -15942,7 +15947,10 @@
     "vcsh_nov24_verified_quotes": "0de294db60135d58a8530b4cabccef4085728a99a0a847ae98cbb0c812ae403f",
     "us_rail_dwell_clock": "7b85fd02656a054b3cd5d616dad7800fc4ff05875bf1b5e1a476ada3ccc791ac",
     "us_rail_dividend_readiness": "d696d56785b347e1363a7b97b8f7b57041c5ab7a47ecebc31d7c4fc1f791a5e2",
-    "us_rail_dwell_delayed": "39c77b45b1599a2689f44deda14702057d659153577a3b711c1860254d165287"
+    "us_rail_dwell_delayed": "39c77b45b1599a2689f44deda14702057d659153577a3b711c1860254d165287",
+    "us_hurricane_retail": "ea66bc0d270670b679c822c32b1f70c9c97b002cb4fd30802d6396772a4bd125",
+    "us_hurricane_retail_filing_clocks": "0407480f650ba2555cc7ad8fb836263fbac6d701554e5ecd5b4ade38c056bbaa",
+    "us_hurricane_retail_exposure_gate": "70f4447a8c809ece1792a5fce5a0696c200355711de3a9602d9f3534d627f69f"
   },
   "filing_event": {
     "sources": [
