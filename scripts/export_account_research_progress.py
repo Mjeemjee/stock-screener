@@ -3529,6 +3529,13 @@ def main():
                                                                                                     assert all(digest(lot_returns.parent/name)==expected for name,expected in lot_returns_review['pins'].items())
                                                                                                     extra_sources['hk_board_lot_returns']=lot_returns
                                                                                                     current_work['owners'].insert(0,dict(name='港股 · 降手后历史收益',status='snapshot',task=lot_returns_review['site_summary']))
+                                                                                                refunding=cover.parent.parent/'us-refunding-duration-source-20261126-v841/RESEARCH-GATE-v1.json'
+                                                                                                if refunding.exists():
+                                                                                                    refunding_review=read(refunding)
+                                                                                                    assert (refunding_review['orders'],refunding_review['returns_computed'])==(0,False)
+                                                                                                    assert all(digest(refunding.parent/name)==expected for name,expected in refunding_review['pins'].items())
+                                                                                                    extra_sources['us_refunding_duration_sources']=refunding
+                                                                                                    current_work['owners'].insert(0,dict(name='美股 · 美债季度供给资料',status='snapshot',task=refunding_review['site_summary']))
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
