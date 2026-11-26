@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-26T15:15:23.576026+08:00",
+  "updated_at": "2026-11-26T15:27:57.976726+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
@@ -8968,6 +8968,11 @@
     "scope": "港美个股及普通非杠杆ETF；持续研究与原03086／SGOV纸面并行。",
     "owners": [
       {
+        "name": "美股 · 场外成交占比",
+        "status": "snapshot",
+        "task": "Cboe场外占比开发58期，40%风险预算毛+12.84%，静持IVV+31.85%；推迟一场也落后价格规则，粗筛退出。"
+      },
+      {
         "name": "美股 · 隐含相关性轮动",
         "status": "snapshot",
         "task": "COR3M轮动开发28期，40%仓位毛+2.63%，低于同频价格比+5.44%及静持IVV+3.48%，延迟一场仍淘汰。"
@@ -15692,7 +15697,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-26T15:15:25.488579+08:00",
+    "checked_at": "2026-11-26T15:28:00.024470+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -15924,7 +15929,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-26T15:15:24.286889+08:00",
+    "checked_at": "2026-11-26T15:27:58.732179+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -16018,7 +16023,7 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "9751950665be5cbd0dbbb724fd10e327c03313b5b95a93fc39f8a6fa9622db18",
+    "mining_goal": "287b6748378cefe4d2f7854270aa043f677e2ce4047991101ccb36e840ae688f",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
     "mining_team": "92dc002703c46e4556b3320fc151cd944138cbe235eaf4d1b4b87cb86bd5f8e7",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
@@ -16316,7 +16321,8 @@
     "hk_03086_static_observe": "6d0ba8171b4d11b4c2b6b52b534c8262886ae521e841617ffc38f895f3e196fd",
     "vcsh_issuer_diagnosis": "8e67e6ab557e2748ebf7d9a29ed9e250f0fee7a16e9f5b17d1202d96e473539e",
     "us_aehr_catalyst_overlap": "9998f038e64d5c88d5c8682034e5de0fa1eeaff3d2e4f5bc5fb2db0aa412ba71",
-    "us_cor3m_rsp": "6beb8c253eed4b3657b1ff9905a4c9d1a614d9d4fe7ba98188ddf711b952fc51"
+    "us_cor3m_rsp": "6beb8c253eed4b3657b1ff9905a4c9d1a614d9d4fe7ba98188ddf711b952fc51",
+    "us_cboe_trf_ivv": "8739942f28df8e316e24a307834a3a02e565ab295e8ae276bfc0e6794cddcdf4"
   },
   "filing_event": {
     "sources": [
