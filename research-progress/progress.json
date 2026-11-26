@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-26T10:33:33.202338+08:00",
+  "updated_at": "2026-11-26T10:40:42.370345+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
@@ -8968,6 +8968,11 @@
     "scope": "港美个股及普通非杠杆ETF；持续研究与原03086／SGOV纸面并行。",
     "owners": [
       {
+        "name": "美股 · 实时景气状态与小盘ETF",
+        "status": "snapshot",
+        "task": "ADS择时IWM开发毛筛通过，扣压力成本后1万/2万正常均输静持，3万小幅胜出。6组压力仅3组过门，样本外未开，候选筛退。"
+      },
+      {
         "name": "美股 · SGOV公开行情补核",
         "status": "snapshot",
         "task": "SGOV 公开补核11月19日至25日五场，双源价格按美分一致。已付12笔每股合计3.646482美元，11月末月评仍待正式收盘，原账11月17日量修订告警保留。"
@@ -15537,7 +15542,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-26T10:33:35.008427+08:00",
+    "checked_at": "2026-11-26T10:40:44.771859+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -15769,7 +15774,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-26T10:33:33.879794+08:00",
+    "checked_at": "2026-11-26T10:40:43.294703+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -15863,7 +15868,7 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "eee73831ad0bf2237092c23dc3dba920500d88c69c8b0afe7375a6abfada5bed",
+    "mining_goal": "904dc980292ec6da7b740809c922b268149a1ed7938b26bb0594df7138bb2b2d",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
     "mining_team": "92dc002703c46e4556b3320fc151cd944138cbe235eaf4d1b4b87cb86bd5f8e7",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
@@ -16130,7 +16135,8 @@
     "hk_sfc_cover_market_breadth": "7ad5d731e2a7106adb303e36e199fd5a03e49da41090f535193a3303dcd77176",
     "hk_buyback_2026_transfer": "8851388a853557ba947609f77118bfac496a692cfca5954c5039ba1769a95f59",
     "hk_03086_public_recovery": "4b83393e3aea48b9700084395a357399ca4209b90ce353b226110afdb0e38b8b",
-    "us_sgov_public_recovery": "b51f948fedaf38efa5d16122b1516204fbd9dd7c4a49d5b5f1fa3a76e55bb656"
+    "us_sgov_public_recovery": "b51f948fedaf38efa5d16122b1516204fbd9dd7c4a49d5b5f1fa3a76e55bb656",
+    "us_ads_iwm_development": "79b348dfedd488cf27ebeaa337fbdc6797ea06b94fa035f88b6e20aa2454e699"
   },
   "filing_event": {
     "sources": [
