@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-26T11:51:44.745256+08:00",
+  "updated_at": "2026-11-26T12:02:20.730082+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
@@ -8968,6 +8968,11 @@
     "scope": "港美个股及普通非杠杆ETF；持续研究与原03086／SGOV纸面并行。",
     "owners": [
       {
+        "name": "美股 · 实际消费结构",
+        "status": "snapshot",
+        "task": "XLY／XLP消费结构择时核七份BEA原稿；2020年8月与9月数据同在10月不同日发布，按真实发布日建信号。尚未计收益。"
+      },
+      {
         "name": "美股 · 钻机择时开发结果",
         "status": "snapshot",
         "task": "XLE钻机择时核37期、34个信号。两种行情下毛收益−4.08%、回撤29.80%；虽较同频价格趋势跌得少，仍落后现金。开发筛退，留存未评分。"
@@ -15597,7 +15602,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-26T11:51:47.252548+08:00",
+    "checked_at": "2026-11-26T12:02:22.500375+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -15829,7 +15834,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-26T11:51:45.587229+08:00",
+    "checked_at": "2026-11-26T12:02:21.371241+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -15923,7 +15928,7 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "e1667f25ee24cbd362352cfc99199a099ebb9d091b6506251496d4e2181c5098",
+    "mining_goal": "0cb9065c2015166d5b66f6bfe090446d486f48e37f7b20a10fdc8e8fbf9f59ce",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
     "mining_team": "92dc002703c46e4556b3320fc151cd944138cbe235eaf4d1b4b87cb86bd5f8e7",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
@@ -16202,7 +16207,8 @@
     "hk_03152_issuer_nav_comparison": "06c17e88e6b29a09ef8bc343fcc6fc8b3debf583ccc904714198daee6c852ac2",
     "hk_03152_execution_bounds": "605c05e6c408ffa800b823a3bb9e369d5a66675b5def07bc9ec2b415f9deb9cd",
     "us_oil_rig_source_pilot": "fa726ef55ca18f261e90282176f8abc3b1050ceae395ca56df811ff7aae2849a",
-    "us_oil_rig_development": "9f9f0410bde97d6a8451477d6a2b928987fbd2323e7141e5db6fb05ee4bb3a05"
+    "us_oil_rig_development": "9f9f0410bde97d6a8451477d6a2b928987fbd2323e7141e5db6fb05ee4bb3a05",
+    "us_pce_composition_source": "a1abd95430b33872edb784e7757b7db35ac2b0b2b5b8b7ae9c91379330459649"
   },
   "filing_event": {
     "sources": [
