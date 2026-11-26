@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-26T12:40:04.886428+08:00",
+  "updated_at": "2026-11-26T12:47:51.294909+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
@@ -8968,6 +8968,11 @@
     "scope": "港美个股及普通非杠杆ETF；持续研究与原03086／SGOV纸面并行。",
     "owners": [
       {
+        "name": "美股 · 小企业开支开发结果",
+        "status": "snapshot",
+        "task": "NFIB开支信号双源毛约+12%，回撤43.19%，低于同频价格趋势+18.32%和静持+70.28%。晚一天仍落后；开发诊断筛退。"
+      },
+      {
         "name": "美股 · 小企业开支历史覆盖",
         "status": "snapshot",
         "task": "NFIB 20季中14季已定位数值和开盘，补取2019年3月原报告。两例镜像日期晚于同期报道，仍缺6季及部分首发证据，未计收益。"
@@ -15622,7 +15627,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-26T12:40:07.620458+08:00",
+    "checked_at": "2026-11-26T12:47:53.845016+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -15854,7 +15859,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-26T12:40:06.017913+08:00",
+    "checked_at": "2026-11-26T12:47:52.180249+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -15948,7 +15953,7 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "4b543399c92124dcbd86a283885be30d3694d36f0136db92ffcdc9bfcdeca067",
+    "mining_goal": "b58df6d94e28fc0f75f8e8c30a25fa1dc7f926c4954622db421f8d4069aab130",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
     "mining_team": "92dc002703c46e4556b3320fc151cd944138cbe235eaf4d1b4b87cb86bd5f8e7",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
@@ -16232,7 +16237,8 @@
     "us_pce_composition_development": "5d9a289d68d7ca3182117e06fcb0958805e823dbd3798abfbc16935f8c630d77",
     "us_epa_rfs_source": "afbc9af7743b81ce24ab84a61421ad5bb4bd42027756135b86916f592076360f",
     "us_nfib_capex_iwm_source": "5c1af8ee1a24a15dff94039e9c8e0e687c3f04e7a47f6319ea7e4282f2f38af4",
-    "us_nfib_capex_iwm_dates": "e96525c1031ac419e850cbef43a8e4bc0c2c5926440462299f59223acbafd677"
+    "us_nfib_capex_iwm_dates": "e96525c1031ac419e850cbef43a8e4bc0c2c5926440462299f59223acbafd677",
+    "us_nfib_capex_iwm_development": "450f047b562df49ec63d81b237c5e41a42d4a77ab45189c81383cc3a27790086"
   },
   "filing_event": {
     "sources": [
