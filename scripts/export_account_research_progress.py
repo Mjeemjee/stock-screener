@@ -3543,6 +3543,13 @@ def main():
                                                                                                     assert all(digest(russell_event.parent/name)==expected for name,expected in russell_review['pins'].items())
                                                                                                     extra_sources['us_russell_reconstitution_iwm']=russell_event
                                                                                                     current_work['owners'].insert(0,dict(name='美股 · 罗素2000重构事件',status='snapshot',task=russell_review['site_summary']))
+                                                                                                hkd_carry=cover.parent.parent/'hk-03110-03152-carry-20261122-v801/RESEARCH-GATE-v1.json'
+                                                                                                if hkd_carry.exists():
+                                                                                                    carry_review=read(hkd_carry)
+                                                                                                    assert (carry_review['orders'],carry_review['new_paper'])==(0,False)
+                                                                                                    assert all(digest(hkd_carry.parent/name)==expected for name,expected in carry_review['pins'].items())
+                                                                                                    extra_sources['hk_03110_03152_carry_result']=hkd_carry
+                                                                                                    current_work['owners'].insert(0,dict(name='港股 · 半仓高股息与港元货基',status='snapshot',task=carry_review['site_summary']))
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
