@@ -3473,6 +3473,13 @@ def main():
                                                                                             assert all(digest(cover.parent/name)==expected for name,expected in cover_review['pins'].items())
                                                                                             extra_sources['hk_sfc_cover_market_breadth']=cover
                                                                                             current_work['owners'].insert(0,dict(name='港股 · 淡仓回补市场广度',status='snapshot',task=cover_review['site_summary']))
+                                                                                            buyback_transfer=cover.parent.parent/'hk-buyback-breadth-2026-transfer-20261126-v833/RESEARCH-GATE-v1.json'
+                                                                                            if buyback_transfer.exists():
+                                                                                                transfer_review=read(buyback_transfer)
+                                                                                                assert (transfer_review['blocks'],transfer_review['cases'],transfer_review['above_cash'])==(21,12,1)
+                                                                                                assert all(digest(buyback_transfer.parent/name)==expected for name,expected in transfer_review['pins'].items())
+                                                                                                extra_sources['hk_buyback_2026_transfer']=buyback_transfer
+                                                                                                current_work['owners'].insert(0,dict(name='港股 · 回购广度2026迁移',status='snapshot',task=transfer_review['site_summary']))
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,

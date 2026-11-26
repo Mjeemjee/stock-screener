@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-26T10:13:10.926481+08:00",
+  "updated_at": "2026-11-26T10:20:14.566674+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
@@ -8968,6 +8968,11 @@
     "scope": "港美个股及普通非杠杆ETF；持续研究与原03086／SGOV纸面并行。",
     "owners": [
       {
+        "name": "港股 · 回购广度2026迁移",
+        "status": "snapshot",
+        "task": "回购择时追加2026历史。三档压力净−127／+80／+285港元，均落后03152；原前向规则不动。"
+      },
+      {
         "name": "港股 · 淡仓回补市场广度",
         "status": "snapshot",
         "task": "港股淡仓回补广度。开发23/25块有严格报价，信号方向反转，三种条件价均输货基；淘汰。"
@@ -15522,7 +15527,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-26T10:13:12.792332+08:00",
+    "checked_at": "2026-11-26T10:20:16.747960+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -15754,7 +15759,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-26T10:13:11.620730+08:00",
+    "checked_at": "2026-11-26T10:20:15.341557+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -15848,7 +15853,7 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "7503d3e54ef28acc14ce4983fe41e1ac5cbab4fe46c3483cb6e0cc4d497eb1b1",
+    "mining_goal": "bf6928701da32335e07bda7a83c95c34047b551ac8531c1bb2c360d1ae300379",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
     "mining_team": "92dc002703c46e4556b3320fc151cd944138cbe235eaf4d1b4b87cb86bd5f8e7",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
@@ -16112,7 +16117,8 @@
     "us_g17_manufacturing": "ae92a260ba358b010c50923ed72d948ccc180e21070821cdad4cdd5010f4a360",
     "hk_buyback_first_open_delay": "6021fe23837f93fa175a531a5b05bc1991dffe7b82748a97d320e01196d8ca7c",
     "us_cp_credit_quality": "519e207add456e996e0827eee85ac208aaf6a006ddd4f85c38a957772ff1bdb4",
-    "hk_sfc_cover_market_breadth": "7ad5d731e2a7106adb303e36e199fd5a03e49da41090f535193a3303dcd77176"
+    "hk_sfc_cover_market_breadth": "7ad5d731e2a7106adb303e36e199fd5a03e49da41090f535193a3303dcd77176",
+    "hk_buyback_2026_transfer": "8851388a853557ba947609f77118bfac496a692cfca5954c5039ba1769a95f59"
   },
   "filing_event": {
     "sources": [
