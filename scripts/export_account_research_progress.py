@@ -3620,6 +3620,13 @@ def main():
         assert all(digest(nfib_development.parent/name)==expected for name,expected in review['pins'].items())
         extra_sources['us_nfib_capex_iwm_development']=nfib_development
         current_work['owners'].insert(0,dict(name='美股 · 小企业开支开发结果',status='snapshot',task=review['site_summary']))
+    mub_source=MINING/'us-mub-nav-20261126-v853/RESEARCH-GATE-v1.json'
+    if mub_source.exists():
+        review=read(mub_source)
+        assert (review['orders'],review['new_paper'])==(0,False)
+        assert all(digest(mub_source.parent/name)==expected for name,expected in review['pins'].items())
+        extra_sources['us_mub_nav_development']=mub_source
+        current_work['owners'].insert(0,dict(name='美股 · 市政债净值折价',status='snapshot',task=review['site_summary']))
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
