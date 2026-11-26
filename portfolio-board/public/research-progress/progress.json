@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-25T15:21:57.595867+08:00",
+  "updated_at": "2026-11-26T10:00:09.370997+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
@@ -8968,6 +8968,16 @@
     "scope": "港美个股及普通非杠杆ETF；持续研究与原03086／SGOV纸面并行。",
     "owners": [
       {
+        "name": "港股 · 回购首开错过记录",
+        "status": "snapshot",
+        "task": "11月26日09:10前未存纸面计划，首开错过且不回填。原区块不重置，准备11月27日按实时证据重试，0成交。"
+      },
+      {
+        "name": "美股 · 制造业产量择时",
+        "status": "snapshot",
+        "task": "美联储制造业产出择时。费后开发仅2/24胜SGOV、后段24/24，但后段全输VTI，暂不晋级。"
+      },
+      {
         "name": "港股 · 回购策略与静态整手对照",
         "status": "snapshot",
         "task": "回购择时对静态整手配置。2025两万／三万近似股票敞口下多赚1,840／4,034港元；一万对可买一手的配置少赚365港元、回撤低。"
@@ -15502,7 +15512,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-25T15:21:58.870315+08:00",
+    "checked_at": "2026-11-26T10:00:11.083862+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -15734,7 +15744,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-25T15:21:58.080539+08:00",
+    "checked_at": "2026-11-26T10:00:09.994553+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -15828,7 +15838,7 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "5e1a6fd5d625fd63b79e78600210896204f0f425cc971c704cbc93da97e5744b",
+    "mining_goal": "75cc6af6c12c1f3618cf39284eaaea2a7049a54008cf815d46ed8ba130f86d42",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
     "mining_team": "92dc002703c46e4556b3320fc151cd944138cbe235eaf4d1b4b87cb86bd5f8e7",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
@@ -16088,7 +16098,9 @@
     "us_cftc_es_crowding": "c24c524c17404d967954232e85b4ba270007a293a2b79aa01d4f9598d0416dc2",
     "hk_buyback_breadth_hsi": "c8edc6389a5365de79c8b7a71c66225ee665ccace078cb5d0801d87b99773908",
     "hk_buyback_breadth_forward": "459a73ce10109a36d34fca7f18cd809768ada24071bea1624531488c88181515",
-    "hk_buyback_static_mix": "85f3d6c530b355b26dac4b9bb78cbf34551c5ea9877a19f589c3aeb8647fc4c3"
+    "hk_buyback_static_mix": "85f3d6c530b355b26dac4b9bb78cbf34551c5ea9877a19f589c3aeb8647fc4c3",
+    "us_g17_manufacturing": "ae92a260ba358b010c50923ed72d948ccc180e21070821cdad4cdd5010f4a360",
+    "hk_buyback_first_open_delay": "6021fe23837f93fa175a531a5b05bc1991dffe7b82748a97d320e01196d8ca7c"
   },
   "filing_event": {
     "sources": [
