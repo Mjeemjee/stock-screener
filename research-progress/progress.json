@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-26T12:23:44.866679+08:00",
+  "updated_at": "2026-11-26T12:30:27.314681+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
@@ -8968,6 +8968,11 @@
     "scope": "港美个股及普通非杠杆ETF；持续研究与原03086／SGOV纸面并行。",
     "owners": [
       {
+        "name": "美股 · 小企业资本开支",
+        "status": "snapshot",
+        "task": "NFIB开支计划三期22%／28%／22%，发布日期有旁证，IWM下一完整场次双源开盘一致。连续历史首发待核，未评分。"
+      },
+      {
         "name": "美股 · 炼油合规事件",
         "status": "snapshot",
         "task": "炼油政策候选核四份EPA原件，已有行情内两次公告均提高义务、零入场，未计收益。VCSH发行人仍未覆盖11月25日，原纸面无新增成交。"
@@ -15612,7 +15617,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-26T12:23:46.599502+08:00",
+    "checked_at": "2026-11-26T12:30:29.859281+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -15844,7 +15849,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-26T12:23:45.484933+08:00",
+    "checked_at": "2026-11-26T12:30:28.236727+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -15938,7 +15943,7 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "5fba714cf3416b6b6621ea8ab305c464fbbef72cc7e921a291345cd5b56e79b1",
+    "mining_goal": "f7886ff2724579ef36841c5bdb1195b456a5bcae87740956cd23050e5640bc26",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
     "mining_team": "92dc002703c46e4556b3320fc151cd944138cbe235eaf4d1b4b87cb86bd5f8e7",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
@@ -16220,7 +16225,8 @@
     "us_oil_rig_development": "9f9f0410bde97d6a8451477d6a2b928987fbd2323e7141e5db6fb05ee4bb3a05",
     "us_pce_composition_source": "a1abd95430b33872edb784e7757b7db35ac2b0b2b5b8b7ae9c91379330459649",
     "us_pce_composition_development": "5d9a289d68d7ca3182117e06fcb0958805e823dbd3798abfbc16935f8c630d77",
-    "us_epa_rfs_source": "afbc9af7743b81ce24ab84a61421ad5bb4bd42027756135b86916f592076360f"
+    "us_epa_rfs_source": "afbc9af7743b81ce24ab84a61421ad5bb4bd42027756135b86916f592076360f",
+    "us_nfib_capex_iwm_source": "5c1af8ee1a24a15dff94039e9c8e0e687c3f04e7a47f6319ea7e4282f2f38af4"
   },
   "filing_event": {
     "sources": [
