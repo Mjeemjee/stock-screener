@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-25T22:48:05.082626+00:00",
+  "generated_at": "2026-11-26T22:36:02.190356+00:00",
   "definition_hash": "ffac6ed3d6ab96da346e18a8b2e6da7fab8f376a907807291b2b5a3ad63b2fc9",
   "policy": {
     "version": "liq-momentum-forward-v2",
@@ -25,8 +25,8 @@
       "market": "HK",
       "quality": {
         "market": "HK",
-        "session": 20261125,
-        "valid": 193,
+        "session": 20261126,
+        "valid": 186,
         "total": 218,
         "status": "ready"
       },
@@ -231,8 +231,9 @@
               },
               {
                 "code": "HK.09969",
-                "status": "missing_entry",
-                "return_pct": null
+                "status": "pending",
+                "return_pct": null,
+                "entry_price": 10.39
               },
               {
                 "code": "HK.00826",
@@ -564,8 +565,9 @@
               },
               {
                 "code": "HK.09969",
-                "status": "missing_entry",
-                "return_pct": null
+                "status": "pending",
+                "return_pct": null,
+                "entry_price": 10.39
               },
               {
                 "code": "HK.02142",
@@ -913,8 +915,9 @@
             },
             {
               "code": "HK.09969",
-              "status": "missing_entry",
-              "return_pct": null
+              "status": "pending",
+              "return_pct": null,
+              "entry_price": 10.39
             },
             {
               "code": "HK.00826",
@@ -967,7 +970,7 @@
       "quality": {
         "market": "US",
         "session": 20261125,
-        "valid": 210,
+        "valid": 212,
         "total": 259,
         "status": "ready"
       },
@@ -1216,7 +1219,7 @@
                 "code": "US.NEM",
                 "status": "pending",
                 "return_pct": null,
-                "entry_price": 103.67
+                "entry_price": 103.4
               },
               {
                 "code": "US.DDOG",
@@ -1993,7 +1996,7 @@
               "code": "US.NEM",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 103.67
+              "entry_price": 103.4
             },
             {
               "code": "US.DDOG",
@@ -2227,9 +2230,9 @@
             {
               "code": "US.NEM",
               "status": "matured",
-              "return_pct": -11.91456,
-              "entry_price": 117.34,
-              "exit_price": 103.67
+              "return_pct": -11.91426,
+              "entry_price": 117.034,
+              "exit_price": 103.4
             },
             {
               "code": "US.PWR",
@@ -3147,9 +3150,9 @@
           {
             "code": "US.NEM",
             "status": "matured",
-            "return_pct": -12.178421,
-            "entry_price": 117.34,
-            "exit_price": 103.67
+            "return_pct": -12.178123,
+            "entry_price": 117.034,
+            "exit_price": 103.4
           },
           {
             "code": "US.PWR",
@@ -3288,9 +3291,10 @@
             },
             {
               "code": "HK.02028",
-              "status": "missing_exit",
-              "return_pct": null,
-              "entry_price": 2.1
+              "status": "matured",
+              "return_pct": -33.295652,
+              "entry_price": 2.1,
+              "exit_price": 1.405
             },
             {
               "code": "HK.01070",
@@ -3440,9 +3444,10 @@
             },
             {
               "code": "HK.09969",
-              "status": "missing_exit",
-              "return_pct": null,
-              "entry_price": 11.77
+              "status": "matured",
+              "return_pct": -11.989153,
+              "entry_price": 11.77,
+              "exit_price": 10.39
             },
             {
               "code": "HK.00267",
@@ -3547,13 +3552,14 @@
         },
         "momentum": {
           "count": 38,
-          "complete": false,
+          "complete": true,
           "holdings": [
             {
               "code": "HK.02028",
-              "status": "missing_exit",
-              "return_pct": null,
-              "entry_price": 2.1
+              "status": "matured",
+              "return_pct": -33.295652,
+              "entry_price": 2.1,
+              "exit_price": 1.405
             },
             {
               "code": "HK.00622",
@@ -3815,7 +3821,7 @@
               "exit_price": 27.5
             }
           ],
-          "return_pct": null
+          "return_pct": -3.6098652631578956
         },
         "liquidity": {
           "count": 38,
@@ -3995,8 +4001,8 @@
             {
               "code": "HK.06881",
               "status": "matured",
-              "return_pct": -4.578349,
-              "entry_price": 6.734,
+              "return_pct": -6.941434,
+              "entry_price": 6.905,
               "exit_price": 6.445
             },
             {
@@ -4101,9 +4107,10 @@
           },
           {
             "code": "HK.02028",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 2.1
+            "status": "matured",
+            "return_pct": -33.495466,
+            "entry_price": 2.1,
+            "exit_price": 1.405
           },
           {
             "code": "HK.01070",
@@ -4253,9 +4260,10 @@
           },
           {
             "code": "HK.09969",
-            "status": "missing_exit",
-            "return_pct": null,
-            "entry_price": 11.77
+            "status": "matured",
+            "return_pct": -12.252791,
+            "entry_price": 11.77,
+            "exit_price": 10.39
           },
           {
             "code": "HK.00267",
@@ -4590,7 +4598,7 @@
               "code": "US.NEM",
               "status": "pending",
               "return_pct": null,
-              "entry_price": 103.67
+              "entry_price": 103.4
             },
             {
               "code": "US.DDOG",
@@ -5367,7 +5375,7 @@
             "code": "US.NEM",
             "status": "pending",
             "return_pct": null,
-            "entry_price": 103.67
+            "entry_price": 103.4
           },
           {
             "code": "US.DDOG",
@@ -5590,8 +5598,9 @@
             },
             {
               "code": "HK.09969",
-              "status": "missing_entry",
-              "return_pct": null
+              "status": "pending",
+              "return_pct": null,
+              "entry_price": 10.39
             },
             {
               "code": "HK.00826",
@@ -5923,8 +5932,9 @@
             },
             {
               "code": "HK.09969",
-              "status": "missing_entry",
-              "return_pct": null
+              "status": "pending",
+              "return_pct": null,
+              "entry_price": 10.39
             },
             {
               "code": "HK.02142",
@@ -6272,8 +6282,9 @@
           },
           {
             "code": "HK.09969",
-            "status": "missing_entry",
-            "return_pct": null
+            "status": "pending",
+            "return_pct": null,
+            "entry_price": 10.39
           },
           {
             "code": "HK.00826",
