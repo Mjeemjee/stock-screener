@@ -3655,6 +3655,13 @@ def main():
         assert all(digest(sgov_cash_continuity.parent/name)==expected for name,expected in review['pins'].items())
         extra_sources['us_sgov_cash_continuity']=sgov_cash_continuity
         current_work['owners'].insert(0,dict(name='美股 · SGOV现金连续性补核',status='snapshot',task=review['site_summary']))
+    hk_dual_execution=MINING/'hk-03110-03152-dual-execution-20261126-v858/RESEARCH-GATE-v1.json'
+    if hk_dual_execution.exists():
+        review=read(hk_dual_execution)
+        assert (review['orders'],review['new_paper'])==(0,False)
+        assert all(digest(hk_dual_execution.parent/name)==expected for name,expected in review['pins'].items())
+        extra_sources['hk_03110_03152_dual_execution']=hk_dual_execution
+        current_work['owners'].insert(0,dict(name='港股 · 高股息与货基成交边界',status='snapshot',task=review['site_summary']))
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
