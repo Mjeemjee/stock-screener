@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-26T14:48:25.499003+08:00",
+  "updated_at": "2026-11-26T14:59:46.902274+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
@@ -8968,6 +8968,11 @@
     "scope": "港美个股及普通非杠杆ETF；持续研究与原03086／SGOV纸面并行。",
     "owners": [
       {
+        "name": "美股 · AEHR重组与同期订单",
+        "status": "snapshot",
+        "task": "AEHR重组后两份订单公告的正文日与网页时点均相差一天。首发盘前时间未证，暂不计入独立重组收益。"
+      },
+      {
         "name": "美股 · 短债发行人日期核验",
         "status": "snapshot",
         "task": "短债组合11月25日双报价已核。两只发行人拆股端点可到25日，基金资料市价与净值仍为24日，原账停在24日。"
@@ -15682,7 +15687,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-26T14:48:27.441473+08:00",
+    "checked_at": "2026-11-26T14:59:48.943139+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -15914,7 +15919,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-26T14:48:26.210460+08:00",
+    "checked_at": "2026-11-26T14:59:47.637065+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -16008,7 +16013,7 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "f2d09e80562811313abc3bdcdb840fbe4814cbf415c16d3b5b70eed8c36eba02",
+    "mining_goal": "1744a2458b429a2282f9a304efabe4dfc54179af1fe86df3df9eff1a6726f8bc",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
     "mining_team": "92dc002703c46e4556b3320fc151cd944138cbe235eaf4d1b4b87cb86bd5f8e7",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
@@ -16304,7 +16309,8 @@
     "hk_03086_score_plan": "de3de3db7f1331dd07ba620135763fd858f745a6e29e1425c4b6b05a05753a50",
     "hk_03086_static_reference": "1ad6c930f9db17291e81b30ea5a1c6ebdb688683915c29077f3f34c729403224",
     "hk_03086_static_observe": "6d0ba8171b4d11b4c2b6b52b534c8262886ae521e841617ffc38f895f3e196fd",
-    "vcsh_issuer_diagnosis": "8e67e6ab557e2748ebf7d9a29ed9e250f0fee7a16e9f5b17d1202d96e473539e"
+    "vcsh_issuer_diagnosis": "8e67e6ab557e2748ebf7d9a29ed9e250f0fee7a16e9f5b17d1202d96e473539e",
+    "us_aehr_catalyst_overlap": "9998f038e64d5c88d5c8682034e5de0fa1eeaff3d2e4f5bc5fb2db0aa412ba71"
   },
   "filing_event": {
     "sources": [
