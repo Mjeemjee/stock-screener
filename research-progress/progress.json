@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-26T12:02:20.730082+08:00",
+  "updated_at": "2026-11-26T12:13:37.355652+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
@@ -8968,6 +8968,11 @@
     "scope": "港美个股及普通非杠杆ETF；持续研究与原03086／SGOV纸面并行。",
     "owners": [
       {
+        "name": "美股 · 消费结构开发结果",
+        "status": "snapshot",
+        "task": "消费结构轮动19期，双源毛+14.20%、收市回撤32.49%，落后同频趋势+42.15%与静态等权+27.45%，开发筛退。"
+      },
+      {
         "name": "美股 · 实际消费结构",
         "status": "snapshot",
         "task": "XLY／XLP消费结构择时核七份BEA原稿；2020年8月与9月数据同在10月不同日发布，按真实发布日建信号。尚未计收益。"
@@ -15602,7 +15607,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-26T12:02:22.500375+08:00",
+    "checked_at": "2026-11-26T12:13:43.662606+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -15834,7 +15839,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-26T12:02:21.371241+08:00",
+    "checked_at": "2026-11-26T12:13:38.944669+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -16208,7 +16213,8 @@
     "hk_03152_execution_bounds": "605c05e6c408ffa800b823a3bb9e369d5a66675b5def07bc9ec2b415f9deb9cd",
     "us_oil_rig_source_pilot": "fa726ef55ca18f261e90282176f8abc3b1050ceae395ca56df811ff7aae2849a",
     "us_oil_rig_development": "9f9f0410bde97d6a8451477d6a2b928987fbd2323e7141e5db6fb05ee4bb3a05",
-    "us_pce_composition_source": "a1abd95430b33872edb784e7757b7db35ac2b0b2b5b8b7ae9c91379330459649"
+    "us_pce_composition_source": "a1abd95430b33872edb784e7757b7db35ac2b0b2b5b8b7ae9c91379330459649",
+    "us_pce_composition_development": "5d9a289d68d7ca3182117e06fcb0958805e823dbd3798abfbc16935f8c630d77"
   },
   "filing_event": {
     "sources": [
