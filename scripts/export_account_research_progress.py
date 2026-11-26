@@ -3466,6 +3466,13 @@ def main():
                                                                                         assert all(digest(cp.parent/name)==expected for name,expected in cp_review['pins'].items())
                                                                                         extra_sources['us_cp_credit_quality']=cp
                                                                                         current_work['owners'].insert(0,dict(name='美股 · 商业票据信用利差',status='snapshot',task=cp_review['site_summary']))
+                                                                                        cover=cp.parent.parent/'hk-sfc-cover-breadth-20261126-v832/RESEARCH-GATE-v1.json'
+                                                                                        if cover.exists():
+                                                                                            cover_review=read(cover)
+                                                                                            assert (cover_review['strict_price_blocks'],cover_review['scheduled_blocks'])==(23,25)
+                                                                                            assert all(digest(cover.parent/name)==expected for name,expected in cover_review['pins'].items())
+                                                                                            extra_sources['hk_sfc_cover_market_breadth']=cover
+                                                                                            current_work['owners'].insert(0,dict(name='港股 · 淡仓回补市场广度',status='snapshot',task=cover_review['site_summary']))
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
