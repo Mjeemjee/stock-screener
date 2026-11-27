@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-27T11:51:55.251423+08:00",
+  "updated_at": "2026-11-27T11:57:59.472820+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
@@ -9017,6 +9017,11 @@
     "scope": "港美个股及普通非杠杆ETF；持续研究与原03086／SGOV纸面并行。",
     "owners": [
       {
+        "name": "港股 · 03086 整手持有参照",
+        "status": "snapshot",
+        "task": "2024–2026年3万压力历史：月度趋势扣费清算+1,579港币、收盘回撤5.55%；静持一手+4,592、回撤7.16%。平均仓位26.5%与28.6%，前向资格未改变。"
+      },
+      {
         "name": "美股 · 下行贝塔补偿",
         "status": "snapshot",
         "task": "2014–2019年固定40股；20／60日毛差+54／+169bp，HAC t为1.01／0.79，双期限未通过。普通贝塔秩相关0.89，无账户或纸面净利。"
@@ -15871,7 +15876,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-27T11:51:56.720218+08:00",
+    "checked_at": "2026-11-27T11:58:00.915909+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -16103,7 +16108,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-27T11:51:55.807255+08:00",
+    "checked_at": "2026-11-27T11:58:00.031958+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -16197,7 +16202,7 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "7d981c24235eca866f68e5b58e6187c8be8455ed70ea0ac4a8f7b96a54887e57",
+    "mining_goal": "f9d8f686ff3527ea9f8eb707e0dc86d4cfa290070f55bb75dc7dd6221d98e286",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
     "mining_team": "92dc002703c46e4556b3320fc151cd944138cbe235eaf4d1b4b87cb86bd5f8e7",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
@@ -16521,7 +16526,8 @@
     "hk_carrier_paired": "104db045fa00d63040eee3aae73656b730b12b767d7853141b684f08db925dd0",
     "hk_carrier_fx_observed": "10b238f82d6980972bc02f583ea27ac60617640a1192140276342bd64b072f0e",
     "hk_public_fee": "1989253754a79425e85e399133938114a76409842dcd69ad5ee4f9a178be74f1",
-    "us_downside_beta": "737bd70a76db8d288a4ee2aa67fbe3c8a28a941ed60b6f7d2f876e6478a44ba5"
+    "us_downside_beta": "737bd70a76db8d288a4ee2aa67fbe3c8a28a941ed60b6f7d2f876e6478a44ba5",
+    "hk_exposure_benchmark": "81b8297b5c2a1b29176747fb70e475be8aad3179e91b632899ca49e8c37c426c"
   },
   "filing_event": {
     "sources": [
