@@ -3941,6 +3941,13 @@ def main():
         assert all(digest(hk_buyback_static_2026.parent/name)==expected for name,expected in review['pins'].items())
         extra_sources['hk_buyback_static_2026']=hk_buyback_static_2026
         current_work['owners'].insert(0,dict(name='港股 · 回购广度静态参照',status='snapshot',task=review['site_summary']))
+    hk_buyback_early=MINING/'hk-buyback-2022-cash-mechanism-20261127-v895/RESEARCH-GATE-v1.json'
+    if hk_buyback_early.exists():
+        review=read(hk_buyback_early)
+        assert (review['orders'],review['new_paper'])==(0,False)
+        assert all(digest(hk_buyback_early.parent/name)==expected for name,expected in review['pins'].items())
+        extra_sources['hk_buyback_early']=hk_buyback_early
+        current_work['owners'].insert(0,dict(name='港股 · 回购广度早期检验',status='snapshot',task=review['site_summary']))
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
