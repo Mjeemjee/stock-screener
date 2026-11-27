@@ -4060,6 +4060,13 @@ def main():
         assert all(digest(us_accrual_quote_coverage.parent/name)==expected for name,expected in review['pins'].items())
         extra_sources['us_accrual_quote_coverage']=us_accrual_quote_coverage
         current_work['owners'].insert(0,dict(name='美股 · 低应计全期日线覆盖',status='snapshot',task=review['site_summary']))
+    nov30_plan=MINING/'hk-buyback-nov30-seal-20261127-v913/RESEARCH-GATE-v1.json'
+    if nov30_plan.exists():
+        review=read(nov30_plan)
+        assert (review['orders'],review['simulated_fills'])==(0,0)
+        assert all(digest(nov30_plan.parent/name)==expected for name,expected in review['pins'].items())
+        extra_sources['hk_buyback_nov30_plan']=nov30_plan
+        current_work['owners'].insert(0,dict(name='港股 · 回购纸面登记',status='snapshot',task=review['site_summary']))
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
