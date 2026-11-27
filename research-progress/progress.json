@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-27T10:20:58.088315+08:00",
+  "updated_at": "2026-11-27T10:26:43.517964+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
@@ -8968,6 +8968,11 @@
     "scope": "港美个股及普通非杠杆ETF；持续研究与原03086／SGOV纸面并行。",
     "owners": [
       {
+        "name": "港股 · 03110／03152 开盘预检",
+        "status": "snapshot",
+        "task": "03110 已由每手100改为50股；两腿可参与开盘竞价。三档预算预检完成，首次候选开盘为2027年1月4、5日，尚无登记或成交。"
+      },
+      {
         "name": "美股 · IVV 月末月初",
         "status": "snapshot",
         "task": "月末至月初IVV历史毛收益通过；3万档2023–2025年压力净亏1,659.78港币，低于现金，筛退。1万亏损及2万收益集中均在开发期淘汰。"
@@ -15722,7 +15727,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-27T10:20:59.490523+08:00",
+    "checked_at": "2026-11-27T10:26:44.985711+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -15954,7 +15959,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-27T10:20:58.604910+08:00",
+    "checked_at": "2026-11-27T10:26:44.059529+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -16048,7 +16053,7 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "702027564d953ff663f328ac3a2b8e3047d1484827b8a205a59e9dd7e2e02f8b",
+    "mining_goal": "4978b8da303ded18b2a000d9f7f9ffc3ac55eb8737461f230fbe22bf8a468a39",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
     "mining_team": "92dc002703c46e4556b3320fc151cd944138cbe235eaf4d1b4b87cb86bd5f8e7",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
@@ -16352,7 +16357,8 @@
     "hk_buyback_retry_nov30": "578981d3f0e4a17bfc304f8aa0a34ff6c7675fa92b88a3d665c7845ce9e1b830",
     "hk_03086_nov26": "722385a08d571d020f295aaaa74ea53f1306de5d30f80263025c947342ab6f22",
     "us_vix9d_screen": "be75dcb6eab295ec15a42bc36f12cd3ecf6bc4240992646146077ce2657c13b6",
-    "us_ivv_month_turn": "497e8af316faa77a06e76359f6961db361aac77470a61e20ab968f26bf595756"
+    "us_ivv_month_turn": "497e8af316faa77a06e76359f6961db361aac77470a61e20ab968f26bf595756",
+    "hk_dual_etf_preflight": "9140cf85815c54cb4e3b66a9bbdbff50ccce70e73991a03676bdf92a748d6669"
   },
   "filing_event": {
     "sources": [
