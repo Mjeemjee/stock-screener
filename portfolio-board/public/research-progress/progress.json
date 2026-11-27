@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-27T11:08:59.824836+08:00",
+  "updated_at": "2026-11-27T11:16:31.430803+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
@@ -8968,6 +8968,11 @@
     "scope": "港美个股及普通非杠杆ETF；持续研究与原03086／SGOV纸面并行。",
     "owners": [
       {
+        "name": "港股 · 03440 盘后独立复核",
+        "status": "snapshot",
+        "task": "03440／03152盘后官方竞价复核已接入独立记录；次日依赖09:00前封存的首日证据与两日计划。尚无真实登记或成交。"
+      },
+      {
         "name": "港股 · 交易所竞价量审查",
         "status": "snapshot",
         "task": "港交所七场日报重核：28份证券日销量对平，15个普通开盘竞价价格匹配，03440只1场有普通竞价。未用于补账。"
@@ -15777,7 +15782,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-27T11:09:01.200964+08:00",
+    "checked_at": "2026-11-27T11:16:35.477684+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -16009,7 +16014,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-27T11:09:00.341251+08:00",
+    "checked_at": "2026-11-27T11:16:32.563909+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -16103,7 +16108,7 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "351f623eb593f188ed4cc724b526e33e15f8708d8f3bd8333c0fa82f62b04390",
+    "mining_goal": "3a1d80cb1774d22c8c3d9ab5cabdb9d02df2bb5b5742248d67a83c8d50bc7d93",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
     "mining_team": "92dc002703c46e4556b3320fc151cd944138cbe235eaf4d1b4b87cb86bd5f8e7",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
@@ -16418,7 +16423,8 @@
     "hk_carrier_fx": "66cba475a5e218dd265c3f52e8f22ffcfab8302bed459d6e297ba92c97e73ff5",
     "hk_carrier_forward": "f0ace37930bab559404239182e3d5b308e0d3ae940fe5d683d496b5ffd23efe6",
     "hk_carrier_open": "f2902073b9834a4131eb256ef06f398c0768543bb97dcfc5ce63d52678968bef",
-    "hk_auction_audit": "56d97b32782eeaf6dc407dd38d206f325fe93cd78a6579de185c99859e8496ef"
+    "hk_auction_audit": "56d97b32782eeaf6dc407dd38d206f325fe93cd78a6579de185c99859e8496ef",
+    "hk_official_shadow": "b89e0e4780ea28eec606cf7b68d4bb32b9b0d8b5b59ac441da7c4034a9922b73"
   },
   "filing_event": {
     "sources": [
