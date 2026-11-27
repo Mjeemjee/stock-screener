@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-27T13:49:43.598542+08:00",
+  "updated_at": "2026-11-27T13:56:41.548914+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
@@ -9017,6 +9017,11 @@
     "scope": "港美个股及普通非杠杆ETF；持续研究与原03086／SGOV纸面并行。",
     "owners": [
       {
+        "name": "美股 · 低应计行情口径试查",
+        "status": "snapshot",
+        "task": "低应计九个行情窗：Yahoo三组拆股后连轴，退市三例缺价；ChartExchange ATVI有末场、RTN与AGN身份冲突。Tiingo目录183／187，仍待实际原价。"
+      },
+      {
         "name": "美股 · 低应计复验财报覆盖",
         "status": "snapshot",
         "task": "低应计181主体、1389份年报；保守申报日后72月每月92–109家三项齐全。仍待证券、行业和退出核验，未计收益。"
@@ -15966,7 +15971,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-27T13:49:45.033874+08:00",
+    "checked_at": "2026-11-27T13:56:43.199183+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -16198,7 +16203,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-27T13:49:44.132124+08:00",
+    "checked_at": "2026-11-27T13:56:42.176186+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -16292,7 +16297,7 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "554484650c1fac93350ce34db0c837205c4ad6de043e01a4e8b105e9821b35b8",
+    "mining_goal": "1b3a84673238de3a179a308c6906990fd76d780200953f62969b155ad2f6d9be",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
     "mining_team": "92dc002703c46e4556b3320fc151cd944138cbe235eaf4d1b4b87cb86bd5f8e7",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
@@ -16635,7 +16640,8 @@
     "us_low_accrual": "245ba96c3ffe7e1e6b3fa585ad437ebe606e42d277616d832042b58b7e096fdc",
     "us_accrual_roster": "9c61aae3bce4482820f79a700e3b23dc098e9e36567dbf318ce497485085fb2f",
     "us_accrual_symbols": "89fe0e08f9179876c73326445601cbc1f802887abcd82389ef999bd012dc219f",
-    "us_accrual_financials": "bc205d2b0cd3bba7c423fb62f1848b41d52b90c9c89c5aa2044ae9e321dd5d85"
+    "us_accrual_financials": "bc205d2b0cd3bba7c423fb62f1848b41d52b90c9c89c5aa2044ae9e321dd5d85",
+    "us_accrual_quotes": "284c8fbf61129332c0358b75a02a64531e893fbef1854e92ac81ef3dc902c4a7"
   },
   "filing_event": {
     "sources": [
