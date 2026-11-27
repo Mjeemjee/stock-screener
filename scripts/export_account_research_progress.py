@@ -458,6 +458,26 @@ def new_factor_research():
     if amihud:report['items'].append(amihud['site_factor'])
     peer_delay=accepted_peer_delay_review()
     if peer_delay:report['items'].append(peer_delay['site_factor'])
+    downside_beta=MINING/'us-downside-beta-20261127-v890/RESEARCH-GATE-v1.json'
+    if downside_beta.exists():
+        gate=read(downside_beta)
+        result_path=downside_beta.parent/'RESULT-v1.json'
+        assert digest(result_path)==gate['pins'][result_path.name]
+        results=read(result_path)['horizons']
+        diagnostics=[]
+        for h in (20,60):
+            row=results[str(h)]
+            ic=row['inference']['rank_ic']
+            assert not row['decision']['pass_training_diagnostic']
+            diagnostics.append(dict(horizon=h,split='固定训练 · 毛权益诊断',period='2014-06-01 — 2019-12-31',
+                rank_ic=ic['mean'],hac_t=ic['t'],p_value=row['decision']['p_bonferroni_two_horizons_only'],
+                p_label='两期限批内p',top_excess_bp=row['means']['top_excess']*10000,measure='gross_rights'))
+        report['items'].append(dict(id='us_downside_beta_compensation_252',name='美股 · 下行贝塔补偿',
+            formula='过去252日，在同池剔除自身的等权收益为负的交易日上估计个股贝塔，高值优先。',
+            status='rejected',status_label='固定方向双期限筛退',horizons=[20,60],diagnostics=diagnostics,
+            account_net_hkd=None,account_max_drawdown_pct=None,conclusion=gate['site_summary'],
+            limitation='当前40只幸存股的已见训练，平均普通贝塔秩相关0.891，毛权益标签含未到账分派。',
+            next='保留初筛结果，本版本不进入成本后账户或纸面。'))
     ids=[r['id'] for r in report['items']]
     assert len(ids)==len(set(ids)), 'A signal cannot be counted twice'
     report['unique_new_signals']=len(ids)
@@ -3886,6 +3906,13 @@ def main():
         assert all(digest(hk_public_fee.parent/name)==expected for name,expected in review['pins'].items())
         extra_sources['hk_public_fee']=hk_public_fee
         current_work['owners'].insert(0,dict(name='港美 · 公开收费核验',status='snapshot',task=review['site_summary']))
+    us_downside_beta=MINING/'us-downside-beta-20261127-v890/RESEARCH-GATE-v1.json'
+    if us_downside_beta.exists():
+        review=read(us_downside_beta)
+        assert (review['orders'],review['new_paper'])==(0,False)
+        assert all(digest(us_downside_beta.parent/name)==expected for name,expected in review['pins'].items())
+        extra_sources['us_downside_beta']=us_downside_beta
+        current_work['owners'].insert(0,dict(name='美股 · 下行贝塔补偿',status='snapshot',task=review['site_summary']))
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
