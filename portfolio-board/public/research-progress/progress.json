@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-27T11:35:28.462770+08:00",
+  "updated_at": "2026-11-27T11:39:46.577699+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
@@ -8968,6 +8968,11 @@
     "scope": "港美个股及普通非杠杆ETF；持续研究与原03086／SGOV纸面并行。",
     "owners": [
       {
+        "name": "港美 · 短债外汇参考复算",
+        "status": "snapshot",
+        "task": "用ECB同日参考外汇价格复算：2026零换汇费SGOV三档领先，50bp/边03440仍领先，一万仅1.68港币。"
+      },
+      {
         "name": "港股 · 双ETF配对开盘",
         "status": "snapshot",
         "task": "03440与03152同窗价量复核：2万／3万两只均支持正常入场分别2／1窗，漏首均0窗。不是实际成交。"
@@ -15807,7 +15812,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-27T11:35:29.852147+08:00",
+    "checked_at": "2026-11-27T11:39:47.982024+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -16039,7 +16044,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-27T11:35:28.984651+08:00",
+    "checked_at": "2026-11-27T11:39:47.110605+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -16133,7 +16138,7 @@
     "IPO_public_cash_terms": "807ce6ec6bbb6f80fd9cd44ebb30954a291a646ce60ebcd3fc2ae58290bbb3f0",
     "US_VTI_2025_cash_bridge": "ed3efc08b2b2ab3156ba7de9ef8df847f6261362600fd2443504592ce4217112",
     "user_paper_transition": "4c2792b7a5cc3710bcbebe0242d7b76a060c0ee0999a5e27eafddb26d6a400c3",
-    "mining_goal": "b014540f2938b509088818bdc87db4b1f581cb519cf9018b2c68b380e8313e25",
+    "mining_goal": "1c209a29526ddb1c26000bb55c38d7668f12a3c6ee443c05560c2f7ee4a8493a",
     "mining_scope": "3e78da9950d1a3833756d01c0fdabfa9e500e5742fad8d12e7e23e4c86f273d0",
     "mining_team": "92dc002703c46e4556b3320fc151cd944138cbe235eaf4d1b4b87cb86bd5f8e7",
     "fip_protocol": "30b8769d6903186528a1f6793fbbc0f04a229f05b1d2f44313e80d3765adbb57",
@@ -16454,7 +16459,8 @@
     "hk_carrier_daily_source": "98f4fbf1b2ccd52e45fa9bdace2c43bf13c378c1c3be193bfbce754ccf2a13df",
     "us_rsp_reversal": "ea2ca6c52d3bb8533f5cc16d8079b66b42a2aa6fdbcdec245c98a7414174b1ff",
     "hk_carrier_capacity": "d15f42f6975e6fb6313d87b7b81386937d5e447e18abe70c1e75520ff4e0a13d",
-    "hk_carrier_paired": "104db045fa00d63040eee3aae73656b730b12b767d7853141b684f08db925dd0"
+    "hk_carrier_paired": "104db045fa00d63040eee3aae73656b730b12b767d7853141b684f08db925dd0",
+    "hk_carrier_fx_observed": "10b238f82d6980972bc02f583ea27ac60617640a1192140276342bd64b072f0e"
   },
   "filing_event": {
     "sources": [
