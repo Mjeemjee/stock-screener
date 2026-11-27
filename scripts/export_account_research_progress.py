@@ -4039,6 +4039,13 @@ def main():
         assert all(digest(us_accrual_symbols.parent/name)==expected for name,expected in review['pins'].items())
         extra_sources['us_accrual_symbols']=us_accrual_symbols
         current_work['owners'].insert(0,dict(name='美股 · 低应计历史证券代码',status='snapshot',task=review['site_summary']))
+    us_accrual_financials=MINING/'us-accrual-sec-financials-20261127-v910/RESEARCH-GATE-v1.json'
+    if us_accrual_financials.exists():
+        review=read(us_accrual_financials)
+        assert (review['orders'],review['new_paper'],review['returns_read'])==(0,False,False)
+        assert all(digest(us_accrual_financials.parent/name)==expected for name,expected in review['pins'].items())
+        extra_sources['us_accrual_financials']=us_accrual_financials
+        current_work['owners'].insert(0,dict(name='美股 · 低应计复验财报覆盖',status='snapshot',task=review['site_summary']))
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
