@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-27T19:58:00.325959+08:00",
+  "updated_at": "2026-11-27T20:07:50.086645+08:00",
   "market_data_through": "2026-11-18",
   "activity": {
     "status": "checking",
@@ -9017,6 +9017,11 @@
     "scope": "港美个股及普通非杠杆ETF；持续研究与原03086／SGOV纸面并行。",
     "owners": [
       {
+        "name": "美股 · 低应计历史复验",
+        "status": "snapshot",
+        "task": "美股低應計2020–2025歷史：可觀察前組毛超額+0.388／+1.653個百分點，RankIC校正p=1.000／0.388，完整月5／0；暫不晉級。"
+      },
+      {
         "name": "美股 · 分拆报价与旧证券",
         "status": "snapshot",
         "task": "名义收盘84,754／84,772吻合；UTX 36个共同收盘相符并找到6窗口入场行；独立开盘及结算待验。"
@@ -16001,7 +16006,7 @@
     "activation_utc": "2026-11-17T11:29:30.611908+00:00",
     "first_session": "2026-11-17",
     "source_quote_through": "2026-11-17",
-    "checked_at": "2026-11-27T19:58:01.952230+08:00",
+    "checked_at": "2026-11-27T20:07:51.812174+08:00",
     "accounts": [
       {
         "id": "HKD20000_base",
@@ -16233,7 +16238,7 @@
     "root_receipt_sha256": "8f987347a237abe84e3d6e65c6022d859af1d330b360ddb7b86ad359cdaa59e1"
   },
   "paper": {
-    "checked_at": "2026-11-27T19:58:00.929257+08:00",
+    "checked_at": "2026-11-27T20:07:50.738705+08:00",
     "activation_utc": "2026-11-16T13:37:03.450249+00:00",
     "first_forward_session": "2026-11-17",
     "account_count": 4,
@@ -16677,7 +16682,8 @@
     "us_accrual_actions": "ea91d9950a311c4b557e92a80227601a15a30d48a71783390f89ce89253896ed",
     "us_accrual_crosscheck": "5f27ac585347efc2c5d12452a86108939280ede948abbd0c46dba12459c8cd96",
     "us_accrual_basis": "f25895d91978cbedb3fc87694a4101533a5ee8b335bce8f7e1375035c682aa7c",
-    "us_accrual_complex": "b03c28d39c0f510a169b1a92625ae824a994379b4dd1b6e59d8982e8b4403cce"
+    "us_accrual_complex": "b03c28d39c0f510a169b1a92625ae824a994379b4dd1b6e59d8982e8b4403cce",
+    "us_accrual_diagnostic": "63de45cc74895154cc6b1a176e993cea13606be9edd47f4d6213986af67a5207"
   },
   "filing_event": {
     "sources": [
