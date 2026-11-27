@@ -3879,6 +3879,13 @@ def main():
         assert all(digest(hk_carrier_fx_observed.parent/name)==expected for name,expected in review['pins'].items())
         extra_sources['hk_carrier_fx_observed']=hk_carrier_fx_observed
         current_work['owners'].insert(0,dict(name='港美 · 短债外汇参考复算',status='snapshot',task=review['site_summary']))
+    hk_public_fee=MINING/'hk-us-public-fees-20261127-v889/RESEARCH-GATE-v1.json'
+    if hk_public_fee.exists():
+        review=read(hk_public_fee)
+        assert (review['orders'],review['new_paper'])==(0,False)
+        assert all(digest(hk_public_fee.parent/name)==expected for name,expected in review['pins'].items())
+        extra_sources['hk_public_fee']=hk_public_fee
+        current_work['owners'].insert(0,dict(name='港美 · 公开收费核验',status='snapshot',task=review['site_summary']))
     payload=dict(schema_version=1,updated_at=now,market_data_through=paper['verified_data_through'],
       activity=dict(status=args.activity,active_at_snapshot=activity_active,focus={'small-nasdaq':'03034 · 1万港币账户','sp500':'03195 · 1万港币账户','hsi-hold':'02800 · 3万港币账户','gold':'黄金 ETF · 来源与小资金预检','ipo':'IPO · 09941前向资料核对','validation':'已有正额候选 · 收益稳定性','cash':'03152 · 现金管理的扣费底线','us-vti':'VTI · 美股普通ETF价格诊断','paper':'03086 · 固定候选纸面跟踪','mining':'港美持续研究 · 总目标运行中'}[args.focus],
                     text=activity_text,
