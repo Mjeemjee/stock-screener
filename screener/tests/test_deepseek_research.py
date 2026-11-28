@@ -127,6 +127,12 @@ class DeepSeekTests(unittest.TestCase):
             model.validate_proposals({'proposals': [self.proposal] * 4}, self.parent, self.state)
 
     def test_no_inference_before_twenty_complete_cohorts(self):
+        self.mature()
+        last = self.directory / 'research/settled/factor_test_19.json'
+        incomplete = research.read_sealed(last)
+        last.unlink()
+        incomplete['pool']['complete'] = False
+        research.sealed(last, incomplete)
         with patch.object(model, 'infer') as infer:
             model.generate(self.directory, self.state, self.now, 'secret')
             infer.assert_not_called()
@@ -163,13 +169,29 @@ class DeepSeekTests(unittest.TestCase):
             model.generate(self.directory, self.state, self.now, 'secret')
             infer.assert_not_called()
 
-    def test_global_cooldown_applies_to_other_parents(self):
+    def test_utc_midnight_does_not_reset_the_hong_kong_date(self):
         self.mature()
+        before = self.now.replace(hour=23, minute=55)
         research.sealed(self.directory / 'research/ai_requests/previous.request.json',
-                        {'at': self.now.isoformat(), 'parent_id': 'another-parent'})
+                        {'at': before.isoformat(), 'parent_id': 'another-parent'})
         with patch.object(model, 'infer') as infer:
-            model.generate(self.directory, self.state, self.now + timedelta(days=6), 'secret')
+            model.generate(self.directory, self.state, before + timedelta(minutes=10), 'secret')
             infer.assert_not_called()
+
+    def test_new_hong_kong_date_allows_a_different_eligible_parent_once(self):
+        self.mature()
+        before = self.now.replace(hour=15, minute=55)
+        # The HK date will change at 16:00 UTC, five minutes after this reservation.
+        research.sealed(self.directory / 'research/ai_requests/previous.request.json',
+                        {'at': before.isoformat(), 'parent_id': 'another-parent'})
+        with patch.object(research, 'assess', return_value=({}, {})), patch.object(model, 'infer', return_value={'status': 'completed', 'value': self.value}) as infer:
+            model.generate(self.directory, self.state, before + timedelta(minutes=4), 'secret')
+            infer.assert_not_called()
+            model.generate(self.directory, self.state, before + timedelta(minutes=5), 'secret')
+            self.assertEqual(infer.call_count, 1)
+            self.assertEqual(len(model.records(self.directory)), 2)
+            model.generate(self.directory, self.state, before + timedelta(days=3), 'secret')
+            self.assertEqual(infer.call_count, 1)
 
     def test_report_only_never_generates_and_exposes_no_credentials(self):
         output = self.directory / 'report.json'
